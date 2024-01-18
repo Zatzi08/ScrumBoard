@@ -2,13 +2,12 @@ package com.team3.project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
 
 @SpringBootApplication
-@RestController
+@Controller
 public class ProjectApplication {
 
     public static void main(String[] args) {
@@ -16,7 +15,7 @@ public class ProjectApplication {
     }
 
     // Start Page (static)
-    @RequestMapping()
+    @RequestMapping(value = "/")
     public String index() {
         return "index.html";
     }
