@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 public class LoginService {
 
     public boolean LoginCheck(String UName, String PW){
-        return UName.equals("P");
+        return !UName.equals("Fail");
     }
 }

@@ -2,16 +2,13 @@
 <html>
     <body>
     <center>
-        <textarea id="text" name="text" cols="35" rows="1"></textarea>
-        <button onclick="myfunction()">Login</button>
+        <form action="/Login" method="post">
+            <label>Name</label><br>
+            <input type="text" id="Username" name="Username"><br>
+            <label>Passwort</label><br>
+            <input type="text" id="passwort" name="Passwort"><br><br>
+            <input type="submit" value="Submit">
+        </form>
     </center>
     </body>
-    <script type="text/javascript">
-        function myfunction(){
-            let server = "localhost:8080";
-            let url = "http://" + server + "/hello?myName=" + document.getElementById("text").value;
-
-            window.location.href = url;
-        }
-    </script>
 </html>
