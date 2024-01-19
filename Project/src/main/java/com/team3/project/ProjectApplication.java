@@ -18,6 +18,7 @@ public class ProjectApplication {
 
     @Autowired
     private LoginService loginService;
+
     // Start Seite (static)
     // TODO: ersetze index.html mit Login Page
     @RequestMapping(value = "/")
