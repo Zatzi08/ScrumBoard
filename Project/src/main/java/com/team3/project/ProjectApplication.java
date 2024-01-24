@@ -35,4 +35,10 @@ public class ProjectApplication {
     public String Login(String Username, String Passwort) {
         return accountService.LoginCheck(Username, Passwort) ? String.format("Hello %s! Dein PW: %s!!", Username, Passwort) : String.format("Wrong Username or Passwort");
     }
+    @RequestMapping(value = "/Register", method = RequestMethod.POST)
+    @ResponseBody
+    public String Register(String EMail, String Passwort){
+        return accountService.CreateAccount(EMail,Passwort) ? String.format("Moin, du bis registriert!!") : String.format("Deine E-Mail ist bereits mit einem Account verbunden.") ;
+    }
+
 }
