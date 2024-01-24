@@ -1,5 +1,6 @@
 package com.team3.project;
 
+import com.team3.project.service.AccountService;
 import com.team3.project.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -17,7 +18,7 @@ public class ProjectApplication {
     }
 
     @Autowired
-    private LoginService loginService;
+    private AccountService accountService;
 
     // Start Seite (static)
     // TODO: ersetze index.html mit Login Page
@@ -33,6 +34,6 @@ public class ProjectApplication {
     @RequestMapping(value ="/Login", method = RequestMethod.POST)
     @ResponseBody
     public String Login(String Username, String Passwort) {
-        return loginService.LoginCheck(Username, Passwort) ? String.format("Hello %s! Dein PW: %s!!", Username, Passwort) : String.format("Wrong Username or Passwort");
+        return accountService.LoginCheck(Username, Passwort) ? String.format("Hello %s! Dein PW: %s!!", Username, Passwort) : String.format("Wrong Username or Passwort");
     }
 }
