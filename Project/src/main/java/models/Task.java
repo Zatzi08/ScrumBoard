@@ -1,9 +1,16 @@
 package models;
 
-import java.io.Serializable;
+import models.Enumerations.Prioritys;
+import lombok.Getter;
+import lombok.Setter;
+
 
 // Definiert Datentyp
 
-public class Task implements Serializable {
-
+@Getter
+@Setter
+public class Task {
+    private int tID;
+    private String description;
+    private Prioritys Priority;
 }
