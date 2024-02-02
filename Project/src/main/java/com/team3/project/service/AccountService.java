@@ -15,6 +15,5 @@ public class AccountService {
         //TODO: send Mail to DB-Layer and check if already in DB
         //provisorisch mit found imitiert
         return !found(Mail);
-
     }
 }
