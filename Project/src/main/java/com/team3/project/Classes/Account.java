@@ -1,4 +1,4 @@
-package models;
+package com.team3.project.Classes;
 
 import lombok.Getter;
 import lombok.Setter;

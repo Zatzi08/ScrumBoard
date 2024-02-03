@@ -1,6 +1,6 @@
-package models;
+package com.team3.project.Classes;
 
-import models.Enumerations.Prioritys;
+import com.team3.project.Classes.Enumerations.Prioritys;
 import lombok.Getter;
 import lombok.Setter;
 
