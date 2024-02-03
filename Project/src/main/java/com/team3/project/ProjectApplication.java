@@ -33,18 +33,48 @@ public class ProjectApplication {
         return modelAndView;
     }
 
+
+    @RequestMapping("/PasswortForgotPage")
+    public ModelAndView PasswortForgot(){
+        ModelAndView modelAndView = new ModelAndView("passwortForgot");
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = "/RegisterPage")
+    public ModelAndView Register(){
+       ModelAndView modelAndView = new ModelAndView("register");
+       return modelAndView;
+    }
     // TODO: implement Login.check.Database(UName,Pw) in service
     // TODO: create Template for User Page
+
+
+    @RequestMapping(value = "/neuesPasswortPage", method = RequestMethod.POST)
+    public ModelAndView neuesPasswortPage(String EMail){
+        ModelAndView modelAndView = new ModelAndView("neuesPasswort");
+        modelAndView.addObject("Mail", EMail);
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = "/neuesPasswort", method = RequestMethod.POST)
+    @ResponseBody
+    public String neuesPasswort(String Passwort, String EMail){
+        accountService.setPasswort(EMail, Passwort);
+        return String.format("%s : %s", EMail, Passwort);
+    }
 
     @RequestMapping(value ="/Login", method = RequestMethod.POST)
     @ResponseBody
     public String Login(String Username, String Passwort) {
         return accountService.LoginCheck(Username, Passwort) ? String.format("Hello %s! Dein PW: %s!!", Username, Passwort) : "Wrong Username or Passwort";
     }
+
     @RequestMapping(value = "/Register", method = RequestMethod.POST)
     @ResponseBody
-    public String Register(String EMail, String Passwort){
-        return accountService.CreateAccount(EMail,Passwort) ? "Moin, du bis registriert!!" : "Deine E-Mail ist bereits mit einem Account verbunden." ;
+    public String Register(String Username, String EMail, String Passwort){
+        return accountService.CreateAccount(Username,EMail,Passwort) ? "Moin, du bis registriert!!" : "Deine E-Mail ist bereits mit einem Account verbunden." ;
     }
 
 }

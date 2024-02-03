@@ -11,9 +11,13 @@ public class AccountService {
     public boolean LoginCheck(String UName, String PW){
         return !UName.equals("Fail");
     }
-    public boolean CreateAccount(String Mail, String PW){
+    public boolean CreateAccount(String Username, String Mail, String passwort){
         //TODO: send Mail to DB-Layer and check if already in DB
         //provisorisch mit found imitiert
         return !found(Mail);
+    }
+
+    public void setPasswort(String EMail, String Passwort) {
+        // TODO: implement setPasswort für User
     }
 }

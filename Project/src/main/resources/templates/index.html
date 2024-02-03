@@ -11,17 +11,17 @@
 <body>
   <div class="loginBackground">
     <div class="container">
-      <form>
+      <form action="\Login" method="post" autocomplete="off">
         <label>Login
-          <input type="text" placeholder="Account-Name" id="nameInput">
+          <input type="text" placeholder="Account-Name" id="nameInput" name="Username">
         </label>
-          <input type="text" placeholder="Passwort" id="passwortInput">
-        <p id="forgotP"><a href="https://www.youtube.com/watch?v=XG6aRxkcr9c&ab_channel=LoopHitMusic">Passwort vergessen?</a></p>
+          <input type="text" placeholder="Passwort" id="passwortInput" name="Passwort">
+        <p id="forgotP"><a href="/PasswortForgotPage">Passwort vergessen?</a></p>
         <div class = "loginButtons">
-          <button id="loginButton">Login</button>
+          <button id="loginButton" type="submit">Login</button>
         </div>
         <p id = "noAccount"> Keine Bitches?
-          <a href="https://www.youtube.com/watch?v=XG6aRxkcr9c&ab_channel=LoopHitMusic">Hier Registrieren! (〃￣︶￣)人(￣︶￣〃)</a></p>
+          <a href="/RegisterPage">Hier Registrieren! (〃￣︶￣)人(￣︶￣〃)</a></p>
       </form>
     </div>
 </div>

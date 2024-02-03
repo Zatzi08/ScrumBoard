@@ -12,12 +12,12 @@
 <body>
   <div class="loginBackground">
     <div class="container">
-    <form>
+    <form action="/neuesPasswortPage" method="post" autocomplete="off">
       <label>Passwort zurücksetzen </label>
-        <input type="text" placeholder="Email" id="emailPasswortInput">
-        <button id="passwortResetBtn">Senden</button>
+        <input type="text" placeholder="Email" id="emailPasswortInput" name="EMail">
+        <button id="passwortResetBtn" type="submit">Senden</button>
         <p id = "noAccount"> Keine Bitches?
-          <a href="https://www.youtube.com/watch?v=XG6aRxkcr9c&ab_channel=LoopHitMusic">Hier Registrieren! (〃￣︶￣)人(￣︶￣〃)</a></p>
+          <a href="/RegisterPage">Hier Registrieren! (〃￣︶￣)人(￣︶￣〃)</a></p>
       </form>
     </div>
 </div>
