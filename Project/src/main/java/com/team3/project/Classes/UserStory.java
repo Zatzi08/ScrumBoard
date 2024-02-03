@@ -10,5 +10,10 @@ public class UserStory {
     private int userID;
     private String description;
     private Prioritys priority;
-    //TODO: Datentyp ändern auf "Priority" welcher die Strings low, normal, high und urgent beinhaltet
+
+    public UserStory(int userID, String description, Enumerations.Prioritys priority){
+        this.userID = userID;
+        this.description = description;
+        this.priority = priority;
+    }
 }

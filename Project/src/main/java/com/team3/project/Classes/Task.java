@@ -12,5 +12,10 @@ import lombok.Setter;
 public class Task {
     private int tID;
     private String description;
-    private Prioritys Priority;
+    private Prioritys priority;
+    public Task(int tID,String description, Prioritys priority){
+        this.tID = tID;
+        this.description = description;
+        this.priority = priority;
+    }
 }

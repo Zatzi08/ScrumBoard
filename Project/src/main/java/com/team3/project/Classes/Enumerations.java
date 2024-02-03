@@ -1,5 +1,6 @@
 package com.team3.project.Classes;
 
 public class Enumerations {
-    enum Prioritys {low, normal, high, urgent}
+    public enum Prioritys {low, normal, high, urgent}
+    public enum Role {admin, productOwner, developer, manager, tester}
 }
