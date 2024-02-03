@@ -8,5 +8,8 @@ import lombok.Setter;
 public class Account {
     private String mail;
     private String password;
-
+    public Account(String mail, String password){
+        this.mail = mail;
+        this.password = password;
+    }
 }
