@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.servlet.ModelAndView;
 
 
 @SpringBootApplication
@@ -28,8 +28,9 @@ public class ProjectApplication {
     // Start Seite (static)
     // TODO: ersetze index.html mit Login Page
     @RequestMapping(value = "/")
-    public String index() {
-        return "index.html";
+    public ModelAndView index() {
+        ModelAndView modelAndView = new ModelAndView("index");
+        return modelAndView;
     }
 
     // TODO: implement Login.check.Database(UName,Pw) in service

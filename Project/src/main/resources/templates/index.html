@@ -1,21 +1,36 @@
-<!DOCTYPE HTML>
-<html>
-    <body>
-    <center>
-        <form action="/Login" method="post" autocomplete="off">
-            <label>Name</label><br />
-            <input type="text" id="Username" name="Username"><br />
-            <label>Passwort</label><br />
-            <input type="password" id="passwort" name="Passwort"><br /><br />
-            <input type="submit" value="Submit">
-        </form>
-        <form action="/Register" method="post" autocomplete="off">
-            <label>E-Mail</label><br />
-            <input type="text" id="E-Mail1" name="EMail"><br />
-            <label>Passwort</label><br />
-            <input type="password" id="passwort1" name="Passwort"><br /><br />
-            <input type="submit" value="Register">
-        </form>
-    </center>
-    </body>
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foundation for Sites</title>
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/app.css">
+  </head>
+<body>
+  <div class="loginBackground">
+    <div class="container">
+      <form>
+        <label>Login
+          <input type="text" placeholder="Account-Name" id="nameInput">
+        </label>
+          <input type="text" placeholder="Passwort" id="passwortInput">
+        <p id="forgotP"><a href="https://www.youtube.com/watch?v=XG6aRxkcr9c&ab_channel=LoopHitMusic">Passwort vergessen?</a></p>
+        <div class = "loginButtons">
+          <button id="loginButton">Login</button>
+        </div>
+        <p id = "noAccount"> Keine Bitches?
+          <a href="https://www.youtube.com/watch?v=XG6aRxkcr9c&ab_channel=LoopHitMusic">Hier Registrieren! (〃￣︶￣)人(￣︶￣〃)</a></p>
+      </form>
+    </div>
+</div>
+  
+</body>
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/what-input.js"></script>
+    <script src="js/vendor/foundation.js"></script>
+    <script src="js/app.js"></script>
+  </body>
 </html>
