@@ -5,18 +5,79 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projektmanager</title>
+    <script type = "text/javascript">
+        function ansichtDropdown() {
+            document.getElementById("ansichtDropdownContent").classList.toggle("show");
+        }
+        function filterDropdown() {
+            document.getElementById("filterDropdownContent").classList.toggle("show");
+        }
+        //wenn wir nicht im dropdown klicken
+        window.onclick = function(event) {
+            if (!event.target.matches('.ansichtBtn')) {
+                document.getElementById("ansichtDropdownContent").classList.remove("show");
+            }
+            if (!event.target.matches('.filterBtn')) {
+                document.getElementById("filterDropdownContent").classList.remove("show");
+            }
+        };
+        //damit bottom-border beim hovern lila wird, hab die weiße Border gehardcodet, weswegen das in css nicht funktioniert hatte
+        function hover(){
+            document.getElementById('pjBtn').style.borderColor = "#ba55d3";
+        }
+        function hoverLeave() {
+            document.getElementById('pjBtn').style.borderColor = "#fff";
+        }
+    </script>
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/projectManager.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <div class="Reiter">
-        <button id="BoardButton">Board</button>
+        <button class="reiterBtn" onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
+        <button class = "reiterBtn" id = "profilBtn">Profil </button>
+        <button class = "reiterBtn" id = "boardBtn">Task-Board </button>
+        <button class = "reiterBtn" id = "kalenderBtn">Kalender </button>
     </div>
+
     <div class="container">
-        <button id="btn"><i class="fa fa-level-down" style="margin-right: 8px;"></i> Alle Tasks</button>
-        <button id="btn"><i class="fa fa-filter" style="margin-right: 8px;"></i> Filter</button>
+        <div class="ansichtDropdown"> <!-- PK-->
+            <button onClick= "ansichtDropdown()"id="ansichtBtn" class = "ansichtBtn"><i class="fa fa-level-down" style="margin-right: 8px;"></i> Ansicht</button>
+            <div id="ansichtDropdownContent" class="ansichtdropdown-content">
+                <a href="#">All</a>
+                <a href="#">User Stories</a>
+                <a href="#">Tasks</a>
+                <a href="#">Schätzungstracker</a>
+                <a href="#">Planning Poker</a>
+            </div>
+        </div>
+        <div class = "filterDropdown">
+            <button onClick = "filterDropdown()"id="filterBtn" class = "filterBtn"><i class="fa fa-filter" style="margin-right: 8px;"></i> Filter</button>
+            <div id = "filterDropdownContent" class = filterdropdown-content>
+                <a href="#">All</a>
+                <a href="#">Due Date</a>
+                <a href="#">Priority</a>
+                <a href="#">Aufwand</a>
+                <a href="#">Category?</a>
+            </div>
+        </div>
+        <div class="suchleiste">
+            <ul class="menu">
+                <li><input type="search" placeholder="Search" id = "sucheInput"></li>
+                <li><button type="button" class="searchBtn"><i class="fa fa-search" style="margin-right: 8px;"></i></button></li>
+            </ul>
+        </div>
+
+        <div class = userStory>
+          <label>Titel</label>
+            <label>Beschreibung</label>
+            <button class = "editBtn">Edit</button>
+            <button class="moreBtn"><i class="fa fa-edit" style="margin-right: 8px;"></i></button>
+
+        </div>
     </div>
+
 
     <script src="js/vendor/jquery.js"></script>
     <script src="js/vendor/what-input.js"></script>
