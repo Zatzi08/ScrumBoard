@@ -11,7 +11,7 @@ public class AccountService {
     public boolean LoginCheck(String UName, String PW){
         return !UName.equals("Fail");
     }
-    public boolean CreateAccount(String Username, String mail, String passwort){
+    public boolean RegisterAccount(String Username, String mail, String passwort){
 
             //TODO:DB-Abfrage and check if already in DB
             //TODO: Methode für Anfrage an DB ein Account zu erstellen
@@ -24,5 +24,6 @@ public class AccountService {
 
     public void setPasswort(String EMail, String Passwort) {
         // TODO: implement setPasswort für User
+        //TODO: implementiere Funktion: E-Mail mit authorization-code (aus DB) an E-Mailadresse EMail schicken
     }
 }

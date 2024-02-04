@@ -1,6 +1,7 @@
 package com.team3.project;
 
 import com.team3.project.service.AccountService;
+import com.team3.project.service.TaskService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
@@ -13,20 +14,21 @@ import org.springframework.web.servlet.ModelAndView;
 @SpringBootApplication
 @Controller
 public class ProjectApplication {
+    private final AccountService accountService;
+    private final TaskService taskService;
 
-    public ProjectApplication(AccountService accountService) {
+    public ProjectApplication(AccountService accountService, TaskService taskService) {
         this.accountService = accountService;
+        this.taskService = taskService;
     }
 
     public static void main(String[] args) {
         SpringApplication.run(ProjectApplication.class, args);
     }
 
-    private final AccountService accountService;
 
     // TODO: IOExeptions
     // Start Seite (static)
-    // TODO: ersetze index.html mit Login Page
     @RequestMapping(value = "/")
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("index");
@@ -74,7 +76,7 @@ public class ProjectApplication {
     @RequestMapping(value = "/Register", method = RequestMethod.POST)
     @ResponseBody
     public String Register(String Username, String EMail, String Passwort){
-        return accountService.CreateAccount(Username,EMail,Passwort) ? "Moin, du bis registriert!!" : "Deine E-Mail ist bereits mit einem Account verbunden." ;
+        return accountService.RegisterAccount(Username,EMail,Passwort) ? "Moin, du bis registriert!!" : "Deine E-Mail ist bereits mit einem Account verbunden." ;
     }
 
 }
