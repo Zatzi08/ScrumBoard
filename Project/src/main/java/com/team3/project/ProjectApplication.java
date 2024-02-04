@@ -1,6 +1,7 @@
 package com.team3.project;
 
 import com.team3.project.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
@@ -42,7 +43,7 @@ public class ProjectApplication {
 
 
     @RequestMapping(value = "/RegisterPage")
-    public ModelAndView Register(){
+    public ModelAndView RegisterPage(){
        ModelAndView modelAndView = new ModelAndView("register");
        return modelAndView;
     }
@@ -75,6 +76,12 @@ public class ProjectApplication {
     @ResponseBody
     public String Register(String Username, String EMail, String Passwort){
         return accountService.CreateAccount(Username,EMail,Passwort) ? "Moin, du bis registriert!!" : "Deine E-Mail ist bereits mit einem Account verbunden." ;
+    }
+
+    @RequestMapping(value = "/Preview")
+    public ModelAndView Preview(){
+        ModelAndView modelAndView = new ModelAndView("projectManager"); // Name für Page hier
+        return modelAndView;
     }
 
 }

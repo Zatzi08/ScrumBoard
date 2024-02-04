@@ -10,8 +10,11 @@ import lombok.Setter;
 public class User {
     private Account account;
     private Profile profile;
-    public User(Account account, Profile profile){
+    private int authorization;
+
+    public User(Account account, Profile profile, int authorization){
         this.account = account;
         this.profile = profile;
+        this.authorization = authorization;
     }
 }
