@@ -78,4 +78,10 @@ public class ProjectApplication {
         return accountService.CreateAccount(Username,EMail,Passwort) ? "Moin, du bis registriert!!" : "Deine E-Mail ist bereits mit einem Account verbunden." ;
     }
 
+    @RequestMapping(value = "/Preview")
+    public ModelAndView Preview(){
+        ModelAndView modelAndView = new ModelAndView("projectManager"); // Name für Page hier
+        return modelAndView;
+    }
+
 }
