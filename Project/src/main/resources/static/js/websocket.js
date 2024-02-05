@@ -5,8 +5,8 @@ const stompClient = new StompJs.Client({
 stompClient.onConnect = (frame) => {
     setConnection(true);
     console.log('Connected: ' + frame);
-    stompClient.subscribe('/topic/ProjectManagerStorys', (Storys) =>{
-        showStory(JSON.parse(Storys.body).userID, JSON.parse((Storys.body).description, JSON.parse(Storys.body).priority));
+    stompClient.subscribe('/topic/ProjectManagerStorys', (Sync) =>{
+        ForceSync(JSON.parse(Sync.body).sync);
     });
 };
 
@@ -19,6 +19,28 @@ stompClient.onStompError = (frame) => {
     console.error('Additional details: ' + frame.body);
 };
 
-function setConnected(connected) {
+function connect() {
+    stompClient.activate();
+}
 
+function disconnect() {
+    stompClient.deactivate();
+    setConnection(false);
+    console.log("Disconnected");
+}
+
+function sendStory() {
+    var name = JSON.stringify({'name': $("name").val()});
+    var description = JSON.stringify({'description': $("discription").val()})
+    var priority = JSON.stringify({'priority': $("priority").val()})
+    stompClient.publish({
+        destination: "/websocket/Story",
+        body: name + description + priority
+        });
+}
+
+function ForceSync(sync) {
+    if(sync == "true") {
+        href = ""
+    }
 }
