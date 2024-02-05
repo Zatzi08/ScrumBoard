@@ -22,6 +22,7 @@ public class ProjectApplication {
         SpringApplication.run(ProjectApplication.class, args);
     }
 
+    @Autowired
     private final AccountService accountService;
 
     // TODO: IOExeptions

@@ -1,18 +1,18 @@
 package com.team3.project.Classes;
 
-import com.team3.project.Classes.Enumerations.Priority;
+import com.team3.project.Classes.Enumerations.Prioritys;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class UserStory {
-    private int userSID;
+    private int userID;
     private String description;
-    private Priority priority;
+    private Prioritys priority;
 
-    public UserStory(int userSID, String description, Enumerations.Priority priority){
-        this.userSID = userSID;
+    public UserStory(int userID, String description, Enumerations.Prioritys priority){
+        this.userID = userID;
         this.description = description;
         this.priority = priority;
     }
