@@ -127,17 +127,31 @@ body {
   border-radius: 50px;
 }
 
-.userStory{
+.userStoryContainer{
   position:absolute;
-  width: 80%;
+  width: 40%;
   height:200px;
   background-color: #87939f;
   color:#3b3b3b;
   border-radius:15px;
   margin-top:30px;
 }
-.userStory:hover{
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+.userStoryContainer:hover{
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+  0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.editBtn{
+  position:absolute;
+  top:5px;
+  right:5px;
+  color:rgb(12, 29, 49);
+}
+
+.editBtn:hover{
+ color:black;
+
+
 }
 
 .toggleEdit {
