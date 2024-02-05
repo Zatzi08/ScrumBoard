@@ -28,9 +28,20 @@
         function hoverLeave() {
             document.getElementById('pjBtn').style.borderColor = "#fff";
         }
+
+        function toggleEditBox() {
+            var toggleEditBox = document.querySelector('.toggleEdit');
+            toggleEditBox.classList.toggle('visible');
+
+            if (toggleEditBox.classList.contains('visible')) {
+                toggleEditBox.style.right = '0';
+            } else {
+                toggleEditBox.style.right = '-350px';
+            }
+        }
     </script>
     <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/projectManager.css">
+    <link rel="stylesheet" href="projectManager.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
@@ -72,9 +83,14 @@
         <div class = userStory>
           <label>Titel</label>
             <label>Beschreibung</label>
-            <button class = "editBtn">Edit</button>
+            <button class = "editBtn" onclick="toggleEditBox()">Edit</button>
             <button class="moreBtn"><i class="fa fa-edit" style="margin-right: 8px;"></i></button>
+        </div>
 
+        <div class = toggleEdit>
+            <input type="text" class="inputName" />
+            <input type="text" class="inputDesc" />
+            <input type="text" class="inputPrio" />
         </div>
     </div>
 
