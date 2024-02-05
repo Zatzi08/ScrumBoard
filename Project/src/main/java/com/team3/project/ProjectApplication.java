@@ -74,7 +74,7 @@ public class ProjectApplication {
     @RequestMapping(value = "/Register", method = RequestMethod.POST)
     @ResponseBody
     public String Register(String Username, String EMail, String Passwort){
-        return accountService.CreateAccount(Username,EMail,Passwort) ? "Moin, du bis registriert!!" : "Deine E-Mail ist bereits mit einem Account verbunden." ;
+        return accountService.RegisterAccount(Username,EMail,Passwort) ? "Moin, du bis registriert!!" : "Deine E-Mail ist bereits mit einem Account verbunden." ;
     }
 
 }

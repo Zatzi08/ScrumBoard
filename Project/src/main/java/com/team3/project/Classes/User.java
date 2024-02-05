@@ -31,7 +31,7 @@ public class User {
     public boolean updateUser(String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles, List<Integer> taskIDs){
         //TODO:implement checkUserID and updateUserDB
         //if check(userID)==false then throw expection "User not found"
-        //else updateUserDB: Wferte verändern (if Argument == null then Wert nicht ändern)
+        //else updateUserDB: Werte verändern (if Argument == null then Wert nicht ändern)
         //return updateUserDB(...);
         return true;
     }

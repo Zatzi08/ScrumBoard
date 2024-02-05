@@ -1,7 +1,8 @@
 package com.team3.project.service;
 
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
-
+import com.team3.project.Classes.Email;
 @Service
 public class AccountService {
     //Alternative um ohne DB zu schreiben
@@ -21,9 +22,16 @@ public class AccountService {
             //provisorisch mit eigener check-Methode imitiert
         return !check(mail);
     }
+    public void authenticate(String email){
 
+    }
     public void setPasswort(String EMail, String Passwort) {
         // TODO: implement setPasswort für User
         //TODO: implementiere Funktion: E-Mail mit authorization-code (aus DB) an E-Mailadresse EMail schicken
     }
+    /* Email um den Code zu schicken muss von Google geprüft werde, weil es geflaggt wurde
+    public static void main(String[] Args){
+        Email test = new Email();
+        test.sendEmail("henryfreyschmidt2226@gmail.com");
+    }*/
 }
