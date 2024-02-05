@@ -30,7 +30,7 @@
         }
 
         function toggleEditBox() {
-            var toggleEditBox = document.querySelector('.toggleEdit');
+            const toggleEditBox = document.querySelector('.toggleEdit');
             toggleEditBox.classList.toggle('visible');
 
             if (toggleEditBox.classList.contains('visible')) {
@@ -39,6 +39,21 @@
                 toggleEditBox.style.right = '-350px';
             }
         }
+
+        var input = document.querySelector('.search-form');
+        var search = document.querySelector('input')
+        var button = document.querySelector('button');
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            input.classList.toggle('active');
+        })
+        search.addEventListener('focus', function() {
+            input.classList.add('focus');
+        })
+
+        search.addEventListener('blur', function() {
+            search.value.length != 0 ? input.classList.add('focus') : input.classList.remove('focus');
+        })
     </script>
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="projectManager.css">
@@ -91,10 +106,16 @@
             </ul>
         </div>
 
-        <div class = toggleEdit>
-            <input type="text" class="inputName" />
-            <input type="text" class="inputDesc" />
-            <input type="text" class="inputPrio" />
+        <div class = "toggleEdit">
+            <div class="userStoryEditInput">
+                <label for="inputName">Name</label>
+                <input type="text" id="inputName" />
+                <label for="inputDesc">Beschreibung</label>
+                <input type="text" id="inputDesc" />
+                <label for="inputPrio">Priorität</label>
+                <input type="text" id="inputPrio" />
+            </div>
+            <button id="saveEdit">Speichern</button>
         </div>
     </div>
 
