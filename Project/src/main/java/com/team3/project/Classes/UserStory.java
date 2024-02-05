@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class UserStory {
     private int userID;
+    private String name;
     private String description;
     private Prioritys priority;
 
