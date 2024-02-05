@@ -20,7 +20,7 @@
             if (!event.target.matches('.filterBtn')) {
                 document.getElementById("filterDropdownContent").classList.remove("show");
             }
-        };
+        }
         //damit bottom-border beim hovern lila wird, hab die weiße Border gehardcodet, weswegen das in css nicht funktioniert hatte
         function hover(){
             document.getElementById('pjBtn').style.borderColor = "#ba55d3";
@@ -28,7 +28,18 @@
         function hoverLeave() {
             document.getElementById('pjBtn').style.borderColor = "#fff";
         }
-
+        function taskAusklappen(){
+            const taskBox = document.querySelector('#taskContainer');
+            document.getElementById("taskContainer").classList.toggle("show");
+            document.getElementById('ausklappbarBtn').style.content='^';
+            if(taskBox.classList.contains('show')){
+                taskBox.style.display='block';
+                document.getElementById('ausklappbarBtn').style.content='^';
+            }
+            else{
+                taskBox.style.display='none';
+            }
+        }
         function toggleEditBox() {
             const toggleEditBox = document.querySelector('.toggleEdit');
             toggleEditBox.classList.toggle('visible');
@@ -55,20 +66,6 @@
             search.value.length != 0 ? input.classList.add('focus') : input.classList.remove('focus');
         })
 
-        var coll = document.getElementsByClassName("collapsible");
-        var i;
-
-        for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "block";
-                }
-            });
-        }
     </script>
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/projectManager.css">
@@ -119,11 +116,11 @@
                     </div>
 
                 <button class = "editBtn" onclick="toggleEditBox()"> <i class="fa fa-edit" style="margin-right: 8px;"></i></button>
-                    <button type="button" id = "ausklappbarTasks" class="collapsible"> > </button>
+                    <button type="button" id = "ausklappbarBtn" onClick="taskAusklappen()"> > </button>
                     <div id="taskContainer">
-                        <div id="taskText">
-                            <button id = "neueTaskBtn">Neue Task Hinzufügen</button>
-                            <label id="taskBeschreibung">TaskText</label>
+                        <div id="taskInhalt">
+                            <button id = "neueTaskBtn">Neue Task <i class="fa fa-plus" ></i></button>
+                            <label id="taskBeschreibung">Noch keine Tasks..</label>
                         </div>
                     </div>
                 </li>

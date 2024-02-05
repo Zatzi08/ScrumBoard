@@ -1,0 +1,171 @@
+.loginBackground{
+display: flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+min-height: 100vh;
+background: linear-gradient(to right, #6885c7, #B7CEF2);
+}
+
+.container{
+position: absolute;
+  width: 400px;
+  height: 400px;
+  z-index: 15;
+  top: 50%;
+  left: 50%;
+  margin: -200px 0 0 -200px;
+  border-radius: 15px;
+background-color: rgba(20, 18, 43, 0.2);
+
+box-shadow: 0 8px 20px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+ 
+
+}
+
+#loginButton{
+display: block;
+position:relative;    
+background-color:  rgb(18, 25, 65);
+width:100px;
+height:40px;
+border: none;
+color: rgb(209, 205, 205);
+font-size: 16px;
+transition-duration: 0.4s;
+box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+border-radius: 15px; 
+margin-left:148px;
+}
+
+#loginButton:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  background-color: rgb(9, 21, 36);
+  cursor: pointer;  
+}
+
+#nameInput{
+width:70%;
+margin:20px;
+height:50px;
+top: 50%;
+left: 50%;
+margin-bottom: 30px;
+margin-left: 60px;
+padding: 10px;
+color:white;
+background-color:#0f315c;
+box-shadow: 0 2px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+border-radius: 15px;  
+}
+#emailInput{
+width:70%;
+margin:30px;
+height:50px;
+top: 50%;
+left: 50%;
+margin-bottom: 30px;
+margin-left: 60px;
+padding: 10px;
+color:white;
+background-color:#0f315c;
+box-shadow: 0 2px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+border-radius: 15px;  
+}
+#passwortInput{
+margin-top: auto;    
+width:70%;
+height:50px;
+top: 50%;
+left: 50%;
+margin-left: 60px;
+padding: 10px;
+border-radius: 15px;
+color:white;
+background-color:#0f315c;
+box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);   
+}
+
+#emailPasswortInput{
+margin-top: 25%;    
+width:70%;
+height:50px;
+top: 50%;
+left: 50%;
+margin-left: 60px;
+padding: 10px;
+border-radius: 15px;
+color:white;
+background-color:#0f315c;
+box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);   
+}
+
+#neuesPasswortInput{
+margin-top: 25%;    
+width:70%;
+height:50px;
+top: 50%;
+left: 50%;
+margin-left: 60px;
+padding: 10px;
+border-radius: 15px;
+color:white;
+background-color:#0f315c;
+box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+#noAccount{
+position: absolute;
+bottom:0;    
+}
+#forgotP{
+margin-left:65px;  
+}
+a{
+color:#103563;
+}
+#passwortResetBtn{
+  display: block;
+  position:relative;    
+  background-color:  rgb(18, 25, 65);
+  width:100px;
+  height:40px;
+  border: none;
+  color: rgb(209, 205, 205);
+  font-size: 16px;
+  transition-duration: 0.4s;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  border-radius: 15px; 
+  margin-left:148px;
+  margin-top: 50px;
+  }
+  
+  #passwortResetBtn:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    background-color: rgb(12, 29, 49);
+    cursor: pointer;  
+  }
+
+  #newPasswortBtn{
+    display: block;
+    position:relative;    
+    background-color:  rgb(18, 25, 65);
+    width:100px;
+    height:40px;
+    border: none;
+    color: rgb(209, 205, 205);
+    font-size: 16px;
+    transition-duration: 0.4s;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border-radius: 15px; 
+    margin-left:148px;
+    margin-top: 50px;
+    }
+    
+    #newPasswortBtn:hover {
+      box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+      background-color: rgb(12, 29, 49);
+      cursor: pointer;  
+    }
+
+  
