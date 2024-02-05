@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class UserStoryService {
 
     // TODO: needs Database connection to implement create Object
-    public boolean CreateUserStory(String UserStoryStory){
+    public boolean createUserStory(String UserStoryContent){
         return false;
     }
 
@@ -18,12 +18,12 @@ public class UserStoryService {
     }
 
     // TODO: needs Database connection to implement Update Object
-    public boolean UpdateUserStory(int UserStoryID, String UserStoryStory, int Priority){
+    public boolean updateUserStory(UserStory userStory){//TODO: wie kann man die veränderten Attribute angeben
         return true;
     }
 
     // TODO: Delete later
     public UserStory getUserStoryT() {
-        return new UserStory(1,"Krasse Story", Enumerations.Prioritys.low);
+        return new UserStory(1,"Krasse Story", Enumerations.Priority.low);
     }
 }

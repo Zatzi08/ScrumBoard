@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 @SpringBootApplication
@@ -62,20 +63,20 @@ public class ProjectApplication {
     @RequestMapping(value = "/neuesPasswort", method = RequestMethod.POST)
     @ResponseBody
     public String neuesPasswort(String Passwort, String EMail){
-        accountService.setPasswort(EMail, Passwort);
+        accountService.resetPasswort(EMail, Passwort);
         return String.format("%s : %s", EMail, Passwort);
     }
 
     @RequestMapping(value ="/Login", method = RequestMethod.POST)
     @ResponseBody
-    public String Login(String Username, String Passwort) {
-        return accountService.LoginCheck(Username, Passwort) ? String.format("Hello %s! Dein PW: %s!!", Username, Passwort) : "Wrong Username or Passwort";
+    public String login(String Username, String Passwort) {
+        return accountService.login(Username, Passwort) ? String.format("Hello %s! Dein PW: %s!!", Username, Passwort) : "Wrong Username or Passwort";
     }
 
     @RequestMapping(value = "/Register", method = RequestMethod.POST)
     @ResponseBody
-    public String Register(String Username, String EMail, String Passwort){
-        return accountService.RegisterAccount(Username,EMail,Passwort) ? "Moin, du bis registriert!!" : "Deine E-Mail ist bereits mit einem Account verbunden." ;
+    public String register(String Username, String EMail, String Passwort){
+        return accountService.register(Username,EMail,Passwort) ? "Moin, du bis registriert!!" : "Deine E-Mail ist bereits mit einem Account verbunden." ;
     }
 
 }

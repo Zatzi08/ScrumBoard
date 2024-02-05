@@ -6,13 +6,13 @@ import com.team3.project.Classes.Email;
 @Service
 public class AccountService {
     //Alternative um ohne DB zu schreiben
-    public boolean check(String Mail){
+    public boolean checkMail(String Mail){
         return !Mail.equals("test@gmail.com");
     }
-    public boolean LoginCheck(String UName, String PW){
-        return !UName.equals("Fail");
+    public boolean login(String Email, String PW){
+        return !Email.equals("Fail");
     }
-    public boolean RegisterAccount(String Username, String mail, String passwort){
+    public boolean register(String username, String email, String passwort){
 
             //TODO:DB-Abfrage and check if already in DB
             //TODO: Methode für Anfrage an DB ein Account zu erstellen
@@ -20,12 +20,12 @@ public class AccountService {
             //else{createAccountDB(username, mail, passwort);}
 
             //provisorisch mit eigener check-Methode imitiert
-        return !check(mail);
+        return !checkMail(email);
     }
     public void authenticate(String email){
 
     }
-    public void setPasswort(String EMail, String Passwort) {
+    public void resetPasswort(String EMail, String Passwort){
         // TODO: implement setPasswort für User
         //TODO: implementiere Funktion: E-Mail mit authorization-code (aus DB) an E-Mailadresse EMail schicken
     }
