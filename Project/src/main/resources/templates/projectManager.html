@@ -108,12 +108,14 @@
 
         <div class = "toggleEdit">
             <div class="userStoryEditInput">
-                <label for="inputName">Name</label>
-                <input type="text" id="inputName" />
-                <label for="inputDesc">Beschreibung</label>
-                <input type="text" id="inputDesc" />
-                <label for="inputPrio">Priorität</label>
-                <input type="text" id="inputPrio" />
+                <form class="form">
+                    <label for="inputName">Name</label>
+                    <textarea id="inputName" class="inputEdit"></textarea>
+                    <label for="inputDesc">Beschreibung</label>
+                    <textarea id="inputDesc" class="inputEdit"></textarea>
+                    <label for="inputPrio">Priorität</label>
+                    <textarea id="inputPrio" class="inputEdit"></textarea>
+                </form>
             </div>
             <button id="saveEdit">Speichern</button>
         </div>
