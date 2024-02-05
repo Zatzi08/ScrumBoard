@@ -1,0 +1,208 @@
+body {
+  background-color: #262c49;
+  color: #ffffff;
+}
+
+.ProjectManagerBackground {
+  position: relative;
+}
+
+.Reiter {
+  background-color: #10163a;
+  height: 75px;
+  position: auto;
+  width: 100%;
+}
+
+.container {
+  margin-top: 20px;
+}
+
+.reiterBtn { /*bei beiden ist jetzt erstmal ein border-bottom, würde aber später das mit javascript oderso ändern, wann was border-bottom hat*/
+  color: #ffffff;
+  padding: 12px 10px;
+  transition: border-bottom-color 0.4s;
+  margin-right:40px;
+  margin-top: 30px;
+}
+
+.reiterBtn:hover {
+  border-bottom-color: #ba55d3;
+  color: #ba55d3;
+}
+
+#ansichtBtn {
+  display: inline-flex;
+  background-color: #0074cc;
+  color: #ffffff;
+  padding: 12px 16px;
+  margin-right:20px;
+  border: none;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  border-radius: 15px;
+}
+
+#ansichtBtn:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  background-color: rgb(12, 29, 49);
+  cursor: pointer;
+}
+#filterBtn {
+  display: inline-flex;
+  background-color: #0074cc;
+  color: #ffffff;
+  padding: 12px 16px;
+  margin-right:20px;
+  border: none;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  border-radius: 15px;
+}
+
+#filterBtn:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+  0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  background-color: rgb(12, 29, 49);
+  cursor: pointer;
+}
+
+.filterDropdown, .ansichtDropdown{
+  position: relative;
+  display: inline-block;
+}
+
+.filterdropdown-content,.ansichtdropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  border-radius: 15px;
+  width: 200px;
+  overflow:auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.filterdropdown-content a, .ansichtdropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  border-bottom: 1px solid #403b3b;
+  display: block;
+}
+
+.ansichtdropdown-content a:hover {background-color: #d9dcde;}
+.filterdropdown-content a:hover {background-color: #d9dcde;}
+
+
+.show {display:block;}
+
+.suchleiste{
+  position:absolute;
+  margin-left:100px;
+  margin-top:-40px;
+  right:0px;
+}
+
+.searchBtn {
+  display: inline-flex;
+  background-color: #0074cc;
+  color: #ffffff;
+  padding: 12px 16px;
+  margin-left:20px;
+  border: none;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  border-radius: 50px;
+  text-align: center;
+}
+
+.searchBtn:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+  0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  background-color: rgb(12, 29, 49);
+  cursor: pointer;
+}
+
+#sucheInput{
+  border-radius: 50px;
+}
+
+.userStoryContainer{
+  position:absolute;
+  width: 40%;
+  height:200px;
+  background-color: #87939f;
+  color:#3b3b3b;
+  border-radius:15px;
+  margin-top:30px;
+}
+.userStoryContainer:hover{
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+  0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.editBtn{
+  position:absolute;
+  top:5px;
+  right:5px;
+  color:rgb(12, 29, 49);
+}
+
+.editBtn:hover{
+ color:black;
+}
+
+.toggleEdit {
+  position: fixed;
+  top: 80px;
+  right: -350px;
+  width: 300px;
+  height: 100%;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  transition: right 0.5s ease;
+  overflow: auto;
+}
+
+.toggleEdit.visible {
+  right: 0;
+}
+
+#saveEdit {
+  display: block;
+  position: absolute;
+  left: 40%;
+  border-radius: 50px;
+}
+
+.inputEdit {
+  width: 100%;
+  border: 2px solid #6e7f91;
+  border-radius: 8px;
+  font-size: 12px;
+  transition: border-color 0.3s;
+  line-height: 1;
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
