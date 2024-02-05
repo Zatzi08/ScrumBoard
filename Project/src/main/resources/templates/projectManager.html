@@ -55,20 +55,6 @@
             search.value.length != 0 ? input.classList.add('focus') : input.classList.remove('focus');
         })
 
-        var coll = document.getElementsByClassName("collapsible");
-        var i;
-
-        for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "block";
-                }
-            });
-        }
     </script>
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/projectManager.css">
@@ -119,7 +105,7 @@
                     </div>
 
                 <button class = "editBtn" onclick="toggleEditBox()"> <i class="fa fa-edit" style="margin-right: 8px;"></i></button>
-                    <button type="button" id = "ausklappbarTasks" class="collapsible"> > </button>
+                    <button type="button" id = "ausklappbarTasks" class="collapsible">  </button>
                     <div id="taskContainer">
                         <p></p>
                     </div>
