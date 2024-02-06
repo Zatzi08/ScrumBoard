@@ -10,20 +10,21 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class WebsocketController {
 
-    private Enumerations enumerations;
+    private Enumerations enumerations = new Enumerations();
 
     @MessageMapping("/UserStory")
     @SendTo("/topic/ProjectManagerStorys")
     public String ProjectManagerStorys( String name) {
-        System.out.println(String.format("%s", name));
-
+        saveStringAsUserstory(name);
         return "true";
     }
 
     private void saveStringAsUserstory(String message) {
-        String name = message.substring(message.indexOf(":"),message.indexOf(","));
-        String description = message.substring(message.indexOf(":", message.indexOf(":")+1),message.indexOf(",", message.indexOf(","))+1);
-        String priority = message.substring(message.indexOf(":",message.indexOf(":")));
+        String name = message.substring(message.indexOf(":")+1,message.indexOf(","));
+        String description = message.substring(message.indexOf(":", message.indexOf(":")+1)+1,message.indexOf(",", message.indexOf(",")+1));
+        String priority = message.substring(message.indexOf(":",message.indexOf(":",message.indexOf(":")+1)+1)+1);
         UserStory userStory = new UserStory(-1, name, description, enumerations.StringToPriority(priority));
+        // saveUser(userstory)
+        // TODO: Implement saveUserstory
     }
 }
