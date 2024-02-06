@@ -12,12 +12,13 @@ import java.util.Properties;
 @Getter
 @Setter
 @Component
+//erst für Sprint 2
+//TODO: Henry: checke ob gmail wieder freigegeben wurde
 public class Email {
     @Autowired
     public JavaMailSenderImpl emailSender = getJavaMailSender();
-
     @Bean
-    public JavaMailSenderImpl getJavaMailSender() {
+    public JavaMailSenderImpl getJavaMailSender() { //Absender + relevante Daten für die Authentifizierungsmail festlegen
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
@@ -32,14 +33,14 @@ public class Email {
         props.put("mail.debug", "true");
         return mailSender;
     }
-    public void sendSimpleMessage(String to, String subject, String text) {
+    public void sendSimpleMessage(String to, String subject, String text) { //Details der Email festlegen
         SimpleMailMessage message = new SimpleMailMessage();
         Email email = new Email();
-        message.setFrom("gruppe3team3@gmail.com"); //
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(text);
-        email.emailSender.send(message);
+        message.setFrom("gruppe3team3@gmail.com"); //Absender
+        message.setTo(to); //Empfänger, also User-Email
+        message.setSubject(subject);//Überschrift
+        message.setText(text); //Inhalt
+        email.emailSender.send(message); //Email verschicken
     }
     public void sendEmail(String Email){ //Authentifizierungscode an Email aus Argument schicken
         //TODO: getAuthentification(Email): Zahl aus DB ablesen
