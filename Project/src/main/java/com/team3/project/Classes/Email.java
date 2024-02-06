@@ -2,7 +2,6 @@ package com.team3.project.Classes;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -13,7 +12,7 @@ import java.util.Properties;
 @Setter
 @Component
 public class Email {
-    @Autowired
+
     public JavaMailSenderImpl emailSender = getJavaMailSender();
 
     @Bean
@@ -32,6 +31,7 @@ public class Email {
         props.put("mail.debug", "true");
         return mailSender;
     }
+
     public void sendSimpleMessage(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
         Email email = new Email();
@@ -41,6 +41,7 @@ public class Email {
         message.setText(text);
         email.emailSender.send(message);
     }
+
     public void sendEmail(String Email){ //Authentifizierungscode an Email aus Argument schicken
         //TODO: getAuthentification(Email): Zahl aus DB ablesen
         //getAuthentification mit beliebigen int simuliert
