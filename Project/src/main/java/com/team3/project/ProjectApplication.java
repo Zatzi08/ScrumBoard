@@ -1,6 +1,8 @@
 package com.team3.project;
 
 import com.team3.project.service.AccountService;
+import com.team3.project.service.UserStoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
@@ -8,15 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 @SpringBootApplication
 @Controller
 public class ProjectApplication {
 
-    public ProjectApplication(AccountService accountService) {
+    public ProjectApplication(AccountService accountService, UserStoryService uService) {
         this.accountService = accountService;
+        this.uService = uService;
     }
 
     public static void main(String[] args) {
@@ -25,6 +27,8 @@ public class ProjectApplication {
 
     @Autowired
     private final AccountService accountService;
+    @Autowired
+    private final UserStoryService uService;
 
     // TODO: IOExeptions
     // Start Seite (static)
@@ -44,7 +48,7 @@ public class ProjectApplication {
 
 
     @RequestMapping(value = "/RegisterPage")
-    public ModelAndView Register(){
+    public ModelAndView RegisterPage(){
        ModelAndView modelAndView = new ModelAndView("register");
        return modelAndView;
     }
@@ -75,8 +79,22 @@ public class ProjectApplication {
 
     @RequestMapping(value = "/Register", method = RequestMethod.POST)
     @ResponseBody
-    public String register(String Username, String EMail, String Passwort){
+    public String Register(String Username, String EMail, String Passwort){
         return accountService.register(Username,EMail,Passwort) ? "Moin, du bis registriert!!" : "Deine E-Mail ist bereits mit einem Account verbunden." ;
     }
 
+    @RequestMapping(value = "/Preview")
+    public ModelAndView Preview(){
+        ModelAndView modelAndView = new ModelAndView("projectManager"); // Name für Page hier
+        return modelAndView;
+    }
+
+
+    @RequestMapping("/socket")
+    public ModelAndView socket(){
+        System.out.println("Start");
+        ModelAndView modelAndView = new ModelAndView("Tasklist");
+        modelAndView.addObject("Story", uService.getUserStoryT());
+        return modelAndView;
+    }
 }

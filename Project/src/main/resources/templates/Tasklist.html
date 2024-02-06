@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+<script src="js/websocket.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,16 +15,22 @@
             <thead>
             <tr>
                 <th>Id</th>
+                <th>Name</th>
                 <th>Description</th>
             </tr>
             </thead>
             <tbody>
-                <tr th:each="item : ${Task}">
-                    <td th:text="${item.id}"></td>
+                <tr th:each="item : ${Story}">
+                    <td th:text="${item.userID}"></td>
+                    <td th:text="${item.name}"></td>
                     <td th:text="${item.description}"></td>
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div>
+        <button class="btn" id="btn1" onclick="connect()">Connect</button>
+        <button class="btn" id="send" onclick="sendStory('B', 'Hi', 'low')">Send</button>
     </div>
 </body>
 </html>

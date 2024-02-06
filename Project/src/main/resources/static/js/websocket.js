@@ -3,10 +3,11 @@ const stompClient = new StompJs.Client({
 });
 
 stompClient.onConnect = (frame) => {
-    setConnection(true);
     console.log('Connected: ' + frame);
-    stompClient.subscribe('/topic/ProjectManagerStorys', (Sync) =>{
-        ForceSync(JSON.parse(Sync.body).sync);
+    stompClient.subscribe('/topic/ProjectManagerStorys', (ProjectManagerStorys) =>{
+        var message = JSON.parse(ProjectManagerStorys.body);
+        console.log(message);
+        ForceSync(message);
     });
 };
 
@@ -25,22 +26,27 @@ function connect() {
 
 function disconnect() {
     stompClient.deactivate();
-    setConnection(false);
     console.log("Disconnected");
 }
 
-function sendStory() {
-    var name = JSON.stringify({'name': $("name").val()});
-    var description = JSON.stringify({'description': $("discription").val()})
-    var priority = JSON.stringify({'priority': $("priority").val()})
+function sendStory(name, description, priority) {
+    //var name = JSON.stringify({'name': $("name").val()});
+    //var description = JSON.stringify({'description': $("discription").val()})
+    //var priority = JSON.stringify({'priority': $("priority").val()})
     stompClient.publish({
-        destination: "/websocket/Story",
-        body: name + description + priority
+        destination: "/websocket/UserStory",
+        body: "name:" + name + ",discription:" + description + ",priority:" + priority
         });
 }
 
 function ForceSync(sync) {
-    if(sync == "true") {
-        href = ""
+    if (sync) {
+        disconnect()
+        window.location.href = "";
     }
 }
+
+$(function () {
+    $("form").on('submit', (e) => e.preventDefault());
+    //$( "#send" ).click(() => sendStory());
+});

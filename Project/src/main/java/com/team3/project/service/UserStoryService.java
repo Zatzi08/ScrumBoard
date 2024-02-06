@@ -24,6 +24,6 @@ public class UserStoryService {
 
     // TODO: Delete later
     public UserStory getUserStoryT() {
-        return new UserStory(1,"Krasse Story", Enumerations.Priority.low);
+        return new UserStory(1,"Name1","Krasse Story", Enumerations.Priority.low);
     }
 }

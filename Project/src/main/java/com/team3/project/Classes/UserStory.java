@@ -8,11 +8,13 @@ import lombok.Setter;
 @Setter
 public class UserStory {
     private int userID;
+    private String name;
     private String description;
     private Priority priority;
 
-    public UserStory(int userID, String description, Enumerations.Priority priority){
+    public UserStory(int userID,String name, String description, Enumerations.Priority priority){
         this.userID = userID;
+        this.name = name;
         this.description = description;
         this.priority = priority;
     }

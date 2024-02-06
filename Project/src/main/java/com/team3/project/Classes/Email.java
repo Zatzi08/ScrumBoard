@@ -15,6 +15,7 @@ import java.util.Properties;
 public class Email {
     @Autowired
     public JavaMailSenderImpl emailSender = getJavaMailSender();
+
     @Bean
     public JavaMailSenderImpl getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
