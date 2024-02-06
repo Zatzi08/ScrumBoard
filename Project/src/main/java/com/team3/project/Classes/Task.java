@@ -13,6 +13,8 @@ public class Task {
     private int taskID;
     private String description;
     private Priority priority;
+    private int userStoryID;
+
     public Task(){
 
     }
@@ -23,10 +25,11 @@ public class Task {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public Task(int tID,String description, Priority priority){
+    public Task(int tID, String description, Priority priority, int UserStoryID){
         this.taskID = tID;
         this.description = description;
         this.priority = priority;
+        this.userStoryID = userStoryID;
     }
 
 }

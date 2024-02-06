@@ -86,7 +86,7 @@ public class ProjectApplication {
 
     /* Author: Lucas Krüger
      * Revisited: Henry L. Freyschmidt
-     * Funktion: Übergabe eines neues Passworts an Datenbank
+     * Funktion: Übergabe eines neuen Passworts an Datenbank
      * Grund: neusetzen eines Passworts
      * UserStory/Task-ID: /
      */

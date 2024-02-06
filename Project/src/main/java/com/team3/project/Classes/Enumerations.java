@@ -4,7 +4,7 @@ public class Enumerations {
 
     // default Priority = low
     public enum Priority {low, normal, high, urgent}
-    public enum Role {admin, productOwner, developer, manager, tester}
+    public enum Role {admin, productOwner,  manager, nutzer}
 
     /* Author: Lucas Krüger
      * Revisited: /
