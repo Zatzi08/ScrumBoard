@@ -44,7 +44,7 @@ body {
 
 #ansichtBtn:hover {
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
-    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+  0 17px 50px 0 rgba(0, 0, 0, 0.19);
   background-color: rgb(12, 29, 49);
   cursor: pointer;
 }
@@ -127,6 +127,7 @@ body {
 #sucheInput{
   border-radius: 50px;
 }
+
 .userStoryContainer{
   position:absolute;
   width: 300px;
@@ -137,14 +138,16 @@ body {
   margin-top:30px;
   margin-left:10px;
 }
+
 .userStoryContainer ul{
   list-style-type: none;
-
 }
+
 .userStoryContainer:hover{
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
   0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
+
 .userStoryText{
   position:absolute;
   top:15%;
@@ -173,24 +176,31 @@ body {
 }
 
 .editBtn:hover{
- color:black;
+  color:black;
 }
-#ausklappbarBtn{
+
+#ausklappbarBtn {
   position: absolute;
-  bottom:5px;
-  right:5px;
+  bottom: 5px;
+  right: 5px;
   color: #0c3d5d;
+  transition: transform 0.3s ease;
 }
+
+#ausklappbarBtn.rotate {
+  transform: rotate(90deg);
+}
+
 #ausklappbarBtn:hover{
   color: black;
 }
+
 #neueTaskBtn{
   position:absolute;
   top:0px;
   width:300px;
   background-color: rgb(12, 29, 49);
   color:#87939f;
-  border-radius: 10px;
 }
 
 #neueTaskBtn i{
@@ -203,14 +213,22 @@ body {
   transition: right 0.5s ease;
   cursor:pointer;
 }
-#taskContainer{
-  width:300px;
-  position:absolute;
-  left:0px;
-  margin-top:200px;
+
+#taskContainer {
+  width: 300px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin-top: 200px;
   background-color: #0c3d5d;
   border-radius: 10px;
-  transition: right 0.5s ease;
+  overflow: hidden;
+  transition: height 0.5s ease;
+  height: 0;
+}
+
+#taskContainer.show {
+  height: 100px;
 }
 
 #taskBeschreibung{
@@ -271,9 +289,9 @@ body {
   background-color: #a8bbbf;
 }
 #inputDate{
-    border-radius: 5px;
+  border-radius: 5px;
 }
 
 .userStoryEditInput form label{
-    color: white;
+  color: white;
 }

@@ -28,25 +28,29 @@
         function hoverLeave() {
             document.getElementById('pjBtn').style.borderColor = "#fff";
         }
-        function taskAusklappen(){
-            const taskBox = document.querySelector('#taskContainer');
-            document.getElementById("taskContainer").classList.toggle("show");
-            document.getElementById('ausklappbarBtn').style.content='^';
-            if(taskBox.classList.contains('show')){
-                taskBox.style.display='block';
-                document.getElementById('ausklappbarBtn').style.content='^';
-            }
-            else{
-                taskBox.style.display='none';
+
+
+        function taskAusklappen() {
+            const taskContainer = document.getElementById("taskContainer");
+            const ausklappbarBtn = document.getElementById("ausklappbarBtn");
+
+            if (taskContainer.classList.contains("show")) {
+                taskContainer.classList.remove("show");
+                ausklappbarBtn.classList.remove("rotate");
+            } else {
+                taskContainer.classList.add("show");
+                ausklappbarBtn.classList.add("rotate");
             }
         }
+
         function toggleEditBox() {
             const toggleEditBox = document.querySelector('.toggleEdit');
             toggleEditBox.classList.toggle('visible');
 
             if (toggleEditBox.classList.contains('visible')) {
                 toggleEditBox.style.right = '0';
-            } else {
+            }
+            else {
                 toggleEditBox.style.right = '-350px';
             }
         }
@@ -60,11 +64,7 @@
         })
         search.addEventListener('focus', function() {
             input.classList.add('focus');
-        })
-
-        search.addEventListener('blur', function() {
-            search.value.length != 0 ? input.classList.add('focus') : input.classList.remove('focus');
-        })
+        });
 
     </script>
     <link rel="stylesheet" href="css/foundation.css">
@@ -136,7 +136,7 @@
                     <textarea id="inputDesc" class="inputEdit"></textarea>
                     <label for="inputPrio">Priorität</label>
                     <textarea id="inputPrio" class="inputEdit"></textarea>
-                    <label >Priorität</label>
+                    <label >Abgabefrist</label>
                     <input type="date" id="inputDate" class="inputBtn"></input>
                 </form>
             </div>
