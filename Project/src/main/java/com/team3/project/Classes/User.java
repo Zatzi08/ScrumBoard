@@ -28,6 +28,12 @@ public class User {
         this.roles = roles;
         this.taskIDs = taskIDs;
     }
+
+    /* Author: Henry L. Freyschmid
+     * Funktion: Updated Userstory in Datenbank
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     public boolean updateUser(String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles, List<Integer> taskIDs){
         //TODO:implement checkUserID and updateUserDB
         //if check(userID)==false then throw expection "User not found"

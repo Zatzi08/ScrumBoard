@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class WebsocketController {
 
-    private Enumerations enumerations = new Enumerations();
+    private final Enumerations enumerations = new Enumerations();
 
     @MessageMapping("/UserStory")
     @SendTo("/topic/ProjectManagerStorys")

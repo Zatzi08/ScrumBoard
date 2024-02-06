@@ -33,29 +33,51 @@ public class ProjectApplication {
     // TODO: IOExeptions
     // Start Seite (static)
     // TODO: ersetze index.html mit Login Page
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: Laden der Login-Page
+     * Grund: /
+     * UserStory/Task-ID: A3.F1
+     */
     @RequestMapping(value = "/")
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("index");
         return modelAndView;
     }
 
-
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: Weiterleiten zu PasswortForgot Seite
+     * Grund: Mittel zum Passwort zurücksetzen
+     * UserStory/Task-ID: /
+     */
     @RequestMapping("/PasswortForgotPage")
     public ModelAndView PasswortForgot(){
         ModelAndView modelAndView = new ModelAndView("passwortForgot");
         return modelAndView;
     }
 
-
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: Weiterleiten zu Registrieren-Seiter
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     @RequestMapping(value = "/RegisterPage")
     public ModelAndView RegisterPage(){
        ModelAndView modelAndView = new ModelAndView("register");
        return modelAndView;
     }
-    // TODO: implement Login.check.Database(UName,Pw) in service
-    // TODO: create Template for User Page
 
 
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: Weiterleiten zu neues Passwort-Seite
+     * Grund: Möglichkeit neues Passwort einzugeben
+     * UserStory/Task-ID: /
+     */
     @RequestMapping(value = "/neuesPasswortPage", method = RequestMethod.POST)
     public ModelAndView neuesPasswortPage(String EMail){
         ModelAndView modelAndView = new ModelAndView("neuesPasswort");
@@ -64,6 +86,12 @@ public class ProjectApplication {
     }
 
 
+    /* Author: Lucas Krüger
+     * Revisited: Henry L. Freyschmidt
+     * Funktion: Übergabe eines neues Passworts an Datenbank
+     * Grund: neusetzen eines Passworts
+     * UserStory/Task-ID: /
+     */
     @RequestMapping(value = "/neuesPasswort", method = RequestMethod.POST)
     @ResponseBody
     public String neuesPasswort(String Passwort, String EMail){
@@ -71,28 +99,52 @@ public class ProjectApplication {
         return String.format("%s : %s", EMail, Passwort);
     }
 
+    /* Author: Henry L. Freyschmidt
+     * Revisited:
+     * Funktion:
+     * Grund:
+     * UserStory/Task-ID: /
+     */
     @RequestMapping(value ="/Login", method = RequestMethod.POST)
     @ResponseBody
     public String login(String Username, String Passwort) {
+        // TODO: implement Login.check.Database(EMail,Pw) in service
         return accountService.login(Username, Passwort) ? String.format("Hello %s! Dein PW: %s!!", Username, Passwort) : "Wrong Username or Passwort";
     }
 
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: Übergabe von Userdaten an Datenbank und Rückgabe des Projektmanagers oder eines Fail
+     * Grund: Speichern von neues Userdaten
+     * UserStory/Task-ID: A2.B1
+     */
     @RequestMapping(value = "/Register", method = RequestMethod.POST)
-    @ResponseBody
-    public String Register(String Username, String EMail, String Passwort){
-        return accountService.register(Username,EMail,Passwort) ? "Moin, du bis registriert!!" : "Deine E-Mail ist bereits mit einem Account verbunden." ;
+    public ModelAndView Register(String Username, String EMail, String Passwort){
+        ModelAndView projectManager = new ModelAndView("projectManager");
+        ModelAndView Fail = new ModelAndView("index");
+        return accountService.register(Username,EMail,Passwort) ? projectManager : Fail;
     }
 
+    /* Author: Lucas Krüger
+     * Revisited:
+     * Funktion: Manueller Test für Aussehen von Webpackes
+     * Grund: Korrekte Integration von Thymeleaf nur so zu testen
+     * UserStory/Task-ID: /
+     */
     @RequestMapping(value = "/Preview")
     public ModelAndView Preview(){
         ModelAndView modelAndView = new ModelAndView("projectManager"); // Name für Page hier
         return modelAndView;
     }
 
-
+    /* Author: Lucas Krüger
+     * Revisited:
+     * Funktion: Beispiel für Websocket Integration
+     * Grund: Erkannte Änderungen in DB an Seite Weiterleiten
+     * UserStory/Task-ID: /
+     */
     @RequestMapping("/socket")
     public ModelAndView socket(){
-        System.out.println("Start");
         ModelAndView modelAndView = new ModelAndView("Tasklist");
         modelAndView.addObject("Story", uService.getUserStoryT());
         return modelAndView;

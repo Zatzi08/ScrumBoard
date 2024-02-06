@@ -7,9 +7,11 @@ public class Enumerations {
     public enum Role {admin, productOwner, developer, manager, tester}
 
     /* Author: Lucas Krüger
-    * Funktion: Typumwandlung
-    * Grund: Frontend sendet nur Strings
-    */
+     * Revisited: /
+     * Funktion: Typumwandlung
+     * Grund: Frontend sendet nur Strings
+     * UserStory/Task-ID: /
+     */
     public Priority StringToPriority(String priority){
         return switch (priority) {
             case "urgent" -> Priority.urgent;
