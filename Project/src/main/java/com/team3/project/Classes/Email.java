@@ -15,6 +15,12 @@ public class Email {
 
     public JavaMailSenderImpl emailSender = getJavaMailSender();
 
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     @Bean
     public JavaMailSenderImpl getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -32,6 +38,12 @@ public class Email {
         return mailSender;
     }
 
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     public void sendSimpleMessage(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
         Email email = new Email();
@@ -42,6 +54,12 @@ public class Email {
         email.emailSender.send(message);
     }
 
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     public void sendEmail(String Email){ //Authentifizierungscode an Email aus Argument schicken
         //TODO: getAuthentification(Email): Zahl aus DB ablesen
         //getAuthentification mit beliebigen int simuliert

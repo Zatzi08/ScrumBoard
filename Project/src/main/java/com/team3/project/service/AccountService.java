@@ -39,7 +39,7 @@ public class AccountService {
      * UserStory/Task-ID: /
      */
     public void resetPasswort(String EMail, String Passwort){
-        // TODO: implement setPasswort für User
+        // TODO: implement resetPasswort für User
         //TODO: implementiere Funktion: E-Mail mit authorization-code (aus DB) an E-Mailadresse EMail schicken
     }
     /* Email um den Code zu schicken muss von Google geprüft werde, weil es geflaggt wurde

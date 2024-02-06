@@ -19,6 +19,12 @@ public class User {
     private List<Integer> taskIDs;
     private int authorization; //von der DB gestellt
 
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     public User(Account account, String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles, List<Integer> taskIDs){
         this.account = account;
         this.name = name;

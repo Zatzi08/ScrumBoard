@@ -12,6 +12,12 @@ public class UserStory {
     private String description;
     private Priority priority;
 
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     public UserStory(int userID,String name, String description, Enumerations.Priority priority){
         this.userID = userID;
         this.name = name;

@@ -17,6 +17,12 @@ public class Task {
 
     }
 
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     public Task(int tID,String description, Priority priority){
         this.taskID = tID;
         this.description = description;

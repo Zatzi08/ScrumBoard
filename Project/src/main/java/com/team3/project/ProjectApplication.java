@@ -31,8 +31,6 @@ public class ProjectApplication {
     private final UserStoryService uService;
 
     // TODO: IOExeptions
-    // Start Seite (static)
-    // TODO: ersetze index.html mit Login Page
 
     /* Author: Lucas Krüger
      * Revisited: /
