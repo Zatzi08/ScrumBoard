@@ -2,10 +2,18 @@ package com.team3.project.service;
 
 import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.UserStory;
+import com.team3.project.Interface.LogicToData;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserStoryService {
+    public UserStoryService(){
+        this.logicToData = LogicToData.getInstance();
+    }
+    private final LogicToData logicToData;
+    private Enumerations enumerations = new Enumerations();
 
     // TODO: needs Database connection to implement create Object
     /* Author: Henry L. Freyschmidt
@@ -26,7 +34,7 @@ public class UserStoryService {
      * UserStory/Task-ID: /
      */
     public UserStory getUserStory(int UserStoryID){
-        return null;
+        return null; //logicToData.daoUserStoryService.getByID(UserStoryID);
     }
 
     // TODO: needs Database connection to implement Update Object
@@ -40,8 +48,15 @@ public class UserStoryService {
         return true;
     }
 
-    // TODO: Delete later
-    public UserStory getUserStoryT() {
-        return new UserStory(1,"Name1","Krasse Story", Enumerations.Priority.low);
+    public void addUserStory(UserStory story) {
+        if(story.getUserID() == -1){
+            logicToData.daoUserStoryService.create(story.getName(),story.getDescription(), enumerations.getInt(story.getPriority()), story.getId());
+        } else{
+            //logicToData.daoUserStoryService.save(story.getUserID(), story.getName(), story.getDescription(), enumerations.getInt(story.getPriority()), story.getId());
+        }
+    }
+
+    public List<UserStory> getAllUserStorys() {
+        return null; //logicToData.daoUserStoryService.getAll();
     }
 }
