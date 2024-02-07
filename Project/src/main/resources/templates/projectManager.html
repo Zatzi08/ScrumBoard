@@ -71,26 +71,48 @@
         function replaceWithUserStoryContainer() {
             const userStoryButton = document.querySelector('.createUserStory');
             userStoryButton.innerHTML = `
-            <div class="userStoryContainer">
-                <ul>
-                    <li>
-                        <div class="userStoryText">
-                            <label id="userStoryTitel">Titel</label>
-                            <label id="userStoryBeschreibung">Beschreibung</label>
-                        </div>
-                        <button class="editBtn" onclick="toggleEditBox()"><i class="fa fa-edit" style="margin-right: 8px;"></i></button>
-                        <button type="button" id="ausklappbarBtn" onClick="taskAusklappen()"> > </button>
-                        <div id="taskContainer">
-                            <div id="taskInhalt">
-                                <button id="neueTaskBtn">Neue Task <i class="fa fa-plus"></i></button>
-                                <label id="taskBeschreibung">Noch keine Tasks..</label>
+            <div class="userStoryAndTaskContainer">
+                <div class="userStoryContainer">
+                    <ul>
+                        <li>
+                            <div class="userStoryText">
+                                <label id="userStoryTitel">Titel</label>
+                                <label id="userStoryBeschreibung">Beschreibung</label>
                             </div>
-                        </div>
-                    </li>
-                </ul>
+                            <button class="editBtn" onclick="toggleEditBox()"><i class="fa fa-edit" style="margin-right: 8px;"></i></button>
+                            <button id="zoomUserStoryBtn" onclick="zoomUserStoryContainer()"><i class="fa fa-search-plus" style="margin-right: 10px"></i>Zoom</button>
+                            <button type="button" id="ausklappbarBtn" onClick="taskAusklappen()"> > </button>
+                            <div id="taskContainer">
+                                <div id="taskInhalt">
+                                    <button id="neueTaskBtn">Neue Task <i class="fa fa-plus"></i></button>
+                                    <label id="taskBeschreibung">Noch keine Tasks..</label>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
             `;
         }
+
+        function zoomUserStoryContainer() {
+            const userStoryContainer = document.querySelector('.userStoryContainer');
+            const overlay = document.createElement('div');
+            overlay.classList.add('overlay');
+            document.body.appendChild(overlay);
+            userStoryContainer.classList.add('zoomed');
+            overlay.addEventListener('click', function() {
+                userStoryContainer.classList.remove('zoomed');
+                overlay.remove();
+            });
+            const zoomButton = document.getElementById('zoomUserStoryBtn');
+            zoomButton.onclick = function() {
+                userStoryContainer.classList.remove('zoomed');
+                overlay.remove();
+                zoomButton.onclick = zoomUserStoryContainer;
+            };
+        }
+
 
     </script>
 </head>
