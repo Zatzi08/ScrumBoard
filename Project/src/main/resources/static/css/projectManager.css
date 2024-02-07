@@ -131,9 +131,26 @@ body {
 #sucheInput{
   border-radius: 50px;
   height: 35px;
+  font-size: 13px;
 }
 
 #sucheInput::-webkit-search-cancel-button {margin-left: 10px;}
+
+#createUserStoryBtn{
+  display: inline-flex;
+  background-color: rgba(0, 116, 204, 0.3);
+  color: #ffffff;
+  padding: 12px 16px;
+  margin-right:20px;
+  border: none;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  border-radius: 15px;
+  width: 200px;
+  margin-top: 30px;
+  margin-left: 10px;
+  font-size: 16px;
+}
 
 .userStoryContainer{
   position:absolute;
@@ -145,6 +162,7 @@ body {
   border-top-right-radius:15px;
   margin-top:30px;
   margin-left:10px;
+  transition: all 0.5s ease;
 }
 
 .userStoryContainer ul{list-style-type: none;}
@@ -154,12 +172,29 @@ body {
   0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.userStoryContainer.zoomed {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.4);
+  z-index: 1000;
+}
+
 .userStoryText{
   position:absolute;
   top:15%;
   left:10px;
   right:10px;
-
 }
 
 #userStoryTitel{
@@ -221,17 +256,19 @@ body {
   top: 0;
   margin-top: 200px;
   background-color: #105686;
-  border-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   overflow: hidden;
   transition: height 0.5s ease;
   height: 0;
 }
 
 #taskContainer.show {height: 100px;}
-#taskBeschreibung{margin-top: 50px;}
+#taskBeschreibung {margin-top: 50px;}
 
 .editMenu {
   position: fixed;
+  z-index: 1000;
   top: 75px;
   right: -350px;
   width: 300px;
@@ -249,7 +286,7 @@ body {
 #editMenu-saveEdit {
   position: page;
   bottom: 50px;
-  border-radius: 5px;
+  border-radius: 10px;
   width: 80px;
   height: 17px;
   background-color: white;
@@ -281,7 +318,7 @@ body {
   padding: .75rem 1rem;
   text-align: center;
   font-size: 12px;
-  width: 55px;
+  width: 56px;
   height: 30px;
   display: inline-flex;
   align-items: center;
@@ -320,19 +357,3 @@ body {
   background-clip: content-box;
 }
 ::-webkit-scrollbar-thumb:hover {background-color: #a8bbbf;}
-
-#createUserStoryBtn{
-  display: inline-flex;
-  background-color: rgba(0, 116, 204, 0.3);
-  color: #ffffff;
-  padding: 12px 16px;
-  margin-right:20px;
-  border: none;
-  cursor: pointer;
-  transition-duration: 0.4s;
-  border-radius: 15px;
-  width: 200px;
-  margin-top: 30px;
-  margin-left: 10px;
-  font-size: 16px;
-}
