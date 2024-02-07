@@ -1,8 +1,6 @@
 package com.team3.project;
 
-import com.team3.project.service.AccountService;
-import com.team3.project.service.UserStoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.team3.project.Interface.PresentationToLogic;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
@@ -16,19 +14,15 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ProjectApplication {
 
-    public ProjectApplication(AccountService accountService, UserStoryService uService) {
-        this.accountService = accountService;
-        this.uService = uService;
+    public ProjectApplication() {
+        this.presentationToLogic = new  PresentationToLogic();
     }
 
     public static void main(String[] args) {
         SpringApplication.run(ProjectApplication.class, args);
     }
 
-    @Autowired
-    private final AccountService accountService;
-    @Autowired
-    private final UserStoryService uService;
+    private final PresentationToLogic presentationToLogic;
 
     // TODO: IOExeptions
 
@@ -93,7 +87,7 @@ public class ProjectApplication {
     @RequestMapping(value = "/neuesPasswort", method = RequestMethod.POST)
     @ResponseBody
     public String neuesPasswort(String Passwort, String EMail){
-        accountService.resetPasswort(EMail, Passwort);
+        presentationToLogic.accountService.resetPasswort(EMail, Passwort);
         return String.format("%s : %s", EMail, Passwort);
     }
 
@@ -107,7 +101,7 @@ public class ProjectApplication {
     @ResponseBody
     public String login(String Username, String Passwort) {
         // TODO: implement Login.check.Database(EMail,Pw) in service
-        return accountService.login(Username, Passwort) ? String.format("Hello %s! Dein PW: %s!!", Username, Passwort) : "Wrong Username or Passwort";
+        return presentationToLogic.accountService.login(Username, Passwort) ? String.format("Hello %s! Dein PW: %s!!", Username, Passwort) : "Wrong Username or Passwort";
     }
 
     /* Author: Lucas Krüger
@@ -120,7 +114,7 @@ public class ProjectApplication {
     public ModelAndView Register(String Username, String EMail, String Passwort){
         ModelAndView projectManager = new ModelAndView("projectManager");
         ModelAndView Fail = new ModelAndView("index");
-        return accountService.register(Username,EMail,Passwort) ? projectManager : Fail;
+        return presentationToLogic.accountService.register(Username,EMail,Passwort) ? projectManager : Fail;
     }
 
     /* Author: Lucas Krüger
@@ -144,7 +138,7 @@ public class ProjectApplication {
     @RequestMapping("/socket")
     public ModelAndView socket(){
         ModelAndView modelAndView = new ModelAndView("Tasklist");
-        modelAndView.addObject("Story", uService.getUserStoryT());
+        modelAndView.addObject("Story", presentationToLogic.userStoryService.getUserStoryT());
         return modelAndView;
     }
 }
