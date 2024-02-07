@@ -4,6 +4,7 @@ import com.team3.project.Interface.PresentationToLogic;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -86,7 +87,8 @@ public class WebController {
      */
     @RequestMapping(value ="/Login", method = RequestMethod.POST)
     @ResponseBody
-    public String login(String Username, String Passwort) {
+    public String login(@RequestParam(value = "Username", required = false, defaultValue = "") String Username,
+                        @RequestParam(value = "Passwort", required = false, defaultValue = "") String Passwort) {
         // TODO: implement Login.check.Database(EMail,Pw) in service
         return presentationToLogic.accountService.login(Username, Passwort) ? String.format("Hello %s! Dein PW: %s!!", Username, Passwort) : "Wrong Username or Passwort";
     }
