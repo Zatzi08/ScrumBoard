@@ -100,7 +100,9 @@ public class WebController {
      * UserStory/Task-ID: A2.B1
      */
     @RequestMapping(value = "/Register", method = RequestMethod.POST)
-    public ModelAndView Register(String Username, String EMail, String Passwort){
+    public ModelAndView Register(@RequestParam(value = "Username", required = false, defaultValue = "") String Username,
+                                 @RequestParam(value = "EMail", required = false, defaultValue = "") String EMail,
+                                 @RequestParam(value = "Passwort", required = false, defaultValue = "") String Passwort){
         ModelAndView projectManager = new ModelAndView("projectManager");
         ModelAndView Fail = new ModelAndView("index");
         return presentationToLogic.accountService.register(Username,EMail,Passwort) ? projectManager : Fail;
