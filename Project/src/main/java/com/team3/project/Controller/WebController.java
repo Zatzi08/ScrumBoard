@@ -1,5 +1,10 @@
 package com.team3.project.Controller;
 
+import com.team3.project.Classes.Email;
+import com.team3.project.Classes.UserStory;
+import com.team3.project.DAOService.DAOAccountService;
+import com.team3.project.DAOService.DAOUserStoryService;
+import com.team3.project.Interface.LogicToData;
 import com.team3.project.Interface.PresentationToLogic;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 public class WebController {
     public WebController() {
         this.presentationToLogic = PresentationToLogic.getInstance();
+        this.logicToData = LogicToData.getInstance();
     }
     private final PresentationToLogic presentationToLogic;
+    private final LogicToData logicToData;
 
     // TODO: IOExeptions
     /* Author: Lucas Krüger
@@ -52,6 +59,23 @@ public class WebController {
         return modelAndView;
     }
 
+    /* Author: Henry L. Freyschmidt
+     * Revisited:
+     * Funktion:
+     * Grund:
+     * UserStory/Task-ID: /
+     */
+    @RequestMapping(value ="/Login", method = RequestMethod.POST)
+    public ModelAndView login(@RequestParam(value = "EMail", required = true) String EMail,
+                              @RequestParam(value = "Passwort", required = true) String Passwort) {
+        if (EMail != "" && Passwort != "" &&
+                DAOAccountService.checkmail(EMail) &&
+                DAOAccountService.LoginCheck(EMail, Passwort)) {
+            return new ModelAndView("projectManager"); // .addObject(logicToData.daoUserStoryService.getAll())
+        }
+        return new ModelAndView("index");
+    }
+
     /* Author: Lucas Krüger
      * Revisited: /
      * Funktion: Weiterleiten zu neues Passwort-Seite
@@ -60,9 +84,8 @@ public class WebController {
      */
     @RequestMapping(value = "/neuesPasswortPage", method = RequestMethod.POST)
     public ModelAndView neuesPasswortPage(String EMail){
-        ModelAndView modelAndView = new ModelAndView("neuesPasswort");
-        modelAndView.addObject("Mail", EMail);
-        return modelAndView;
+        if(DAOAccountService.checkmail(EMail)) return new ModelAndView("neuesPasswort").addObject("Mail", EMail);
+        return new ModelAndView("index");
     }
 
 
@@ -80,20 +103,6 @@ public class WebController {
         return String.format("%s : %s", EMail, Passwort);
     }
 
-    /* Author: Henry L. Freyschmidt
-     * Revisited:
-     * Funktion:
-     * Grund:
-     * UserStory/Task-ID: /
-     */
-    @RequestMapping(value ="/Login", method = RequestMethod.POST)
-    @ResponseBody
-    public String login(@RequestParam(value = "EMail", required = true) String EMail,
-                        @RequestParam(value = "Passwort", required = true) String Passwort) {
-        // TODO: implement Login.check.Database(EMail,Pw) in service
-        return presentationToLogic.accountService.login(EMail, Passwort) ? String.format("Hello %s! Dein PW: %s!!", EMail, Passwort) : "Wrong Username or Passwort";
-    }
-
     /* Author: Lucas Krüger
      * Revisited: /
      * Funktion: Übergabe von Userdaten an Datenbank und Rückgabe des Projektmanagers oder eines Fail
@@ -104,9 +113,18 @@ public class WebController {
     public ModelAndView Register(@RequestParam(value = "Username", required = true) String Username,
                                  @RequestParam(value = "EMail", required = true) String EMail,
                                  @RequestParam(value = "Passwort", required = true) String Passwort){
-        ModelAndView projectManager = new ModelAndView("projectManager");
-        ModelAndView Fail = new ModelAndView("index");
-        return presentationToLogic.accountService.register(Username,EMail,Passwort) ? projectManager : Fail;
+        if(!DAOAccountService.checkmail(EMail)) {
+           if(DAOAccountService.createAccount(EMail,Passwort)) return new ModelAndView("projectManager"); //.addObject("Storys", DAOUserStoryService.getAll())
+        }
+        return new ModelAndView("register");
+    }
+
+    @RequestMapping("/addStory")
+    public ModelAndView addStory(@RequestParam(value = "newStory", required = true) UserStory Story){
+        presentationToLogic.userStoryService.addUserStory(Story);
+        ModelAndView modelAndView = new ModelAndView("projectManager");
+        modelAndView.addObject("Story", presentationToLogic.userStoryService.getAllUserStorys());
+        return modelAndView;
     }
 
     /* Author: Lucas Krüger
@@ -127,10 +145,10 @@ public class WebController {
      * Grund: Erkannte Änderungen in DB an Seite Weiterleiten
      * UserStory/Task-ID: /
      */
-    @RequestMapping("/socket")
+    /*@RequestMapping("/socket")
     public ModelAndView socket(){
         ModelAndView modelAndView = new ModelAndView("Tasklist");
         modelAndView.addObject("Story", presentationToLogic.userStoryService.getUserStoryT());
         return modelAndView;
-    }
+    }*/
 }
