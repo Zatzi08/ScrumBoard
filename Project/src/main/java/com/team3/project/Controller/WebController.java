@@ -74,7 +74,8 @@ public class WebController {
      */
     @RequestMapping(value = "/neuesPasswort", method = RequestMethod.POST)
     @ResponseBody
-    public String neuesPasswort(String Passwort, String EMail){
+    public String neuesPasswort(@RequestParam(value = "Passwort", required = false, defaultValue = "") String Passwort,
+                                @RequestParam(value = "EMail", required = false, defaultValue = "")String EMail){
         presentationToLogic.accountService.resetPasswort(EMail, Passwort);
         return String.format("%s : %s", EMail, Passwort);
     }
