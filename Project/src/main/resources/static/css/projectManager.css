@@ -199,18 +199,19 @@ body {
 
 #userStoryTitel{
   position:absolute;
-  width:280px;
+  width:480px;
   border-bottom: 1px solid #606060;
 }
 
 #userStoryBeschreibung{
   margin-top: 25px;
   right: 0;
-  width:280px;
-  height:130px;
+  width:380px;
+  height:280px;
 }
 
 .editBtn{
+  color:rgb(12, 29, 49);
   position:absolute;
   top:5px;
   right:5px;
@@ -218,7 +219,13 @@ body {
 }
 
 .editBtn:hover{color:black;}
-
+.sizeBtn{
+  color:rgb(12, 29, 49);
+  position:absolute;
+  right:30px;
+  top:4px;
+}
+.sizeBtn:hover{color:black;}
 #ausklappbarBtn {
   position: absolute;
   bottom: 5px;
@@ -233,7 +240,7 @@ body {
 #neueTaskBtn{
   position:absolute;
   top:0px;
-  width:300px;
+  width:500px;
   background-color: rgba(20, 35, 65, 0.79);
   color:#87939f;
 }
@@ -250,12 +257,12 @@ body {
 }
 
 #taskContainer {
-  width: 300px;
+  width: 500px;
   position: absolute;
   left: 0;
   top: 0;
-  margin-top: 200px;
-  background-color: #105686;
+  margin-top: 350px;
+  background-color: #53575e;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   overflow: hidden;
@@ -264,6 +271,8 @@ body {
 }
 
 #taskContainer.show {height: 100px;}
+#taskContainer:hover{ box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+0 17px 50px 0 rgba(0, 0, 0, 0.19);}
 #taskBeschreibung {margin-top: 50px;}
 
 .editMenu {
@@ -333,7 +342,7 @@ body {
 }
 
 .inputEditPrio:focus-visible {box-shadow: none;}
-.inputEditPrio.selected {border: 2px solid #ba55d3;}
+.inputEditPrio.selected {border: 2px solid rgba(255, 255, 255, 0.75);}
 
 #inputDate {font-size: 12px; height: 30px}
 #inputDate{border-radius: 5px;}
