@@ -14,6 +14,7 @@ public class UserStory {
     private String description;
     private Priority priority;
     private List<Task> Tasks = null;
+    private String id;
 
     /* Author: Henry L. Freyschmidt
      * Revisited: /
@@ -21,10 +22,11 @@ public class UserStory {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public UserStory(int userID,String name, String description, Enumerations.Priority priority){
+    public UserStory(int userID,String name, String description, Enumerations.Priority priority, String id){
         this.userID = userID;
         this.name = name;
         this.description = description;
         this.priority = priority;
+        this.id = id;
     }
 }
