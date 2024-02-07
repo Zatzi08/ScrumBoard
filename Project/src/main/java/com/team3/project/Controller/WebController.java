@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class WebController {
     public WebController() {
-        this.presentationToLogic = new  PresentationToLogic();
+        this.presentationToLogic = PresentationToLogic.getInstance();
     }
     private final PresentationToLogic presentationToLogic;
 
