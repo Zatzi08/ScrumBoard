@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProjectApplication {
 
     public ProjectApplication() {
-        this.presentationToLogic = new  PresentationToLogic();
+        this.presentationToLogic = PresentationToLogic.getInstance();
     }
 
     public static void main(String[] args) {

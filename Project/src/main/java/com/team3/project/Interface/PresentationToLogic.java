@@ -10,10 +10,15 @@ public class PresentationToLogic {
     public final AccountService accountService;
     public final TaskService taskService;
     public final UserStoryService userStoryService;
+    private static PresentationToLogic instance;
 
-    public PresentationToLogic(){
+    private PresentationToLogic(){
         this.accountService = new AccountService();
         this.userStoryService = new UserStoryService();
         this.taskService = new TaskService();
+    }
+    public static PresentationToLogic getInstance(){
+        if(PresentationToLogic.instance == null) PresentationToLogic.instance = new PresentationToLogic();
+        return PresentationToLogic.instance;
     }
 }
