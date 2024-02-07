@@ -46,7 +46,7 @@
         }
 
         function toggleEditBox() {
-            const toggleEditBox = document.querySelector('.toggleEdit');
+            const toggleEditBox = document.querySelector('.editMenu');
             toggleEditBox.classList.toggle('visible');
 
             if (toggleEditBox.classList.contains('visible')) {
@@ -66,6 +66,30 @@
                     button.classList.remove('selected');
                 }
             });
+        }
+
+        function replaceWithUserStoryContainer() {
+            const userStoryButton = document.querySelector('.createUserStory');
+            userStoryButton.innerHTML = `
+            <div class="userStoryContainer">
+                <ul>
+                    <li>
+                        <div class="userStoryText">
+                            <label id="userStoryTitel">Titel</label>
+                            <label id="userStoryBeschreibung">Beschreibung</label>
+                        </div>
+                        <button class="editBtn" onclick="toggleEditBox()"><i class="fa fa-edit" style="margin-right: 8px;"></i></button>
+                        <button type="button" id="ausklappbarBtn" onClick="taskAusklappen()"> > </button>
+                        <div id="taskContainer">
+                            <div id="taskInhalt">
+                                <button id="neueTaskBtn">Neue Task <i class="fa fa-plus"></i></button>
+                                <label id="taskBeschreibung">Noch keine Tasks..</label>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            `;
         }
 
     </script>
@@ -101,53 +125,33 @@
         </div>
         <div class="suchleiste">
             <ul class="menu">
-                <li><input type="search" placeholder="Search" id = "sucheInput"></li>
-                <li><button type="button" class="searchBtn"><i class="fa fa-search" style="margin-right: 8px;"></i></button></li>
+                <li><input type="search" placeholder="Suchen..." id = "sucheInput"></li>
+                <li><button type="button" class="searchBtn"><i class="fa fa-search" style="margin-top: -2px;"></i></button></li>
             </ul>
         </div>
 
-        <div class = userStoryContainer>
-            <ul>
-                <li>
-                    <div class = "userStoryText">
-                        <label id = "userStoryTitel">Titel</label>
-                        <label id = "userStoryBeschreibung">Beschreibung</label>
-                    </div>
-
-                <button class = "editBtn" onclick="toggleEditBox()"> <i class="fa fa-edit" style="margin-right: 8px;"></i></button>
-                    <button type="button" id = "ausklappbarBtn" onClick="taskAusklappen()"> > </button>
-                    <div id="taskContainer">
-                        <div id="taskInhalt">
-                            <button id = "neueTaskBtn">Neue Task <i class="fa fa-plus" ></i></button>
-                            <label id="taskBeschreibung">Noch keine Tasks..</label>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+        <div class="createUserStory">
+            <button id="createUserStoryBtn" onclick="replaceWithUserStoryContainer()"><i class="fa fa-plus" style="margin-right: 10px"></i>User-Story erstellen</button>
         </div>
 
-        <div class = "toggleEdit">
-            <label style="color: white"><i class="fa-pencil" style="margin-right: 8px;"></i>Bearbeitungsmenu</label>
+        <div class = "editMenu">
+            <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
             <span id="closeToggleEdit" class="closeToggleEdit" onclick="toggleEditBox()">&times;</span>
-            <div class="userStoryEditInput">
+            <div class="editMenu-content">
                 <form class="form">
-                    <div>
-                        <label for="inputName" >Name</label>
-                        <textarea id="inputName" class="inputEdit"></textarea>
-                        <label for="inputDesc">Beschreibung</label>
-                    </div>
-                    <textarea id="inputDesc" class="inputEdit"></textarea>
-                        <label>Priorität</label>
-                        <button id="inputPrioUrgent" class="inputEditPrio" onclick="highlightPriorityButton('inputPrioUrgent')">Urgent</button>
-                        <button id="inputPrioHigh" class="inputEditPrio" onclick="highlightPriorityButton('inputPrioHigh')">High</button>
-                        <button id="inputPrioNormal" class="inputEditPrio" onclick="highlightPriorityButton('inputPrioNormal')">Normal</button>
-                        <button id="inputPrioLow" class="inputEditPrio" onclick="highlightPriorityButton('inputPrioLow')">Low</button>
-                    <label>Abgabefrist</label>
-                    <input type="datetime-local" id="inputDate" class="inputBtn">
+                    <textarea id="inputName" class="inputEdit" placeholder="Titel der User-Story eingeben"></textarea>
+                    <textarea id="inputDesc" class="inputEdit" placeholder="Eine passende Beschreibung eingeben"></textarea>
+                    <label>Priorität</label>
+                    <button class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: indianred">Urgent</button>
+                    <button class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: lightcoral">High</button>
+                    <button class="inputEditPrio" id="inputPrioNormal" onclick="highlightPriorityButton('inputPrioNormal')" style="background-color: lightblue">Normal</button>
+                    <button class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: lightgreen">Low</button>
+                    <label style="margin-top: 15px">Abgabefrist</label>
+                    <input type="datetime-local" id="inputDate" class="inputBtn" placeholder="Abgabefrist">
                     <input type="hidden">
                 </form>
             </div>
-            <button id="saveEdit">Speichern</button>
+            <button id="editMenu-saveEdit">Speichern</button>
         </div>
     </div>
 
