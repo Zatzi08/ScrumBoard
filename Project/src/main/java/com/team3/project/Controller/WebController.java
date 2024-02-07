@@ -74,8 +74,8 @@ public class WebController {
      */
     @RequestMapping(value = "/neuesPasswort", method = RequestMethod.POST)
     @ResponseBody
-    public String neuesPasswort(@RequestParam(value = "Passwort", required = false, defaultValue = "") String Passwort,
-                                @RequestParam(value = "EMail", required = false, defaultValue = "")String EMail){
+    public String neuesPasswort(@RequestParam(value = "Passwort", required = true) String Passwort,
+                                @RequestParam(value = "EMail", required = true)String EMail){
         presentationToLogic.accountService.resetPasswort(EMail, Passwort);
         return String.format("%s : %s", EMail, Passwort);
     }
@@ -88,10 +88,10 @@ public class WebController {
      */
     @RequestMapping(value ="/Login", method = RequestMethod.POST)
     @ResponseBody
-    public String login(@RequestParam(value = "Username", required = false, defaultValue = "") String Username,
-                        @RequestParam(value = "Passwort", required = false, defaultValue = "") String Passwort) {
+    public String login(@RequestParam(value = "EMail", required = true) String EMail,
+                        @RequestParam(value = "Passwort", required = true) String Passwort) {
         // TODO: implement Login.check.Database(EMail,Pw) in service
-        return presentationToLogic.accountService.login(Username, Passwort) ? String.format("Hello %s! Dein PW: %s!!", Username, Passwort) : "Wrong Username or Passwort";
+        return presentationToLogic.accountService.login(EMail, Passwort) ? String.format("Hello %s! Dein PW: %s!!", EMail, Passwort) : "Wrong Username or Passwort";
     }
 
     /* Author: Lucas Krüger
@@ -101,9 +101,9 @@ public class WebController {
      * UserStory/Task-ID: A2.B1
      */
     @RequestMapping(value = "/Register", method = RequestMethod.POST)
-    public ModelAndView Register(@RequestParam(value = "Username", required = false, defaultValue = "") String Username,
-                                 @RequestParam(value = "EMail", required = false, defaultValue = "") String EMail,
-                                 @RequestParam(value = "Passwort", required = false, defaultValue = "") String Passwort){
+    public ModelAndView Register(@RequestParam(value = "Username", required = true) String Username,
+                                 @RequestParam(value = "EMail", required = true) String EMail,
+                                 @RequestParam(value = "Passwort", required = true) String Passwort){
         ModelAndView projectManager = new ModelAndView("projectManager");
         ModelAndView Fail = new ModelAndView("index");
         return presentationToLogic.accountService.register(Username,EMail,Passwort) ? projectManager : Fail;
