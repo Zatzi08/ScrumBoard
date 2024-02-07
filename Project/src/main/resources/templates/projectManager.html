@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projektmanager</title>
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/projectManager.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type = "text/javascript">
         function ansichtDropdown() {
             document.getElementById("ansichtDropdownContent").classList.toggle("show");
@@ -28,7 +31,6 @@
         function hoverLeave() {
             document.getElementById('pjBtn').style.borderColor = "#fff";
         }
-
 
         function taskAusklappen() {
             const taskContainer = document.getElementById("taskContainer");
@@ -55,21 +57,18 @@
             }
         }
 
-        var input = document.querySelector('.search-form');
-        var search = document.querySelector('input')
-        var button = document.querySelector('button');
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            input.classList.toggle('active');
-        })
-        search.addEventListener('focus', function() {
-            input.classList.add('focus');
-        });
+        function highlightPriorityButton(buttonId) {
+            const priorityButtons = document.querySelectorAll('.inputEditPrio');
+            priorityButtons.forEach(button => {
+                if (button.id === buttonId) {
+                    button.classList.add('selected');
+                } else {
+                    button.classList.remove('selected');
+                }
+            });
+        }
 
     </script>
-    <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/projectManager.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <div class="Reiter">
@@ -128,22 +127,29 @@
         </div>
 
         <div class = "toggleEdit">
+            <label style="color: white"><i class="fa-pencil" style="margin-right: 8px;"></i>Bearbeitungsmenu</label>
+            <span id="closeToggleEdit" class="closeToggleEdit" onclick="toggleEditBox()">&times;</span>
             <div class="userStoryEditInput">
                 <form class="form">
-                    <label for="inputName" >Name</label>
-                    <textarea id="inputName" class="inputEdit"></textarea>
-                    <label for="inputDesc">Beschreibung</label>
+                    <div>
+                        <label for="inputName" >Name</label>
+                        <textarea id="inputName" class="inputEdit"></textarea>
+                        <label for="inputDesc">Beschreibung</label>
+                    </div>
                     <textarea id="inputDesc" class="inputEdit"></textarea>
-                    <label for="inputPrio">Priorität</label>
-                    <textarea id="inputPrio" class="inputEdit"></textarea>
-                    <label >Abgabefrist</label>
-                    <input type="date" id="inputDate" class="inputBtn"></input>
+                        <label>Priorität</label>
+                        <button id="inputPrioUrgent" class="inputEditPrio" onclick="highlightPriorityButton('inputPrioUrgent')">Urgent</button>
+                        <button id="inputPrioHigh" class="inputEditPrio" onclick="highlightPriorityButton('inputPrioHigh')">High</button>
+                        <button id="inputPrioNormal" class="inputEditPrio" onclick="highlightPriorityButton('inputPrioNormal')">Normal</button>
+                        <button id="inputPrioLow" class="inputEditPrio" onclick="highlightPriorityButton('inputPrioLow')">Low</button>
+                    <label>Abgabefrist</label>
+                    <input type="datetime-local" id="inputDate" class="inputBtn">
+                    <input type="hidden">
                 </form>
             </div>
             <button id="saveEdit">Speichern</button>
         </div>
     </div>
-
 
     <script src="js/vendor/jquery.js"></script>
     <script src="js/vendor/what-input.js"></script>
