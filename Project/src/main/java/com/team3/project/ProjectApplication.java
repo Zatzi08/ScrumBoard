@@ -1,8 +1,6 @@
 package com.team3.project;
 
 import com.team3.project.Interface.PresentationToLogic;
-import com.team3.project.service.AccountService;
-import com.team3.project.service.UserStoryService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
@@ -16,15 +14,15 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ProjectApplication {
 
-    public ProjectApplication(AccountService accountService, UserStoryService uService) {
-        PresentationToLogic presentationToLogic;
+    public ProjectApplication() {
+        this.presentationToLogic = new  PresentationToLogic();
     }
 
     public static void main(String[] args) {
         SpringApplication.run(ProjectApplication.class, args);
     }
 
-    private PresentationToLogic presentationToLogic;
+    private final PresentationToLogic presentationToLogic;
 
     // TODO: IOExeptions
 
