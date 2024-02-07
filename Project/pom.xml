@@ -54,6 +54,28 @@
             <artifactId>spring-context-support</artifactId>
             <version>5.2.8.RELEASE</version>
         </dependency>
+                <!--db dependencys-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.4.3.Final</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.transaction</groupId>
+            <artifactId>jakarta.transaction-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-community-dialects</artifactId>
+            <version>6.2.7.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.45.1.0</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -61,7 +83,15 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <!--das brauch ich(marvin) damit es bei mir funktioniert. wen du das hier siehst hab ich das ausversehn hochgeladen. enfern das selbst oder sag mir das ich das weg machen soll-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+            </plugin>
+            <!--bis hier-->
         </plugins>
     </build>
+    
 
 </project>

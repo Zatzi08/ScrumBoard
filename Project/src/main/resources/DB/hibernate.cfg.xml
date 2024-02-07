@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+  ~ Hibernate, Relational Persistence for Idiomatic Java
+  ~
+  ~ License: GNU Lesser General Public License (LGPL), version 2.1 or later.
+  ~ See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
+  -->
+<!DOCTYPE hibernate-configuration PUBLIC
+	   "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	   "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+
+	   <!-- Database connection settings -->
+	   <property name="connection.driver_class">org.sqlite.JDBC</property>
+	   <property name="connection.url">jdbc:sqlite:file:./Project/src/main/resources/DB/database.db</property>
+
+	   <!-- SQL dialect -->
+	   <property name="dialect">org.hibernate.community.dialect.SQLiteDialect</property>
+
+	   <!-- Echo all executed SQL to stdout -->
+	   <property name="show_sql">false</property>
+
+	   <!-- Names the annotated entity class -->
+	   <mapping class="com.team3.project.DAO.DAOAccount"/>
+
+
+    </session-factory>
+
+</hibernate-configuration>
+<!--org.hibernate.community.dialect.SQLiteDialect
+<property name="dialect">org.hibernate.dialect.SQLiteDialect</property>
