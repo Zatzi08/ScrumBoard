@@ -8,16 +8,34 @@ import org.springframework.stereotype.Service;
 public class UserStoryService {
 
     // TODO: needs Database connection to implement create Object
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     public boolean createUserStory(String UserStoryContent){
         return false;
     }
 
     // TODO: needs Database connection to implement get Object
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     public UserStory getUserStory(int UserStoryID){
         return null;
     }
 
     // TODO: needs Database connection to implement Update Object
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     public boolean updateUserStory(UserStory userStory){//TODO: wie kann man die veränderten Attribute angeben
         return true;
     }

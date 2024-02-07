@@ -8,11 +8,25 @@ import org.springframework.stereotype.Service;
 // Interagiert mit Repository, also create, delete, get, set
 @Service
 public class TaskService {
+
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     public boolean createTask(String description, Enumerations.Priority priority){
         //TODO: Anfrage an DB createTaskDB implementieren : erstelle Task mit gegebenen Argumenten
         //return createTaskDB(description,priority);
         return true;
     }
+
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     public boolean deleteTask(Task task){
         //TODO: checkRights(user) implementieren
         //TODO: deleteTaskDB implementieren
@@ -21,6 +35,13 @@ public class TaskService {
         // return deleteTaskDB(taskID);
         return true;
     }
+
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     public boolean updateTask(Task task) {
 
         // wenn ein Wert nicht verändert wird, wird der Methode  null übergeben
@@ -31,10 +52,16 @@ public class TaskService {
         //return  updateTaskDescriptionDB(taskID, description);
         return true;
     }
+
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     public Task getTask(int taskID){
         Task task = new Task();
         //TODO: implementiere findTask: Rückgabe Task mit  TaskID= taskID
-
         return task;
     }
 }

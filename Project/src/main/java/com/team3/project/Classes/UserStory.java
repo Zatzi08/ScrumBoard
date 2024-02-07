@@ -4,6 +4,8 @@ import com.team3.project.Classes.Enumerations.Priority;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class UserStory {
@@ -11,7 +13,14 @@ public class UserStory {
     private String name;
     private String description;
     private Priority priority;
+    private List<Task> Tasks = null;
 
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     public UserStory(int userID,String name, String description, Enumerations.Priority priority){
         this.userID = userID;
         this.name = name;
