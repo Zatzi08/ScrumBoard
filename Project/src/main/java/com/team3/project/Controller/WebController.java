@@ -17,10 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class WebController {
     public WebController() {
         this.presentationToLogic = PresentationToLogic.getInstance();
-        this.logicToData = LogicToData.getInstance();
     }
     private final PresentationToLogic presentationToLogic;
-    private final LogicToData logicToData;
 
     // TODO: IOExeptions
     /* Author: Lucas Krüger
