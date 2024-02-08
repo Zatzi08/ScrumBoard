@@ -1,6 +1,6 @@
 /*
  * Author: Paula Krasnovska
-* Revisited: /
+ * Revisited: /
  * Funktion: Dropdown für Ansicht-Button
  * Grund: /
  * User-Story/Task-ID: /
@@ -45,11 +45,11 @@ function hoverLeave() {
 
 //Todo: Statt closest mit ID's umsetzen
 /*
-* Author: Paula Krasnovska
-* Revisited: Zana Salih Hama
-* Funktion: Ausklappen der Tasks
-* Grund: Zueghörigkeit zu User-Stories
-* User-Story/Task-ID: /
+ * Author: Paula Krasnovska
+ * Revisited: Zana Salih Hama
+ * Funktion: Ausklappen der Tasks
+ * Grund: Zueghörigkeit zu User-Stories
+ * User-Story/Task-ID: /
 */
 function taskAusklappen(button) {
     const container = button.closest(".userStoryContainer");
@@ -66,11 +66,11 @@ function taskAusklappen(button) {
 }
 
 /*
-* Author: Zana Salih Hama
-* Revisited: /
-* Funktion: Toggeln des Bearbeitungsmenü'
-* Grund: /
-* User-Story/Task-ID: U3.F1, U4.F1
+ * Author: Zana Salih Hama
+ * Revisited: /
+ * Funktion: Toggeln des Bearbeitungsmenü'
+ * Grund: /
+ * User-Story/Task-ID: U3.F1, U4.F1
 */
 function toggleEditBox() {
     const toggleEditBox = document.querySelector('.editMenu');
@@ -85,11 +85,11 @@ function toggleEditBox() {
 }
 
 /*
-* Author: Zana Salih Hama
-* Revisited: /
-* Funktion: Highlighten der Prioritätsbuttons im Bearbeitungsfenster bei Auswahl
-* Grund: Benutzerfreundlichkeit
-* User-ID/Task-ID: /
+ * Author: Zana Salih Hama
+ * Revisited: /
+ * Funktion: Highlighten der Prioritätsbuttons im Bearbeitungsfenster bei Auswahl
+ * Grund: Benutzerfreundlichkeit
+ * User-ID/Task-ID: /
 */
 function highlightPriorityButton(buttonId) {
     const priorityButtons = document.querySelectorAll('.inputEditPrio');
@@ -104,11 +104,11 @@ function highlightPriorityButton(buttonId) {
 
 //Todo: ID-Erstellung hier einbetten?; Erstellung mit Thymleaf?
 /*
-* Author: Zana Salih Hama
-* Revisited: /
-* Funktion: Eine/mehrere User-Stories erstellen
-* Grund: U3.F1
-* User-ID/Task-ID: /
+ * Author: Zana Salih Hama
+ * Revisited: /
+ * Funktion: Eine/mehrere User-Stories erstellen
+ * Grund: U3.F1
+ * User-ID/Task-ID: /
 */
 function replaceWithUserStoryContainer() {
     const createUserStory = document.querySelector('.createUserStory');
@@ -146,11 +146,11 @@ function replaceWithUserStoryContainer() {
 }
 
 /*
-* Author: Zana Salih Hama
-* Revisited: /
-* Funktion: Zoom-Funktion für User-Stories
-* Grund: Benutzerfreundlichkeit; angenehmer, um ein gesamtes User-Story-Konstrukt anzusehen
-* User-ID/Task-ID: /
+ * Author: Zana Salih Hama
+ * Revisited: /
+ * Funktion: Zoom-Funktion für User-Stories
+ * Grund: Benutzerfreundlichkeit; angenehmer, um ein gesamtes User-Story-Konstrukt anzusehen
+ * User-ID/Task-ID: /
 */
 function zoomUserStoryContainer() {
     const userStoryButton = document.querySelector('.createUserStory');
@@ -192,12 +192,12 @@ function zoomUserStoryContainer() {
 }
 
 /*
-* Author: Zana Salih Hama
-* Revisited: /
-* Funktion: Automatischer Seitenrefresh bei Submits ausschalten und Formular
-*           nicht automatisch an Server gesendet; noch nicht genutzt
-* Grund: Überwachung/Testzwecke
-* User-ID/Task-ID: /
+ * Author: Zana Salih Hama
+ * Revisited: /
+ * Funktion: Automatischer Seitenrefresh bei Submits ausschalten und Formular
+ *           nicht automatisch an Server gesendet; noch nicht genutzt
+ * Grund: Überwachung/Testzwecke
+ * User-ID/Task-ID: /
 */
 function onFormSubmit(event) {
     event.preventDefault();
