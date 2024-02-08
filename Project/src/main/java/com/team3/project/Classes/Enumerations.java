@@ -3,9 +3,7 @@ package com.team3.project.Classes;
 public class Enumerations {
 
     // default Priority = low
-    public enum Priority {low, normal, high, urgent;
-
-    }
+    public enum Priority {low, normal, high, urgent;}
     public enum Role {admin, productOwner,  manager, nutzer}
 
     /* Author: Lucas Krüger
@@ -29,6 +27,15 @@ public class Enumerations {
             case high -> 3;
             case normal -> 2;
             default -> 1;
+        };
+    }
+
+    public Priority IntToPriority(int priority) {
+        return switch (priority) {
+            case 4 -> Priority.urgent;
+            case 3 -> Priority.high;
+            case 2 -> Priority.normal;
+            default -> Priority.low;
         };
     }
 }
