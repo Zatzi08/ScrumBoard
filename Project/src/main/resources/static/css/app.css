@@ -1,6 +1,11 @@
 /*Author: Pair Programming: Zana Salih Hama, Paula Krasnovska*/
 
-/*Hintergrundfarbe*/
+/**
+Revisited: /
+Funktion: Login Hintergrund
+Grund: /
+User-ID/Task-ID: A3.F1
+**/
 
 .loginBackground{
 display: flex;
@@ -26,7 +31,12 @@ box-shadow: 0 8px 20px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
  
 
 }
-/*Button zur Loginbestätigung*/
+/**
+Revisited: /
+Funktion: Button zur Login-Bestätigung
+Grund: /
+User-ID/Task-ID: A3.F1
+**/
 #loginButton{
 display: block;
 position:relative;    
@@ -47,7 +57,12 @@ margin-left:148px;
   background-color: rgb(9, 21, 36);
   cursor: pointer;  
 }
-/*Eingabe der Login-Daten*/
+/**
+Revisited: /
+Funktion: Eingabe der Login- und Registrierungsdaten
+Grund: /
+User-ID/Task-ID: A3.F1
+**/
 #nameInput{
 width:70%;
 margin:20px;
@@ -117,7 +132,12 @@ color:white;
 background-color:#0f315c;
 box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
-/*Passwort zurücksetzen Buttons*/
+/**
+Revisited: /
+Funktion: Passwort zurücksetzen Buttons
+Grund: Benutzerfreundlichkeit
+User-ID/Task-ID:
+**/
 #noAccount{
 position: absolute;
 bottom:0;    
@@ -149,7 +169,12 @@ color:#103563;
     background-color: rgb(12, 29, 49);
     cursor: pointer;  
   }
-/*Bestätigung des neuen Passworts mit Button*/
+/**
+Revisited: /
+Funktion: Bestätigung des neuen Passworts mit Button
+Grund: Benutzerfreundlichkeit
+User-ID/Task-ID:
+**/
   #newPasswortBtn{
     display: block;
     position:relative;    
