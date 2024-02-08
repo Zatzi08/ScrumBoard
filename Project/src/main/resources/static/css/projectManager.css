@@ -1,3 +1,12 @@
+
+
+/*
+  Author:  Zana Salih Hama,
+  Revisited: /
+  Funktion: Hintergrund für Project Managers
+  Grund: /
+  User-ID/Task-ID: U1.F1
+  */
 body {
   background-color: #262c49;
   color: #ffffff;
@@ -7,7 +16,13 @@ body {
 .ProjectManagerBackground {
   position: relative;
 }
-
+/*
+  Author:  Zana Salih Hama, Paula Krasnovska
+  Revisited: /
+  Funktion: Reiter und Buttons für Reiter
+  Grund: /
+  User-ID/Task-ID: U1.F1
+  */
 .Reiter {
   background-color: rgba(16, 22, 58, 0.6);
   height: 75px;
@@ -28,7 +43,13 @@ body {
   border-bottom-color: #ba55d3;
   color: #ba55d3;
 }
-
+/*
+  Author:  Zana Salih Hama, Paula Krasnovska
+  Revisited: /
+  Funktion: Buttons für Ansicht und Filter
+  Grund: /
+  User-ID/Task-ID: U1.F1
+  */
 #ansichtBtn {
   display: inline-flex;
   background-color: rgba(0, 116, 204, 0.6);
@@ -75,6 +96,13 @@ body {
   display: inline-block;
 }
 
+/*
+  Author:  Paula Krasnovska
+  Revisited: /
+  Funktion: Drop Down Inhalt der Buttons beim Klicken
+  Grund: Benutzerfreundlichkeit
+  User-ID/Task-ID: /
+  */
 .filterdropdown-content,.ansichtdropdown-content {
   display: none;
   position: absolute;
@@ -100,6 +128,14 @@ body {
 
 .show {display:block;}
 
+
+/*
+  Author:  Paula Krasnovska
+  Revisited: /
+  Funktion: Suchleiste und Suchbutton
+  Grund: Suche nach User Storys und Tasks
+  User-ID/Task-ID: /
+  */
 .suchleiste{
   position:absolute;
   margin-left:100px;
@@ -134,14 +170,28 @@ body {
   font-size: 13px;
 }
 
+/*
+  Author: Zana Salih Hama
+  Revisited: /
+  Funktion: Cancel Button Suchleite
+  Grund: Benutzerfreundlichkeit
+  User-ID/Task-ID: /
+  */
 #sucheInput::-webkit-search-cancel-button {margin-left: 10px;}
 
-#createUserStoryBtn {
+/*
+  Author: Zana Salih Hama
+  Revisited: /
+  Funktion: User Story erstellen Button
+  Grund:
+  User-ID/Task-ID: U3.F1
+  */
+#createUserStoryBtn{
   display: inline-flex;
   background-color: rgba(0, 116, 204, 0.3);
   color: #ffffff;
   padding: 12px 16px;
-  margin-right: 20px;
+  margin-right:20px;
   border: none;
   cursor: pointer;
   transition-duration: 0.4s;
@@ -152,6 +202,13 @@ body {
   font-size: 16px;
 }
 
+/*
+  Author: Zana Salih Hama
+  Revisited: /
+  Funktion: User Story
+  Grund: Benutzerfreundlichkeit
+  User-ID/Task-ID: U1.F1
+  */
 .userStoryContainer{
   position:absolute;
   width: 500px;
@@ -216,13 +273,47 @@ body {
 }
 
 .editBtn:hover{color:black;}
-.sizeBtn{
-  color:rgb(12, 29, 49);
-  position:absolute;
-  right:30px;
-  top:4px;
+
+/*
+  Author: Zana Salih Hama
+  Revisited: /
+  Funktion: User Story Zoom
+  Grund: Benutzerfreundlichkeit
+  User-ID/Task-ID:
+  */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  overflow-y: scroll;
 }
-.sizeBtn:hover{color:black;}
+
+.userStoryContainer.zoomed {
+  position: relative;
+  margin: 0 auto;
+  width: 300px;
+  z-index: 1000;
+  filter: brightness(1.2);
+  transform: scale(1.4);
+}
+
+#zoomUserStoryBtn{
+  margin-left: 230px;
+}
+
+/*
+  Author: Paula Krasnovska
+  Revisited: /
+  Funktion: Task ausklappen, Task hinzufügen Buttons, Task selbst
+  Grund: Zugehörigkeit zu User Storys
+  User-ID/Task-ID: U1.F1
+  */
+
 #ausklappbarBtn {
   position: absolute;
   bottom: 5px;
@@ -254,12 +345,11 @@ body {
 }
 
 #taskContainer {
-  width: 500px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  margin-top: 350px;
-  background-color: #53575e;
+  width: 300px;
+  position: relative;
+  margin-top: 175px;
+  margin-left: -20px;
+  background-color: #105686;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   overflow: hidden;
@@ -268,9 +358,18 @@ body {
 }
 
 #taskContainer.show {height: 100px;}
-#taskContainer:hover{ box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
-0 17px 50px 0 rgba(0, 0, 0, 0.19);}
-#taskBeschreibung {margin-top: 50px;}
+#taskBeschreibung{
+  margin-top: 50px;
+  padding: 10px;
+}
+
+/*
+  Author: Zana Salih Hama
+  Revisited: /
+  Funktion: User Story Bearbeitungsmenü
+  Grund:
+  User-ID/Task-ID: U3.F1
+  */
 
 .editMenu {
   position: fixed;
@@ -279,7 +378,7 @@ body {
   right: -350px;
   width: 300px;
   height: 85%;
-  background-color: #000000;
+  background-color: rgb(11, 20, 38);
   color: white;
   padding: 20px;
   border-radius: 10px;
@@ -339,7 +438,7 @@ body {
 }
 
 .inputEditPrio:focus-visible {box-shadow: none;}
-.inputEditPrio.selected {border: 2px solid rgba(255, 255, 255, 0.75);}
+.inputEditPrio.selected {border: 2px solid #ba55d3;}
 
 #inputDate {font-size: 12px; height: 30px}
 #inputDate{border-radius: 5px;}
@@ -353,6 +452,14 @@ body {
   cursor: pointer;
   color: white;
 }
+
+/*
+  Author: Zana Salih Hama
+  Revisited: /
+  Funktion: Scrollen-Funktion für Bearbeitung und Zoom
+  Grund:
+  User-ID/Task-ID: U3.F1
+  */
 
 ::-webkit-scrollbar {width: 20px;}
 ::-webkit-scrollbar-track {background-color: transparent;}
