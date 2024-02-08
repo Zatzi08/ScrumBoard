@@ -1,5 +1,6 @@
 package com.team3.project.Tests;
 
+import com.team3.project.DAOService.DAOAccountService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,11 +30,15 @@ public class HttpRequestTests {
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
-        String EMail = "Test@Mail.com";
-        String Passwort = "TestPasswort123";
+        String EMail1 = "Test@Mail.com";
+        String Passwort1 = "TestPasswort123";
+        String EMail2 = "Test@Mail.com";
+        String Passwort2 = "TestFail123";
         assertThat(this.restTemplate.exchange("http://localhost:" + port + "/Login",HttpMethod.POST,message, String.class).getStatusCode())
                 .isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(this.restTemplate.exchange("http://localhost:" + port + "/Login" + "?EMail=" + EMail + "&Passwort=" + Passwort, HttpMethod.POST, message, String.class).getStatusCode())
+        assertThat(this.restTemplate.exchange("http://localhost:" + port + "/Login" + "?EMail=" + EMail1 + "&Passwort=" + Passwort1, HttpMethod.POST, message, String.class).getStatusCode())
+                .isEqualTo(HttpStatus.OK);
+        assertThat(this.restTemplate.exchange("http://localhost:" + port + "/Login" + "?EMail=" + EMail2 + "&Passwort=" + Passwort2, HttpMethod.POST, message, String.class).getStatusCode())
                 .isEqualTo(HttpStatus.OK);
     }
 
@@ -46,13 +51,17 @@ public class HttpRequestTests {
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
-        String eMail = "Test@Mail.com";
+        String eMail1 = "Test@Mail.com";
+        String eMail2 = "Test@FailMail.com";
         String passwort = "TestPasswort123";
         String username = "Test Testerson";
         assertThat(this.restTemplate.exchange("http://localhost:" + port + "/Register", HttpMethod.POST,message, String.class).getStatusCode())
                 .isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(this.restTemplate.exchange("http://localhost:" + port + "/Register" + "?EMail=" + eMail + "&Passwort=" + passwort + "&Username=" + username, HttpMethod.POST, message, String.class)
+        assertThat(this.restTemplate.exchange("http://localhost:" + port + "/Register" + "?EMail=" + eMail1 + "&Passwort=" + passwort + "&Username=" + username, HttpMethod.POST, message, String.class)
                 .getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(this.restTemplate.exchange("http://localhost:" + port + "/Register" + "?EMail=" + eMail2 + "&Passwort=" + passwort + "&Username=" + username, HttpMethod.POST, message, String.class)
+                .getStatusCode()).isEqualTo(HttpStatus.OK);
+        DAOAccountService.deleteAccount(eMail2);
     }
 
     /*  Test ID: HTTP.T3
