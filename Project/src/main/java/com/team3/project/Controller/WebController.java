@@ -68,10 +68,9 @@ public class WebController {
     @RequestMapping(value ="/Login", method = RequestMethod.POST)
     public ModelAndView login(@RequestParam(value = "EMail", required = true) String EMail,
                               @RequestParam(value = "Passwort", required = true) String Passwort) {
-        if (EMail != "" && Passwort != "" //&&
-               // DAOAccountService.checkmail(EMail) &&
-               // DAOAccountService.LoginCheck(EMail, Passwort)
-            ) {
+        if (EMail != "" && Passwort != "" &&
+               DAOAccountService.checkmail(EMail) &&
+               DAOAccountService.LoginCheck(EMail, Passwort)) {
             return new ModelAndView("projectManager"); // .addObject(logicToData.daoUserStoryService.getAll())
         }
         return new ModelAndView("index");
@@ -85,9 +84,8 @@ public class WebController {
      */
     @RequestMapping(value = "/neuesPasswortPage", method = RequestMethod.POST)
     public ModelAndView neuesPasswortPage(@RequestParam(value = "EMail", required = true) String EMail){
-        //if(DAOAccountService.checkmail(EMail))
-            return new ModelAndView("neuesPasswort").addObject("Mail", EMail);
-        //return new ModelAndView("index");
+        if(DAOAccountService.checkmail(EMail)) return new ModelAndView("neuesPasswort").addObject("Mail", EMail);
+        return new ModelAndView("index");
     }
 
 
@@ -115,13 +113,19 @@ public class WebController {
     public ModelAndView Register(@RequestParam(value = "Username", required = true) String Username,
                                  @RequestParam(value = "EMail", required = true) String EMail,
                                  @RequestParam(value = "Passwort", required = true) String Passwort){
-        //if(!DAOAccountService.checkmail(EMail)) {
-          // if(DAOAccountService.createAccount(EMail,Passwort))
+        if(!DAOAccountService.checkmail(EMail)) {
+           if(DAOAccountService.createAccount(EMail,Passwort))
                return new ModelAndView("index"); //.addObject("Storys", DAOUserStoryService.getAll())
-        //}
-        //return new ModelAndView("register");
+        }
+        return new ModelAndView("register");
     }
 
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: Übergabe von Daten als UserStory.class an Logic/Data
+     * Grund: Übergeben von UserStorys
+     * UserStory/Task-ID:
+     */
     @RequestMapping("/addStory")
     public ModelAndView addStory(@RequestParam(value = "newStory", required = true) UserStory Story){
         presentationToLogic.userStoryService.addUserStory(Story);
