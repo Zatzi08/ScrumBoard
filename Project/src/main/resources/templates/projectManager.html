@@ -8,124 +8,16 @@
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/projectManager.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script type = "text/javascript">
-        function ansichtDropdown() {
-            document.getElementById("ansichtDropdownContent").classList.toggle("show");
-        }
-        function filterDropdown() {
-            document.getElementById("filterDropdownContent").classList.toggle("show");
-        }
-        //wenn wir nicht im dropdown klicken
-        window.onclick = function(event) {
-            if (!event.target.matches('.ansichtBtn')) {
-                document.getElementById("ansichtDropdownContent").classList.remove("show");
-            }
-            if (!event.target.matches('.filterBtn')) {
-                document.getElementById("filterDropdownContent").classList.remove("show");
-            }
-        }
-        //damit bottom-border beim hovern lila wird, hab die weiße Border gehardcodet, weswegen das in css nicht funktioniert hatte
-        function hover(){
-            document.getElementById('pjBtn').style.borderColor = "#ba55d3";
-        }
-        function hoverLeave() {
-            document.getElementById('pjBtn').style.borderColor = "#fff";
-        }
-
-        function taskAusklappen() {
-            const taskContainer = document.getElementById("taskContainer");
-            const ausklappbarBtn = document.getElementById("ausklappbarBtn");
-
-            if (taskContainer.classList.contains("show")) {
-                taskContainer.classList.remove("show");
-                ausklappbarBtn.classList.remove("rotate");
-            } else {
-                taskContainer.classList.add("show");
-                ausklappbarBtn.classList.add("rotate");
-            }
-        }
-
-        function toggleEditBox() {
-            const toggleEditBox = document.querySelector('.editMenu');
-            toggleEditBox.classList.toggle('visible');
-
-            if (toggleEditBox.classList.contains('visible')) {
-                toggleEditBox.style.right = '0';
-            }
-            else {
-                toggleEditBox.style.right = '-350px';
-            }
-        }
-
-        function highlightPriorityButton(buttonId) {
-            const priorityButtons = document.querySelectorAll('.inputEditPrio');
-            priorityButtons.forEach(button => {
-                if (button.id === buttonId) {
-                    button.classList.add('selected');
-                } else {
-                    button.classList.remove('selected');
-                }
-            });
-        }
-
-        function replaceWithUserStoryContainer() {
-            const userStoryButton = document.querySelector('.createUserStory');
-            userStoryButton.innerHTML = `
-            <div class="userStoryAndTaskContainer">
-                <div class="userStoryContainer">
-                    <ul>
-                        <li>
-                            <div class="userStoryText">
-                                <label id="userStoryTitel">Titel</label>
-                                <label id="userStoryBeschreibung">Beschreibung</label>
-                            </div>
-                            <button class="editBtn" onclick="toggleEditBox()"><i class="fa fa-edit" style="margin-right: 8px;"></i></button>
-                            <button class = "sizeBtn" id="zoomUserStoryBtn" onclick="zoomUserStoryContainer()"><i class="fa fa-search-plus" style="margin-right: 10px"></i></button>
-                            <button class = "sizeBtn"id="minusUserStoryBtn" hidden onclick="zoomUserStoryContainer()"><i class="fa fa-search-minus" style="margin-right: 10px"></i></button>
-                            <button type="button" id="ausklappbarBtn" onClick="taskAusklappen()"> > </button>
-                            <div id="taskContainer">
-                                <div id="taskInhalt">
-                                    <button id="neueTaskBtn">Neue Task <i class="fa fa-plus"></i></button>
-                                    <label id="taskBeschreibung">Noch keine Tasks..</label>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            `;
-        }
-
-        function zoomUserStoryContainer() {
-            const mButton = document.getElementById('minusUserStoryBtn');
-            const zButton = document.getElementById('zoomUserStoryBtn');
-            const userStoryContainer = document.querySelector('.userStoryContainer');
-            const overlay = document.createElement('div');
-            overlay.classList.add('overlay');
-            document.body.appendChild(overlay);
-            zButton.style.display = 'none';
-            mButton.style.display = 'block';
-            userStoryContainer.classList.add('zoomed');
-            overlay.addEventListener('click', function() {
-                userStoryContainer.classList.remove('zoomed');
-                overlay.remove();
-            });
-
-            const minusButton = document.getElementById('minusUserStoryBtn');
-            const zoomButton = document.getElementById('zoomUserStoryBtn');
-            minusButton.onclick = function() {
-                minusButton.style.display = 'none';
-                zoomButton.style.display = 'block';
-                userStoryContainer.classList.remove('zoomed');
-                overlay.remove();
-                zoomButton.onclick = zoomUserStoryContainer;
-            };
-        }
-
-
-    </script>
 </head>
 <body>
+
+    <!--
+       Author: Zana Salih Hama
+       Revisited: /
+       Funktion: Reiter zur Übersicht aller Seiten[-optionen]
+       Grund: Übersichtlichkeit
+       User-ID/Task-ID: /
+    -->
     <div class="Reiter">
         <button class="reiterBtn" onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
         <button class = "reiterBtn" id = "profilBtn">Profil </button>
@@ -133,9 +25,16 @@
         <button class = "reiterBtn" id = "kalenderBtn">Kalender </button>
     </div>
 
+    <!--
+       Author: Paula Krasnovska
+       Revisited: /
+       Funktion: Container für Dropdown Ansicht und Filter
+       Grund: /
+       User-ID/Task-ID: U1.F1
+    -->
     <div class="container">
-        <div class="ansichtDropdown"> <!-- PK-->
-            <button onClick= "ansichtDropdown()"id="ansichtBtn" class = "ansichtBtn"><i class="fa fa-level-down" style="margin-right: 8px;"></i> Ansicht</button>
+        <div class="ansichtDropdown">
+            <button onClick= "ansichtDropdown()" id="ansichtBtn" class = "ansichtBtn"><i class="fa fa-level-down" style="margin-right: 8px;"></i> Ansicht</button>
             <div id="ansichtDropdownContent" class="ansichtdropdown-content">
                 <a href="#">All</a>
                 <a href="#">User Stories</a>
@@ -154,6 +53,14 @@
                 <a href="#">Category?</a>
             </div>
         </div>
+
+        <!--
+           Author: Paula Krasnovska
+           Revisited: /
+           Funktion: Suchen
+           Grund: Navigieren im Projekt-Manager
+           User-ID/Task-ID: /
+        -->
         <div class="suchleiste">
             <ul class="menu">
                 <li><input type="search" placeholder="Suchen..." id = "sucheInput"></li>
@@ -161,10 +68,24 @@
             </ul>
         </div>
 
+        <!--
+           Author: Zana Salih Hama
+           Revisited: /
+           Funktion: Button um User-Story zu erstellen
+           Grund: U1.F1
+           User-ID/Task-ID: /
+        -->
         <div class="createUserStory">
             <button id="createUserStoryBtn" onclick="replaceWithUserStoryContainer()"><i class="fa fa-plus" style="margin-right: 10px"></i>User-Story erstellen</button>
         </div>
 
+        <!--
+            Author: Zana Salih Hama
+            Revisited: /
+            Funktion: Bearbeitungs-/Erstellungsfenster für User-Stories
+            Grund: /
+            User-ID/Task-ID: U3.F1, U4.F1, U5.F1, U5.F2
+        -->
         <div class = "editMenu">
             <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
             <span id="closeToggleEdit" class="closeToggleEdit" onclick="toggleEditBox()">&times;</span>
@@ -173,16 +94,16 @@
                     <textarea id="inputName" class="inputEdit" placeholder="Titel der User-Story eingeben"></textarea>
                     <textarea id="inputDesc" class="inputEdit" placeholder="Eine passende Beschreibung eingeben"></textarea>
                     <label>Priorität</label>
-                    <button class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: indianred">Urgent</button>
-                    <button class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: lightcoral">High</button>
-                    <button class="inputEditPrio" id="inputPrioNormal" onclick="highlightPriorityButton('inputPrioNormal')" style="background-color: lightblue">Normal</button>
-                    <button class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: lightgreen">Low</button>
+                    <button type="button" class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: indianred">Urgent</button>
+                    <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: lightcoral">High</button>
+                    <button type="button" class="inputEditPrio" id="inputPrioNormal" onclick="highlightPriorityButton('inputPrioNormal')" style="background-color: lightblue">Normal</button>
+                    <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: lightgreen">Low</button>
                     <label style="margin-top: 15px">Abgabefrist</label>
                     <input type="datetime-local" id="inputDate" class="inputBtn" placeholder="Abgabefrist">
                     <input type="hidden">
+                    <button type="submit" id="editMenu-saveEdit">Speichern</button>
                 </form>
             </div>
-            <button id="editMenu-saveEdit">Speichern</button>
         </div>
     </div>
 
@@ -190,6 +111,6 @@
     <script src="js/vendor/what-input.js"></script>
     <script src="js/vendor/foundation.js"></script>
     <script src="js/app.js"></script>
+    <script type = "text/javascript" src="js/projectManager.js"></script>
 </body>
 </html>
-
