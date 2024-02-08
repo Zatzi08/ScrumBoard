@@ -1,3 +1,7 @@
+/*Author: Pair Programming: Zana Salih Hama, Paula Krasnovska*/
+
+/*Hintergrundfarbe*/
+
 .loginBackground{
 display: flex;
 align-items: center;
@@ -22,7 +26,7 @@ box-shadow: 0 8px 20px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
  
 
 }
-
+/*Button zur Loginbestätigung*/
 #loginButton{
 display: block;
 position:relative;    
@@ -43,7 +47,7 @@ margin-left:148px;
   background-color: rgb(9, 21, 36);
   cursor: pointer;  
 }
-
+/*Eingabe der Login-Daten*/
 #nameInput{
 width:70%;
 margin:20px;
@@ -113,7 +117,7 @@ color:white;
 background-color:#0f315c;
 box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
-
+/*Passwort zurücksetzen Buttons*/
 #noAccount{
 position: absolute;
 bottom:0;    
@@ -145,7 +149,7 @@ color:#103563;
     background-color: rgb(12, 29, 49);
     cursor: pointer;  
   }
-
+/*Bestätigung des neuen Passworts mit Button*/
   #newPasswortBtn{
     display: block;
     position:relative;    
