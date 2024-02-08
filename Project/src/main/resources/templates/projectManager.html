@@ -80,7 +80,8 @@
                                 <label id="userStoryBeschreibung">Beschreibung</label>
                             </div>
                             <button class="editBtn" onclick="toggleEditBox()"><i class="fa fa-edit" style="margin-right: 8px;"></i></button>
-                            <button id="zoomUserStoryBtn" onclick="zoomUserStoryContainer()"><i class="fa fa-search-plus" style="margin-right: 10px"></i>Zoom</button>
+                            <button class = "sizeBtn" id="zoomUserStoryBtn" onclick="zoomUserStoryContainer()"><i class="fa fa-search-plus" style="margin-right: 10px"></i></button>
+                            <button class = "sizeBtn"id="minusUserStoryBtn" hidden onclick="zoomUserStoryContainer()"><i class="fa fa-search-minus" style="margin-right: 10px"></i></button>
                             <button type="button" id="ausklappbarBtn" onClick="taskAusklappen()"> > </button>
                             <div id="taskContainer">
                                 <div id="taskInhalt">
@@ -96,17 +97,25 @@
         }
 
         function zoomUserStoryContainer() {
+            const mButton = document.getElementById('minusUserStoryBtn');
+            const zButton = document.getElementById('zoomUserStoryBtn');
             const userStoryContainer = document.querySelector('.userStoryContainer');
             const overlay = document.createElement('div');
             overlay.classList.add('overlay');
             document.body.appendChild(overlay);
+            zButton.style.display = 'none';
+            mButton.style.display = 'block';
             userStoryContainer.classList.add('zoomed');
             overlay.addEventListener('click', function() {
                 userStoryContainer.classList.remove('zoomed');
                 overlay.remove();
             });
+
+            const minusButton = document.getElementById('minusUserStoryBtn');
             const zoomButton = document.getElementById('zoomUserStoryBtn');
-            zoomButton.onclick = function() {
+            minusButton.onclick = function() {
+                minusButton.style.display = 'none';
+                zoomButton.style.display = 'block';
                 userStoryContainer.classList.remove('zoomed');
                 overlay.remove();
                 zoomButton.onclick = zoomUserStoryContainer;
@@ -183,3 +192,4 @@
     <script src="js/app.js"></script>
 </body>
 </html>
+
