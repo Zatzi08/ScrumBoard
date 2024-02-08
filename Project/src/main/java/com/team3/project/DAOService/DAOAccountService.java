@@ -22,8 +22,8 @@ public class DAOAccountService {
     public static boolean LoginCheck(String mail,String totest){
         Session session = DAOSession.getNewSession();
         session.beginTransaction();
-        List<DAOAccount> user = session.createQuery( "from DAOAccount where email = ?1" , DAOAccount.class).setParameter(1, mail).list();
-        if (user.get(0).getPassword().equals(totest)) {
+        DAOAccount user = session.createQuery( "from DAOAccount where email = ?1" , DAOAccount.class).setParameter(1, mail).uniqueResult();
+        if (user.getPassword().equals(totest)) {
             session.close();
             return true;
         }
