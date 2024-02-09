@@ -373,9 +373,11 @@ body {
   overflow: auto;
 }
 
-.editMenu.visible {right: 0;}
 
-#editMenu-saveEdit {
+.editMenu.visible {right: 0;}
+#addOrEdit{width:20px; height:10px; display:block; color:rgb(11, 20, 38); background-color: #22bb5b}
+
+#editMenu-saveEditBtn {
   position: page;
   bottom: 50px;
   border-radius: 10px;
@@ -385,9 +387,32 @@ body {
   font-size: 14px;
   left: 30px;
   margin-left: 35%;
+  padding:15px;
+  display:none;
 }
 
-#saveEdit:hover{
+#editMenu-saveEditBtn:hover{
+  background-color: lightgrey;
+  transition: right 0.5s ease;
+  cursor:pointer;
+}
+
+#addMenuBtn {
+  position: page;
+  bottom: 50px;
+  border-radius: 10px;
+  width: 80px;
+  height: 17px;
+  background-color: white;
+  font-size: 14px;
+  left: 30px;
+  margin-left: 35%;
+  display:none;
+}
+#addMenuBtn.show{display:block;}
+#editMenu-saveEditBtn.show{display:block;}
+
+#addMenuBtn:hover{
   background-color: lightgrey;
   transition: right 0.5s ease;
   cursor:pointer;
