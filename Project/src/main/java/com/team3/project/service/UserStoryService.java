@@ -53,6 +53,6 @@ public class UserStoryService {
     }
 */
     public List<UserStory> getAllUserStorys() {
-        return null; //logicToData.daoUserStoryService.getAll();
+        return DAOUserStoryService.getAll();
     }
 }
