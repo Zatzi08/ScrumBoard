@@ -83,33 +83,20 @@ function EditBox() {
         toggleEditBox.style.right = '-350px';
     }
 }
-
-function toggleEditBox(){
+function toggleEditBox([[${id}]]){
     EditBox();
-    document.getElementById("addOrEdit").textContent= "1";
-    const editButton = document.getElementById("editMenu-saveEditBtn");
-    const addButton = document.getElementById("addMenuBtn");
-    if (editButton.classList.contains("show")) {
-        editButton.classList.remove("show");
-    } else {
-        editButton.classList.add("show");
-        addButton.classList.remove('show');
+    name = document.getElementById("userStoryTitel").value;
+    beschreibung = document.getElementById("userStoryBeschreibung").value; //
+    const editId = [[${id}]]; // oder editId = document.getElementById("userStoryBeschreibung").value;
 
-    }
 }
 
 function addUserStory(){
-    const addButton = document.getElementById("addMenuBtn");
-    const editButton = document.getElementById("editMenu-saveEditBtn");
-    if (addButton.classList.contains("show")) {
-        addButton.classList.remove("show");
-    } else {
-        addButton.classList.add("show");
-        editButton.classList.remove('show');
-
-    }
     EditBox();
-    document.getElementById("addOrEdit").textContent= "0";
+    let id = document.getElementById("editId").val();
+    id = -1;
+
+
 
 
 }

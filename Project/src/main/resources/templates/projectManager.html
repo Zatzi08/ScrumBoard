@@ -75,7 +75,33 @@
            User-ID/Task-ID: /
         -->
         <div class="createUserStory">
-            <button id="createUserStoryBtn" onclick="replaceWithUserStoryContainer()"><i class="fa fa-plus" style="margin-right: 10px"></i>User-Story erstellen</button>
+            <button id="createUserStoryBtn" th:value="${id}" onclick="addUserStory()"><i class="fa fa-plus" style="margin-right: 10px"></i>User-Story erstellen</button>
+        </div>
+
+        <!--Author: Paula Krasnovska
+        Revisited: /
+        Funktion: User-Story Template
+        Grund: Task-Container für Zugehörigkeit zu User-Stories
+        User-ID/Task-ID: U1.F1
+        -->
+        <div class="userStoryContainer">
+            <ul>
+                <li th:each = "story: ${Storys}"> <!--oder muss das in das untere div rein? brauchen wir überhaupt ul und li? -->
+                    <div class="userStoryText">
+                        <label th:text = "${name}" id="userStoryTitel">Titel</label>
+                        <label th:text = "${description}"id="userStoryBeschreibung">Beschreibung</label>
+                    </div>
+                    <button class="editBtn" th:onclick="toggleEditBox('+${id}+')"><i class="fa fa-edit" style="margin-right: 8px;"></i></button>
+                    <button class = "sizeBtn" id="zoomUserStoryBtn" onclick="zoomUserStoryContainer()"><i class="fa fa-search" ></i></button>
+                    <button type="button" id="ausklappbarBtn" onClick="taskAusklappen(this)"> > </button>
+                    <div id="taskContainer">
+                        <div id="taskInhalt">
+                            <button id="neueTaskBtn">Tasks <i class="fa fa-plus"></i></button>
+                            <label id="taskBeschreibung">Noch keine Tasks..</label>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
 
         <!--
@@ -99,8 +125,8 @@
                     <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: lightgreen">Low</button>
                     <label style="margin-top: 15px">Abgabefrist</label>
                     <input type="datetime-local" id="inputDate" class="inputBtn" placeholder="Abgabefrist">
-                    <input type="hidden">
-                    <button type="submit" id="editMenu-saveEdit">Speichern</button>
+                    <input type="hidden" th:value="${id}" id = "editId">
+                    <button type="submit" id="editMenu-saveEditBtn">Speichern</button>
                 </form>
             </div>
         </div>
