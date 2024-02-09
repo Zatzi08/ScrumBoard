@@ -72,16 +72,46 @@ function taskAusklappen(button) {
 * Grund: /
 * User-Story/Task-ID: U3.F1, U4.F1
 */
-function toggleEditBox() {
+function EditBox() {
     const toggleEditBox = document.querySelector('.editMenu');
     toggleEditBox.classList.toggle('visible');
 
     if (toggleEditBox.classList.contains('visible')) {
-        toggleEditBox.style.right = '0';
+        toggleEditBox.style.right = '0'
     }
     else {
         toggleEditBox.style.right = '-350px';
     }
+}
+
+function toggleEditBox(){
+    EditBox();
+    document.getElementById("addOrEdit").textContent= "1";
+    const editButton = document.getElementById("editMenu-saveEditBtn");
+    const addButton = document.getElementById("addMenuBtn");
+    if (editButton.classList.contains("show")) {
+        editButton.classList.remove("show");
+    } else {
+        editButton.classList.add("show");
+        addButton.classList.remove('show');
+
+    }
+}
+
+function addUserStory(){
+    const addButton = document.getElementById("addMenuBtn");
+    const editButton = document.getElementById("editMenu-saveEditBtn");
+    if (addButton.classList.contains("show")) {
+        addButton.classList.remove("show");
+    } else {
+        addButton.classList.add("show");
+        editButton.classList.remove('show');
+
+    }
+    EditBox();
+    document.getElementById("addOrEdit").textContent= "0";
+
+
 }
 
 /*
@@ -105,24 +135,22 @@ function highlightPriorityButton(buttonId) {
 //Todo: ID-Erstellung hier einbetten?; Erstellung mit Thymleaf?
 /*
 * Author: Zana Salih Hama
-* Revisited: /
+* Revisited: Paula Krasnovska
 * Funktion: Eine/mehrere User-Stories erstellen
-* Grund: U3.F1
-* User-ID/Task-ID: /
+* Grund: Auskommentiert, andere Funktion für hinzufügen von User Storys im Backend hinzugefügt
+* User-ID/Task-ID: U3.F1
 */
+
+/*
 function replaceWithUserStoryContainer() {
     const createUserStory = document.querySelector('.createUserStory');
     const userStoryContainer = document.createElement('div');
     createUserStory.appendChild(userStoryContainer);
     userStoryContainer.outerHTML = `
 
-                <!--
-                Author: Paula Krasnovska
-                Revisited: /
-                Funktion: User-Story Template
-                Grund: Task-Container für Zugehörigkeit zu User-Stories
-                User-ID/Task-ID: U1.F1
-                -->
+
+
+
                 <div class="userStoryContainer">
                      <ul>
                         <li>
@@ -141,12 +169,12 @@ function replaceWithUserStoryContainer() {
                             </div>
                         </li>
                      </ul>
-                </div>
+                </div> -->
             `;
 }
+*/
 
-/*
-* Author: Zana Salih Hama
+/* Author: Zana Salih Hama
 * Revisited: /
 * Funktion: Zoom-Funktion für User-Stories
 * Grund: Benutzerfreundlichkeit; angenehmer, um ein gesamtes User-Story-Konstrukt anzusehen
