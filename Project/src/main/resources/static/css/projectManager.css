@@ -388,7 +388,6 @@ body {
   left: 30px;
   margin-left: 35%;
   padding:15px;
-  display:none;
 }
 
 #editMenu-saveEditBtn:hover{
@@ -408,14 +407,6 @@ body {
   left: 30px;
   margin-left: 35%;
   display:none;
-}
-#addMenuBtn.show{display:block;}
-#editMenu-saveEditBtn.show{display:block;}
-
-#addMenuBtn:hover{
-  background-color: lightgrey;
-  transition: right 0.5s ease;
-  cursor:pointer;
 }
 
 .inputEdit {

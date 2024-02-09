@@ -91,10 +91,6 @@ function toggleEditBox(storyId, name, description){
 
 }
 
-function addUserStory(){
-    EditBox();
-}
-
 /*
 * Author: Zana Salih Hama
 * Revisited: /
