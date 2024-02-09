@@ -1,6 +1,7 @@
 package com.team3.project.Controller;
 
 import com.team3.project.Classes.UserStory;
+import com.team3.project.DAOService.DAOUserStoryService;
 import com.team3.project.Interface.PresentationToLogic;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,7 +66,7 @@ public class WebController {
         if (EMail != "" && Passwort != "" &&
                presentationToLogic.accountService.checkMail(EMail) &&
                presentationToLogic.accountService.login(EMail, Passwort)) {
-            return new ModelAndView("projectManager"); // .addObject(logicToData.daoUserStoryService.getAll())
+            return new ModelAndView("projectManager").addObject(DAOUserStoryService.getAll());
         }
         return new ModelAndView("index");
     }
@@ -121,10 +122,10 @@ public class WebController {
      * UserStory/Task-ID:
      */
     @RequestMapping("/addStory")
-    public ModelAndView addStory(@RequestParam(value = "newStory", required = true) UserStory Story){
-       // presentationToLogic.userStoryService.addUserStory(Story);
+    public ModelAndView addStory(@RequestParam(required = true) UserStory Story){
+        presentationToLogic.userStoryService.addUserStory(Story);
         ModelAndView modelAndView = new ModelAndView("projectManager");
-        modelAndView.addObject("Story", presentationToLogic.userStoryService.getAllUserStorys());
+        modelAndView.addObject("Storys", presentationToLogic.userStoryService.getAllUserStorys());
         return modelAndView;
     }
 

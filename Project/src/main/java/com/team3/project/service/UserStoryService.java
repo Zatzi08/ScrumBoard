@@ -43,16 +43,16 @@ public class UserStoryService {
     public boolean updateUserStory(UserStory userStory){//TODO: wie kann man die veränderten Attribute angeben
         return true;
     }
-/*
+
     public void addUserStory(UserStory story) {
-        if(story.getUserID() == -1){
-            DAOUserStoryService.create(story.getName(),story.getDescription(), enumerations.getInt(story.getPriority()), story.getId());
+        if(story.getId() == -1){
+            DAOUserStoryService.create(story.getName(),story.getDescription(), enumerations.getInt(story.getPriority()));
         } else{
-            //logicToData.daoUserStoryService.save(story.getUserID(), story.getName(), story.getDescription(), enumerations.getInt(story.getPriority()), story.getId());
+            DAOUserStoryService.create(story.getName(), story.getDescription(), enumerations.getInt(story.getPriority()));
         }
     }
-*/
+
     public List<UserStory> getAllUserStorys() {
-        return null; //logicToData.daoUserStoryService.getAll();
+        return DAOUserStoryService.getAll();
     }
 }
