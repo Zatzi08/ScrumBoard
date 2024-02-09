@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Datenbank ###
+src/main/resources/DB/database.db
