@@ -124,7 +124,7 @@ public class WebController {
     public ModelAndView addStory(@RequestParam(value = "newStory", required = true) UserStory Story){
        // presentationToLogic.userStoryService.addUserStory(Story);
         ModelAndView modelAndView = new ModelAndView("projectManager");
-        modelAndView.addObject("Story", presentationToLogic.userStoryService.getAllUserStorys());
+        modelAndView.addObject("Storys", presentationToLogic.userStoryService.getAllUserStorys());
         return modelAndView;
     }
 
