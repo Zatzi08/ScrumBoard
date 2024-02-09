@@ -11,7 +11,17 @@ import com.team3.project.DAO.DAOAccount;
 import com.team3.project.DAO.DAOUserStory;
 
 public class DAOUserStoryService {
-    
+
+    public static UserStory getByID(int id){
+        Session session = DAOSession.getNewSession();
+        session.beginTransaction();
+        DAOUserStory story = session.createQuery( "from DAOUserStory where id = ?1" , DAOUserStory.class).setParameter(1, id).uniqueResult();
+        Enumerations prio = new Enumerations();
+        UserStory userStory = new UserStory(story.getName(),story.getDescription(),prio.IntToPriority(story.getPriority()),story.getId());
+        session.close();
+        return userStory;
+    }
+
     public static List<UserStory> getAll(){
         List<UserStory> userstories = new LinkedList<UserStory>();
         Session session = DAOSession.getNewSession();

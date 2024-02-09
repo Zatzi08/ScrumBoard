@@ -5,6 +5,7 @@ import com.team3.project.Classes.UserStory;
 import com.team3.project.DAOService.DAOUserStoryService;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -48,7 +49,11 @@ public class UserStoryService {
         if(story.getId() == -1){
             DAOUserStoryService.create(story.getName(),story.getDescription(), enumerations.getInt(story.getPriority()));
         } else{
-            DAOUserStoryService.create(story.getName(), story.getDescription(), enumerations.getInt(story.getPriority()));
+            UserStory userStory = DAOUserStoryService.getByID(story.getId());
+            DAOUserStoryService.updateDescription(userStory.getName(),story.getDescription());
+            Enumerations prio = new Enumerations();
+            DAOUserStoryService.updatePriority(userStory.getName(), prio.getInt(story.getPriority()));
+            DAOUserStoryService.updateName(userStory.getName(),story.getName());
         }
     }
 

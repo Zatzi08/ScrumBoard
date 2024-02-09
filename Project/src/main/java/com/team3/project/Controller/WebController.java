@@ -1,5 +1,6 @@
 package com.team3.project.Controller;
 
+import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.UserStory;
 import com.team3.project.DAOService.DAOUserStoryService;
 import com.team3.project.Interface.PresentationToLogic;
@@ -65,9 +66,8 @@ public class WebController {
                               @RequestParam(value = "Passwort", required = true) String Passwort) {
         if (EMail != "" && Passwort != "" &&
                presentationToLogic.accountService.checkMail(EMail) &&
-               presentationToLogic.accountService.login(EMail, Passwort)) {
-            return new ModelAndView("projectManager").addObject(DAOUserStoryService.getAll());
-        }
+               presentationToLogic.accountService.login(EMail, Passwort))
+            return new ModelAndView("projectManager").addObject("Storys",DAOUserStoryService.getAll());
         return new ModelAndView("index");
     }
 
@@ -95,7 +95,7 @@ public class WebController {
     public String neuesPasswort(@RequestParam(value = "Passwort", required = true) String Passwort,
                                 @RequestParam(value = "EMail", required = true)String EMail){
         presentationToLogic.accountService.resetPasswort(EMail, Passwort);
-        return String.format("%s : %s", EMail, Passwort);
+        return "redirect:/";
     }
 
     /* Author: Lucas Krüger
@@ -110,7 +110,7 @@ public class WebController {
                                  @RequestParam(value = "Passwort", required = true) String Passwort){
         if(!presentationToLogic.accountService.checkMail(EMail)) {
            if(presentationToLogic.accountService.register( Username,EMail,Passwort))
-               return new ModelAndView("index"); //.addObject("Storys", DAOUserStoryService.getAll())
+               return new ModelAndView("index");
         }
         return new ModelAndView("register");
     }
@@ -121,8 +121,17 @@ public class WebController {
      * Grund: Übergeben von UserStorys
      * UserStory/Task-ID:
      */
-    @RequestMapping("/addStory")
-    public ModelAndView addStory(@RequestParam(required = true) UserStory Story){
+    @RequestMapping(value = "/addStory", method = RequestMethod.POST)
+    public ModelAndView addStory(@RequestParam(value = "name", required = true) String name,
+                                 @RequestParam(value = "description", required = true) String Desc,
+                                 @RequestParam(value = "low", required = false) boolean low,
+                                 @RequestParam(value = "normal", required = false) boolean normal,
+                                 @RequestParam(value = "high", required = false) boolean high,
+                                 @RequestParam(value = "urgent", required = false) boolean urgent,
+                                 @RequestParam(value = "id", required = true) int id){
+        UserStory Story = new UserStory(name, Desc,
+                low? Enumerations.Priority.low: normal? Enumerations.Priority.normal: high? Enumerations.Priority.high: Enumerations.Priority.urgent
+                ,id);
         presentationToLogic.userStoryService.addUserStory(Story);
         ModelAndView modelAndView = new ModelAndView("projectManager");
         modelAndView.addObject("Storys", presentationToLogic.userStoryService.getAllUserStorys());
@@ -137,7 +146,7 @@ public class WebController {
      */
     @RequestMapping(value = "/Preview")
     public ModelAndView Preview(){
-        ModelAndView modelAndView = new ModelAndView("projectManager"); // Name für Page hier
+        ModelAndView modelAndView = new ModelAndView("projectManager").addObject("Storys", DAOUserStoryService.getAll()); // Name für Page hier
         return modelAndView;
     }
 
