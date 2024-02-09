@@ -1,5 +1,6 @@
 package com.team3.project.DAO;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,11 +16,11 @@ import lombok.Setter;
 public class DAOUserStory {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int usID;
+    @Column(name="usID")
+    private int id;
     private String name;
     private String description;
     private int priority;
-    private int id;
 
 
     public DAOUserStory(String name,String description,int priority){
