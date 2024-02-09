@@ -24,7 +24,7 @@ public class DAO {
         // System.out.println(DAOAccountService.createAccount("newDave2", "pass"));
         // System.out.println(DAOAccountService.updatePassword("newDave2", "test"));
         // System.out.println(DAOAccountService.deleteAccount("max@web.de"));
-        System.out.println(DAOUserStoryService.create("testName", "null", 0, 2));
+        System.out.println(DAOUserStoryService.create("testName", "null", 0));
         List<UserStory> list = DAOUserStoryService.getAll();
         //System.out.println(list.get(0).getName()+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         for (UserStory test : list) {
