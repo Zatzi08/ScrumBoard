@@ -11,11 +11,6 @@ import com.team3.project.DAO.DAOAccount;
 import com.team3.project.DAO.DAOUserStory;
 
 public class DAOUserStoryService {
-
-    public static boolean create(String name,String description,int priority,String id){
-
-        return false;
-    }
     
     public static List<UserStory> getAll(){
         List<UserStory> userstories = new LinkedList<UserStory>();
@@ -28,8 +23,10 @@ public class DAOUserStoryService {
                 UserStory toAdd = new UserStory(daoUserStory.getName(), daoUserStory.getDescription(),prio.IntToPriority(daoUserStory.getPriority()), daoUserStory.getId());
                 userstories.add(toAdd);
             }
+            session.close();
             return userstories;
         }
+        session.close();
         return userstories; //hier error?
     }
 
@@ -47,7 +44,7 @@ public class DAOUserStoryService {
     }
 
     public static boolean delete(String name){
-            if(true /*checkname*/){
+        if(true /*checkname*/){
             Session session = DAOSession.getNewSession();
             session.beginTransaction();
             DAOUserStory story = session.createQuery( "from DAOUserStory where name = ?1" , DAOUserStory.class).setParameter(1, name).uniqueResult();
@@ -71,6 +68,7 @@ public class DAOUserStoryService {
             return true;
         }
         return false;}
+
     public static boolean updateDescription(String name,String newDescription){
         if(true /*checkname*/){
             Session session = DAOSession.getNewSession();
@@ -84,7 +82,7 @@ public class DAOUserStoryService {
         }
         return false;
     }
-    
+
     public static boolean updatePriority(String name,int newPriority){
         if(true /*checkname*/){
             Session session = DAOSession.getNewSession();
@@ -98,5 +96,4 @@ public class DAOUserStoryService {
         }
         return false;
     }
-    
 }
