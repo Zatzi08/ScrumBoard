@@ -88,8 +88,8 @@
             <ul>
                 <li th:each = "story: ${Storys}"> <!--oder muss das in das untere div rein? brauchen wir überhaupt ul und li? -->
                     <div class="userStoryText">
-                        <label th:text = "${name}" id="userStoryTitel">Titel</label>
-                        <label th:text = "${description}"id="userStoryBeschreibung">Beschreibung</label>
+                        <label th:text = "${story.name}" id="userStoryTitel">Titel</label>
+                        <label th:text = "${story.description}"id="userStoryBeschreibung">Beschreibung</label>
                     </div>
                     <button class="editBtn" th:onclick="toggleEditBox('+${id}+')"><i class="fa fa-edit" style="margin-right: 8px;"></i></button>
                     <button class = "sizeBtn" id="zoomUserStoryBtn" onclick="zoomUserStoryContainer()"><i class="fa fa-search" ></i></button>
