@@ -11,11 +11,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="Users")
+@Table(name="UserStorys")
 public class DAOUserStory {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int usid;
+    private int usID;
     private String name;
     private String description;
     private int priority;
@@ -28,5 +28,6 @@ public class DAOUserStory {
         this.priority=priority;
         this.id=id;
     }
+    public DAOUserStory(){}
     
 }

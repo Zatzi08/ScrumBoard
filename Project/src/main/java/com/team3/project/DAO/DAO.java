@@ -1,5 +1,7 @@
 package com.team3.project.DAO;
 
+import java.util.List;
+
 // import java.util.List;
 
 // import org.hibernate.Session;
@@ -8,18 +10,26 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import com.team3.project.Classes.UserStory;
 import com.team3.project.DAOService.DAOAccountService;
+import com.team3.project.DAOService.DAOUserStoryService;
 
 public class DAO {
     private static SessionFactory sessionFactory;
     public static void main(String[] args) {
         try {
         setUp();
-        System.out.println(DAOAccountService.checkmail("temp")+"\n");
-        System.out.println(DAOAccountService.LoginCheck("temp","password"));
-        System.out.println(DAOAccountService.createAccount("newDave2", "pass"));
-        System.out.println(DAOAccountService.updatePassword("newDave2", "test"));
-        System.out.println(DAOAccountService.deleteAccount("max@web.de"));
+        // System.out.println(DAOAccountService.checkmail("temp")+"\n");
+        // System.out.println(DAOAccountService.LoginCheck("temp","password"));
+        // System.out.println(DAOAccountService.createAccount("newDave2", "pass"));
+        // System.out.println(DAOAccountService.updatePassword("newDave2", "test"));
+        // System.out.println(DAOAccountService.deleteAccount("max@web.de"));
+        System.out.println(DAOUserStoryService.create("testName", "null", 0, 2));
+        List<UserStory> list = DAOUserStoryService.getAll();
+        //System.out.println(list.get(0).getName()+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        for (UserStory test : list) {
+            System.out.println(test.getName());
+        }
         //Usertest();
         tearDown();    
         } catch (Exception e) {

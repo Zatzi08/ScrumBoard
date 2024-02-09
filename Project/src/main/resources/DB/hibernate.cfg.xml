@@ -27,6 +27,7 @@
 
 	   <!-- Names the annotated entity class -->
 	   <mapping class="com.team3.project.DAO.DAOAccount"/>
+	   <mapping class="com.team3.project.DAO.DAOUserStory"/>
 
 
     </session-factory>
