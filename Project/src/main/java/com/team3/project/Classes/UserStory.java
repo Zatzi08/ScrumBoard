@@ -13,7 +13,8 @@ public class UserStory {
     private String description;
     private Priority priority;
     private List<Task> Tasks = null;
-    private int id;
+    // id darf nicht in der logic angepast werden nacht deswegen jetzt final -Marvin
+    private final int id;
 
     /* Author: Henry L. Freyschmidt
      * Revisited: /

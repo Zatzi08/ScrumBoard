@@ -30,8 +30,8 @@ public class DAOUserStoryService {
         return userstories; //hier error?
     }
 
-    public static boolean create(String name,String description,int priority,int id){
-        DAOUserStory tosave = new DAOUserStory( name, description, priority, id);
+    public static boolean create(String name,String description,int priority){
+        DAOUserStory tosave = new DAOUserStory( name, description, priority);
         if(true/*checkname/id*/){
             Session session = DAOSession.getNewSession();
             session.beginTransaction();

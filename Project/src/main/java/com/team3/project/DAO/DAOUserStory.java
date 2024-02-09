@@ -22,11 +22,10 @@ public class DAOUserStory {
     private int id;
 
 
-    public DAOUserStory(String name,String description,int priority,int id){
+    public DAOUserStory(String name,String description,int priority){
         this.name=name;
         this.description=description;
         this.priority=priority;
-        this.id=id;
     }
     public DAOUserStory(){}
     
