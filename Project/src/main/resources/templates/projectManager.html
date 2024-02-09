@@ -75,7 +75,7 @@
            User-ID/Task-ID: /
         -->
         <div class="createUserStory">
-            <button id="createUserStoryBtn" th:value="${id}" onclick="addUserStory()"><i class="fa fa-plus" style="margin-right: 10px"></i>User-Story erstellen</button>
+            <button id="createUserStoryBtn" th:value="${-1}" onclick="addUserStory()"><i class="fa fa-plus" style="margin-right: 10px"></i>User-Story erstellen</button>
         </div>
 
         <!--Author: Paula Krasnovska
@@ -91,7 +91,7 @@
                         <label th:text = "${story.name}" id="userStoryTitel">Titel</label>
                         <label th:text = "${story.description}"id="userStoryBeschreibung">Beschreibung</label>
                     </div>
-                    <button class="editBtn" th:onclick="toggleEditBox('+${id}+')"><i class="fa fa-edit" style="margin-right: 8px;"></i></button>
+                    <button class="editBtn" th:onclick="toggleEditBox('+${id}+${story.name}+${story.description}+')"><i class="fa fa-edit" style="margin-right: 8px;"></i></button>
                     <button class = "sizeBtn" id="zoomUserStoryBtn" onclick="zoomUserStoryContainer()"><i class="fa fa-search" ></i></button>
                     <button type="button" id="ausklappbarBtn" onClick="taskAusklappen(this)"> > </button>
                     <div id="taskContainer">

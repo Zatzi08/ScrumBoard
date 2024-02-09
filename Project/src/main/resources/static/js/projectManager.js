@@ -83,22 +83,16 @@ function EditBox() {
         toggleEditBox.style.right = '-350px';
     }
 }
-function toggleEditBox([[${id}]]){
+function toggleEditBox(storyId, name, description){
     EditBox();
-    name = document.getElementById("userStoryTitel").value;
-    beschreibung = document.getElementById("userStoryBeschreibung").value; //
-    const editId = [[${id}]]; // oder editId = document.getElementById("userStoryBeschreibung").value;
+    document.getElementById("userStoryTitel").value = name;
+    document.getElementById("userStoryBeschreibung").value = description;
+    document.getElementById("editId").value = storyId;
 
 }
 
 function addUserStory(){
     EditBox();
-    let id = document.getElementById("editId").val();
-    id = -1;
-
-
-
-
 }
 
 /*
