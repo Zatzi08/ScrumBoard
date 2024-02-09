@@ -1,17 +1,17 @@
 package com.team3.project.service;
 
+import com.team3.project.Classes.User;
+import com.team3.project.DAOService.DAOAccountService;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import com.team3.project.Classes.Email;
 @Service
-public class AccountService {
-    // TODO: Delete Stuff, wenn DB da
-    //Alternative um ohne DB zu schreiben
+public class AccountService extends User {
     public boolean checkMail(String Mail){
-        return !Mail.equals("test@gmail.com");
+        return DAOAccountService.checkmail(Mail);
     }
-    public boolean login(String Email, String PW){
-        return !Email.equals("Fail");
+    public boolean login(String Email, String Passwort){
+        return DAOAccountService.LoginCheck(Email,Passwort);
     }
 
     /* Author: Henry L. Freyschmidt
@@ -21,14 +21,7 @@ public class AccountService {
      * UserStory/Task-ID: /
      */
     public boolean register(String username, String email, String passwort){
-
-            //TODO:DB-Abfrage and check if already in DB
-            //TODO: Methode für Anfrage an DB ein Account zu erstellen
-            //if(check(Mail) == true){catch(Exception e){ throw new SecurityException("Deine E-Mail ist mit einem anderen Account verknüpft");}
-            //else{createAccountDB(username, mail, passwort);}
-
-            //provisorisch mit eigener check-Methode imitiert
-        return !checkMail(email);
+        return DAOAccountService.createAccount(email,passwort);
     }
 
 
@@ -38,9 +31,9 @@ public class AccountService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public void resetPasswort(String EMail, String Passwort){
-        // TODO: implement resetPasswort für User
-        //TODO: implementiere Funktion: E-Mail mit authorization-code (aus DB) an E-Mailadresse EMail schicken
+    public boolean resetPasswort(String EMail, String Passwort){
+        // TODO: Verification dass überhaupt erlaubt durch Email
+        return DAOAccountService.updatePassword(EMail,Passwort);
     }
     /* Email um den Code zu schicken muss von Google geprüft werde, weil es geflaggt wurde
     public static void main(String[] Args){

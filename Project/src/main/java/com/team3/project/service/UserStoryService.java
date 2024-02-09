@@ -2,17 +2,13 @@ package com.team3.project.service;
 
 import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.UserStory;
-import com.team3.project.Interface.LogicToData;
+import com.team3.project.DAOService.DAOUserStoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class UserStoryService {
-    public UserStoryService(){
-        this.logicToData = LogicToData.getInstance();
-    }
-    private final LogicToData logicToData;
     private Enumerations enumerations = new Enumerations();
 
     // TODO: needs Database connection to implement create Object
@@ -47,15 +43,15 @@ public class UserStoryService {
     public boolean updateUserStory(UserStory userStory){//TODO: wie kann man die veränderten Attribute angeben
         return true;
     }
-
+/*
     public void addUserStory(UserStory story) {
         if(story.getUserID() == -1){
-            logicToData.daoUserStoryService.create(story.getName(),story.getDescription(), enumerations.getInt(story.getPriority()), story.getId());
+            DAOUserStoryService.create(story.getName(),story.getDescription(), enumerations.getInt(story.getPriority()), story.getId());
         } else{
             //logicToData.daoUserStoryService.save(story.getUserID(), story.getName(), story.getDescription(), enumerations.getInt(story.getPriority()), story.getId());
         }
     }
-
+*/
     public List<UserStory> getAllUserStorys() {
         return null; //logicToData.daoUserStoryService.getAll();
     }

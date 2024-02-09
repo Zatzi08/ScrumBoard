@@ -16,7 +16,6 @@ public class DAOUserStory {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int usid;
-
     private String name;
     private String description;
     private int priority;

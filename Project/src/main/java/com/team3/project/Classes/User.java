@@ -19,6 +19,8 @@ public class User {
     private List<Integer> taskIDs;
     private int authorization; //von der DB gestellt
 
+    public User(){}
+
     /* Author: Henry L. Freyschmidt
      * Revisited: /
      * Funktion: /

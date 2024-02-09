@@ -1,20 +1,23 @@
 package com.team3.project.Interface;
 
-import com.team3.project.DAOService.DAOAccountService;
-import com.team3.project.DAOService.DAOUserStoryService;
+import com.team3.project.Classes.Enumerations;
+import com.team3.project.Classes.UserStory;
+import com.team3.project.DAO.DAOAccount;
+import com.team3.project.DAO.DAOUserStory;
+
+import java.util.*;
 
 public class LogicToData {
-    private static LogicToData instance;
-    public final DAOAccountService daoAccountService;
-    public final DAOUserStoryService daoUserStoryService;
 
-    private LogicToData(){
-        this.daoAccountService = new DAOAccountService();
-        this.daoUserStoryService = new DAOUserStoryService();
+    private final Enumerations enumerations = new Enumerations();
+/*
+    public List<UserStory> getALL(){
+        List<DAOUserStory> daoUserStorys = DAOUserStory.getAll();
+        List<UserStory> userStorys = new ArrayList<UserStory>();
+        for (DAOUserStory daoStory : daoUserStorys){
+            userStorys.add(new UserStory(daoStory.getName(), daoStory.getDescription(), enumerations.IntToPriority(daoStory.getPriority()),String.format("%s",daoStory.getId())));
+        }
+        return userStorys;
     }
-
-    public static LogicToData getInstance(){
-        if(LogicToData.instance == null) LogicToData.instance = new LogicToData();
-        return LogicToData.instance;
-    }
+*/
 }

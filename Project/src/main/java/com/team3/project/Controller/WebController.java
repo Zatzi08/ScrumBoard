@@ -1,10 +1,6 @@
 package com.team3.project.Controller;
 
-import com.team3.project.Classes.Email;
 import com.team3.project.Classes.UserStory;
-import com.team3.project.DAOService.DAOAccountService;
-import com.team3.project.DAOService.DAOUserStoryService;
-import com.team3.project.Interface.LogicToData;
 import com.team3.project.Interface.PresentationToLogic;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,8 +63,8 @@ public class WebController {
     public ModelAndView login(@RequestParam(value = "EMail", required = true) String EMail,
                               @RequestParam(value = "Passwort", required = true) String Passwort) {
         if (EMail != "" && Passwort != "" &&
-               DAOAccountService.checkmail(EMail) &&
-               DAOAccountService.LoginCheck(EMail, Passwort)) {
+               presentationToLogic.accountService.checkMail(EMail) &&
+               presentationToLogic.accountService.login(EMail, Passwort)) {
             return new ModelAndView("projectManager"); // .addObject(logicToData.daoUserStoryService.getAll())
         }
         return new ModelAndView("index");
@@ -82,7 +78,7 @@ public class WebController {
      */
     @RequestMapping(value = "/neuesPasswortPage", method = RequestMethod.POST)
     public ModelAndView neuesPasswortPage(@RequestParam(value = "EMail", required = true) String EMail){
-        if(DAOAccountService.checkmail(EMail)) return new ModelAndView("neuesPasswort").addObject("Mail", EMail);
+        if(presentationToLogic.accountService.checkMail(EMail)) return new ModelAndView("neuesPasswort").addObject("Mail", EMail);
         return new ModelAndView("index");
     }
 
@@ -111,8 +107,8 @@ public class WebController {
     public ModelAndView Register(@RequestParam(value = "Username", required = true) String Username,
                                  @RequestParam(value = "EMail", required = true) String EMail,
                                  @RequestParam(value = "Passwort", required = true) String Passwort){
-        if(!DAOAccountService.checkmail(EMail)) {
-           if(DAOAccountService.createAccount(EMail,Passwort))
+        if(!presentationToLogic.accountService.checkMail(EMail)) {
+           if(presentationToLogic.accountService.register( Username,EMail,Passwort))
                return new ModelAndView("index"); //.addObject("Storys", DAOUserStoryService.getAll())
         }
         return new ModelAndView("register");
@@ -126,7 +122,7 @@ public class WebController {
      */
     @RequestMapping("/addStory")
     public ModelAndView addStory(@RequestParam(value = "newStory", required = true) UserStory Story){
-        presentationToLogic.userStoryService.addUserStory(Story);
+       // presentationToLogic.userStoryService.addUserStory(Story);
         ModelAndView modelAndView = new ModelAndView("projectManager");
         modelAndView.addObject("Story", presentationToLogic.userStoryService.getAllUserStorys());
         return modelAndView;

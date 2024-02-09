@@ -36,7 +36,7 @@ public class WebsocketController {
         String description = message.substring(message.indexOf(":", message.indexOf(":")+1)+1,message.indexOf(",", message.indexOf(",")+1));
         String priority = message.substring(message.indexOf(":",message.indexOf(":",message.indexOf(":")+1)+1)+1);
         String id = "0";
-        UserStory userStory = new UserStory(-1, name, description, enumerations.StringToPriority(priority), id);
+        UserStory userStory = new UserStory( name, description, enumerations.StringToPriority(priority), id);
         // saveUser(userstory)
         // TODO: Implement saveUserstory
     }

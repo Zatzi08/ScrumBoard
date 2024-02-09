@@ -9,7 +9,6 @@ import java.util.List;
 @Getter
 @Setter
 public class UserStory {
-    private int userID;
     private String name;
     private String description;
     private Priority priority;
@@ -22,8 +21,7 @@ public class UserStory {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public UserStory(int userID,String name, String description, Enumerations.Priority priority, String id){
-        this.userID = userID;
+    public UserStory(String name, String description, Enumerations.Priority priority, String id){
         this.name = name;
         this.description = description;
         this.priority = priority;

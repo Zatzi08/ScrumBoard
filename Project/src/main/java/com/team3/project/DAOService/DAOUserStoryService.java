@@ -1,7 +1,5 @@
 package com.team3.project.DAOService;
 
-import java.util.List;
-
 import org.hibernate.Session;
 
 import com.team3.project.Classes.UserStory;
@@ -14,7 +12,7 @@ public class DAOUserStoryService {
 
         return false;
     }
-
+/*
     public static List<UserStory> getAllUserStorys(){
         Session session = DAOSession.getNewSession();
         session.beginTransaction();
@@ -33,6 +31,6 @@ public class DAOUserStoryService {
             
         }
 
-    }
+    }*/
     
 }
