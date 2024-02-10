@@ -113,14 +113,16 @@ public class HttpRequestTests {
         HttpEntity<String> message = new HttpEntity<>("", header);
         String name = "TestStory";
         String desc = "Delete later";
+        int prio1 = 2;
         String desc2 = "Really delete later!";
+        int prio2 = 1;
         assertThat(this.restTemplate.exchange("http://localhost:" + port + "/addStory", HttpMethod.POST,message, String.class).getStatusCode())
                 .isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(this.restTemplate.exchange("http://localhost:" + port + "/addStory" + "?name=" + name + "&description=" + desc + "&low=true" + "&id=-1", HttpMethod.POST, message, String.class)
+        assertThat(this.restTemplate.exchange("http://localhost:" + port + "/addStory" + "?name=" + name + "&description=" + desc + "&priority=" + prio1 + "&id=-1", HttpMethod.POST, message, String.class)
                 .getStatusCode()).isEqualTo(HttpStatus.FOUND);
         List<DAOUserStory> userStories = DAOUserStoryService.getAll();
         int id = userStories.get(userStories.size()-1).getId();
-        assertThat(this.restTemplate.exchange("http://localhost:" + port + "/addStory" + "?name=" + name + "&description=" + desc2 + "&low=true" + "&id="+ id, HttpMethod.POST, message, String.class)
+        assertThat(this.restTemplate.exchange("http://localhost:" + port + "/addStory" + "?name=" + name + "&description=" + desc2 + "&priority=" + prio2 + "&id="+ id, HttpMethod.POST, message, String.class)
                 .getStatusCode()).isEqualTo(HttpStatus.FOUND);
         DAOUserStoryService.delete(id);
     }
