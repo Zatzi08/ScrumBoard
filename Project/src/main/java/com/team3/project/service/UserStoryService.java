@@ -51,11 +51,10 @@ public class UserStoryService {
         if(story.getId() == -1){
             DAOUserStoryService.create(story.getName(),story.getDescription(), enumerations.getInt(story.getPriority()));
         } else{
-            DAOUserStory userStory = DAOUserStoryService.getByID(story.getId());
-            DAOUserStoryService.updateDescription(userStory.getName(),story.getDescription());
+            DAOUserStoryService.updateName(story.getId(),story.getName());
+            DAOUserStoryService.updateDescription(story.getId(),story.getDescription());
             Enumerations prio = new Enumerations();
-            DAOUserStoryService.updatePriority(userStory.getName(), prio.getInt(story.getPriority()));
-            DAOUserStoryService.updateName(userStory.getName(),story.getName());
+            DAOUserStoryService.updatePriority(story.getId(), prio.getInt(story.getPriority()));
         }
     }
 
