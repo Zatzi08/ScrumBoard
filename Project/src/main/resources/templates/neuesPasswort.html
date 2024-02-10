@@ -20,7 +20,7 @@
     <div class="container">
       <form action="/neuesPasswort" method="post" autocomplete="off">
       <label></label>
-        <input type="text" placeholder="Passwort ändern" id="neuesPasswortInput" name="Passwort">
+        <input type="text" required placeholder="Passwort ändern" id="neuesPasswortInput" name="Passwort">
           <input type="hidden" name="EMail" th:value="${Mail}">
         <button id="newPasswortBtn" type="submit">Ändern</button>
       <p id = "yesAccount"> Du besitzt doch einen Account?
