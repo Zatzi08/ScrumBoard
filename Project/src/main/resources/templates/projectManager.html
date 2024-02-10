@@ -20,9 +20,10 @@
     -->
     <div class="Reiter">
         <button class="reiterBtn" onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
-        <button class = "reiterBtn" id = "profilBtn">Profil </button>
-        <button class = "reiterBtn" id = "boardBtn">Task-Board </button>
-        <button class = "reiterBtn" id = "kalenderBtn">Kalender </button>
+        <button class = "reiterBtn">Profil </button>
+        <button class = "reiterBtn">Task-Board </button>
+        <button class = "reiterBtn">Kalender </button>
+        <button class = "reiterBtn" id="einstellungBtn">Einstellungen </button>
     </div>
 
     <!--
@@ -36,7 +37,6 @@
         <div class="ansichtDropdown">
             <button onClick= "ansichtDropdown()" id="ansichtBtn" class = "ansichtBtn"><i class="fa fa-level-down" style="margin-right: 8px;"></i> Ansicht</button>
             <div id="ansichtDropdownContent" class="ansichtdropdown-content">
-                <a href="#">All</a>
                 <a href="#">User Stories</a>
                 <a href="#">Tasks</a>
                 <a href="#">Schätzungstracker</a>
@@ -46,9 +46,9 @@
         <div class = "filterDropdown">
             <button onClick = "filterDropdown()"id="filterBtn" class = "filterBtn"><i class="fa fa-filter" style="margin-right: 8px;"></i> Filter</button>
             <div id = "filterDropdownContent" class = filterdropdown-content>
-                <a href="#">All</a>
-                <a href="#">Due Date</a>
-                <a href="#">Priority</a>
+                <a href="#">Kein Filter</a>
+                <a href="#">Abgabefrist</a>
+                <a href="#">Priorität</a>
                 <a href="#">Aufwand</a>
             </div>
         </div>

@@ -26,7 +26,7 @@ position: absolute;
   left: 50%;
   margin: -200px 0 0 -200px;
   border-radius: 15px;
-background-color: rgb(152, 156, 224);
+background-color: rgba(152, 156, 224);
 box-shadow: 0 8px 20px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
@@ -143,12 +143,16 @@ position: absolute;
   margin-left:80px;
 bottom:0;    
 }
-#forgotP{
-margin-left:65px;  
+
+#yesAccount{
+  position: absolute;
+  width:400px;
+  margin-left:30px;
+  bottom:0;
 }
-a{
-color:#103563;
-}
+#forgotP{margin-left:65px;}
+a{color:#103563;}
+
 #passwortResetBtn{
   display: block;
   position:relative;    
