@@ -124,14 +124,10 @@ public class WebController {
     @RequestMapping(value = "/addStory", method = RequestMethod.POST)
     public String addStory(@RequestParam(value = "name", required = true) String name,
                            @RequestParam(value = "description", required = true) String Desc,
-                           @RequestParam(value = "low", required = false) boolean low,
-                           @RequestParam(value = "normal", required = false) boolean normal,
-                           @RequestParam(value = "high", required = false) boolean high,
-                           @RequestParam(value = "urgent", required = false) boolean urgent,
+                           @RequestParam(value = "priority", required = true) int prio,
                            @RequestParam(value = "id", required = true) int id){
-        UserStory Story = new UserStory(name, Desc,
-                low? Enumerations.Priority.low: normal? Enumerations.Priority.normal: high? Enumerations.Priority.high: Enumerations.Priority.urgent
-                ,id);
+        Enumerations prior = new Enumerations();
+        UserStory Story = new UserStory(name, Desc, prior.IntToPriority(prio),id);
         presentationToLogic.userStoryService.addUserStory(Story);
         return "redirect:/ProjectManager";
     }

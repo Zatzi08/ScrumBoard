@@ -86,13 +86,13 @@
         -->
         <div>
             <ul>
-                <li th:each = "story: ${Storys}" class="userStoryContainer">
+                <li th:each = "story: ${Storys}" class="userStoryContainer" >
                     <div class="userStoryText">
                         <label th:text = "${story.name}?:'Titel'" id="userStoryTitel">Titel</label>
                         <label th:text = "${story.description}?:'Beschreibung'"id="userStoryBeschreibung">Beschreibung</label>
                     </div>
                     <button class="editBtn" th:sname="${story.name}" th:sdescription="${story.description}" th:sid="${story.id}" onclick="toggleEditBox(this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'));" ><i class="fa fa-edit" style="margin-right: 8px;"></i></button>
-                    <button id="zoomUserStoryBtn" onclick="zoomUserStoryContainer()"><i class="fa fa-search" ></i></button> <!-- onclick="zoomUserStoryContainer()" TODO: Fix position shift to the left-->
+                    <button id="zoomUserStoryBtn"><i class="fa fa-search" ></i></button> <!-- onclick="zoomUserStoryContainer(id)" TODO: Fix position shift to the left-->
                     <!-- <button type="button" id="ausklappbarBtn" onClick="taskAusklappen(this)"> > </button>  TODO: Fix position relativ to list-->
                     <div id="taskContainer">
                         <div id="taskInhalt">
@@ -115,7 +115,7 @@
             <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
             <span id="closeToggleEdit" class="closeToggleEdit" onclick="toggleEditBox()">&times;</span>
             <div class="editMenu-content">
-                <form class="form" action="/addStory" method="post" id="editForm" autocomplete="off">
+                <form class="form" action="/addStory" method="post" id="editForm" autocomplete="off" name="Story">
                     <textarea id="inputName" class="inputEdit" placeholder="Titel der User-Story eingeben" name="name" form="editForm"></textarea>
                     <textarea id="inputDesc" class="inputEdit" placeholder="Eine passende Beschreibung eingeben" name="description" form="editForm"></textarea>
                     <label>Priorität</label>
@@ -126,6 +126,7 @@
                     <label style="margin-top: 15px">Abgabefrist</label>
                     <input type="datetime-local" id="inputDate" class="inputBtn" placeholder="Abgabefrist">
                     <input type="hidden" id = "editId" name="id">
+                    <input type="hidden" id = "editPrio" name="priority" value="1">
                     <button type="submit" id="editMenu-saveEditBtn">Speichern</button>
                 </form>
             </div>
