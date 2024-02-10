@@ -19,8 +19,8 @@ public class DatenbankTests {
      */
     @Test
     void accGeneral(){
-        String testMail = "testmail";
-        String testPas = "testpas";
+        String testMail = "testmail1";
+        String testPas = "testpas1";
         assertTrue(DAOAccountService.createAccount(testMail,testPas));
         assertTrue(DAOAccountService.checkmail(testMail));
         assertTrue(DAOAccountService.deleteAccount(testMail));
@@ -82,8 +82,8 @@ public class DatenbankTests {
      */
     @Test
     void updatePassTest(){
-        String testMail = "testmail";
-        String oldPas = "testpas";
+        String testMail = "testmail2";
+        String oldPas = "testpas2";
         String newPas = "12345";
         assertFalse(DAOAccountService.updatePassword(testMail,newPas));
         DAOAccountService.createAccount(testMail,oldPas);
@@ -99,8 +99,8 @@ public class DatenbankTests {
      */
     @Test
     void newOldPasTest(){
-        String testMail = "testmail";
-        String oldPas = "testpas";
+        String testMail = "testmail3";
+        String oldPas = "testpas3";
         String newPas = "testpas";
         DAOAccountService.createAccount(testMail,oldPas);
         assertTrue(DAOAccountService.LoginCheck(testMail, oldPas));
