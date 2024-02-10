@@ -92,7 +92,7 @@
                         <label th:text = "${story.description}?:'Beschreibung'"id="userStoryBeschreibung">Beschreibung</label>
                     </div>
                     <button class="editBtn" th:sname="${story.name}" th:sdescription="${story.description}" th:sid="${story.id}" onclick="toggleEditBox(this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'));" ><i class="fa fa-edit" style="margin-right: 8px;"></i></button>
-                    <button id="zoomUserStoryBtn" ><i class="fa fa-search" ></i></button> <!-- onclick="zoomUserStoryContainer()" TODO: Fix multizoom and position shift-->
+                    <button id="zoomUserStoryBtn" onclick="zoomUserStoryContainer()"><i class="fa fa-search" ></i></button> <!-- onclick="zoomUserStoryContainer()" TODO: Fix position shift to the left-->
                     <!-- <button type="button" id="ausklappbarBtn" onClick="taskAusklappen(this)"> > </button>  TODO: Fix position relativ to list-->
                     <div id="taskContainer">
                         <div id="taskInhalt">
