@@ -1,48 +1,36 @@
 package com.team3.project.DAOService;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.hibernate.Session;
 
-import com.team3.project.Classes.Enumerations;
-import com.team3.project.Classes.UserStory;
-import com.team3.project.DAO.DAOAccount;
 import com.team3.project.DAO.DAOUserStory;
 
 public class DAOUserStoryService {
 
-    public static UserStory getByID(int id){
+    public static DAOUserStory getByID(int id){
         Session session = DAOSession.getNewSession();
         session.beginTransaction();
         DAOUserStory story = session.createQuery( "from DAOUserStory where id = ?1" , DAOUserStory.class).setParameter(1, id).uniqueResult();
-        Enumerations prio = new Enumerations();
-        UserStory userStory = new UserStory(story.getName(),story.getDescription(),prio.IntToPriority(story.getPriority()),story.getId());
         session.close();
-        return userStory;
+        return story;
     }
 
-    public static List<UserStory> getAll(){
-        List<UserStory> userstories = new LinkedList<UserStory>();
+    public static List<DAOUserStory> getAll(){
         Session session = DAOSession.getNewSession();
         session.beginTransaction();
         List<DAOUserStory> user = session.createQuery( "from DAOUserStory" , DAOUserStory.class).list();
         if (!user.isEmpty()) {
-            for (DAOUserStory daoUserStory : user) {
-                Enumerations prio = new Enumerations();
-                UserStory toAdd = new UserStory(daoUserStory.getName(), daoUserStory.getDescription(),prio.IntToPriority(daoUserStory.getPriority()), daoUserStory.getId());
-                userstories.add(toAdd);
-            }
             session.close();
-            return userstories;
+            return user;
         }
         session.close();
-        return userstories; //hier error?
+        return null;
     }
 
     public static boolean create(String name,String description,int priority){
         DAOUserStory tosave = new DAOUserStory( name, description, priority);
-        if(true/*checkname/id*/){
+        if(!checkName(name)){
             Session session = DAOSession.getNewSession();
             session.beginTransaction();
             session.persist(tosave);
@@ -53,11 +41,11 @@ public class DAOUserStoryService {
         return false;
     }
 
-    public static boolean delete(String name){
-        if(true /*checkname*/){
+    public static boolean delete(int id){
+        if(checkId(id)){
             Session session = DAOSession.getNewSession();
             session.beginTransaction();
-            DAOUserStory story = session.createQuery( "from DAOUserStory where name = ?1" , DAOUserStory.class).setParameter(1, name).uniqueResult();
+            DAOUserStory story = session.createQuery( "from DAOUserStory where id = ?1" , DAOUserStory.class).setParameter(1, id).uniqueResult();
             session.remove(story);
             session.getTransaction().commit();
             session.close();
@@ -66,11 +54,11 @@ public class DAOUserStoryService {
     return false;
     }
 
-    public static boolean updateName(String name,String newName){
-        if(true /*checkname*/){
+    public static boolean updateName(int id,String newName){
+        if(checkId(id) && !checkName(newName)){
             Session session = DAOSession.getNewSession();
             session.beginTransaction();
-            DAOUserStory story = session.createQuery( "from DAOUserStory where name = ?1" , DAOUserStory.class).setParameter(1, name).uniqueResult();
+            DAOUserStory story = session.createQuery( "from DAOUserStory where id = ?1" , DAOUserStory.class).setParameter(1, id).uniqueResult();
             story.setName(newName);;
             session.persist(story);            
             session.getTransaction().commit();
@@ -79,11 +67,11 @@ public class DAOUserStoryService {
         }
         return false;}
 
-    public static boolean updateDescription(String name,String newDescription){
-        if(true /*checkname*/){
+    public static boolean updateDescription(int id,String newDescription){
+        if(checkId(id)){
             Session session = DAOSession.getNewSession();
             session.beginTransaction();
-            DAOUserStory story = session.createQuery( "from DAOUserStory where name = ?1" , DAOUserStory.class).setParameter(1, name).uniqueResult();
+            DAOUserStory story = session.createQuery( "from DAOUserStory where id = ?1" , DAOUserStory.class).setParameter(1, id).uniqueResult();
             story.setDescription(newDescription);
             session.persist(story);            
             session.getTransaction().commit();
@@ -93,15 +81,33 @@ public class DAOUserStoryService {
         return false;
     }
 
-    public static boolean updatePriority(String name,int newPriority){
-        if(true /*checkname*/){
+    public static boolean updatePriority(int id,int newPriority){
+        if(checkId(id)){
             Session session = DAOSession.getNewSession();
             session.beginTransaction();
-            DAOUserStory story = session.createQuery( "from DAOUserStory where name = ?1" , DAOUserStory.class).setParameter(1, name).uniqueResult();
+            DAOUserStory story = session.createQuery( "from DAOUserStory where id = ?1" , DAOUserStory.class).setParameter(1, id).uniqueResult();
             story.setPriority(newPriority);
             session.persist(story);            
             session.getTransaction().commit();
             session.close();
+            return true;
+        }
+        return false;
+    }
+    public static boolean checkId(int id){
+        Session session = DAOSession.getNewSession();
+        session.beginTransaction();
+        DAOUserStory story = session.createQuery( "from DAOUserStory where id = ?1" , DAOUserStory.class).setParameter(1, id).uniqueResult();
+        if (story == null) {
+            return true;
+        }
+        return false;
+    }
+    public static boolean checkName(String name){
+        Session session = DAOSession.getNewSession();
+        session.beginTransaction();
+        DAOUserStory story = session.createQuery( "from DAOUserStory where name = ?1" , DAOUserStory.class).setParameter(1, name).uniqueResult();
+        if (story == null) {
             return true;
         }
         return false;
