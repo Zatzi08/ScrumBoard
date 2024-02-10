@@ -16,6 +16,14 @@ public class DAOUserStoryService {
         return story;
     }
 
+    public static DAOUserStory getByName(String name){
+        Session session = DAOSession.getNewSession();
+        session.beginTransaction();
+        DAOUserStory story = session.createQuery( "from DAOUserStory where name = ?1" , DAOUserStory.class).setParameter(1, name).uniqueResult();
+        session.close();
+        return story;
+    }
+
     public static List<DAOUserStory> getAll(){
         Session session = DAOSession.getNewSession();
         session.beginTransaction();
@@ -99,17 +107,21 @@ public class DAOUserStoryService {
         session.beginTransaction();
         DAOUserStory story = session.createQuery( "from DAOUserStory where id = ?1" , DAOUserStory.class).setParameter(1, id).uniqueResult();
         if (story == null) {
-            return true;
+            session.close();
+            return false;
         }
-        return false;
+        session.close();
+        return true;
     }
     public static boolean checkName(String name){
         Session session = DAOSession.getNewSession();
         session.beginTransaction();
         DAOUserStory story = session.createQuery( "from DAOUserStory where name = ?1" , DAOUserStory.class).setParameter(1, name).uniqueResult();
         if (story == null) {
-            return true;
+            session.close();
+            return false;
         }
-        return false;
+        session.close();
+        return true;
     }
 }

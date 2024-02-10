@@ -23,7 +23,7 @@ public class DAOAccountService {
         Session session = DAOSession.getNewSession();
         session.beginTransaction();
         DAOAccount user = session.createQuery( "from DAOAccount where email = ?1" , DAOAccount.class).setParameter(1, mail).uniqueResult();
-        if (user.getPassword().equals(totest)) {
+        if (user!=null && user.getPassword().equals(totest)) {
             session.close();
             return true;
         }
