@@ -100,6 +100,12 @@ function toggleEditBox(storyId, name, description){
 */
 function highlightPriorityButton(buttonId) {
     const priorityButtons = document.querySelectorAll('.inputEditPrio');
+    switch (buttonId){
+        case 'inputPrioUrgent' : document.getElementById('editPrio').value = 4; break;
+        case 'inputPrioHigh' : document.getElementById('editPrio').value = 3; break;
+        case 'inputPrioNormal' : document.getElementById('editPrio').value = 2; break;
+        default : document.getElementById('editPrio').value = 1;
+    }
     priorityButtons.forEach(button => {
         if (button.id === buttonId) {
             button.classList.add('selected');
