@@ -163,10 +163,10 @@ function replaceWithUserStoryContainer() {
 * Grund: Benutzerfreundlichkeit; angenehmer, um ein gesamtes User-Story-Konstrukt anzusehen
 * User-ID/Task-ID: /
 */
-function zoomUserStoryContainer() {
+function zoomUserStoryContainer(id) {
     const userStoryButton = document.querySelector('.createUserStory');
     const userStoryContainer = document.querySelector('.userStoryContainer');
-    const zoomUserStoryBtn = document.getElementById('zoomUserStoryBtn'); // Korrekte Auswahl des Zoom-Buttons
+    const zoomUserStoryBtn = document.getElementById('zoomUserStoryBtn'+id); // Korrekte Auswahl des Zoom-Buttons
     const overlay = document.createElement('div');
     overlay.classList.add('overlay');
     document.body.appendChild(overlay);
