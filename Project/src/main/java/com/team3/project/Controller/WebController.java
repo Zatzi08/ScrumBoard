@@ -62,13 +62,13 @@ public class WebController {
      * UserStory/Task-ID: /
      */
     @RequestMapping(value ="/Login", method = RequestMethod.POST)
-    public ModelAndView login(@RequestParam(value = "EMail", required = true) String EMail,
-                              @RequestParam(value = "Passwort", required = true) String Passwort) {
+    public String login(@RequestParam(value = "EMail", required = true) String EMail,
+                        @RequestParam(value = "Passwort", required = true) String Passwort) {
         if (EMail != "" && Passwort != "" &&
                presentationToLogic.accountService.checkMail(EMail) &&
                presentationToLogic.accountService.login(EMail, Passwort))
-            return new ModelAndView("projectManager").addObject("Storys",DAOUserStoryService.getAll());
-        return new ModelAndView("index");
+            return "redirect:/ProjectManager";
+        return "redirect:/";
     }
 
     /* Author: Lucas Krüger
@@ -122,31 +122,30 @@ public class WebController {
      * UserStory/Task-ID:
      */
     @RequestMapping(value = "/addStory", method = RequestMethod.POST)
-    public ModelAndView addStory(@RequestParam(value = "name", required = true) String name,
-                                 @RequestParam(value = "description", required = true) String Desc,
-                                 @RequestParam(value = "low", required = false) boolean low,
-                                 @RequestParam(value = "normal", required = false) boolean normal,
-                                 @RequestParam(value = "high", required = false) boolean high,
-                                 @RequestParam(value = "urgent", required = false) boolean urgent,
-                                 @RequestParam(value = "id", required = true) int id){
+    public String addStory(@RequestParam(value = "name", required = true) String name,
+                           @RequestParam(value = "description", required = true) String Desc,
+                           @RequestParam(value = "low", required = false) boolean low,
+                           @RequestParam(value = "normal", required = false) boolean normal,
+                           @RequestParam(value = "high", required = false) boolean high,
+                           @RequestParam(value = "urgent", required = false) boolean urgent,
+                           @RequestParam(value = "id", required = true) int id){
         UserStory Story = new UserStory(name, Desc,
                 low? Enumerations.Priority.low: normal? Enumerations.Priority.normal: high? Enumerations.Priority.high: Enumerations.Priority.urgent
                 ,id);
         presentationToLogic.userStoryService.addUserStory(Story);
-        ModelAndView modelAndView = new ModelAndView("projectManager");
-        modelAndView.addObject("Storys", presentationToLogic.userStoryService.getAllUserStorys());
-        return modelAndView;
+        return "redirect:/ProjectManager";
     }
 
     /* Author: Lucas Krüger
-     * Revisited:
-     * Funktion: Manueller Test für Aussehen von Webpackes
-     * Grund: Korrekte Integration von Thymeleaf nur so zu testen
-     * UserStory/Task-ID: /
+     * Revisited: /
+     * Funktion: Anzeigen aller Userstorys
+     * Grund: /
+     * UserStory/Task-ID: U1.B1, U3.B1, U4.B1, U5.B1, U5.B2
      */
-    @RequestMapping(value = "/Preview")
-    public ModelAndView Preview(){
-        ModelAndView modelAndView = new ModelAndView("projectManager").addObject("Storys", DAOUserStoryService.getAll()); // Name für Page hier
+    @RequestMapping("/ProjectManager")
+    private ModelAndView ProjectManager(){
+        ModelAndView modelAndView = new ModelAndView("projectManager");
+        modelAndView.addObject("Storys", presentationToLogic.userStoryService.getAllUserStorys());
         return modelAndView;
     }
 

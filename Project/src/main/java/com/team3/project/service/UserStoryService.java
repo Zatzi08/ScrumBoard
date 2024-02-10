@@ -2,10 +2,12 @@ package com.team3.project.service;
 
 import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.UserStory;
+import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.DAOUserStoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -49,7 +51,7 @@ public class UserStoryService {
         if(story.getId() == -1){
             DAOUserStoryService.create(story.getName(),story.getDescription(), enumerations.getInt(story.getPriority()));
         } else{
-            UserStory userStory = DAOUserStoryService.getByID(story.getId());
+            DAOUserStory userStory = DAOUserStoryService.getByID(story.getId());
             DAOUserStoryService.updateDescription(userStory.getName(),story.getDescription());
             Enumerations prio = new Enumerations();
             DAOUserStoryService.updatePriority(userStory.getName(), prio.getInt(story.getPriority()));
@@ -58,6 +60,16 @@ public class UserStoryService {
     }
 
     public List<UserStory> getAllUserStorys() {
-        return DAOUserStoryService.getAll();
+        List<DAOUserStory> user = DAOUserStoryService.getAll();
+        if (user != null) {
+            List<UserStory> userStories = new LinkedList<>();
+            for (DAOUserStory daoUserStory : user) {
+                Enumerations prio = new Enumerations();
+                UserStory toAdd = new UserStory(daoUserStory.getName(), daoUserStory.getDescription(), prio.IntToPriority(daoUserStory.getPriority()), daoUserStory.getId());
+                userStories.add(toAdd);
+            }
+            return userStories;
+        }
+        return null;
     }
 }
