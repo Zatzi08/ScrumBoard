@@ -63,7 +63,7 @@ public class WebController {
      */
     @RequestMapping(value ="/Login", method = RequestMethod.POST)
     public String login(@RequestParam(value = "EMail", required = true) String EMail,
-                              @RequestParam(value = "Passwort", required = true) String Passwort) {
+                        @RequestParam(value = "Passwort", required = true) String Passwort) {
         if (EMail != "" && Passwort != "" &&
                presentationToLogic.accountService.checkMail(EMail) &&
                presentationToLogic.accountService.login(EMail, Passwort))
@@ -123,12 +123,12 @@ public class WebController {
      */
     @RequestMapping(value = "/addStory", method = RequestMethod.POST)
     public String addStory(@RequestParam(value = "name", required = true) String name,
-                                 @RequestParam(value = "description", required = true) String Desc,
-                                 @RequestParam(value = "low", required = false) boolean low,
-                                 @RequestParam(value = "normal", required = false) boolean normal,
-                                 @RequestParam(value = "high", required = false) boolean high,
-                                 @RequestParam(value = "urgent", required = false) boolean urgent,
-                                 @RequestParam(value = "id", required = true) int id){
+                           @RequestParam(value = "description", required = true) String Desc,
+                           @RequestParam(value = "low", required = false) boolean low,
+                           @RequestParam(value = "normal", required = false) boolean normal,
+                           @RequestParam(value = "high", required = false) boolean high,
+                           @RequestParam(value = "urgent", required = false) boolean urgent,
+                           @RequestParam(value = "id", required = true) int id){
         UserStory Story = new UserStory(name, Desc,
                 low? Enumerations.Priority.low: normal? Enumerations.Priority.normal: high? Enumerations.Priority.high: Enumerations.Priority.urgent
                 ,id);
