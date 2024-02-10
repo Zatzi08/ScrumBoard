@@ -160,6 +160,7 @@ function replaceWithUserStoryContainer() {
 function zoomUserStoryContainer() {
     const userStoryButton = document.querySelector('.createUserStory');
     const userStoryContainer = document.querySelector('.userStoryContainer');
+    const zoomUserStoryBtn = document.getElementById('zoomUserStoryBtn'); // Korrekte Auswahl des Zoom-Buttons
     const overlay = document.createElement('div');
     overlay.classList.add('overlay');
     document.body.appendChild(overlay);
@@ -174,13 +175,15 @@ function zoomUserStoryContainer() {
     overlay.appendChild(pivot2);
 
     userStoryContainer.classList.add('zoomed');
-
+    
     const onClose = function () {
         userStoryContainer.classList.remove('zoomed');
         userStoryButton.appendChild(userStoryContainer);
         overlay.remove();
-        zoomButton.onclick = zoomUserStoryContainer;
+        zoomUserStoryBtn.onclick = zoomUserStoryContainer; // Wieder das Zoomen aktivieren
     }
+
+    zoomUserStoryBtn.onclick = onClose;
 
     overlay.addEventListener('click', function(event) {
         if (
@@ -191,9 +194,6 @@ function zoomUserStoryContainer() {
             onClose();
         }
     });
-
-    const zoomButton = document.getElementById('zoomUserStoryBtn');
-    zoomButton.onclick = onClose
 }
 
 /*
