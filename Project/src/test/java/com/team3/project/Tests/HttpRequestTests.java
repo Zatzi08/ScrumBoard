@@ -1,6 +1,7 @@
 package com.team3.project.Tests;
 
 import com.team3.project.DAOService.DAOAccountService;
+import com.team3.project.DAOService.DAOUserStoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,9 +38,9 @@ public class HttpRequestTests {
         assertThat(this.restTemplate.exchange("http://localhost:" + port + "/Login",HttpMethod.POST,message, String.class).getStatusCode())
                 .isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(this.restTemplate.exchange("http://localhost:" + port + "/Login" + "?EMail=" + EMail1 + "&Passwort=" + Passwort1, HttpMethod.POST, message, String.class).getStatusCode())
-                .isEqualTo(HttpStatus.OK);
+                .isEqualTo(HttpStatus.FOUND);
         assertThat(this.restTemplate.exchange("http://localhost:" + port + "/Login" + "?EMail=" + EMail2 + "&Passwort=" + Passwort2, HttpMethod.POST, message, String.class).getStatusCode())
-                .isEqualTo(HttpStatus.OK);
+                .isEqualTo(HttpStatus.FOUND);
     }
 
     /*  Test ID: HTTP.T2
@@ -95,5 +96,24 @@ public class HttpRequestTests {
                 .isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(this.restTemplate.exchange("http://localhost:" + port + "/neuesPasswort" + "?EMail=" + eMail + "&Passwort=" + passwort, HttpMethod.POST, message, String.class)
                 .getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    /*  Test ID: HTTP.T5
+     *  Author: Lucas Krüger
+     *  Zweck: Testen des Post Requests zum adden von neuen oder ändern bestehender USerStorys
+     */
+    @Test
+    void addUserStory(){
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.TEXT_PLAIN);
+        HttpEntity<String> message = new HttpEntity<>("", header);
+        String name = "TestStory";
+        String desc = "Delete later";
+        String desc2 = "Really delete later!";
+        assertThat(this.restTemplate.exchange("http://localhost:" + port + "/addStory", HttpMethod.POST,message, String.class).getStatusCode())
+                .isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(this.restTemplate.exchange("http://localhost:" + port + "/addStory" + "?name=" + name + "&description=" + desc + "&low=true" + "&id=-1", HttpMethod.POST, message, String.class)
+                .getStatusCode()).isEqualTo(HttpStatus.FOUND);
+        DAOUserStoryService.delete(name);
     }
 }
