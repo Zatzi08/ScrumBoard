@@ -1,5 +1,6 @@
 package com.team3.project.Tests;
 
+import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.DAOAccountService;
 import com.team3.project.DAOService.DAOUserStoryService;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+
+import java.util.List;
+
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -114,6 +118,10 @@ public class HttpRequestTests {
                 .isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(this.restTemplate.exchange("http://localhost:" + port + "/addStory" + "?name=" + name + "&description=" + desc + "&low=true" + "&id=-1", HttpMethod.POST, message, String.class)
                 .getStatusCode()).isEqualTo(HttpStatus.FOUND);
-        DAOUserStoryService.delete(name);
+        List<DAOUserStory> userStories = DAOUserStoryService.getAll();
+        int id = userStories.get(userStories.size()-1).getId();
+        assertThat(this.restTemplate.exchange("http://localhost:" + port + "/addStory" + "?name=" + name + "&description=" + desc2 + "&low=true" + "&id="+ id, HttpMethod.POST, message, String.class)
+                .getStatusCode()).isEqualTo(HttpStatus.FOUND);
+        DAOUserStoryService.delete(id);
     }
 }
