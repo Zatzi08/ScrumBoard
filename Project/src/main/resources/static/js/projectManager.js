@@ -85,8 +85,8 @@ function EditBox() {
 }
 function toggleEditBox(storyId, name, description){
     EditBox();
-    document.getElementById("userStoryTitel").value = name;
-    document.getElementById("userStoryBeschreibung").value = description;
+    document.getElementById("inputName").textContent = name;
+    document.getElementById("inputDesc").textContent = description;
     document.getElementById("editId").value = storyId;
 
 }

@@ -113,7 +113,7 @@
         -->
         <div class = "editMenu">
             <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
-            <span id="closeToggleEdit" class="closeToggleEdit" onclick="toggleEditBox()">&times;</span>
+            <span id="closeToggleEdit" class="closeToggleEdit" onclick="EditBox()">&times;</span>
             <div class="editMenu-content">
                 <form class="form" action="/addStory" method="post" id="editForm" autocomplete="off" name="Story">
                     <textarea id="inputName" class="inputEdit" required placeholder="Titel der User-Story eingeben" name="name" form="editForm"></textarea>
@@ -125,7 +125,7 @@
                     <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: lightgreen" name="low" form="editForm">Low</button>
                     <label style="margin-top: 15px">Abgabefrist</label>
                     <input type="datetime-local" id="inputDate" class="inputBtn" placeholder="Abgabefrist">
-                    <input type="hidden" id = "editId" name="id">
+                    <input type="hidden" id = "editId" name="id" value="-1">
                     <input type="hidden" id = "editPrio" name="priority" value="1">
                     <button type="submit" id="editMenu-saveEditBtn">Speichern</button>
                 </form>

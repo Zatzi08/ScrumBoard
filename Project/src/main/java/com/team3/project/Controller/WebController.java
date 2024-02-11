@@ -124,7 +124,7 @@ public class WebController {
     @RequestMapping(value = "/addStory", method = RequestMethod.POST)
     public String addStory(@RequestParam(value = "name", required = true) String name,
                            @RequestParam(value = "description", required = true) String Desc,
-                           @RequestParam(value = "priority", required = true) int prio,
+                           @RequestParam(value = "priority", required = false) int prio,
                            @RequestParam(value = "id", required = true) int id){
         Enumerations prior = new Enumerations();
         UserStory Story = new UserStory(name, Desc, prior.IntToPriority(prio),id);
