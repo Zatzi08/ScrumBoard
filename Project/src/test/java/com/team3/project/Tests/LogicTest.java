@@ -13,6 +13,10 @@ import java.util.List;
 
 public class LogicTest {
 
+    /*  Test ID: Logic.T1
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck:
+     */
     @Test
     void createUserStory(){ // TODO: fix problem: wenn eine userStory mit nicht vorhandener id geupdated werden soll, ändert sich etwas in der DB (siehe Zeile 29)
         UserStoryService usService = new UserStoryService();
@@ -31,6 +35,11 @@ public class LogicTest {
         DAOUserStoryService.delete(2);
         Assertions.assertEquals(usService.getAllUserStorys(), null); // sicherstellen, dass die DB wieder leer ist
     }
+
+    /*  Test ID: Logic.T2
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck:
+     */
     @Test
     void updateUserStory(){
         UserStoryService usService = new UserStoryService();
