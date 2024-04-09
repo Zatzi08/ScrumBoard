@@ -4,10 +4,6 @@ import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.UserStory;
 import com.team3.project.DAOService.DAOUserStoryService;
 import com.team3.project.service.UserStoryService;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
@@ -51,6 +47,8 @@ public class LogicTest {
         pw.close();
     }
 
+    // TODO: Tests atomarer gestalten -> z.B. Test auf DB empty als BeforeEach und oder AfterEach statt in jedem Test
+
     /*  Test ID: Logic.T1
      *  Author: Henry Lewis Freyschmidt
      *  Zweck:
@@ -67,6 +65,7 @@ public class LogicTest {
             pass = false;
         }
         Assertions.assertNull(usService.getAllUserStorys()); // Die Datenbank ist leer
+
         try {
             usService.addUserStory(u1);
         } catch (Exception e){
@@ -111,11 +110,18 @@ public class LogicTest {
      */
     @Test
     void updateUserStory(){
+        pw.append("Logk-Test-updateUserStory\n" + "Date: " + formatter.format(date)+ '\n');
         UserStoryService usService = new UserStoryService();
         UserStory u1 = new UserStory("UserStory1", "Blablah1", Enumerations.Priority.low, -1);
         UserStory u2 = new UserStory("UserStory2", "Blablah2", Enumerations.Priority.high, -1);
         UserStory u3 = new UserStory("UserStory3", "Blablah3", Enumerations.Priority.normal, 1);
+        if (usService.getAllUserStorys() != null) {
+            pw.append("not empty Database Userstory\n");
+            pass = false;
+        }
         Assertions.assertNull(usService.getAllUserStorys());
+
+
         try {
             usService.addUserStory(u1);
             usService.addUserStory(u2);
@@ -129,9 +135,22 @@ public class LogicTest {
         }catch (Exception e){
             e.printStackTrace();
         }
-        Assertions.assertNotSame(list, usService.getAllUserStorys()); //prüfen ob Userstory verändert wurde
+
+        try {
+            Assertions.assertNotSame(list, usService.getAllUserStorys());//prüfen ob Userstory verändert wurde
+        } catch (AssertionError e){
+            pw.append("no Userstory created\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+
         DAOUserStoryService.delete(1);
         DAOUserStoryService.delete(2);
+
+        if (usService.getAllUserStorys() != null) {
+            pw.append("not emptied Database Userstory\n");
+            pass = false;
+        }
         Assertions.assertNull(usService.getAllUserStorys());
         pw.append(String.format("pass: %b\n\n", pass));
     }

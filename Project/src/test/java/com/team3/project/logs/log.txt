@@ -1,1 +1,10 @@
 Test-Log
+
+Logk-Test-createUserStory
+Date: 09/04/24 13:49:32
+pass: true
+
+Logk-Test-updateUserStory
+Date: 09/04/24 13:49:32
+pass: true
+
