@@ -14,17 +14,6 @@ import java.util.List;
 public class UserStoryService {
     private Enumerations enumerations = new Enumerations();
 
-    // TODO: needs Database connection to implement create Object
-    /* Author: Henry L. Freyschmidt
-     * Revisited: /
-     * Funktion: /
-     * Grund: /
-     * UserStory/Task-ID: /
-     */
-    public boolean createUserStory(String UserStoryContent){
-        return false;
-    }
-
     // TODO: needs Database connection to implement get Object
     /* Author: Lucas Krüger
      * Revisited: /
@@ -32,22 +21,13 @@ public class UserStoryService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public UserStory getUserStory(int UserStoryID){
+    public UserStory getUserStory(int userStoryID) throws Exception {
+        if (userStoryID == -1) throw new Exception("Null UserStoryID");
         return null; //logicToData.daoUserStoryService.getByID(UserStoryID);
     }
 
-    // TODO: needs Database connection to implement Update Object
-    /* Author: Henry L. Freyschmidt
-     * Revisited: /
-     * Funktion: /
-     * Grund: /
-     * UserStory/Task-ID: /
-     */
-    public boolean updateUserStory(UserStory userStory){//TODO: wie kann man die veränderten Attribute angeben
-        return true;
-    }
-
-    public void addUserStory(UserStory story) {
+    public void addUserStory(UserStory story) throws Exception {
+        if (story == null) throw new Exception("Null Story");
         if(story.getId() == -1){
             DAOUserStoryService.create(story.getName(),story.getDescription(), enumerations.getInt(story.getPriority()));
         } else{

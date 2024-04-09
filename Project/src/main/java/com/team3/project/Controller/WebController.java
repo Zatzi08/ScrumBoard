@@ -64,11 +64,13 @@ public class WebController {
     @RequestMapping(value ="/Login", method = RequestMethod.POST)
     public String login(@RequestParam(value = "EMail", required = true) String EMail,
                         @RequestParam(value = "Passwort", required = true) String Passwort) {
-        if (EMail != "" && Passwort != "" &&
-               presentationToLogic.accountService.checkMail(EMail) &&
-               presentationToLogic.accountService.login(EMail, Passwort))
-            return "redirect:/ProjectManager";
-        return "redirect:/";
+        try{
+            if(presentationToLogic.accountService.checkMail(EMail) &&
+                    presentationToLogic.accountService.login(EMail, Passwort)) return "redirect:/ProjectManager";
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+            return "redirect:/";
     }
 
     /* Author: Lucas Krüger
@@ -94,7 +96,12 @@ public class WebController {
     @ResponseBody
     public String neuesPasswort(@RequestParam(value = "Passwort", required = true) String Passwort,
                                 @RequestParam(value = "EMail", required = true)String EMail){
-        presentationToLogic.accountService.resetPasswort(EMail, Passwort);
+        // TODO: Mail mit Verifizierungscode + neuen Link für zurücksetzen
+        try {
+            presentationToLogic.accountService.resetPasswort(EMail, Passwort);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "redirect:/";
     }
 
@@ -109,8 +116,12 @@ public class WebController {
                                  @RequestParam(value = "EMail", required = true) String EMail,
                                  @RequestParam(value = "Passwort", required = true) String Passwort){
         if(!presentationToLogic.accountService.checkMail(EMail)) {
-           if(presentationToLogic.accountService.register( Username,EMail,Passwort))
-               return new ModelAndView("index");
+            try {
+                if(presentationToLogic.accountService.register( Username,EMail,Passwort))
+                    return new ModelAndView("index");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return new ModelAndView("register");
     }
@@ -125,10 +136,14 @@ public class WebController {
     public String addStory(@RequestParam(value = "name", required = true) String name,
                            @RequestParam(value = "description", required = true) String Desc,
                            @RequestParam(value = "priority", required = false) int prio,
-                           @RequestParam(value = "id", required = true) int id){
+                           @RequestParam(value = "id", required = true, defaultValue = "-1") int id){
         Enumerations prior = new Enumerations();
         UserStory Story = new UserStory(name, Desc, prior.IntToPriority(prio),id);
-        presentationToLogic.userStoryService.addUserStory(Story);
+        try {
+            presentationToLogic.userStoryService.addUserStory(Story);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         return "redirect:/ProjectManager";
     }
 
@@ -136,7 +151,7 @@ public class WebController {
      * Revisited: /
      * Funktion: Anzeigen aller Userstorys
      * Grund: /
-     * UserStory/Task-ID: U1.B1, U3.B1, U4.B1, U5.B1, U5.B2
+     * UserStory/Task-ID: U1.B1, U3.B1, U4.B1, U5.B1, U5.B2 // Todo: Fix
      */
     @RequestMapping("/ProjectManager")
     private ModelAndView ProjectManager(){
