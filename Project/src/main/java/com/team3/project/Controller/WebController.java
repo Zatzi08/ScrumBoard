@@ -1,6 +1,5 @@
 package com.team3.project.Controller;
 
-import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.UserStory;
 import com.team3.project.Faced.PresentationToLogic;
 import org.springframework.stereotype.Controller;
@@ -44,7 +43,7 @@ public class WebController {
 
     /* Author: Lucas Krüger
      * Revisited: /
-     * Funktion: Weiterleiten zu Registrieren-Seiter
+     * Funktion: Weiterleiten zu Registrieren-Seite
      * Grund: /
      * UserStory/Task-ID: /
      */
