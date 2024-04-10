@@ -67,9 +67,9 @@ public class LogicTest {
     void createUserStory(){ // TODO: fix problem: wenn eine userStory mit nicht vorhandener id geupdated werden soll, ändert sich etwas in der DB (siehe Zeile 29)
         pw.append("Logik-Test-createUserStory\nTest ID: Logic.T1\nDate: " + formatter.format(date)+ '\n');
         UserStoryService usService = new UserStoryService();
-        UserStory u1 = new UserStory("UserStory1", "Blablah1", Enumerations.Priority.low, -1);
-        UserStory u2 = new UserStory("UserStory2", "Blablah2", Enumerations.Priority.high, -1);
-        UserStory u3 = new UserStory("UserStory3", "Blablah3", Enumerations.Priority.low, 5);
+        UserStory u1 = new UserStory("UserStory1", "Blablah1", 1, -1);
+        UserStory u2 = new UserStory("UserStory2", "Blablah2", 3, -1);
+        UserStory u3 = new UserStory("UserStory3", "Blablah3", 2, 5);
 
         try {
             usService.addUserStory(u1);
@@ -110,9 +110,9 @@ public class LogicTest {
     void updateUserStory(){
         pw.append("Logik-Test-updateUserStory\nTest ID: Logic.T2\n" + "Date: " + formatter.format(date)+ '\n');
         UserStoryService usService = new UserStoryService();
-        UserStory u1 = new UserStory("UserStory1", "Blablah1", Enumerations.Priority.low, -1);
-        UserStory u2 = new UserStory("UserStory2", "Blablah2", Enumerations.Priority.high, -1);
-        UserStory u3 = new UserStory("UserStory3", "Blablah3", Enumerations.Priority.normal, 1);
+        UserStory u1 = new UserStory("UserStory1", "Blablah1", 1, -1);
+        UserStory u2 = new UserStory("UserStory2", "Blablah2", 3, -1);
+        UserStory u3 = new UserStory("UserStory3", "Blablah3", 2, 1);
 
         try {
             usService.addUserStory(u1);

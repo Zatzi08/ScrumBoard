@@ -2,8 +2,7 @@ package com.team3.project.Controller;
 
 import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.UserStory;
-import com.team3.project.DAOService.DAOUserStoryService;
-import com.team3.project.Interface.PresentationToLogic;
+import com.team3.project.Faced.PresentationToLogic;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +17,7 @@ public class WebController {
     }
     private final PresentationToLogic presentationToLogic;
 
-    // TODO: IOExeptions
+    // TODO: IOExceptions
     /* Author: Lucas Krüger
      * Revisited: /
      * Funktion: Laden der Login-Page
@@ -139,11 +138,10 @@ public class WebController {
                            @RequestParam(value = "description", required = true) String Desc,
                            @RequestParam(value = "priority", required = false) int prio,
                            @RequestParam(value = "id", required = true, defaultValue = "-1") int id){
-        Enumerations prior = new Enumerations();
-        UserStory Story = new UserStory(name, Desc, prior.IntToPriority(prio),id);
+        UserStory story = new UserStory(name, Desc, prio,id);
 
         try {
-            presentationToLogic.userStoryService.addUserStory(Story);
+            presentationToLogic.userStoryService.addUserStory(story);
         } catch (Exception e){
             e.printStackTrace();
         }

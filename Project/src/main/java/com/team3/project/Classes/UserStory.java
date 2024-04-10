@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class UserStory {
+public class UserStory extends abstraktDataClasses {
     private String name;
     private String description;
     private Priority priority;
@@ -22,10 +22,11 @@ public class UserStory {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public UserStory(String name, String description, Enumerations.Priority priority, int id){
+    public UserStory(String name, String description, int priority, int id){
+        Enumerations prior = new Enumerations();
         this.name = name;
         this.description = description;
-        this.priority = priority;
+        this.priority = prior.IntToPriority(priority);
         this.id = id;
     }
 }
