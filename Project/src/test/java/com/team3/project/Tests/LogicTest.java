@@ -54,7 +54,7 @@ public class LogicTest {
      */
     @Test
     void createUserStory(){ // TODO: fix problem: wenn eine userStory mit nicht vorhandener id geupdated werden soll, ändert sich etwas in der DB (siehe Zeile 29)
-        pw.append("Logk-Test-createUserStory\n" + "Date: " + formatter.format(date)+ '\n');
+        pw.append("Logik-Test-createUserStory\nDate: " + formatter.format(date)+ '\n');
         UserStoryService usService = new UserStoryService();
         UserStory u1 = new UserStory("UserStory1", "Blablah1", Enumerations.Priority.low, -1);
         UserStory u2 = new UserStory("UserStory2", "Blablah2", Enumerations.Priority.high, -1);
@@ -109,7 +109,7 @@ public class LogicTest {
      */
     @Test
     void updateUserStory(){
-        pw.append("Logk-Test-updateUserStory\n" + "Date: " + formatter.format(date)+ '\n');
+        pw.append("Logik-Test-updateUserStory\n" + "Date: " + formatter.format(date)+ '\n');
         UserStoryService usService = new UserStoryService();
         UserStory u1 = new UserStory("UserStory1", "Blablah1", Enumerations.Priority.low, -1);
         UserStory u2 = new UserStory("UserStory2", "Blablah2", Enumerations.Priority.high, -1);
