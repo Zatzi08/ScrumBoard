@@ -66,7 +66,8 @@ public class WebController {
                         @RequestParam(value = "Passwort", required = true) String Passwort) {
         try{
             if(presentationToLogic.accountService.checkMail(EMail) &&
-                    presentationToLogic.accountService.login(EMail, Passwort)) return "redirect:/ProjectManager";
+               presentationToLogic.accountService.login(EMail, Passwort))
+                return "redirect:/ProjectManager";
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -81,7 +82,8 @@ public class WebController {
      */
     @RequestMapping(value = "/neuesPasswortPage", method = RequestMethod.POST)
     public ModelAndView neuesPasswortPage(@RequestParam(value = "EMail", required = true) String EMail){
-        if(presentationToLogic.accountService.checkMail(EMail)) return new ModelAndView("neuesPasswort").addObject("Mail", EMail);
+        if(presentationToLogic.accountService.checkMail(EMail))
+            return new ModelAndView("neuesPasswort").addObject("Mail", EMail);
         return new ModelAndView("index");
     }
 
@@ -115,14 +117,14 @@ public class WebController {
     public ModelAndView Register(@RequestParam(value = "Username", required = true) String Username,
                                  @RequestParam(value = "EMail", required = true) String EMail,
                                  @RequestParam(value = "Passwort", required = true) String Passwort){
-        if(!presentationToLogic.accountService.checkMail(EMail)) {
             try {
-                if(presentationToLogic.accountService.register( Username,EMail,Passwort))
-                    return new ModelAndView("index");
+                if(!presentationToLogic.accountService.checkMail(EMail)) {
+                    if (presentationToLogic.accountService.register(Username, EMail, Passwort))
+                        return new ModelAndView("index");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
         return new ModelAndView("register");
     }
 
@@ -139,6 +141,7 @@ public class WebController {
                            @RequestParam(value = "id", required = true, defaultValue = "-1") int id){
         Enumerations prior = new Enumerations();
         UserStory Story = new UserStory(name, Desc, prior.IntToPriority(prio),id);
+
         try {
             presentationToLogic.userStoryService.addUserStory(Story);
         } catch (Exception e){
