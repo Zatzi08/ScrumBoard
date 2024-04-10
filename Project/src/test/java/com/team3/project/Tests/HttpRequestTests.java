@@ -38,7 +38,7 @@ public class HttpRequestTests {
     @BeforeAll
     public static void setup(){
         try {
-            File log = new File("src/test/java/com/team3/project/logs/log_LogicTest.txt");
+            File log = new File("src/test/java/com/team3/project/logs/log_HttpRequestTest.txt");
             log.setWritable(true);
             log.setReadable(true);
             FileWriter fw = new FileWriter(log,true);
@@ -100,6 +100,7 @@ public class HttpRequestTests {
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
         }
+        pw.append(String.format("pass: %b", pass));
     }
 
     /*  Test ID: HTTP.T2
@@ -142,6 +143,7 @@ public class HttpRequestTests {
         }
 
         DAOAccountService.deleteAccount(eMail2);
+        pw.append(String.format("pass: %b", pass));
     }
 
     /*  Test ID: HTTP.T3
@@ -170,6 +172,7 @@ public class HttpRequestTests {
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
         }
+        pw.append(String.format("pass: %b", pass));
     }
 
     /*  Test ID: HTTP.T4
@@ -199,6 +202,7 @@ public class HttpRequestTests {
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
         }
+        pw.append(String.format("pass: %b", pass));
     }
 
     /*  Test ID: HTTP.T5
@@ -244,5 +248,6 @@ public class HttpRequestTests {
             throw new AssertionError(e);
         }
         DAOUserStoryService.delete(id);
+        pw.append(String.format("pass: %b", pass));
     }
 }

@@ -8,8 +8,6 @@ Logik-Test-updateUserStory
 Date: 09/04/24 13:49:32
 pass: true
 
-
-
 Logik-Test-createUserStory
 Date: 10/04/24 13:11:12
 pass: true
@@ -17,4 +15,3 @@ pass: true
 Logik-Test-updateUserStory
 Date: 10/04/24 13:11:12
 pass: true
-
