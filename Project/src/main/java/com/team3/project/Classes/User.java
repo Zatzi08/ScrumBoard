@@ -9,9 +9,9 @@ import java.util.List;
 
 @Getter
 @Setter
-public class User {
+public class User extends abstraktDataClasses {
     private Account account;
-    private int userID;
+    private int ID;
     private String name;
     private String privatDescription;
     private String workDescription;
@@ -30,7 +30,7 @@ public class User {
     public User(Account account, String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles, List<Integer> taskIDs){
         this.account = account;
         this.name = name;
-        this.userID = userID;
+        this.ID = userID;
         this.privatDescription = privatDescription;
         this.workDescription = workDescription;
         this.roles = roles;

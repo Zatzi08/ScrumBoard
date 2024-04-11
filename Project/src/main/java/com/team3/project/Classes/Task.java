@@ -9,8 +9,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Task {
-    private int taskID;
+public class Task extends abstraktDataClasses {
+    private int ID;
     private String description;
     private Priority priority;
     private int userStoryID;
@@ -26,7 +26,7 @@ public class Task {
      * UserStory/Task-ID: /
      */
     public Task(int tID, String description, Priority priority, int UserStoryID){
-        this.taskID = tID;
+        this.ID = tID;
         this.description = description;
         this.priority = priority;
         this.userStoryID = userStoryID;

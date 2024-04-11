@@ -22,7 +22,7 @@ public class LogicTest {
     @BeforeAll
     public static void setup(){
         try {
-            File log = new File("src/test/java/com/team3/project/logs/log.txt");
+            File log = new File("src/test/java/com/team3/project/logs/log_LogicTest.txt");
             log.setWritable(true);
             log.setReadable(true);
             FileWriter fw = new FileWriter(log,true);
@@ -41,6 +41,17 @@ public class LogicTest {
         pass = true;
     }
 
+    @BeforeEach @AfterEach
+    public void emptyDatabase(){
+        UserStoryService usService = new UserStoryService();
+        try{
+            Assertions.assertNull(usService.getAllUserStorys()); // Die Datenbank ist leer
+        } catch (AssertionError e){
+            pw.append("not empty Database\n");
+            throw new AssertionError(e);
+        }
+    }
+
     @AfterAll
     public static void closeWriter(){
         pw.close();
@@ -54,16 +65,11 @@ public class LogicTest {
      */
     @Test
     void createUserStory(){ // TODO: fix problem: wenn eine userStory mit nicht vorhandener id geupdated werden soll, ändert sich etwas in der DB (siehe Zeile 29)
-        pw.append("Logk-Test-createUserStory\n" + "Date: " + formatter.format(date)+ '\n');
+        pw.append("Logik-Test-createUserStory\nTest ID: Logic.T1\nDate: " + formatter.format(date)+ '\n');
         UserStoryService usService = new UserStoryService();
-        UserStory u1 = new UserStory("UserStory1", "Blablah1", Enumerations.Priority.low, -1);
-        UserStory u2 = new UserStory("UserStory2", "Blablah2", Enumerations.Priority.high, -1);
-        UserStory u3 = new UserStory("UserStory3", "Blablah3", Enumerations.Priority.low, 5);
-        if (usService.getAllUserStorys() != null) {
-            pw.append("not empty Database Userstory\n");
-            pass = false;
-        }
-        Assertions.assertNull(usService.getAllUserStorys()); // Die Datenbank ist leer
+        UserStory u1 = new UserStory("UserStory1", "Blablah1", 1, -1);
+        UserStory u2 = new UserStory("UserStory2", "Blablah2", 3, -1);
+        UserStory u3 = new UserStory("UserStory3", "Blablah3", 2, 5);
 
         try {
             usService.addUserStory(u1);
@@ -82,7 +88,7 @@ public class LogicTest {
         try {
             Assertions.assertNotSame(list, usService.getAllUserStorys());//prüfen ob u2 erstellt wird (soll erstellt werden)
         } catch (AssertionError e){
-            pw.append("no Userstory created\n");
+            pw.append("Fail: no Userstory created\n");
             pass = false;
             throw new AssertionError(e);
         }
@@ -93,13 +99,6 @@ public class LogicTest {
         Assertions.assertSame(list, usService.getAllUserStorys());*/ // prüfen ob u3 erstellt wird (soll nicht erstellt werden)
         DAOUserStoryService.delete(1);
         DAOUserStoryService.delete(2);
-
-        if (usService.getAllUserStorys() != null) {
-            pw.append("not emptied Database Userstory\n");
-            pass = false;
-        }
-        Assertions.assertNull(usService.getAllUserStorys()); // sicherstellen, dass die DB wieder leer ist
-
         pw.append(String.format("pass: %b", pass));
     }
 
@@ -109,17 +108,11 @@ public class LogicTest {
      */
     @Test
     void updateUserStory(){
-        pw.append("Logk-Test-updateUserStory\n" + "Date: " + formatter.format(date)+ '\n');
+        pw.append("Logik-Test-updateUserStory\nTest ID: Logic.T2\n" + "Date: " + formatter.format(date)+ '\n');
         UserStoryService usService = new UserStoryService();
-        UserStory u1 = new UserStory("UserStory1", "Blablah1", Enumerations.Priority.low, -1);
-        UserStory u2 = new UserStory("UserStory2", "Blablah2", Enumerations.Priority.high, -1);
-        UserStory u3 = new UserStory("UserStory3", "Blablah3", Enumerations.Priority.normal, 1);
-        if (usService.getAllUserStorys() != null) {
-            pw.append("not empty Database Userstory\n");
-            pass = false;
-        }
-        Assertions.assertNull(usService.getAllUserStorys());
-
+        UserStory u1 = new UserStory("UserStory1", "Blablah1", 1, -1);
+        UserStory u2 = new UserStory("UserStory2", "Blablah2", 3, -1);
+        UserStory u3 = new UserStory("UserStory3", "Blablah3", 2, 1);
 
         try {
             usService.addUserStory(u1);
@@ -138,7 +131,7 @@ public class LogicTest {
         try {
             Assertions.assertNotSame(list, usService.getAllUserStorys());//prüfen ob Userstory verändert wurde
         } catch (AssertionError e){
-            pw.append("no Userstory created\n");
+            pw.append("Fail: no Userstory created\n");
             pass = false;
             throw new AssertionError(e);
         }
@@ -146,11 +139,6 @@ public class LogicTest {
         DAOUserStoryService.delete(1);
         DAOUserStoryService.delete(2);
 
-        if (usService.getAllUserStorys() != null) {
-            pw.append("not emptied Database Userstory\n");
-            pass = false;
-        }
-        Assertions.assertNull(usService.getAllUserStorys());
-        pw.append(String.format("pass: %b\n\n", pass));
+        pw.append(String.format("pass: %b", pass));
     }
 }

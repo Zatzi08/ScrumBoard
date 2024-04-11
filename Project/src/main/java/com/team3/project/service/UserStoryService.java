@@ -46,7 +46,7 @@ public class UserStoryService {
             List<UserStory> userStories = new LinkedList<>();
             for (DAOUserStory daoUserStory : user) {
                 Enumerations prio = new Enumerations();
-                UserStory toAdd = new UserStory(daoUserStory.getName(), daoUserStory.getDescription(), prio.IntToPriority(daoUserStory.getPriority()), daoUserStory.getId());
+                UserStory toAdd = new UserStory(daoUserStory.getName(), daoUserStory.getDescription(), daoUserStory.getPriority(), daoUserStory.getId());
                 userStories.add(toAdd);
             }
             return userStories;

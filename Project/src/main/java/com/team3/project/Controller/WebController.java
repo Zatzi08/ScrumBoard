@@ -1,9 +1,7 @@
 package com.team3.project.Controller;
 
-import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.UserStory;
-import com.team3.project.DAOService.DAOUserStoryService;
-import com.team3.project.Interface.PresentationToLogic;
+import com.team3.project.Faced.PresentationToLogic;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +16,7 @@ public class WebController {
     }
     private final PresentationToLogic presentationToLogic;
 
-    // TODO: IOExeptions
+    // TODO: IOExceptions
     /* Author: Lucas Krüger
      * Revisited: /
      * Funktion: Laden der Login-Page
@@ -45,7 +43,7 @@ public class WebController {
 
     /* Author: Lucas Krüger
      * Revisited: /
-     * Funktion: Weiterleiten zu Registrieren-Seiter
+     * Funktion: Weiterleiten zu Registrieren-Seite
      * Grund: /
      * UserStory/Task-ID: /
      */
@@ -66,7 +64,8 @@ public class WebController {
                         @RequestParam(value = "Passwort", required = true) String Passwort) {
         try{
             if(presentationToLogic.accountService.checkMail(EMail) &&
-                    presentationToLogic.accountService.login(EMail, Passwort)) return "redirect:/ProjectManager";
+               presentationToLogic.accountService.login(EMail, Passwort))
+                return "redirect:/ProjectManager";
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -81,7 +80,8 @@ public class WebController {
      */
     @RequestMapping(value = "/neuesPasswortPage", method = RequestMethod.POST)
     public ModelAndView neuesPasswortPage(@RequestParam(value = "EMail", required = true) String EMail){
-        if(presentationToLogic.accountService.checkMail(EMail)) return new ModelAndView("neuesPasswort").addObject("Mail", EMail);
+        if(presentationToLogic.accountService.checkMail(EMail))
+            return new ModelAndView("neuesPasswort").addObject("Mail", EMail);
         return new ModelAndView("index");
     }
 
@@ -115,14 +115,14 @@ public class WebController {
     public ModelAndView Register(@RequestParam(value = "Username", required = true) String Username,
                                  @RequestParam(value = "EMail", required = true) String EMail,
                                  @RequestParam(value = "Passwort", required = true) String Passwort){
-        if(!presentationToLogic.accountService.checkMail(EMail)) {
             try {
-                if(presentationToLogic.accountService.register( Username,EMail,Passwort))
-                    return new ModelAndView("index");
+                if(!presentationToLogic.accountService.checkMail(EMail)) {
+                    if (presentationToLogic.accountService.register(Username, EMail, Passwort))
+                        return new ModelAndView("index");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
         return new ModelAndView("register");
     }
 
@@ -137,10 +137,10 @@ public class WebController {
                            @RequestParam(value = "description", required = true) String Desc,
                            @RequestParam(value = "priority", required = false) int prio,
                            @RequestParam(value = "id", required = true, defaultValue = "-1") int id){
-        Enumerations prior = new Enumerations();
-        UserStory Story = new UserStory(name, Desc, prior.IntToPriority(prio),id);
+        UserStory story = new UserStory(name, Desc, prio,id);
+
         try {
-            presentationToLogic.userStoryService.addUserStory(Story);
+            presentationToLogic.userStoryService.addUserStory(story);
         } catch (Exception e){
             e.printStackTrace();
         }
