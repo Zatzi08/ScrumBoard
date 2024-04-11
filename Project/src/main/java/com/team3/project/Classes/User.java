@@ -19,8 +19,6 @@ public class User extends abstraktDataClasses {
     private List<Integer> taskIDs;
     private int authorization; //von der DB gestellt
 
-    public User(){}
-
     /* Author: Henry L. Freyschmidt
      * Revisited: /
      * Funktion: /
@@ -28,9 +26,9 @@ public class User extends abstraktDataClasses {
      * UserStory/Task-ID: /
      */
     public User(Account account, String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles, List<Integer> taskIDs){
+        super(userID);
         this.account = account;
         this.name = name;
-        this.ID = userID;
         this.privatDescription = privatDescription;
         this.workDescription = workDescription;
         this.roles = roles;

@@ -6,7 +6,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import com.team3.project.Classes.Email;
 @Service
-public class AccountService extends User {
+public class AccountService {
     public boolean checkMail(String Mail){
         return DAOAccountService.checkmail(Mail);
     }

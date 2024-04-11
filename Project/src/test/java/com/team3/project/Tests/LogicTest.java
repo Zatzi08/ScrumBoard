@@ -1,6 +1,5 @@
 package com.team3.project.Tests;
 
-import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.UserStory;
 import com.team3.project.DAOService.DAOUserStoryService;
 import com.team3.project.service.UserStoryService;
@@ -64,7 +63,7 @@ public class LogicTest {
      *  Zweck:
      */
     @Test
-    void createUserStory(){ // TODO: fix problem: wenn eine userStory mit nicht vorhandener id geupdated werden soll, ändert sich etwas in der DB (siehe Zeile 29)
+    void createUserStory(){ // TODO: fix problem: wenn eine userStory mit nicht vorhandener id updated werden soll, ändert sich etwas in der DB (siehe Zeile 29)
         pw.append("Logik-Test-createUserStory\nTest ID: Logic.T1\nDate: " + formatter.format(date)+ '\n');
         UserStoryService usService = new UserStoryService();
         UserStory u1 = new UserStory("UserStory1", "Blablah1", 1, -1);
