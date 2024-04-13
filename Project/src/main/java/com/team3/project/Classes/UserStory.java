@@ -13,8 +13,6 @@ public class UserStory extends abstraktDataClasses {
     private String description;
     private Priority priority;
     private List<Task> Tasks = null;
-    // id darf nicht in der logic angepast werden nacht deswegen jetzt final -Marvin
-    private final int id;
 
     /* Author: Henry L. Freyschmidt
      * Revisited: /
@@ -23,10 +21,10 @@ public class UserStory extends abstraktDataClasses {
      * UserStory/Task-ID: /
      */
     public UserStory(String name, String description, int priority, int id){
+        super(id);
         Enumerations prior = new Enumerations();
         this.name = name;
         this.description = description;
         this.priority = prior.IntToPriority(priority);
-        this.id = id;
     }
 }

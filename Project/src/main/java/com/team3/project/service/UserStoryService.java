@@ -28,14 +28,14 @@ public class UserStoryService {
 
     public void addUserStory(UserStory story) throws Exception {
         if (story == null) throw new Exception("Null Story");
-        if(story.getId() == -1){
+        if(story.getID() == -1){
             DAOUserStoryService.create(story.getName(),story.getDescription(), enumerations.getInt(story.getPriority()));
         } else{
-            if (DAOUserStoryService.getByID(story.getId()) != null){
-                DAOUserStoryService.updateName(story.getId(),story.getName());
-                DAOUserStoryService.updateDescription(story.getId(),story.getDescription());
+            if (DAOUserStoryService.getByID(story.getID()) != null){
+                DAOUserStoryService.updateName(story.getID(),story.getName());
+                DAOUserStoryService.updateDescription(story.getID(),story.getDescription());
                 Enumerations prio = new Enumerations();
-                DAOUserStoryService.updatePriority(story.getId(), prio.getInt(story.getPriority()));
+                DAOUserStoryService.updatePriority(story.getID(), prio.getInt(story.getPriority()));
             }
         }
     }

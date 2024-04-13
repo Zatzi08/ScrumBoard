@@ -60,8 +60,8 @@ public class TaskService {
      * UserStory/Task-ID: /
      */
     public Task getTask(int taskID){
-        Task task = new Task();
+        //Task task = new Task();
         //TODO: implementiere findTask: Rückgabe Task mit  TaskID= taskID
-        return task;
+        return null;
     }
 }

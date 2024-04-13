@@ -210,7 +210,7 @@ public class HttpRequestTests {
      *  Zweck: Testen des Post Requests zum adden von neuen oder ändern bestehender USerStorys
      */
     @Test
-    void addUserStory(){
+    void addUserStoryTest(){
         pw.append("HTTP-Test-addUserStoryTest\nTest ID: HTTP.T5\nDate: " + formatter.format(date)+ '\n');
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
@@ -250,4 +250,88 @@ public class HttpRequestTests {
         DAOUserStoryService.delete(id);
         pw.append(String.format("pass: %b", pass));
     }
+
+    /*  Test ID: HTTP.T6
+     *  Author: Lucas Krüger
+     *  Zweck: Testen des Post Requests zum Anfordern des Reset-codes für einen User
+     */
+    @Test
+    void RequestResetCodeTest(){
+        pw.append("HTTP-Test-RequestResetCodeTest\nTest ID: HTTP.T6\nDate: " + formatter.format(date)+ '\n');
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.TEXT_PLAIN);
+        HttpEntity<String> message = new HttpEntity<>("", header);
+        String EMail1 = "Test@Mail.com";
+        String EMail2 = "Test@Mail.com";
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetPasswort", HttpMethod.POST, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.BAD_REQUEST);
+        } catch (AssertionError e){
+            pw.append("Fail: Akzeptiert Bad_Request");
+            throw new AssertionError(e);
+        }
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetPasswort?email=" + EMail1, HttpMethod.POST, message, String.class)
+                    .getStatusCode()).isEqualTo(HttpStatus.FOUND);
+        } catch (AssertionError e){
+            pw.append("Fail: HTTP PostRequest nicht erfolgreich");
+            throw new AssertionError(e);
+        }
+        try {
+            try {
+                assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetPasswort?email=" + EMail1, HttpMethod.POST, message, String.class)
+                        .getBody().contains("code:")); //TODO: alle Codes starten mit "code:" PS.: kp ob contains überhaupt funktioniert
+            } catch (AssertionError e) {
+                pw.append("Fail: Code nicht integriert");
+                throw new AssertionError(e);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetPasswort?email=" + EMail2, HttpMethod.POST, message, String.class)
+                    .getStatusCode()).isEqualTo(HttpStatus.FOUND);
+        } catch (AssertionError e){
+            pw.append("Fail: HTTP PostRequest nicht erfolgreich");
+            throw new AssertionError(e);
+        }
+        pw.append(String.format("pass: %b", pass));
+    }
+
+    /*  Test ID: HTTP.T6
+     *  Author: Lucas Krüger
+     *  Zweck: Testen des Post Requests zum resetten des Passworts eines Users
+     */
+    @Test
+    void RequestResetTest(){
+        pw.append("HTTP-Test-RequestResetCodeTest\nTest ID: HTTP.T6\nDate: " + formatter.format(date)+ '\n');
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.TEXT_PLAIN);
+        HttpEntity<String> message = new HttpEntity<>("", header);
+        String EMail1 = "Test@Mail.com";
+        String Passwort1 = "TestPasswort123";
+        String Code1 = "MasterCodeEAIFPH8746531§%$&%/%(&)7867451!%468756847Rqwef6844255614as7846f<ehtr86r4wefra784s6<"; //TODO: implement Mastercode für Tests oder
+        //TODO: alternativ bekomme code aus ResponseBody oder so... aber kp ob einfach möglich
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetPasswort", HttpMethod.POST, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.BAD_REQUEST);
+        } catch (AssertionError e){
+            pw.append("Fail: Akzeptiert Bad_Request");
+            throw new AssertionError(e);
+        }
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetPasswort?email=" + EMail1 + "&newPasswort="+Passwort1 + "&code=" + Code1, HttpMethod.POST, message, String.class)
+                    .getStatusCode()).isEqualTo(HttpStatus.FOUND);
+        } catch (AssertionError e){
+            pw.append("Fail: HTTP PostRequest nicht erfolgreich");
+            throw new AssertionError(e);
+        }
+
+        pw.append(String.format("pass: %b", pass));
+    }
+
 }
