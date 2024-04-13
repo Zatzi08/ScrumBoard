@@ -142,3 +142,48 @@ public class LogicTest {
         pw.append(String.format("pass: %b", pass));
     }
 }
+/* erster Draft: Erfüllungsbedingungen für die User-Storys vom Sprint 2
+* Test A4:
+* A4.B1 - Sicherheitscode erstellen: trivial
+* A4.B2 - Mail-Erstellung: erfüllt, wenn E-Mail mit korrekten Daten generiert wurde
+* A4.B3 - Mail-Sendung: manuell??
+*
+* Test A5:
+* A5.B1 - Passwort-Wiederherstellung: erfüllt, wenn 1. bei korrekten Angaben die Passwort-Speicherung einleitet
+*                                                   2. bei falschen Angaben abbricht
+*
+* Test P1:
+* P1.B1 - Profil-Anzeigen: erfüllt, wenn Profil-Daten des Nutzers ans Front-end geschickt werden
+*
+* Test P2:
+* P2.B1 - Profil-Editieren: erfüllt, wenn geänderte Daten im korrekten Profil gespeichert werden
+*
+* Test U3:
+* U3.B1 - User-Story-Erstellung: erfüllt, wenn 1. User-Story mit korrekten Daten generiert wird
+*                                             2. User-Story kann nur von gewissen Rollen erstellt werden
+* U3.B2 - Rechteverwaltung: erfüllt, wenn 1. Nutzern können Rollen/Rechte zugeordnet werden
+*                                         2. nur gewisse Nutzer können die Rechte anderer bestimmen
+*
+* Test U4:
+* U4.B1 - User-Story-Editieren: erfüllt, wenn 1. gewünschte Änderungen werden in der korrekten User-Story abgespeichert
+*                                             2. nur der Product-Owner kann die User-Story editieren
+* Test U6:
+* U6.B1 - User-Story-Löschen: erfüllt, wenn 1. korrekte User-Story aus der DB gelöscht wird
+*                                           2. nur der Product-Owner kann die User-Story löschen
+* Test T1:
+* T1.B1 - Alle Tasks Anzeigen: erfüllt, wenn alle Tasks der DB ans front-end weitergeleitet werden
+*
+* Test T3:
+* T3.B1 - Task-Erstellen: erfüllt, wenn 1. die Task in der DB eingespeichert wird
+*                                       2. Task an die korrekte User-Story verknüpft ist
+* Test T4:
+* T4.B1 - Task-Löschen: erfüllt, wenn die gewünschte Task aus der DB entfernt wird
+*
+* Test T16:
+* T16.B1 - Task-Erstellen + Task-Board-Zuorndung: erfüllt, wenn betrachtete Task an gewünschte Task-Board verknüpft ist
+* T.16.B2 - Task-Editieren + Task-Board-Zuordung: erfüllt, wenn gewünschte Task-Board-Zuordnung in der korrekten Task geändert wird
+*
+* Test TB2:
+* TB2.B1 - Task-Board-Anzeigen: erfüllt, wenn gewünschtes Task-Board aus der DB geholt und ans front-end geschickt wird
+ */
+
