@@ -1,7 +1,7 @@
 /*Author: Pair Programming: Zana Salih Hama, Paula Krasnovska*/
 
 /**
-Revisited: /
+Revisited: PK, unterschiedliche ids zu einer Klasse zusammengefügt
 Funktion: Login Hintergrund
 Grund: /
 User-ID/Task-ID: A3.F1
@@ -62,79 +62,24 @@ Funktion: Eingabe der Login- und Registrierungsdaten
 Grund: /
 User-ID/Task-ID: A3.F1
 **/
-#nameInput{
-width:70%;
-margin:20px;
-height:50px;
-top: 50%;
-left: 50%;
-  margin-top: 50px;
-margin-bottom: 30px;
-margin-left: 60px;
-padding: 10px;
-color:white;
-background-color:#0f315c;
-box-shadow: 0 2px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-border-radius: 15px;  
-}
-#emailInput{
-width:70%;
-margin:30px;
-height:50px;
-top: 50%;
-left: 50%;
-margin-bottom: 30px;
-margin-left: 60px;
-padding: 10px;
-color:white;
-background-color:#0f315c;
-box-shadow: 0 2px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-border-radius: 15px;  
-}
-#passwortInput{
-margin-top: auto;    
-width:70%;
-height:50px;
-top: 50%;
-left: 50%;
-margin-left: 60px;
-padding: 10px;
-border-radius: 15px;
-color:white;
-background-color:#0f315c;
-box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);   
-}
-
-#emailPasswortInput{
-margin-top: 25%;    
-width:70%;
-height:50px;
-top: 50%;
-left: 50%;
-margin-left: 60px;
-padding: 10px;
-border-radius: 15px;
-color:white;
-background-color:#0f315c;
-box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);   
-}
-
-#neuesPasswortInput{
-margin-top: 25%;    
-width:70%;
-height:50px;
-top: 50%;
-left: 50%;
-margin-left: 60px;
-padding: 10px;
-border-radius: 15px;
-color:white;
-background-color:#0f315c;
-box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+/*Todo: Inputs nochmal anpassen, ist jetzt etwas ugly aber ändere ich gleich*/
+.Input{
+  margin-top: auto;
+  margin-bottom:30px;
+  margin-left: 60px;
+  width:70%;
+  height:50px;
+  top: 50%;
+  left: 50%;
+  padding: 10px;
+  border-radius: 15px;
+  color:white;
+  background-color:#0f315c;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 /**
 Revisited: /
-Funktion: Passwort zurücksetzen Buttons
+Funktion: Pk: Passwort zurücksetzen Buttons
 Grund: Benutzerfreundlichkeit
 User-ID/Task-ID:
 **/
@@ -201,5 +146,59 @@ User-ID/Task-ID:
       background-color: rgb(12, 29, 49);
       cursor: pointer;  
     }
+
+    #headerLogin{
+      padding: 10px;
+      font-size: large;
+      font-weight: bold;
+    }
+
+/**
+Author:Paula Krasnovska
+Revisited: /
+Funktion: Bestätigung des Emailversandts
+Grund: Benutzerfreundlichkeit
+User-ID/Task-ID:
+**/
+
+    #emailGesendetPopup{
+      width: 200px;
+      margin:30px;
+      margin-left: 100px;
+      visibility: hidden;
+      background-color: rgba(0, 0, 0, 0.57);
+      color: white;
+      text-align: center;
+      border-radius: 15px;
+      bottom: 50px;
+    }
+
+    #emailGesendetPopup.show{
+      visibility: visible;
+      -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
 
   
