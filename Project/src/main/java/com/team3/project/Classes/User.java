@@ -9,17 +9,15 @@ import java.util.List;
 
 @Getter
 @Setter
-public class User {
+public class User extends abstraktDataClasses {
     private Account account;
-    private int userID;
+    private int ID;
     private String name;
     private String privatDescription;
     private String workDescription;
     private Enumerations.Role roles;
     private List<Integer> taskIDs;
     private int authorization; //von der DB gestellt
-
-    public User(){}
 
     /* Author: Henry L. Freyschmidt
      * Revisited: /
@@ -28,9 +26,9 @@ public class User {
      * UserStory/Task-ID: /
      */
     public User(Account account, String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles, List<Integer> taskIDs){
+        super(userID);
         this.account = account;
         this.name = name;
-        this.userID = userID;
         this.privatDescription = privatDescription;
         this.workDescription = workDescription;
         this.roles = roles;

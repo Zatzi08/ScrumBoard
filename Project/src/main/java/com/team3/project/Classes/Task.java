@@ -9,15 +9,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Task {
-    private int taskID;
+public class Task extends abstraktDataClasses {
     private String description;
     private Priority priority;
     private int userStoryID;
-
-    public Task(){
-
-    }
 
     /* Author: Henry L. Freyschmidt
      * Revisited: /
@@ -26,7 +21,7 @@ public class Task {
      * UserStory/Task-ID: /
      */
     public Task(int tID, String description, Priority priority, int UserStoryID){
-        this.taskID = tID;
+        super(tID);
         this.description = description;
         this.priority = priority;
         this.userStoryID = userStoryID;

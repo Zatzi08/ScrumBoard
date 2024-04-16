@@ -14,17 +14,6 @@ import java.util.List;
 public class UserStoryService {
     private Enumerations enumerations = new Enumerations();
 
-    // TODO: needs Database connection to implement create Object
-    /* Author: Henry L. Freyschmidt
-     * Revisited: /
-     * Funktion: /
-     * Grund: /
-     * UserStory/Task-ID: /
-     */
-    public boolean createUserStory(String UserStoryContent){
-        return false;
-    }
-
     // TODO: needs Database connection to implement get Object
     /* Author: Lucas Krüger
      * Revisited: /
@@ -32,30 +21,21 @@ public class UserStoryService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public UserStory getUserStory(int UserStoryID){
+    public UserStory getUserStory(int userStoryID) throws Exception {
+        if (userStoryID == -1) throw new Exception("Null UserStoryID");
         return null; //logicToData.daoUserStoryService.getByID(UserStoryID);
     }
 
-    // TODO: needs Database connection to implement Update Object
-    /* Author: Henry L. Freyschmidt
-     * Revisited: /
-     * Funktion: /
-     * Grund: /
-     * UserStory/Task-ID: /
-     */
-    public boolean updateUserStory(UserStory userStory){//TODO: wie kann man die veränderten Attribute angeben
-        return true;
-    }
-
-    public void addUserStory(UserStory story) {
-        if(story.getId() == -1){
+    public void addUserStory(UserStory story) throws Exception {
+        if (story == null) throw new Exception("Null Story");
+        if(story.getID() == -1){
             DAOUserStoryService.create(story.getName(),story.getDescription(), enumerations.getInt(story.getPriority()));
         } else{
-            if (DAOUserStoryService.getByID(story.getId()) != null){
-                DAOUserStoryService.updateName(story.getId(),story.getName());
-                DAOUserStoryService.updateDescription(story.getId(),story.getDescription());
+            if (DAOUserStoryService.getByID(story.getID()) != null){
+                DAOUserStoryService.updateName(story.getID(),story.getName());
+                DAOUserStoryService.updateDescription(story.getID(),story.getDescription());
                 Enumerations prio = new Enumerations();
-                DAOUserStoryService.updatePriority(story.getId(), prio.getInt(story.getPriority()));
+                DAOUserStoryService.updatePriority(story.getID(), prio.getInt(story.getPriority()));
             }
         }
     }
@@ -66,7 +46,7 @@ public class UserStoryService {
             List<UserStory> userStories = new LinkedList<>();
             for (DAOUserStory daoUserStory : user) {
                 Enumerations prio = new Enumerations();
-                UserStory toAdd = new UserStory(daoUserStory.getName(), daoUserStory.getDescription(), prio.IntToPriority(daoUserStory.getPriority()), daoUserStory.getId());
+                UserStory toAdd = new UserStory(daoUserStory.getName(), daoUserStory.getDescription(), daoUserStory.getPriority(), daoUserStory.getId());
                 userStories.add(toAdd);
             }
             return userStories;
