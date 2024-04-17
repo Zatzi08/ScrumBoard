@@ -34,3 +34,23 @@ HTTP-Test-RequestResetCodeTest
 Test ID: HTTP.T6
 Date: 12/04/24 21:48:13
 Fail: Initial Test - Funktion nicht implementiert
+
+HTTP-Test-SendMailTest
+Test ID: HTTP.T7
+Date: 16/04/24 12:46:26
+Fail: Initial Test - Funktion nicht implementiert
+
+HTTP-Test-GetProfilPageByIDTest
+Test ID: HTTP.T8
+Date: 16/04/24 13:54:27
+Fail: Initial Test - Funktion nicht implementiert
+
+HTTP-Test-GetProfilPageByNameTest
+Test ID: HTTP.T9
+Date: 16/04/24 13:57:57
+Fail: Initial Test - Funktion nicht implementiert
+
+HTTP-Test-SaveUserDataTest
+Test ID: HTTP.T10
+Date: 16/04/24 13:59:20
+Fail: Initial Test - Funktion nicht implementiert
