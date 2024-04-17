@@ -15,10 +15,6 @@ body {
     background-size: cover;
 }
 
-.ProjectManagerBackground {
-    position: relative;
-}
-
 /*
   Author:  Zana Salih Hama, Paula Krasnovska
   Revisited: /
@@ -32,10 +28,12 @@ body {
     width: 100%;
 }
 
-.container {margin-top: 20px;}
+/*.container {margin-top: 20px;}*/
+
 
 .reiterBtn {
-    color: #ffffff;
+    color: #d9dcde;
+    background-color: rgba(64,59,59,0);
     padding: 12px 10px;
     transition: border-bottom-color 0.4s;
     margin-right:40px;

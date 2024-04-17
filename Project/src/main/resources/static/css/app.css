@@ -62,7 +62,7 @@ Funktion: Eingabe der Login- und Registrierungsdaten
 Grund: /
 User-ID/Task-ID: A3.F1
 **/
-/*Todo: Inputs nochmal anpassen, ist jetzt etwas ugly aber ändere ich gleich*/
+/*Todo: Input Farbe ändert sich beim Klicken, warum?*/
 .Input{
   margin-top: auto;
   margin-bottom:30px;
