@@ -1,6 +1,10 @@
 package com.team3.project.Tests;
 
+import com.team3.project.Classes.Enumerations;
+import com.team3.project.Classes.User;
 import com.team3.project.Classes.UserStory;
+import com.team3.project.Classes.Profile;
+import com.team3.project.service.AccountService;
 import com.team3.project.DAOService.DAOUserStoryService;
 import com.team3.project.service.UserStoryService;
 import org.junit.jupiter.api.*;
@@ -140,7 +144,112 @@ public class LogicTest {
 
         pw.append(String.format("pass: %b", pass));
     }
+    /*  Test ID: Logic.T3
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck: Profile erstellen
+     */
+    @Test
+    void createProfile(){
+        pw.append("Logik-Test-createProfile\nTest ID: Logic.T3\n" + "Date: " + formatter.format(date)+ '\n');
+        ProfileService pservice = new ProfileService();
+        AccountService aservice = new AccountService();
+        User user1 = new User("Dave", 123,"","", Enumerations.Role.manager);
+        Profile profil1 = new Profile("Dave", "bin langweilig", "Manager");
+
+        try{
+            aservice.createUser(user1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertNull(DAOAccountService.getByID(user1.getID()).getWorkDescription());
+        }catch(AssertionError e){
+            pw.append("Fail: non-existent User-Profile-description found\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+
+        try{
+            pservice.addProfile(profil1);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertNotNull(DAOAccountService.getByID(user1.getID()).getPrivatDescription());
+        }catch(AssertionError e){
+            pw.append("Fail: existent User-Profile-description not found\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+        try{
+            DAOAccountService.delete(user1.getID());
+        }catch( Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertNull(DAOAcountService.getByID(user1.getID()).getWorkDescription());
+        }catch(AssertionError e){
+            pw.append("Fail: non-existent User-Profile-description found\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+
+        pw.append(String.format("pass: %b", pass));
+    }
+
+    /*  Test ID: Logic.T4
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck: Profile aktualisieren
+     */
+    @Test
+    void updateProfile(){
+        pw.append("Logik-Test-updateUserStory\nTest ID: Logic.T4\n" + "Date: " + formatter.format(date)+ '\n');
+        ProfileService pservice = new ProfileService();
+        AccountService aservice = new AccountService();
+        User user1 = new User("Dave", 123,"","", Enumerations.Role.manager);
+        Profile profil1 = new Profile("Dave", "bin langweilig", "Manager");
+        String newdescription = "new Manager";
+
+        try{
+            aservice.createUser(user1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            pservice.addProfile(profil1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertNotEquals(DAOAccountService.getByName(profil1.getUname()).getDescription(), newdescription);
+        }catch (AssertionError e){
+            pw.append("Fail: User-Profile desciption is wrong");
+            pass = false;
+        }
+
+        profil1.setDescription(newdescription);
+
+        try{
+            pservice.updateProfile(profil1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertEquals(DAOAccountService.getByName(profil1.getUname()).getDescription(), newdescription);
+        }catch (AssertionError e){
+            pw.append("Fail: User-Profile-Description does not contain updated value");
+            pass = false;
+        }
+        pw.append(String.format("pass = %b",pass));
+    }
 }
+
 /* erster Draft: Erfüllungsbedingungen für die User-Storys vom Sprint 2
 * Test A4:
 * A4.B1 - Sicherheitscode erstellen: trivial
