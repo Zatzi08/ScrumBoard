@@ -6,6 +6,7 @@ import com.team3.project.Classes.UserStory;
 import com.team3.project.Classes.Profile;
 import com.team3.project.service.AccountService;
 import com.team3.project.DAOService.DAOUserStoryService;
+import com.team3.project.DAOService.DAOAccountService;
 import com.team3.project.service.UserStoryService;
 import org.junit.jupiter.api.*;
 import java.io.File;
@@ -151,7 +152,6 @@ public class LogicTest {
     @Test
     void createProfile(){
         pw.append("Logik-Test-createProfile\nTest ID: Logic.T3\n" + "Date: " + formatter.format(date)+ '\n');
-        ProfileService pservice = new ProfileService();
         AccountService aservice = new AccountService();
         User user1 = new User("Dave", 123,"","", Enumerations.Role.manager);
         Profile profil1 = new Profile("Dave", "bin langweilig", "Manager");
@@ -171,7 +171,7 @@ public class LogicTest {
         }
 
         try{
-            pservice.addProfile(profil1);
+            aservice.addProfile(profil1);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -207,7 +207,6 @@ public class LogicTest {
     @Test
     void updateProfile(){
         pw.append("Logik-Test-updateUserStory\nTest ID: Logic.T4\n" + "Date: " + formatter.format(date)+ '\n');
-        ProfileService pservice = new ProfileService();
         AccountService aservice = new AccountService();
         User user1 = new User("Dave", 123,"","", Enumerations.Role.manager);
         Profile profil1 = new Profile("Dave", "bin langweilig", "Manager");
@@ -220,7 +219,7 @@ public class LogicTest {
         }
 
         try{
-            pservice.addProfile(profil1);
+            aservice.addProfile(profil1);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -235,7 +234,7 @@ public class LogicTest {
         profil1.setDescription(newdescription);
 
         try{
-            pservice.updateProfile(profil1);
+            aservice.updateProfile(profil1);
         }catch (Exception e){
             e.printStackTrace();
         }
