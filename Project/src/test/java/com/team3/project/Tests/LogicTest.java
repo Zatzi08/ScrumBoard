@@ -4,6 +4,8 @@ import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.User;
 import com.team3.project.Classes.UserStory;
 import com.team3.project.Classes.Profile;
+import com.team3.project.Classes.Task;
+import com.team3.project.Classes.Enumerations;
 import com.team3.project.service.AccountService;
 import com.team3.project.DAOService.DAOUserStoryService;
 import com.team3.project.DAOService.DAOAccountService;
@@ -65,9 +67,10 @@ public class LogicTest {
 
     /*  Test ID: Logic.T1
      *  Author: Henry Lewis Freyschmidt
-     *  Zweck:
+     *  Zweck: U3.B1
      */
     @Test
+    //TODO: integriere die Rolle des Product Owners; dafür fehlt DB-Ansprache zum Nutzer
     void createUserStory(){ // TODO: fix problem: wenn eine userStory mit nicht vorhandener id updated werden soll, ändert sich etwas in der DB (siehe Zeile 29)
         pw.append("Logik-Test-createUserStory\nTest ID: Logic.T1\nDate: " + formatter.format(date)+ '\n');
         UserStoryService usService = new UserStoryService();
@@ -108,9 +111,10 @@ public class LogicTest {
 
     /*  Test ID: Logic.T2
      *  Author: Henry Lewis Freyschmidt
-     *  Zweck:
+     *  Zweck: U4.B1
      */
     @Test
+    //TODO: integriere die Rolle des Product Owners; dafür fehlt DB-Ansprache zum Nutzer
     void updateUserStory(){
         pw.append("Logik-Test-updateUserStory\nTest ID: Logic.T2\n" + "Date: " + formatter.format(date)+ '\n');
         UserStoryService usService = new UserStoryService();
@@ -145,9 +149,10 @@ public class LogicTest {
 
         pw.append(String.format("pass: %b", pass));
     }
+
     /*  Test ID: Logic.T3
      *  Author: Henry Lewis Freyschmidt
-     *  Zweck: Profile erstellen
+     *  Zweck: Profile erstellen P1.B1
      */
     @Test
     void createProfile(){
@@ -190,7 +195,7 @@ public class LogicTest {
         }
 
         try{
-            Assertions.assertNull(DAOAcountService.getByID(user1.getID()).getWorkDescription());
+            Assertions.assertNull(DAOAccountService.getByID(user1.getID()).getWorkDescription());
         }catch(AssertionError e){
             pw.append("Fail: non-existent User-Profile-description found\n");
             pass = false;
@@ -202,7 +207,7 @@ public class LogicTest {
 
     /*  Test ID: Logic.T4
      *  Author: Henry Lewis Freyschmidt
-     *  Zweck: Profile aktualisieren
+     *  Zweck: Profile aktualisieren P2.B1
      */
     @Test
     void updateProfile(){
@@ -227,8 +232,9 @@ public class LogicTest {
         try{
             Assertions.assertNotEquals(DAOAccountService.getByName(profil1.getUname()).getDescription(), newdescription);
         }catch (AssertionError e){
-            pw.append("Fail: User-Profile desciption is wrong");
+            pw.append("Fail: User-Profile desciption is wrong\n");
             pass = false;
+            throw new AssertionError(e);
         }
 
         profil1.setDescription(newdescription);
@@ -242,11 +248,187 @@ public class LogicTest {
         try{
             Assertions.assertEquals(DAOAccountService.getByName(profil1.getUname()).getDescription(), newdescription);
         }catch (AssertionError e){
-            pw.append("Fail: User-Profile-Description does not contain updated value");
+            pw.append("Fail: User-Profile-Description does not contain updated value\n");
             pass = false;
+            throw new AssertionError(e);
         }
         pw.append(String.format("pass = %b",pass));
     }
+    /*  Test ID: Logic.T5
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck: User Story löschen U6.B1
+     */
+    @Test
+    //TODO: integriere die Rolle des Product Owners; dafür fehlt DB-Ansprache zum Nutzer
+    void deleteUserStory(){
+        pw.append("Logik-Test-deleteUserStory\nTest ID: Logic.T5\n" + "Date: " + formatter.format(date)+ '\n');
+        UserStoryService usService = new UserStoryService();
+        UserStory u1 = new UserStory("UserStory1", "Blablah1", 1, -1);
+
+        try{
+            Assertions.assertEquals(DAOUserStoryService.getByName("UserStory1").getDescription(), u1.getDescription());
+        }catch (AssertionError e){
+            pw.append("Fail: non-existent User-Story found\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+
+        try{
+            usService.addUserStory(u1);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        int u1id = DAOUserStoryService.getByName("UserStory1").getId();
+
+        try{
+            Assertions.assertEquals(DAOUserStoryService.getByName("UserStory1").getDescription(), u1.getDescription());
+        }catch (AssertionError e){
+            pw.append("Fail: existent User-Story not found\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+
+        try{
+            usService.deleteUserStory(u1.getID());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertFalse(DAOUserStoryService.checkId(u1id));
+        }catch (AssertionError e){
+            pw.append("Fail: deleted User Story found\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+
+        pw.append(String.format("pass = %b", pass));
+    }
+    /*  Test ID: Logic.T6
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck: Task anzeigen  T1.B1
+     */
+    @Test
+    void showTask(){
+        pw.append("Logik-Test-showTask\nTest ID: Logic.T6\n" + "Date: " + formatter.format(date)+ '\n');
+    }
+    /*  Test ID: Logic.T7
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck: Task erstellen T3.B1
+     */
+    @Test
+    void createTask(){
+        pw.append("Logik-Test-createTask\nTest ID: Logic.T7\n" + "Date: " + formatter.format(date)+ '\n');
+        UserStoryService uservice = new UserStoryService();
+        UserStory u1 = new UserStory("Story1", "Blah1", 1, -1);
+
+        try{
+            uservice.addUserStory(u1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        int uid = DAOUserStoryService.getByName(u1.getName()).getId();
+        Task t1 = new Task(1, "Task1", Enumerations.Priority.low, uid);
+
+        try{
+            Assertions.assertNotEquals(t1.getDescription(), DAOUserStoryService.getTaskByID(t1.getID()).getDescription());
+        }catch(AssertionError e){
+            pw.append("Fail: non-existent Task found\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+
+        try {
+            uservice.addTask(t1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertEquals(t1.getDescription(), DAOUserStoryService.getTaskByID(t1.getID()).getDescription());
+        }catch(AssertionError e){
+            pw.append("Fail: existent Task not found\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+        DAOUserStoryService.delete(u1.getID());
+        //Voraussetzung: wenn eine User-Story gelöscht wird, werden dazugehörige Tasks gelöscht
+        try{
+            Assertions.assertNotEquals(t1.getDescription(), DAOUserStoryService.getTaskByID(t1.getID()).getDescription());
+        }catch(AssertionError e){
+            pw.append("Fail: non-existent Task found\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+        pw.append(String.format("pass = %b", pass));
+    }
+
+    /*  Test ID: Logic.T8
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck: Task löschen T4.B1
+     */
+    @Test
+    void deleteTask(){
+        pw.append("Logik-Test-deleteTask\nTest ID: Logic.T8\n" + "Date: " + formatter.format(date)+ '\n');
+        UserStoryService uservice = new UserStoryService();
+        UserStory u1 = new UserStory("StoryName", "BlahBlah", 1, -1);
+
+        try{
+            uservice.addUserStory(u1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        int uid = DAOUserStoryService.getByName(u1.getName()).getId();
+        Task t1 = new Task(5, "TaskDescription", Enumerations.Priority.low, uid);
+        Task t2 = new Task(10, "TaskDescription2", Enumerations.Priority.low, uid);
+
+        try{
+            uservice.addTask(t1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            uservice.addTask(t2);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertEquals(t1.getDescription(), DAOUserStoryService.getTaskByID(t1.getID()).getDescription());
+        }catch(AssertionError e){
+            pw.append("Fail: existent Task not found\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+
+        try{
+            uservice.deleteTask(t1.getID());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertEquals(t1.getDescription(), DAOUserStoryService.getTaskByID(t1.getID()).getDescription());
+        }catch(AssertionError e){
+            pw.append("Fail: deleted Task found\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+        uservice.deleteUserStory(u1.getID());
+
+        try{
+            Assertions.assertEquals(t2.getDescription(), DAOUserStoryService.getTaskByID(t2.getID()).getDescription());
+        }catch(AssertionError e){
+            pw.append("Fail: deleted Task found\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+        pw.append(String.format("pass = %b", pass));
+    }
+
 }
 
 /* erster Draft: Erfüllungsbedingungen für die User-Storys vom Sprint 2
@@ -284,8 +466,8 @@ public class LogicTest {
 * T3.B1 - Task-Erstellen: erfüllt, wenn 1. die Task in der DB eingespeichert wird
 *                                       2. Task an die korrekte User-Story verknüpft ist
 * Test T4:
-* T4.B1 - Task-Löschen: erfüllt, wenn die gewünschte Task aus der DB entfernt wird
-*
+* T4.B1 - Task-Löschen: erfüllt, wenn   1.die gewünschte Task aus der DB entfernt wird
+*                                       2. beim Löschen der verknüpften user-Story die Tasks gelöscht wird
 * Test T16:
 * T16.B1 - Task-Erstellen + Task-Board-Zuorndung: erfüllt, wenn betrachtete Task an gewünschte Task-Board verknüpft ist
 * T.16.B2 - Task-Editieren + Task-Board-Zuordung: erfüllt, wenn gewünschte Task-Board-Zuordnung in der korrekten Task geändert wird

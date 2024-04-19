@@ -1,6 +1,7 @@
 package com.team3.project.service;
 
 import com.team3.project.Classes.Enumerations;
+import com.team3.project.Classes.Task;
 import com.team3.project.Classes.UserStory;
 import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.DAOUserStoryService;
@@ -53,4 +54,14 @@ public class UserStoryService {
         }
         return null;
     }
+    public void deleteUserStory(int uid){
+
+    }
+     public void addTask(Task t){
+
+     }
+
+     public void deleteTask(int tID){
+
+     }
 }

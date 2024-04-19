@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+
 import org.aopalliance.aop.AspectException;
 import org.hibernate.AssertionFailure;
 import org.junit.jupiter.api.AfterAll;
@@ -66,28 +67,28 @@ public class DatenbankTests {
         try {
             assertTrue(DAOAccountService.createAccount(testMail, testPas));
         }catch(AssertionError e){
-            pw.append(String.format("fail: valid Account not created\n"));
+            pw.append("Fail: valid Account not created\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOAccountService.checkmail(testMail));
         }catch(AssertionError e){
-            pw.append(String.format("fail: existent Mail not found\n"));
+            pw.append("Fail: existent Mail not found\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOAccountService.deleteAccount(testMail));
         }catch(AssertionError e){
-            pw.append(String.format("fail: existent Account not deleted\n"));
+            pw.append("Fail: existent Account not deleted\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertFalse(DAOAccountService.checkmail(testMail));
         }catch(AssertionError e){
-            pw.append(String.format("fail:  non-existent Mail found\n"));
+            pw.append("Fail:  non-existent Mail found\n");
             pass = false;
             throw new AssertionError(e);
         }
@@ -111,14 +112,14 @@ public class DatenbankTests {
         try{
             assertFalse(DAOAccountService.checkmail(noMail));
         }catch(AssertionError e){
-            pw.append(String.format("fail: non-existent Mail found \n"));
+            pw.append("Fail: non-existent Mail found \n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertFalse(DAOAccountService.deleteAccount(noMail));
         }catch(AssertionError e){
-            pw.append(String.format("fail: non-existent Account was deleted\n"));
+            pw.append("Fail: non-existent Account was deleted\n");
             pass = false;
             throw new AssertionError(e);
         }
@@ -138,28 +139,28 @@ public class DatenbankTests {
         try{
             assertTrue(DAOAccountService.createAccount(noMail,noPas));
         }catch(AssertionError e){
-            pw.append(String.format("fail: valid Account not created\n"));
+            pw.append("Fail: valid Account not created\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOAccountService.checkmail(noMail));
         }catch(AssertionError e){
-            pw.append(String.format("fail: existent Account not found\n"));
+            pw.append("Fail: existent Account not found\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOAccountService.deleteAccount(noMail));
         }catch(AssertionError e){
-            pw.append(String.format("fail: existent Account not deleted\n"));
+            pw.append("Fail: existent Account not deleted\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertFalse(DAOAccountService.checkmail(noMail));
         }catch(AssertionError e){
-            pw.append(String.format("fail: existent Mail not found\n"));
+            pw.append("Fail: existent Mail not found\n");
             pass = false;
             throw new AssertionError(e);
         }
@@ -181,27 +182,25 @@ public class DatenbankTests {
             DAOAccountService.createAccount(testMail,testPas);
         }catch(Exception e){
             e.printStackTrace();
-            pw.append(String.format("fail: valid Account not created\n"));
-            pass = false;
         }
         try{
             assertTrue(DAOAccountService.LoginCheck(testMail, testPas));
         }catch(AssertionError e){
-            pw.append(String.format("fail: existent Login-Details not found\n"));
+            pw.append("Fail: existent Login-Details not found\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertFalse(DAOAccountService.LoginCheck(testMail, wrongPas));
         }catch(AssertionError e){
-            pw.append(String.format("fail: non-existent Login-Details found\n"));
+            pw.append("Fail: non-existent Login-Details found\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertFalse(DAOAccountService.LoginCheck(testMail, noPas));
         }catch(AssertionError e){
-            pw.append(String.format("fail: non-existent Login-Details found\n"));
+            pw.append("Fail: non-existent Login-Details found\n");
             pass = false;
             throw new AssertionError(e);
         }
@@ -209,13 +208,11 @@ public class DatenbankTests {
             DAOAccountService.deleteAccount(testMail);
         }catch(Exception e){
             e.printStackTrace();
-            pw.append(String.format("fail: existent Account not deleted\n"));
-            pass = false;
         }
         try{
             assertFalse(DAOAccountService.LoginCheck(testMail, testPas));
         }catch(AssertionError e){
-            pw.append(String.format("fail: non-existent Login-Details found\n"));
+            pw.append("Fail: non-existent Login-Details found\n");
             pass = false;
             throw new AssertionError(e);
         }
@@ -235,7 +232,7 @@ public class DatenbankTests {
         try{
             assertFalse(DAOAccountService.updatePassword(testMail,newPas));
         }catch(AssertionError e){
-            pw.append(String.format("fail: non-existent Account found + Password updated\n"));
+            pw.append("Fail: non-existent Account found + Password updated\n");
             pass = false;
             throw new AssertionError(e);
         }
@@ -243,34 +240,32 @@ public class DatenbankTests {
             DAOAccountService.createAccount(testMail,oldPas);
         }catch(Exception e){
             e.printStackTrace();
-            pw.append(String.format("fail: valid Account not created\n"));
-            pass = false;
         }
         try{
             assertTrue(DAOAccountService.LoginCheck(testMail, oldPas));
         }catch(AssertionError e){
-            pw.append(String.format("fail: existent Login-Details not found\n"));
+            pw.append("Fail: existent Login-Details not found\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOAccountService.updatePassword(testMail, newPas));
         }catch(AssertionError e){
-            pw.append(String.format("fail: existent Account not updated with new valid Password \n"));
+            pw.append("Fail: existent Account not updated with new valid Password \n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOAccountService.LoginCheck(testMail, newPas));
         }catch(AssertionError e){
-            pw.append(String.format("fail: existent Login-Details not found\n"));
+            pw.append("Fail: existent Login-Details not found\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertFalse(DAOAccountService.LoginCheck(testMail, oldPas));
         }catch(AssertionError e){
-            pw.append(String.format("fail: non-existent Login-Details  found\n"));
+            pw.append("Fail: non-existent Login-Details  found\n");
             pass = false;
             throw new AssertionError(e);
         }
@@ -278,16 +273,9 @@ public class DatenbankTests {
             DAOAccountService.deleteAccount(testMail);
         }catch(Exception e){
             e.printStackTrace();
-            pw.append(String.format("fail: existent Account not deleted\n"));
-            pass = false;
         }
 
-
-
-
-
-
-
+        pw.append(String.format("pass = %b",pass));
     }
 
     @Test
@@ -304,34 +292,32 @@ public class DatenbankTests {
             DAOAccountService.createAccount(testMail,oldPas);
         }catch(Exception e){
             e.printStackTrace();
-            pw.append(String.format("fail: valid Account not created\n"));
-            pass = false;
         }
         try{
             assertTrue(DAOAccountService.LoginCheck(testMail, oldPas));
         }catch (AssertionError e){
-            pw.append(String.format("fail: existent Login-Details not found\n"));
+            pw.append("Fail: existent Login-Details not found\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOAccountService.updatePassword(testMail, newPas));
         }catch (AssertionError e){
-            pw.append(String.format("fail: existent Account not with valid new Password updated\n"));
+            pw.append("Fail: existent Account not with valid new Password updated\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOAccountService.LoginCheck(testMail, newPas));
         }catch (AssertionError e){
-            pw.append(String.format("fail: existent Login-Details not found\n"));
+            pw.append("Fail: existent Login-Details not found\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOAccountService.LoginCheck(testMail, oldPas));
         }catch(AssertionError e){
-            pw.append(String.format("fail: existent Login-Details not found\n"));
+            pw.append("Fail: existent Login-Details not found\n");
             pass = false;
             throw new AssertionError(e);
         }
@@ -339,8 +325,6 @@ public class DatenbankTests {
             DAOAccountService.deleteAccount(testMail);
         }catch(Exception e){
             e.printStackTrace();
-            pw.append(String.format("fail: existent Account not deleted\n"));
-            pass = false;
         }
         pw.append(String.format("pass = %b", pass));
     }
@@ -358,38 +342,39 @@ public class DatenbankTests {
         try{
             assertTrue(null == DAOUserStoryService.getByName(name));
         }catch(AssertionError e){
-            pw.append(String.format("fail: non-existent User-Story found\n"));
+            pw.append("Fail: non-existent User-Story found\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOUserStoryService.create(name, description, priority));
         }catch(AssertionError e){
-            pw.append(String.format("fail: valid User-Story not created\n"));
+            pw.append("Fail: valid User-Story not created\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOUserStoryService.getByName(name).getName().equals(name));
         }catch(AssertionError e){
-            pw.append(String.format("fail: wrong name in Database\n"));
+            pw.append("Fail: wrong name in Database\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOUserStoryService.delete(DAOUserStoryService.getByName(name).getId()));
         }catch(AssertionError e){
-            pw.append(String.format("fail: existent User-Story not deleted\n"));
+            pw.append("Fail: existent User-Story not deleted\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(null == DAOUserStoryService.getByName(name));
         }catch(AssertionError e){
-            pw.append(String.format("fail: non-existent User-Story found\n"));
+            pw.append("Fail: non-existent User-Story found\n");
             pass = false;
             throw new AssertionError(e);
         }
+
         pw.append(String.format("pass = %b",pass));
     }
 
@@ -407,14 +392,14 @@ public class DatenbankTests {
             DAOUserStoryService.create(name, description, priority);
         }catch(Exception e){
             e.printStackTrace();
-            pw.append(String.format("fail: valid User-Story not created\n"));
-            pass = false;
         }
-        int id = DAOUserStoryService.getByName(name).getId();
+
+        Integer id = DAOUserStoryService.getByName(name).getId();
+
         try{
             assertTrue(DAOUserStoryService.getByName(name).getName().equals(DAOUserStoryService.getByID(id).getName()));
         }catch(AssertionError e){
-            pw.append(String.format("fail: wrong Name\n"));
+            pw.append("Fail: wrong Name\n");
             pass = false;
             throw new AssertionError(e);
         }
@@ -422,7 +407,7 @@ public class DatenbankTests {
             DAOUserStoryService.delete(DAOUserStoryService.getByName(name).getId());
         }catch(Exception e){
             e.printStackTrace();
-            pw.append(String.format("fail: existent User-Story not found\n"));
+            pw.append("Fail: existent User-Story not found\n");
             pass = false;
         }
         pw.append(String.format("pass = %b",pass));
@@ -445,77 +430,77 @@ public class DatenbankTests {
             DAOUserStoryService.create(name, description, priority);
         }catch(Exception e){
             e.printStackTrace();
-            pw.append(String.format("fail: valid User-Story not created\n"));
-            pass = false;
         }
-        int id = DAOUserStoryService.getByName(name).getId();
+
+        Integer id = DAOUserStoryService.getByName(name).getId();
+
         try{
             assertTrue(DAOUserStoryService.updateDescription(id, newdescription));
         }catch(AssertionError e){
-            pw.append(String.format("fail: existent User-Story with valid new Description not updated\n"));
+            pw.append("Fail: existent User-Story with valid new Description not updated\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOUserStoryService.updateName(id, newname));
         }catch(AssertionError e){
-            pw.append(String.format("fail: non-existent User-Story found\n"));
+            pw.append("Fail: non-existent User-Story found\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOUserStoryService.updatePriority(id, newpriority));
         }catch(AssertionError e){
-            pw.append(String.format("fail: priority did not update to new priority\n"));
+            pw.append("Fail: priority did not update to new priority\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOUserStoryService.checkName(newname));
         }catch(AssertionError e){
-            pw.append(String.format("fail: new name not found\n"));
+            pw.append("Fail: new name not found\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertFalse(DAOUserStoryService.checkName(name));
         }catch(AssertionError e){
-            pw.append(String.format("fail: old name found\n"));
+            pw.append("Fail: old name found\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOUserStoryService.getByName(newname).getDescription().equals(newdescription));
         }catch(AssertionError e){
-            pw.append(String.format("fail: description did not update to new description\n"));
+            pw.append("Fail: description did not update to new description\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOUserStoryService.getByName(newname).getPriority() == priority);
         }catch(AssertionError e){
-            pw.append(String.format("fail: wrong priority\n"));
+            pw.append("Fail: wrong priority\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOUserStoryService.checkId(id));
         }catch(AssertionError e){
-            pw.append(String.format("fail: existent User-ID not found\n"));
+            pw.append("Fail: existent User-ID not found\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertTrue(DAOUserStoryService.delete(id));
         }catch(AssertionError e){
-            pw.append(String.format("fail: existent User-Story not deleted\n"));
+            pw.append("Fail: existent User-Story not deleted\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
             assertFalse(DAOUserStoryService.checkId(id));
         }catch(AssertionError e){
-            pw.append(String.format("fail: non-existent User-Story-ID found\n"));
+            pw.append("Fail: non-existent User-Story-ID found\n");
             pass = false;
             throw new AssertionError(e);
         }
@@ -539,8 +524,6 @@ public class DatenbankTests {
             DAOUserStoryService.create(name, description, priority);
         }catch(Exception e){
             e.printStackTrace();
-            pw.append(String.format("fail: valid User-Story not created\n"));
-            pass = false;
         }
 
         List<DAOUserStory> storys = DAOUserStoryService.getAll();
@@ -550,25 +533,25 @@ public class DatenbankTests {
                 try{
                     assertEquals(description, daoUserStory.getDescription());
                 }catch(AssertionError e){
-                    pw.append(String.format("fail: wrong description\n"));
+                    pw.append("Fail: wrong description\n");
                     pass = false;
                     throw new AssertionError(e);
                 }
+
                 try{
                     assertEquals(priority, daoUserStory.getPriority());
                 }catch(AssertionError e){
-                    pw.append(String.format("fail: wrong priority\n"));
+                    pw.append("Fail: wrong priority\n");
                     pass = false;
                     throw new AssertionError(e);
                 }
             }
         }
+
         try{
             DAOUserStoryService.create(newname, newdescription, newpriority);
         }catch (Exception e){
             e.printStackTrace();
-            pw.append(String.format("fail: valid User-Story not created\n"));
-            pass = false;
         }
 
         storys = DAOUserStoryService.getAll();
@@ -578,52 +561,47 @@ public class DatenbankTests {
                 try{
                     assertEquals(description, daoUserStory.getDescription());
                 }catch (AssertionError e){
-                    pw.append(String.format("fail: wrong description\n"));
+                    pw.append("Fail: wrong description\n");
                     pass = false;
                     throw new AssertionError(e);
                 }
                 try{
                     assertEquals(priority, daoUserStory.getPriority());
                 }catch (AssertionError e){
-                    pw.append(String.format("fail: wrong priority\n"));
+                    pw.append("Fail: wrong priority\n");
                     pass = false;
                     throw new AssertionError(e);
                 }
-
-
-
             }
+
             if (daoUserStory.getName().equals(newname)) {//redundanten Test gelöscht
                 try{
                     assertEquals(newdescription, daoUserStory.getDescription());
                 }catch (AssertionError e){
-                    pw.append(String.format("fail: wrong description\n"));
+                    pw.append("Fail: wrong description\n");
                     pass = false;
                     throw new AssertionError(e);
                 }
                 try{
                     assertEquals(newpriority, daoUserStory.getPriority());
                 }catch (AssertionError e){
-                    pw.append(String.format("fail: wrong priority\n"));
+                    pw.append("Fail: wrong priority\n");
                     pass = false;
                     throw new AssertionError(e);
                 }
-
             }
         }
+
         try{
             DAOUserStoryService.delete(DAOUserStoryService.getByName(name).getId());
         }catch(Exception e){
             e.printStackTrace();
-            pw.append(String.format("fail: existent User-Story not deleted\n"));
-            pass = false;
         }
+
         try{
             DAOUserStoryService.delete(DAOUserStoryService.getByName(newname).getId());
         }catch(Exception e){
             e.printStackTrace();
-            pw.append(String.format("fail: existent User-Story not deleted\n"));
-            pass = false;
         }
         pw.append(String.format("pass = %b",pass));
     }
