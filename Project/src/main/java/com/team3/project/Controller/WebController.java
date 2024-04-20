@@ -1,7 +1,10 @@
 package com.team3.project.Controller;
 
+import com.team3.project.Classes.Email;
+import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.UserStory;
-import com.team3.project.Faced.PresentationToLogic;
+import com.team3.project.Faced.LogicToData;
+import org.hibernate.annotations.DialectOverride;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,9 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class WebController {
     public WebController() {
-        this.presentationToLogic = PresentationToLogic.getInstance();
+        this.logicToData = LogicToData.getInstance();
     }
-    private final PresentationToLogic presentationToLogic;
+    private final LogicToData logicToData;
 
     // TODO: IOExceptions
     /* Author: Lucas Krüger
@@ -63,7 +66,7 @@ public class WebController {
     public String login(@RequestParam(value = "EMail", required = true) String EMail,
                         @RequestParam(value = "Passwort", required = true) String Passwort) {
         try{
-            if( presentationToLogic.accountService.login(EMail, Passwort))
+            if( logicToData.accountService.login(EMail, Passwort))
                 return "redirect:/ProjectManager";
         } catch (Exception e){
             e.printStackTrace();
@@ -79,7 +82,7 @@ public class WebController {
      */
     @RequestMapping(value = "/neuesPasswortPage", method = RequestMethod.POST)
     public ModelAndView neuesPasswortPage(@RequestParam(value = "EMail", required = true) String EMail){
-        if(presentationToLogic.accountService.checkMail(EMail))
+        if(logicToData.accountService.checkMail(EMail))
             return new ModelAndView("neuesPasswort").addObject("Mail", EMail);
         return new ModelAndView("index");
     }
@@ -97,7 +100,7 @@ public class WebController {
                                 @RequestParam(value = "EMail", required = true)String EMail){
         // TODO: Mail mit Verifizierungscode + neuen Link für zurücksetzen
         try {
-            presentationToLogic.accountService.resetPasswort(EMail, Passwort);
+            logicToData.accountService.resetPasswort(EMail, Passwort);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -115,8 +118,8 @@ public class WebController {
                                  @RequestParam(value = "EMail", required = true) String EMail,
                                  @RequestParam(value = "Passwort", required = true) String Passwort){
             try {
-                if(!presentationToLogic.accountService.checkMail(EMail)) {
-                    if (presentationToLogic.accountService.register(Username, EMail, Passwort))
+                if(!logicToData.accountService.checkMail(EMail)) {
+                    if (logicToData.accountService.register(Username, EMail, Passwort))
                         return new ModelAndView("index");
                 }
             } catch (Exception e) {
@@ -139,7 +142,7 @@ public class WebController {
         UserStory story = new UserStory(name, Desc, prio,id);
 
         try {
-            presentationToLogic.userStoryService.addUserStory(story);
+            logicToData.userStoryService.addUserStory(story);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -155,9 +158,147 @@ public class WebController {
     @RequestMapping("/ProjectManager")
     private ModelAndView ProjectManager(){
         ModelAndView modelAndView = new ModelAndView("projectManager");
-        modelAndView.addObject("Storys", presentationToLogic.userStoryService.getAllUserStorys());
+        modelAndView.addObject("Storys", logicToData.userStoryService.getAllUserStorys());
         return modelAndView;
     }
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: Anzeigen des ResetCodes
+     * Grund: /
+     * UserStory/Task-ID: A4.B1
+     */
+    @RequestMapping(value = "/RequestResetCode", method = RequestMethod.POST)
+    private ModelAndView RequestRestCode(@RequestParam(value = "email",required = true) String email){
+        if (logicToData.accountService.checkMail(email)) {
+            try {
+                String code = logicToData.GeneratCode(1);
+                ModelAndView modelAndView = new ModelAndView("neuesPasswort")
+                        .addObject("Code", code);
+                return modelAndView;
+            } catch (Exception e){
+                e.printStackTrace();
+                return new ModelAndView("Error").addObject("error", e.toString());
+            }
+        }
+        return new ModelAndView("passwortForgot").addObject("error", true).addObject("EMail", email);
+    }
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: Initialisieren des Resets eines Passworts
+     * Grund: /
+     * UserStory/Task-ID: A5.B1
+     */
+    @RequestMapping(value = "/RequestResetPasswort", method = RequestMethod.POST)
+    private ModelAndView RequestRestCode(@RequestParam(value = "email",required = true) String email,
+                                         @RequestParam(value = "newPasswort",required = true) String passwort,
+                                         @RequestParam(value = "code",required = true) String code){
+        try{
+            if (logicToData.accountService.checkMail(email) && logicToData.checkCode(code)) {
+                logicToData.accountService.resetPasswort(email, passwort);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ModelAndView("Error").addObject("error", e.toString());
+        }
+        return new ModelAndView("index");
+    }
+
+    // TODO: wäre sweet, wenn das hier mal wer testet sobald frontend existiert
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: "Senden" einer Mail
+     * Grund: /
+     * UserStory/Task-ID: // Todo: Place ID
+     */
+    @RequestMapping(value = "/SendMail", method = RequestMethod.POST)
+    private void SendMail(@RequestParam(value = "senderEmail",required = true) String from,
+                          @RequestParam(value = "recieverEmail",required = true)String to,
+                          @RequestParam(value = "text",required = true) String text){
+        System.out.print("From:"+from+"\nTo:"+to+"\nText:\n"+text);
+    }
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: Ausgeben einer ProfilPage by ID
+     * Grund: /
+     * UserStory/Task-ID: P1.B1
+     */
+    @RequestMapping(value = "/GetProfileByID", method = RequestMethod.POST)
+    private ModelAndView ProfilePageByID(@RequestParam(value = "ID",required = true, defaultValue = "-1") int ID){
+
+        try{
+            Profile user = logicToData.accountService.getProfileByID(ID);
+            if (user != null) return new ModelAndView("profil").addObject("User", user);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ModelAndView("Error").addObject("error", e.toString());
+        }
+
+        return new ModelAndView("projectManager").addObject("Storys", logicToData.userStoryService.getAllUserStorys());
+    }
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: Ausgeben aller Profile gleichen Namens
+     * Grund: /
+     * UserStory/Task-ID: P1.B1
+     */
+    @RequestMapping(value = "/GetProfileByName", method = RequestMethod.POST)
+    private ModelAndView ProfilePageByID(@RequestParam(value = "name",required = true) String name){
+        try{
+            Profile user = logicToData.accountService.getProfileByName(name);
+            if (user != null) return new ModelAndView("profil").addObject("User", user);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ModelAndView("Error").addObject("error", e.toString());
+        }
+        return new ModelAndView("projectManager").addObject("Storys", logicToData.userStoryService.getAllUserStorys());
+    }
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: Speicherung/Anpassung von User-Daten
+     * Grund: /
+     * UserStory/Task-ID: P2.B1
+     */
+    @RequestMapping(value = "SaveUserData", method = RequestMethod.POST)
+    private ModelAndView SaveUserData(@RequestParam(value = "ID",required = true, defaultValue = "-1") int ID,
+                                @RequestParam(value = "uName", required = true) String name,
+                                @RequestParam(value = "rolle",required = true) String rolle,
+                                @RequestParam(value = "uDesc",required = true) String uDesc,
+                                @RequestParam(value = "pDesc",required = true) String pDesc){
+        try {
+            logicToData.accountService.SavePublicData(ID, name, rolle, uDesc, pDesc);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ModelAndView("Error").addObject("error", e.toString());
+        }
+        return ProfilePageByID(ID);
+    }
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion:
+     * Grund: /
+     * UserStory/Task-ID: T1.B1
+     */
+    @RequestMapping(value = "/GetAllTask", method = RequestMethod.POST)
+    private ModelAndView AllTask(){
+        ModelAndView modelAndView = new ModelAndView("Tasklist");
+        modelAndView.addObject("Tasks",logicToData.taskService.getAllTask());
+        return modelAndView;
+    }
+
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion:
+     * Grund: /
+     * UserStory/Task-ID: // Todo: Place ID
+     */
+
 
     /* Author: Lucas Krüger
      * Revisited:

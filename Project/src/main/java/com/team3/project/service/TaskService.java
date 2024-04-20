@@ -5,6 +5,8 @@ import com.team3.project.Classes.Task;
 import com.team3.project.Classes.User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 // Interagiert mit Repository, also create, delete, get, set
 @Service
 public class TaskService {
@@ -63,5 +65,15 @@ public class TaskService {
         //Task task = new Task();
         //TODO: implementiere findTask: Rückgabe Task mit  TaskID= taskID
         return null;
+    }
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: Erfragt alle Tasks aus der Datenbank
+     * Grund: /
+     * UserStory/Task-ID: T1.B1
+     */
+    public List<Task> getAllTask() {
+        return null;//DAOTaskService.getAll(); TODO: Implement wenn DAO fertig
     }
 }

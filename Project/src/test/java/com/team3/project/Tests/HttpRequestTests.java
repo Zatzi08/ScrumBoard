@@ -260,7 +260,7 @@ public class HttpRequestTests {
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
         String EMail1 = "Test@Mail.com";
-        String EMail2 = "Test@Mail.com";
+        String EMail2 = "Fail@Mail.com";
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetPasswort", HttpMethod.POST, message, String.class).getStatusCode())
@@ -372,8 +372,6 @@ public class HttpRequestTests {
 
         pw.append(String.format("pass: %b", pass));
     }
-
-    // TODO A4.B4 A5.B1
 
     /*  Test ID: HTTP.T8
      *  Author: Lucas Krüger
@@ -492,7 +490,7 @@ public class HttpRequestTests {
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
         int ID = 0;
-        ResponseEntity<String> Responce = this.restTemplate.exchange("http://localhost:" + port + "/GetTaskAll", HttpMethod.POST, message, String.class);
+        ResponseEntity<String> Responce = this.restTemplate.exchange("http://localhost:" + port + "/GetAllTask", HttpMethod.POST, message, String.class);
 
         try {
             assertThat(Responce.getStatusCode())

@@ -3,9 +3,10 @@ package com.team3.project.service;
 import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.User;
 import com.team3.project.DAOService.DAOAccountService;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
-import com.team3.project.Classes.Email;
+
+import java.lang.classfile.instruction.SwitchCase;
+
 @Service
 public class AccountService {
     public boolean checkMail(String Mail){
@@ -50,5 +51,25 @@ public class AccountService {
     }
     public void updateProfile(Profile p){
 
+    }
+
+    public void SavePublicData(int id, String name, String rolle, String uDesc, String pDesc) throws Exception {
+        if (id == -1) throw new Exception("id outOfBound");
+        if (name == null) throw new Exception("Null Name");
+        if (rolle == null) throw new Exception("Null Rolle");
+        if (uDesc == null) throw new Exception("Null uDesc");
+        if (pDesc == null) throw new Exception("Null pDes");
+        //DAOAccountService.updatePublicData(id,name,rolle,uDesc,pDesc);
+
+    }
+
+    public Profile getProfileByName(String name) throws Exception {
+        if (name == null) throw new Exception("Null Name");
+        return null;//DAOAccountService.getAccountByName(name); TODO: Implement, wenn DB bereit
+    }
+
+    public Profile getProfileByID(int id) throws Exception {
+        if (id == -1) throw new Exception("Null ID");
+        return null; //DAOAccountService.getAccountByID(id); TODO: Implement, wenn DB bereit
     }
 }
