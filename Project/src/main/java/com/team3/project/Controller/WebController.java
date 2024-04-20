@@ -63,8 +63,7 @@ public class WebController {
     public String login(@RequestParam(value = "EMail", required = true) String EMail,
                         @RequestParam(value = "Passwort", required = true) String Passwort) {
         try{
-            if(presentationToLogic.accountService.checkMail(EMail) &&
-               presentationToLogic.accountService.login(EMail, Passwort))
+            if( presentationToLogic.accountService.login(EMail, Passwort))
                 return "redirect:/ProjectManager";
         } catch (Exception e){
             e.printStackTrace();

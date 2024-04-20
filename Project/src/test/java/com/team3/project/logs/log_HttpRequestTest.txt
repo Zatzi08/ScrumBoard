@@ -54,3 +54,33 @@ HTTP-Test-SaveUserDataTest
 Test ID: HTTP.T10
 Date: 16/04/24 13:59:20
 Fail: Initial Test - Funktion nicht implementiert
+
+HTTP-Test-GetTaskAllTest
+Test ID: HTTP.T11
+Date: 20/04/24 15:03:37
+Fail: Initial Test - Funktion nicht implementiert
+
+HTTP-Test-GetTaskByUSIDTest
+Test ID: HTTP.T12
+Date: 20/04/24 15:16:48
+Fail: Initial Test - Funktion nicht implementiert
+
+HTTP-Test-GetTaskByTLIDTest
+Test ID: HTTP.T13
+Date: 20/04/24 15:18:35
+Fail: Initial Test - Funktion nicht implementiert
+
+HTTP-Test-SaveTaskTest
+Test ID: HTTP.T14
+Date: 20/04/24 15:27:16
+Fail: Initial Test - Funktion nicht implementiert
+
+HTTP-Test-DeleteTaskTest
+Test ID: HTTP.T15
+Date: 20/04/24 15:30:32
+Fail: Initial Test - Funktion nicht implementiert
+
+HTTP-Test-GetTaskBoardTest
+Test ID: HTTP.T16
+Date: 20/04/24 15:33:17
+Fail: Initial Test - Funktion nicht implementiert
