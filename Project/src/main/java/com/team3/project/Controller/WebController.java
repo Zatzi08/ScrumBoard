@@ -1,10 +1,8 @@
 package com.team3.project.Controller;
 
-import com.team3.project.Classes.Email;
 import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.UserStory;
 import com.team3.project.Faced.LogicToData;
-import org.hibernate.annotations.DialectOverride;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
