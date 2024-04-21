@@ -7,6 +7,7 @@ import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.Task;
 import com.team3.project.Classes.Enumerations;
 import com.team3.project.service.AccountService;
+import com.team3.project.service.TaskService;
 import com.team3.project.DAOService.DAOUserStoryService;
 import com.team3.project.DAOService.DAOAccountService;
 import com.team3.project.service.UserStoryService;
@@ -279,8 +280,6 @@ public class LogicTest {
             e.printStackTrace();
         }
 
-        int u1id = DAOUserStoryService.getByName("UserStory1").getId();
-
         try{
             Assertions.assertEquals(DAOUserStoryService.getByName("UserStory1").getDescription(), u1.getDescription());
         }catch (AssertionError e){
@@ -289,8 +288,10 @@ public class LogicTest {
             throw new AssertionError(e);
         }
 
+        int u1id = DAOUserStoryService.getByName("UserStory1").getId();
+
         try{
-            usService.deleteUserStory(u1.getID());
+            usService.deleteUserStory(u1id);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -305,21 +306,14 @@ public class LogicTest {
 
         pw.append(String.format("pass = %b", pass));
     }
+
     /*  Test ID: Logic.T6
-     *  Author: Henry Lewis Freyschmidt
-     *  Zweck: Task anzeigen  T1.B1
-     */
-    @Test
-    void showTask(){
-        pw.append("Logik-Test-showTask\nTest ID: Logic.T6\n" + "Date: " + formatter.format(date)+ '\n');
-    }
-    /*  Test ID: Logic.T7
      *  Author: Henry Lewis Freyschmidt
      *  Zweck: Task erstellen T3.B1
      */
     @Test
     void createTask(){
-        pw.append("Logik-Test-createTask\nTest ID: Logic.T7\n" + "Date: " + formatter.format(date)+ '\n');
+        pw.append("Logik-Test-createTask\nTest ID: Logic.T6\n" + "Date: " + formatter.format(date)+ '\n');
         UserStoryService uservice = new UserStoryService();
         UserStory u1 = new UserStory("Story1", "Blah1", 1, -1);
 
@@ -329,6 +323,7 @@ public class LogicTest {
             e.printStackTrace();
         }
         int uid = DAOUserStoryService.getByName(u1.getName()).getId();
+        TaskService tservice = new TaskService();
         Task t1 = new Task(1, "Task1", Enumerations.Priority.low, uid);
 
         try{
@@ -340,7 +335,7 @@ public class LogicTest {
         }
 
         try {
-            uservice.addTask(t1);
+            tservice.createTask(t1);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -352,7 +347,7 @@ public class LogicTest {
             pass = false;
             throw new AssertionError(e);
         }
-        DAOUserStoryService.delete(u1.getID());
+        uservice.deleteUserStory(u1.getID());
         //Voraussetzung: wenn eine User-Story gelöscht wird, werden dazugehörige Tasks gelöscht
         try{
             //Assertions.assertNotEquals(t1.getDescription(), DAOUserStoryService.getTaskByID(t1.getID()).getDescription());
@@ -363,15 +358,92 @@ public class LogicTest {
         }
         pw.append(String.format("pass = %b", pass));
     }
+    /*  Test ID: Logic.T7
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck: Task editieren T4.B1
+     */
+    @Test
+    void editTask(){
+        pw.append("Logik-Test-editTask\nTest ID: Logic.T7\n" + "Date: " + formatter.format(date)+ '\n');
+        UserStoryService uservice = new UserStoryService();
+        TaskService tservice = new TaskService();
+        UserStory u1 = new UserStory("UStory1", "blaBla1", 1, -1);
+        String newdescription = "newblaBla1";
+
+        try {
+            Assertions.assertNull(DAOUserStoryService.getByName("UStory1").getDescription());
+        }catch (AssertionError e){
+            pw.append("Fail: non-existent User-Story found\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+
+        try{
+            uservice.addUserStory(u1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try {
+            Assertions.assertEquals(DAOUserStoryService.getByName("UStory1").getDescription(), u1.getDescription());
+        }catch (AssertionError e){
+            pw.append("Fail: valid User-Story not created\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+
+        Task t1 = new Task(1, "Task1", Enumerations.Priority.low, DAOUserStoryService.getByName("UStory1").getId());
+
+        try{
+            //Assertions.assertNull(DAOUserStoryService.getTaskByID(t1.getID()).getDescription());
+        }catch(AssertionError e){
+            pw.append("Fail: non-existent Task found\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+
+        try{
+            tservice.createTask(t1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            //Assertions.assertEquals(t1.getDescription(), DAOUserStoryService.getTaskByID(t1.getID()).getDescription());
+        }catch(AssertionError e){
+            pw.append("Fail: existent Task not found\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+
+        t1.setDescription(newdescription);
+
+        try{
+            tservice.updateTask(t1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            //Assertions.assertEquals(t1.getDescription(), DAOUserStoryService.getTaskByID(t1.getID()).getDescription());
+        }catch(AssertionError e){
+            pw.append("Fail: updated Task not found\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+
+        pw.append(String.format("pass = %b",pass));
+    }
 
     /*  Test ID: Logic.T8
      *  Author: Henry Lewis Freyschmidt
-     *  Zweck: Task löschen T4.B1
+     *  Zweck: Task löschen T5.B1
      */
     @Test
     void deleteTask(){
         pw.append("Logik-Test-deleteTask\nTest ID: Logic.T8\n" + "Date: " + formatter.format(date)+ '\n');
         UserStoryService uservice = new UserStoryService();
+        TaskService tservice = new TaskService();
         UserStory u1 = new UserStory("StoryName", "BlahBlah", 1, -1);
 
         try{
@@ -385,13 +457,13 @@ public class LogicTest {
         Task t2 = new Task(10, "TaskDescription2", Enumerations.Priority.low, uid);
 
         try{
-            uservice.addTask(t1);
+            tservice.createTask(t1);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            uservice.addTask(t2);
+            tservice.createTask(t2);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -405,7 +477,7 @@ public class LogicTest {
         }
 
         try{
-            uservice.deleteTask(t1.getID());
+            tservice.deleteTask(t1);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -429,6 +501,14 @@ public class LogicTest {
         pw.append(String.format("pass = %b", pass));
     }
 
+    /*  Test ID: Logic.T9
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck: Tasklisten-Zuordnung T16.B1
+     */
+    @Test
+    void taskList(){
+
+    }
 }
 
 /* erster Draft: Erfüllungsbedingungen für die User-Storys vom Sprint 2
