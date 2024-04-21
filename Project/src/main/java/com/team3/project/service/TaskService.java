@@ -17,7 +17,7 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public boolean createTask(String description, Enumerations.Priority priority){
+    public boolean createTask(Task t){
         //TODO: Anfrage an DB createTaskDB implementieren : erstelle Task mit gegebenen Argumenten
         //return createTaskDB(description,priority);
         return true;
