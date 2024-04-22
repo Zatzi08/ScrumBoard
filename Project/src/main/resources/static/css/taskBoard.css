@@ -1,0 +1,41 @@
+/*
+  Author: Paula Krasnovska
+  Revisited: /
+  Funktion: Task im TaskBoard
+  Grund: Benutzerfreundlichkeit
+  User-ID/Task-ID: U1.F1
+*/
+/*Todo: User ID raussuchen für Task*/
+/*Todo: taskCard für das Task Board entsprechend umschreiben, damit die Größe und Attribute angemessen sind.*/
+.taskCard{
+    position:relative;
+    width: 300px;
+    height:200px;
+    background-color: #87939f;
+    color:#3b3b3b;
+    border-top-left-radius:15px;
+    border-top-right-radius:15px;
+    margin-top:30px;
+    margin-left:10px;
+    transition: all 0.5s ease;
+    list-style-type: none;
+}
+
+.taskCard:hover{
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+#taskCardBeschreibung{
+    margin-top: 25px;
+    right: 0;
+    width:280px;
+    height:130px;
+}
+
+/*Packen wir alle Infos auf das Kärtchen, oder lösen wir das auch mit einem Popup, dass dann da alle Infos angezeigt werden?*/
+#taskCardUS{}
+#taskCardPrio{}
+#taskCardDueDate{}
+#taskCardRole{}

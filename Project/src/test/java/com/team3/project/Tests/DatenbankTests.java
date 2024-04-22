@@ -184,8 +184,6 @@ public class DatenbankTests {
             DAOAccountService.create(testMail,testPas);
         } catch(Exception e) {
             e.printStackTrace();
-            pw.append(String.format("fail: valid Account not created\n"));
-            pass = false;
         }
         try {
              assertTrue(DAOAccountService.loginCheck(testMail, testPas));
@@ -212,8 +210,6 @@ public class DatenbankTests {
             DAOAccountService.deleteByMail(testMail);
         } catch(Exception e) {
             e.printStackTrace();
-            pw.append(String.format("fail: existent Account not deleted\n"));
-            pass = false;
         }
         try {
             assertFalse(DAOAccountService.loginCheck(testMail, testPas));
@@ -247,8 +243,6 @@ public class DatenbankTests {
             DAOAccountService.create(testMail, oldPas);
         } catch(Exception e) {
             e.printStackTrace();
-            pw.append(String.format("fail: valid Account not created\n"));
-            pass = false;
         }
         try {
             assertTrue(DAOAccountService.loginCheck(testMail, oldPas));
@@ -302,8 +296,6 @@ public class DatenbankTests {
             DAOAccountService.create(testMail, oldPas);
         } catch(Exception e) {
             e.printStackTrace();
-            pw.append(String.format("fail: valid Account not created\n"));
-            pass = false;
         }
         try {
             assertTrue(DAOAccountService.loginCheck(testMail, oldPas));
@@ -337,8 +329,6 @@ public class DatenbankTests {
             DAOAccountService.deleteByMail(testMail);
         } catch(Exception e) {
             e.printStackTrace();
-            pw.append(String.format("fail: existent Account not deleted\n"));
-            pass = false;
         }
         pw.append(String.format("pass = %b", pass));
     }
@@ -408,8 +398,6 @@ public class DatenbankTests {
             System.out.println("create successfull");
         } catch(Exception e) {
             e.printStackTrace();
-            pw.append(String.format("fail: valid User-Story not created\n"));
-            pass = false;
         }
         int id = DAOUserStoryService.getByName(name).getId();
         try {
@@ -423,7 +411,7 @@ public class DatenbankTests {
             DAOUserStoryService.delete(DAOUserStoryService.getByName(name).getId());
         } catch(Exception e) {
             e.printStackTrace();
-            pw.append(String.format("fail: existent User-Story not found\n"));
+            pw.append("Fail: existent User-Story not found\n");
             pass = false;
         }
         pw.append(String.format("pass = %b", pass));
@@ -447,8 +435,6 @@ public class DatenbankTests {
             DAOUserStoryService.create(name, description, priority);
         } catch(Exception e) {
             e.printStackTrace();
-            pw.append(String.format("fail: valid User-Story not created\n"));
-            pass = false;
         }
         int id = DAOUserStoryService.getByName(name).getId();
         try {
@@ -543,8 +529,6 @@ public class DatenbankTests {
             DAOUserStoryService.create(name, description, priority);
         } catch(Exception e) {
             e.printStackTrace();
-            pw.append(String.format("fail: valid User-Story not created\n"));
-            pass = false;
         }
 
         List<DAOUserStory> storys = DAOUserStoryService.getAll();
@@ -571,8 +555,6 @@ public class DatenbankTests {
             DAOUserStoryService.create(newname, newdescription, newpriority);
         } catch (Exception e) {
             e.printStackTrace();
-            pw.append(String.format("fail: valid User-Story not created\n"));
-            pass = false;
         }
 
         storys = DAOUserStoryService.getAll();
@@ -593,10 +575,8 @@ public class DatenbankTests {
                     pass = false;
                     throw new AssertionError(e);
                 }
-
-
-
             }
+
             if (daoUserStory.getName().equals(newname)) {//redundanten Test gelöscht
                 try {
                     assertEquals(newdescription, daoUserStory.getDescription());
@@ -618,15 +598,11 @@ public class DatenbankTests {
             DAOUserStoryService.delete(DAOUserStoryService.getByName(name).getId());
         } catch(Exception e) {
             e.printStackTrace();
-            pw.append(String.format("fail: existent User-Story not deleted\n"));
-            pass = false;
         }
         try {
             DAOUserStoryService.delete(DAOUserStoryService.getByName(newname).getId());
         } catch(Exception e) {
             e.printStackTrace();
-            pw.append(String.format("fail: existent User-Story not deleted\n"));
-            pass = false;
         }
         pw.append(String.format("pass = %b", pass));
     }

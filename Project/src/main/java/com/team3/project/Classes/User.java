@@ -10,7 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 public class User extends abstraktDataClasses {
-    private Account account;
     private int ID;
     private String name;
     private String privatDescription;
@@ -21,21 +20,21 @@ public class User extends abstraktDataClasses {
 
     /* Author: Henry L. Freyschmidt
      * Revisited: /
-     * Funktion: /
+     * Funktion: User Konstruktor
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public User(Account account, String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles, List<Integer> taskIDs){
+
+    //Frage von Henry: soll beim Konstruktor von User die Profil-Sachen dabei sein?
+    public User(String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles){
         super(userID);
-        this.account = account;
         this.name = name;
         this.privatDescription = privatDescription;
         this.workDescription = workDescription;
         this.roles = roles;
-        this.taskIDs = taskIDs;
     }
 
-    /* Author: Henry L. Freyschmid
+    /* Author: Henry L. Freyschmidt
      * Funktion: Updated Userstory in Datenbank
      * Grund: /
      * UserStory/Task-ID: /

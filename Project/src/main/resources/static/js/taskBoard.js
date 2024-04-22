@@ -5,16 +5,31 @@
 * Grund: /
 * User-Story/Task-ID: U3.F1, U4.F1
 */
-
 function EditBox() {
-    /*Todo: onClickEvent() für PopUp der Edit/AddBox als Methode (PK)*/
+    const toggleEditBox = document.querySelector('.editMenu');
+    toggleEditBox.classList.toggle('visible');
+
+    if (toggleEditBox.classList.contains('visible')) {
+        toggleEditBox.style.right = '0'
+    }
+    else {
+        toggleEditBox.style.right = '-350px';
+    }
 }
+/*
+* Author: Paula Krasnovska
+* Revisited: /
+* Funktion: Toggeln des Bearbeitungsmenü, Zuweisung von Attributen für Thymeleaf
+* Grund: /
+* User-Story/Task-ID: U3.F1, U4.F1
+*/
 function toggleEditBox(storyId, name, description){
     EditBox();
     document.getElementById("inputName").textContent = name;
     document.getElementById("inputDesc").textContent = description;
     document.getElementById("editId").value = storyId;
 }
+
 /*
 * Author: Zana Salih Hama
 * Revisited: /

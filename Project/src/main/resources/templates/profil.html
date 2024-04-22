@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil</title>
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/profil.css">
+    <link rel="stylesheet" href="css/setup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<!--
+       Author: Zana Salih Hama
+       Revisited: /
+       Funktion: Reiter zur Übersicht aller Seiten[-optionen]
+       Grund: Übersichtlichkeit
+       User-ID/Task-ID: /
+    -->
+<div class="Reiter">
+    <button class="reiterBtn" >Projekt Manager</button>
+    <button class = "reiterBtn"onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Profil </button>
+    <button class = "reiterBtn">Task-Board </button>
+    <button class = "reiterBtn">Kalender </button>
+    <button class = "reiterBtn" id="einstellungBtn">Einstellungen </button>
+</div>
+
+<div id = "profilContainer">
+    <div id = "profilInhalt">
+        <div id = "profilName">  <i class = "fa fa-edit" onclick="toggleProfilMenü()"></i>Benutzername </div>
+        <div id = "profilProjektBeschreibung"> Projekt Beschreibung </div>
+        <div id = "rolleProfil"> Rolle <p>.</p> </div>
+        <div id = "profilPersoBeschreibung"> Persönliche Beschreibung </div>
+    </div>
+</div>
+
+<div id = "profilEditMenü">
+<form id = "profilForm" action = "/GetProfileByID" method = "post" autocomplete="off">
+    <span class = "fa fa-close" onclick="toggleProfilMenü()"></span>
+    <label class = "labelProfil">Benutzername:</label>
+    <textarea class = "profilInput" form = "profilForm" placeholder = "Benutzername bearbeiten" name = benutzername style = " height:30px;"></textarea>
+    <label class = "labelProfil">projektbezogene Beschreibung:</label>
+    <textarea class = "profilInput" form = "profilForm" placeholder = "projektbezogene Beschreibung bearbeiten" name = projektBeschreibung></textarea>
+    <label class = "labelProfil" >Rolle:</label>
+    <textarea class = "profilInput" form = "profilForm" placeholder = "Rolle bearbeiten" name = rolle style = "height:30px;"></textarea>
+    <label class = "labelProfil">persönliche Beschreibung:</label>
+    <textarea class = "profilInput" form = "profilForm" placeholder = "persönliche Beschreibung bearbeiten" name = persoBeschreibung></textarea>
+    <button type = "submit" id = "profilEditBtn">Speichern</button>
+</form>
+</div>
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/what-input.js"></script>
+    <script src="js/vendor/foundation.js"></script>
+    <script src="js/app.js"></script>
+    <script type = "text/javascript" src="js/setup.js"></script>
+    <script type = "text/javascript" src="js/profil.js"></script>
+</body>
+</html>
