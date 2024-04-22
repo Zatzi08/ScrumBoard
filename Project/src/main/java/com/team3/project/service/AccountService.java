@@ -5,6 +5,9 @@ import com.team3.project.Classes.User;
 import com.team3.project.DAOService.DAOAccountService;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
+import java.util.List;
+
 
 @Service
 public class AccountService {
@@ -52,6 +55,15 @@ public class AccountService {
 
     }
 
+    public void deleteProfile(Profile p){
+
+    }
+
+    public List<User> getAllUser(){
+        List <User> list = new LinkedList<>();
+        return list;
+    }
+
     public void SavePublicData(String SessionId, String name, String rolle, String uDesc, String pDesc) throws Exception {
         if (SessionId == null) throw new Exception("id outOfBound");
         if (name == null) throw new Exception("Null Name");
@@ -72,5 +84,4 @@ public class AccountService {
         if (SessionId == null) throw new Exception("Null ID");
         return null; //DAOAccountService.getAccountByID(id); TODO: Implement, wenn DB bereit
     }
-
 }
