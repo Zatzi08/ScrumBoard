@@ -7,136 +7,61 @@
     <title>Projektmanager</title>
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/projectManager.css">
+    <link rel="stylesheet" href="css/setup.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-
-    <!--
+<!--
        Author: Zana Salih Hama
        Revisited: /
        Funktion: Reiter zur Übersicht aller Seiten[-optionen]
        Grund: Übersichtlichkeit
        User-ID/Task-ID: /
     -->
-    <div class="Reiter">
-        <button class="reiterBtn" onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
-        <button class = "reiterBtn">Profil </button>
-        <button class = "reiterBtn">Task-Board </button>
-        <button class = "reiterBtn">Kalender </button>
-        <button class = "reiterBtn" id="einstellungBtn">Einstellungen </button>
-    </div>
+<div class="Reiter">
+    <button class="reiterBtn" onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
+    <button class = "reiterBtn">Profil </button>
+    <button class = "reiterBtn">Task-Board </button>
+    <button class = "reiterBtn">Kalender </button>
+    <button class = "reiterBtn" id="einstellungBtn">Einstellungen </button>
+</div>
 
-    <!--
-       Author: Paula Krasnovska
-       Revisited: /
-       Funktion: Container für Dropdown Ansicht und Filter
-       Grund: /
-       User-ID/Task-ID: U1.F1
-    -->
-    <div class="container">
-        <div class="ansichtDropdown">
-            <button onClick= "ansichtDropdown()" id="ansichtBtn" class = "ansichtBtn"><i class="fa fa-level-down" style="margin-right: 8px;"></i> Ansicht</button>
-            <div id="ansichtDropdownContent" class="ansichtdropdown-content">
-                <a href="#">User Stories</a>
-                <a href="#">Tasks</a>
-                <a href="#">Schätzungstracker</a>
-                <a href="#">Planning Poker</a>
-            </div>
-        </div>
-        <div class = "filterDropdown">
-            <button onClick = "filterDropdown()"id="filterBtn" class = "filterBtn"><i class="fa fa-filter" style="margin-right: 8px;"></i> Filter</button>
-            <div id = "filterDropdownContent" class = filterdropdown-content>
-                <a href="#">Kein Filter</a>
-                <a href="#">Abgabefrist</a>
-                <a href="#">Priorität</a>
-                <a href="#">Aufwand</a>
-            </div>
-        </div>
 
-        <!--
-           Author: Paula Krasnovska
-           Revisited: /
-           Funktion: Suchen
-           Grund: Navigieren im Projekt-Manager
-           User-ID/Task-ID: /
-        -->
-        <div class="suchleiste">
-            <ul class="menu">
-                <li><input type="search" placeholder="Suchen..." id = "sucheInput"></li>
-                <li><button type="button" class="searchBtn"><i class="fa fa-search" style="margin-top: -2px;"></i></button></li>
-            </ul>
-        </div>
 
-        <!--
+<!--
            Author: Zana Salih Hama
            Revisited: /
-           Funktion: Button um User-Story zu erstellen
-           Grund: U1.F1
-           User-ID/Task-ID: /
-        -->
-        <div class="createUserStory">
-            <button id="createUserStoryBtn" onclick= "toggleEditBox(-1,'','')"><i class="fa fa-plus" style="margin-right: 10px"></i>User-Story erstellen</button>
-        </div>
-
-        <!--Author: Paula Krasnovska
-        Revisited: /
-        Funktion: User-Story Template
-        Grund: Task-Container für Zugehörigkeit zu User-Stories
-        User-ID/Task-ID: U1.F1
-        -->
-        <div>
-            <ul>
-                <li th:each = "story: ${Storys}" class="userStoryContainer" >
-                    <div class="userStoryText">
-                        <label th:text = "${story.name}?:'Titel'" id="userStoryTitel">Titel</label>
-                        <label th:text = "${story.description}?:'Beschreibung'"id="userStoryBeschreibung">Beschreibung</label>
-                    </div>
-                    <button class="editBtn" th:sname="${story.name}" th:sdescription="${story.description}" th:sid="${story.id}" onclick="toggleEditBox(this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'));" ><i class="fa fa-edit" style="margin-right: 8px;"></i></button>
-                    <button id="zoomUserStoryBtn"><i class="fa fa-search" ></i></button> <!-- onclick="zoomUserStoryContainer(id)" TODO: Fix position shift to the left-->
-                    <!-- <button type="button" id="ausklappbarBtn" onClick="taskAusklappen(this)"> > </button>  TODO: Fix position relativ to list-->
-                    <div id="taskContainer">
-                        <div id="taskInhalt">
-                            <button id="neueTaskBtn">Tasks <i class="fa fa-plus"></i></button>
-                            <label id="taskBeschreibung">Noch keine Tasks..</label>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <!--
-            Author: Zana Salih Hama
-            Revisited: /
-            Funktion: Bearbeitungs-/Erstellungsfenster für User-Stories
-            Grund: /
-            User-ID/Task-ID: U3.F1, U4.F1, U5.F1, U5.F2
-        -->
-        <div class = "editMenu">
-            <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
-            <span id="closeToggleEdit" class="closeToggleEdit" onclick="EditBox()">&times;</span>
-            <div class="editMenu-content">
-                <form class="form" action="/addStory" method="post" id="editForm" autocomplete="off" name="Story">
-                    <textarea id="inputName" class="inputEdit" required placeholder="Titel der User-Story eingeben" name="name" form="editForm"></textarea>
-                    <textarea id="inputDesc" class="inputEdit" required placeholder="Eine passende Beschreibung eingeben" name="description" form="editForm"></textarea>
-                    <label>Priorität</label>
-                    <button type="button" class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: indianred" name="urgent" form="editForm">Urgent</button>
-                    <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: lightcoral" name="high" form="editForm">High</button>
-                    <button type="button" class="inputEditPrio" id="inputPrioNormal" onclick="highlightPriorityButton('inputPrioNormal')" style="background-color: lightblue" name="normal" form="editForm">Normal</button>
-                    <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: lightgreen" name="low" form="editForm">Low</button>
-                    <label style="margin-top: 15px">Abgabefrist</label>
-                    <input type="datetime-local" id="inputDate" class="inputBtn" placeholder="Abgabefrist">
-                    <input type="hidden" id = "editId" name="id" value="-1">
-                    <input type="hidden" id = "editPrio" name="priority" value="1">
-                    <button type="submit" id="editMenu-saveEditBtn">Speichern</button>
-                </form>
-            </div>
-        </div>
+           Funktion: Bearbeitungs-/Erstellungsfenster für User-Stories
+           Grund: /
+           User-ID/Task-ID: U3.F1, U4.F1, U5.F1, U5.F2
+       -->
+<div class = "editMenu">
+    <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
+    <span id="closeToggleEdit" class="closeToggleEdit" onclick="EditBox()">&times;</span>
+    <div class="editMenu-content">
+        <form class="form" th:action="@{/addStory?SessionId={id}(id=${SessionID})}" method="post" id="editForm" autocomplete="off" name="Story">
+            <textarea id="inputName" class="inputEdit" required placeholder="Titel der User-Story eingeben" name="name" form="editForm"></textarea>
+            <textarea id="inputDesc" class="inputEdit" required placeholder="Eine passende Beschreibung eingeben" name="description" form="editForm"></textarea>
+            <label>Priorität</label>
+            <button type="button" class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: indianred" name="urgent" form="editForm">Urgent</button>
+            <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: lightcoral" name="high" form="editForm">High</button>
+            <button type="button" class="inputEditPrio" id="inputPrioNormal" onclick="highlightPriorityButton('inputPrioNormal')" style="background-color: lightblue" name="normal" form="editForm">Normal</button>
+            <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: lightgreen" name="low" form="editForm">Low</button>
+            <label style="margin-top: 15px">Abgabefrist</label>
+            <input type="datetime-local" id="inputDate" class="inputBtn" placeholder="Abgabefrist">
+            <input type="hidden" id = "editId" name="id" value="-1">
+            <input type="hidden" id = "editPrio" name="priority" value="1">
+            <button type="submit" id="editMenu-saveEditBtn">Speichern</button>
+        </form>
     </div>
+</div>
+</div>
 
     <script src="js/vendor/jquery.js"></script>
     <script src="js/vendor/what-input.js"></script>
     <script src="js/vendor/foundation.js"></script>
     <script src="js/app.js"></script>
+    <script type = "text/javascript" src="js/setup.js"></script>
     <script type = "text/javascript" src="js/projectManager.js"></script>
 </body>
 </html>

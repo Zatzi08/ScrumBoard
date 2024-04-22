@@ -11,6 +11,14 @@ import java.util.Properties;
 @Getter
 @Setter
 @Component
+
+/*
+* aws Acc:
+* E-Mail: henryfreyschmidt@gmail.com
+* account name: SWT-Projekt
+* passwort: SWTGruppe3Team3!
+* kontaktinfo: Henry's persönliche Daten
+* Problem: meine Karte wird nicht angenommen. Kläre ich am Montag (15.4) mit der Bank */
 public class Email {
 
     public JavaMailSenderImpl emailSender = getJavaMailSender();
