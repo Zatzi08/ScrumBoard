@@ -8,12 +8,12 @@ import com.team3.project.Classes.Email;
 @Service
 public class AccountService {
     public boolean checkMail(String Mail){
-        return DAOAccountService.checkmail(Mail);
+        return DAOAccountService.checkMail(Mail);
     }
     public boolean login(String email, String passwort) throws Exception {
         if( email == null) throw new Exception("Null Email");
         if( passwort == null) throw new Exception("Null Passwort");
-        return DAOAccountService.LoginCheck(email,passwort);
+        return DAOAccountService.loginCheck(email,passwort);
     }
 
     /* Author: Henry L. Freyschmidt
@@ -26,7 +26,7 @@ public class AccountService {
         if( email == null) throw new Exception("Null Email");
         if( passwort == null) throw new Exception("Null Passwort");
         if( username == null) throw new Exception("Null Username");
-        return DAOAccountService.createAccount(email,passwort);
+        return DAOAccountService.create(email,passwort);
     }
 
 

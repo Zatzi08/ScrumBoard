@@ -142,7 +142,7 @@ public class HttpRequestTests {
             throw new AssertionError(e);
         }
 
-        DAOAccountService.deleteAccount(eMail2);
+        DAOAccountService.deleteByMail(eMail2);
         pw.append(String.format("pass: %b", pass));
     }
 

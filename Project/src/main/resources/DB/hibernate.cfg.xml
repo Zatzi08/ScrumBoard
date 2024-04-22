@@ -16,7 +16,7 @@
 	   <!-- Database connection settings -->
 	   <property name="connection.driver_class">org.sqlite.JDBC</property>
 		<!-- Intellij root: file:./src/main/resources/DB/database.db -->
-	   <property name="connection.url">jdbc:sqlite:file:./src/main/resources/DB/database.db</property>
+	   <property name="connection.url">jdbc:sqlite:file:./src/main/resources/DB/databaseTest.db</property>
 
 	   <!-- SQL dialect -->
 	   <property name="dialect">org.hibernate.community.dialect.SQLiteDialect</property>
@@ -27,7 +27,8 @@
 	   <!-- Names the annotated entity class -->
 	   <mapping class="com.team3.project.DAO.DAOAccount"/>
 	   <mapping class="com.team3.project.DAO.DAOUserStory"/>
-
+	   <mapping class="com.team3.project.DAO.DAOUser"/>
+	   <mapping class="com.team3.project.DAO.DAORole"/>
 
     </session-factory>
 
