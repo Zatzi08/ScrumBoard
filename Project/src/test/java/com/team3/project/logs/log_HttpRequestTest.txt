@@ -30,57 +30,142 @@ Test ID: HTTP.T6
 Date: 12/04/24 21:47:58
 Fail: Initial Test - Funktion nicht implementiert
 
-HTTP-Test-RequestResetCodeTest
-Test ID: HTTP.T6
+HTTP-Test-RequestResetPasswortTest
+Test ID: HTTP.T7
 Date: 12/04/24 21:48:13
 Fail: Initial Test - Funktion nicht implementiert
 
 HTTP-Test-SendMailTest
-Test ID: HTTP.T7
+Test ID: HTTP.T8
 Date: 16/04/24 12:46:26
 Fail: Initial Test - Funktion nicht implementiert
 
 HTTP-Test-GetProfilPageByIDTest
-Test ID: HTTP.T8
+Test ID: HTTP.T9
 Date: 16/04/24 13:54:27
 Fail: Initial Test - Funktion nicht implementiert
 
 HTTP-Test-GetProfilPageByNameTest
-Test ID: HTTP.T9
+Test ID: HTTP.T10
 Date: 16/04/24 13:57:57
 Fail: Initial Test - Funktion nicht implementiert
 
 HTTP-Test-SaveUserDataTest
-Test ID: HTTP.T10
+Test ID: HTTP.T11
 Date: 16/04/24 13:59:20
 Fail: Initial Test - Funktion nicht implementiert
 
 HTTP-Test-GetTaskAllTest
-Test ID: HTTP.T11
+Test ID: HTTP.T12
 Date: 20/04/24 15:03:37
 Fail: Initial Test - Funktion nicht implementiert
 
 HTTP-Test-GetTaskByUSIDTest
-Test ID: HTTP.T12
+Test ID: HTTP.T13
 Date: 20/04/24 15:16:48
 Fail: Initial Test - Funktion nicht implementiert
 
 HTTP-Test-GetTaskByTLIDTest
-Test ID: HTTP.T13
+Test ID: HTTP.T14
 Date: 20/04/24 15:18:35
 Fail: Initial Test - Funktion nicht implementiert
 
 HTTP-Test-SaveTaskTest
-Test ID: HTTP.T14
+Test ID: HTTP.T15
 Date: 20/04/24 15:27:16
 Fail: Initial Test - Funktion nicht implementiert
 
 HTTP-Test-DeleteTaskTest
-Test ID: HTTP.T15
+Test ID: HTTP.T16
 Date: 20/04/24 15:30:32
 Fail: Initial Test - Funktion nicht implementiert
 
 HTTP-Test-GetTaskBoardTest
-Test ID: HTTP.T16
+Test ID: HTTP.T17
 Date: 20/04/24 15:33:17
 Fail: Initial Test - Funktion nicht implementiert
+
+HTTP-Test-SaveTaskTest
+Test ID: HTTP.T15
+Date: 22/04/24 14:48:36
+Fail: Funktion nicht implementiert
+
+HTTP-Test-RequestResetPasswortTest
+Test ID: HTTP.T7
+Date: 22/04/24 14:48:36
+pass: true
+
+HTTP-Test-GetTaskBoardTest
+Test ID: HTTP.T17
+Date: 22/04/24 14:48:36
+Fail: Funktion nicht implementiert
+
+HTTP-Test-RegisterTest
+Test ID: HTTP.T2
+Date: 22/04/24 14:48:36
+pass: true
+
+HTTP-Test-addUserStoryTest
+Test ID: HTTP.T5
+Date: 22/04/24 14:48:36
+pass: true
+
+HTTP-Test-SaveUserDataTest
+Test ID: HTTP.T11
+Date: 22/04/24 14:48:36
+pass: true
+
+HTTP-Test-neuesPasswortPageTest
+Test ID: HTTP.T3
+Date: 22/04/24 14:48:36
+pass: true
+
+HTTP-Test-LoginTest
+Test ID: HTTP.T1
+Date: 22/04/24 14:48:36
+pass: true
+
+HTTP-Test-neuesPasswortTest
+Test ID: HTTP.T4
+Date: 22/04/24 14:48:36
+pass: true
+
+HTTP-Test-DeleteTaskTest
+Test ID: HTTP.T16
+Date: 22/04/24 14:48:36
+Fail: Funktion nicht implementiert
+
+HTTP-Test-GetTaskByTLIDTest
+Test ID: HTTP.T14
+Date: 22/04/24 14:48:36
+Fail: Funktion nicht implementiert
+
+HTTP-Test-GetTaskByUSIDTest
+Test ID: HTTP.T13
+Date: 22/04/24 14:48:36
+Fail: Funktion nicht implementiert
+
+HTTP-Test-GetProfilPageByNameTest
+Test ID: HTTP.T10
+Date: 22/04/24 14:48:36
+pass: true
+
+HTTP-Test-SendMailTest
+Test ID: HTTP.T8
+Date: 22/04/24 14:48:36
+pass: true
+
+HTTP-Test-GetTaskAllTest
+Test ID: HTTP.T12
+Date: 22/04/24 14:48:36
+pass: true
+
+HTTP-Test-RequestResetCodeTest
+Test ID: HTTP.T6
+Date: 22/04/24 14:48:36
+pass: true
+
+HTTP-Test-GetProfilPageByIDTest
+Test ID: HTTP.T9
+Date: 22/04/24 14:48:36
+pass: true

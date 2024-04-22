@@ -3,8 +3,9 @@ package com.team3.project.Controller;
 import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.UserStory;
 import com.team3.project.Faced.LogicToData;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,7 +30,7 @@ public class WebController {
         return modelAndView;
     }
 
-    @RequestMapping("/error")
+    @RequestMapping("/Error")
     private ModelAndView error(Exception e){
         return new ModelAndView("Error").addObject("error",e.toString());
     }
@@ -240,10 +241,10 @@ public class WebController {
      * UserStory/Task-ID: // Todo: Place ID
      */
     @RequestMapping(value = "/SendMail", method = RequestMethod.POST)
-    private void SendMail(@RequestParam(value = "senderEmail",required = true) String from,
-                          @RequestParam(value = "recieverEmail",required = true)String to,
-                          @RequestParam(value = "text",required = true) String text,
-                          @RequestParam(value = "SessionId",required = true) String SessionId){
+    private ResponseEntity SendMail(@RequestParam(value = "senderEmail",required = true) String from,
+                                    @RequestParam(value = "recieverEmail",required = true)String to,
+                                    @RequestParam(value = "text",required = true) String text,
+                                    @RequestParam(value = "SessionId",required = true) String SessionId){
         try {
             if (logicToData.webSessionService.verify(SessionId)) {
                 System.out.println("From:" + from + "\nTo:" + to + "\nText:\n" + text);
@@ -251,6 +252,7 @@ public class WebController {
         } catch (Exception e){
             System.out.println(e.toString());
         }
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     /* Author: Lucas Krüger
@@ -259,7 +261,7 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: P1.B1
      */
-    @RequestMapping(value = "/GetProfile", method = RequestMethod.POST)
+    @RequestMapping(value = "/GetProfilePage", method = RequestMethod.POST)
     private ModelAndView GetProfilePage(@RequestParam(value = "SessionId",required = true) String SessionId){
         try{
             if (logicToData.webSessionService.verify(SessionId)){
@@ -279,7 +281,7 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: P1.B1
      */
-    @RequestMapping(value = "/GetProfileByName", method = RequestMethod.POST)
+    @RequestMapping(value = "/GetProfilePageByName", method = RequestMethod.POST)
     private ModelAndView GetProfilePageByName(@RequestParam(value = "name",required = true) String name,
                                               @RequestParam(value = "SessionId",required = true) String SessionId){
         try{

@@ -85,7 +85,7 @@ public class HttpRequestTests {
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/Login" + "?EMail=" + EMail1 + "&Passwort=" + Passwort1, HttpMethod.POST, message, String.class).getStatusCode())
-                    .isEqualTo(HttpStatus.FOUND);
+                    .isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
@@ -93,7 +93,7 @@ public class HttpRequestTests {
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/Login" + "?EMail=" + EMail2 + "&Passwort=" + Passwort2, HttpMethod.POST, message, String.class).getStatusCode())
-                    .isEqualTo(HttpStatus.FOUND);
+                    .isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
@@ -229,7 +229,7 @@ public class HttpRequestTests {
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/addStory?SessionId=" + masterID + "&name=" + name + "&description=" + desc + "&priority=" + prio1 + "&id=-1", HttpMethod.POST, message, String.class)
-                    .getStatusCode()).isEqualTo(HttpStatus.FOUND);
+                    .getStatusCode()).isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
@@ -240,7 +240,7 @@ public class HttpRequestTests {
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/addStory?SessionId=" + masterID + "&name=" + name + "&description=" + desc2 + "&priority=" + prio2 + "&id=" + id, HttpMethod.POST, message, String.class)
-                    .getStatusCode()).isEqualTo(HttpStatus.FOUND);
+                    .getStatusCode()).isEqualTo(HttpStatus.OK);
         }  catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
@@ -263,7 +263,7 @@ public class HttpRequestTests {
         String EMail2 = "Fail@Mail.com";
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetPasswort", HttpMethod.POST, message, String.class).getStatusCode())
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetCode", HttpMethod.POST, message, String.class).getStatusCode())
                     .isEqualTo(HttpStatus.BAD_REQUEST);
         } catch (AssertionError e){
             pw.append("Fail: Akzeptiert Bad_Request");
@@ -271,15 +271,24 @@ public class HttpRequestTests {
         }
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetPasswort?email=" + EMail1, HttpMethod.POST, message, String.class)
-                    .getStatusCode()).isEqualTo(HttpStatus.FOUND);
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetCode?email=" + EMail1, HttpMethod.POST, message, String.class)
+                    .getStatusCode()).isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
         }
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetCode?email=" + EMail2, HttpMethod.POST, message, String.class)
+                    .getStatusCode()).isEqualTo(HttpStatus.OK);
+        } catch (AssertionError e){
+            pw.append("Fail: HTTP PostRequest nicht erfolgreich");
+            throw new AssertionError(e);
+        }
+
         try {
             try {
-                assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetPasswort?email=" + EMail1, HttpMethod.POST, message, String.class)
+                assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetCode?email=" + EMail1, HttpMethod.POST, message, String.class)
                         .getBody().contains("code:")); //TODO: alle Codes starten mit "code:" PS.: kp ob contains überhaupt funktioniert
             } catch (AssertionError e) {
                 pw.append("Fail: Code nicht integriert");
@@ -288,24 +297,16 @@ public class HttpRequestTests {
         }catch (Exception e){
             e.printStackTrace();
         }
-
-        try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetPasswort?email=" + EMail2, HttpMethod.POST, message, String.class)
-                    .getStatusCode()).isEqualTo(HttpStatus.FOUND);
-        } catch (AssertionError e){
-            pw.append("Fail: HTTP PostRequest nicht erfolgreich");
-            throw new AssertionError(e);
-        }
         pw.append(String.format("pass: %b", pass));
     }
 
-    /*  Test ID: HTTP.T6
+    /*  Test ID: HTTP.T7
      *  Author: Lucas Krüger
      *  Zweck: Testen des Post Requests zum resetten des Passworts eines Users
      */
     @Test
-    void RequestResetTest(){
-        pw.append("HTTP-Test-RequestResetCodeTest\nTest ID: HTTP.T6\nDate: " + formatter.format(date)+ '\n');
+    void RequestResetPasswortTest(){
+        pw.append("HTTP-Test-RequestResetPasswortTest\nTest ID: HTTP.T7\nDate: " + formatter.format(date)+ '\n');
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
@@ -323,7 +324,7 @@ public class HttpRequestTests {
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetPasswort?email=" + EMail1 + "&newPasswort="+Passwort1 + "&code=" + Code1, HttpMethod.POST, message, String.class)
-                    .getStatusCode()).isEqualTo(HttpStatus.FOUND);
+                    .getStatusCode()).isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
@@ -332,13 +333,13 @@ public class HttpRequestTests {
         pw.append(String.format("pass: %b", pass));
     }
 
-    /*  Test ID: HTTP.T7
+    /*  Test ID: HTTP.T8
      *  Author: Lucas Krüger
      *  Zweck: Testen des Post Requests zum Senden einer Mail an einen User
      */
     @Test
     void SendMail(){
-        pw.append("HTTP-Test-SendMailTest\nTest ID: HTTP.Tz\nDate: " + formatter.format(date)+ '\n');
+        pw.append("HTTP-Test-SendMailTest\nTest ID: HTTP.T8\nDate: " + formatter.format(date)+ '\n');
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
@@ -356,7 +357,7 @@ public class HttpRequestTests {
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/SendMail?SessionId=" + masterID +"&senderEmail=" + EMail1 + "&recieverEmail="+ EMail1 + "&text="+Text, HttpMethod.POST, message, String.class)
-                    .getStatusCode()).isEqualTo(HttpStatus.FOUND);
+                    .getStatusCode()).isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
@@ -364,37 +365,7 @@ public class HttpRequestTests {
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/SendMail?SessionId=" + masterID+"&senderEmail=" + EMail2 + "&recieverEmail="+ EMail2 + "&text="+Text, HttpMethod.POST, message, String.class)
-                    .getStatusCode()).isEqualTo(HttpStatus.FOUND);
-        } catch (AssertionError e){
-            pw.append("Fail: HTTP PostRequest nicht erfolgreich");
-            throw new AssertionError(e);
-        }
-
-        pw.append(String.format("pass: %b", pass));
-    }
-
-    /*  Test ID: HTTP.T8
-     *  Author: Lucas Krüger
-     *  Zweck: Testen des Post Requests zum Öffnen einer ProfilPage by UserID/SessionID
-     */
-    @Test
-    void GetProfilPageByID(){
-        pw.append("HTTP-Test-GetProfilPageByIDTest\nTest ID: HTTP.T8\nDate: " + formatter.format(date)+ '\n');
-        HttpHeaders header = new HttpHeaders();
-        header.setContentType(MediaType.TEXT_PLAIN);
-        HttpEntity<String> message = new HttpEntity<>("", header);
-
-        try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetProfilPage?SessionId=" + masterID, HttpMethod.POST, message, String.class).getStatusCode())
-                    .isEqualTo(HttpStatus.BAD_REQUEST);
-        } catch (AssertionError e){
-            pw.append("Fail: Akzeptiert Bad_Request");
-            throw new AssertionError(e);
-        }
-
-        try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetProfilPage?SessionId=" + masterID, HttpMethod.POST, message, String.class)
-                    .getStatusCode()).isEqualTo(HttpStatus.FOUND);
+                    .getStatusCode()).isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
@@ -405,19 +376,17 @@ public class HttpRequestTests {
 
     /*  Test ID: HTTP.T9
      *  Author: Lucas Krüger
-     *  Zweck: Testen des Post Requests zum Öffnen einer ProfilPage by UserName
+     *  Zweck: Testen des Post Requests zum Öffnen einer ProfilPage by UserID/SessionID
      */
     @Test
-    void GetProfilPageByName(){
-        pw.append("HTTP-Test-GetProfilPageByNameTest\nTest ID: HTTP.T9\nDate: " + formatter.format(date)+ '\n');
+    void GetProfilPageByID(){
+        pw.append("HTTP-Test-GetProfilPageByIDTest\nTest ID: HTTP.T9\nDate: " + formatter.format(date)+ '\n');
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
-        String UName1 = "Dave";
-        String UName2 = "NotDave";
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetProfilPageByName", HttpMethod.POST, message, String.class).getStatusCode())
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetProfilePage", HttpMethod.POST, message, String.class).getStatusCode())
                     .isEqualTo(HttpStatus.BAD_REQUEST);
         } catch (AssertionError e){
             pw.append("Fail: Akzeptiert Bad_Request");
@@ -425,16 +394,8 @@ public class HttpRequestTests {
         }
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetProfilPageByName?SessionId=" + masterID+"&name=" + UName1, HttpMethod.POST, message, String.class)
-                    .getStatusCode()).isEqualTo(HttpStatus.FOUND);
-        } catch (AssertionError e){
-            pw.append("Fail: HTTP PostRequest nicht erfolgreich");
-            throw new AssertionError(e);
-        }
-
-        try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetProfilPageByName?SessionId=" + masterID+"&name=" + UName2, HttpMethod.POST, message, String.class)
-                    .getStatusCode()).isEqualTo(HttpStatus.FOUND);
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetProfilePage?SessionId=" + masterID, HttpMethod.POST, message, String.class)
+                    .getStatusCode()).isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
@@ -445,11 +406,51 @@ public class HttpRequestTests {
 
     /*  Test ID: HTTP.T10
      *  Author: Lucas Krüger
+     *  Zweck: Testen des Post Requests zum Öffnen einer ProfilPage by UserName
+     */
+    @Test
+    void GetProfilPageByName(){
+        pw.append("HTTP-Test-GetProfilPageByNameTest\nTest ID: HTTP.T10\nDate: " + formatter.format(date)+ '\n');
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.TEXT_PLAIN);
+        HttpEntity<String> message = new HttpEntity<>("", header);
+        String UName1 = "Dave";
+        String UName2 = "NotDave";
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetProfilePageByName", HttpMethod.POST, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.BAD_REQUEST);
+        } catch (AssertionError e){
+            pw.append("Fail: Akzeptiert Bad_Request");
+            throw new AssertionError(e);
+        }
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetProfilePageByName?SessionId=" + masterID+"&name=" + UName1, HttpMethod.POST, message, String.class)
+                    .getStatusCode()).isEqualTo(HttpStatus.OK);
+        } catch (AssertionError e){
+            pw.append("Fail: HTTP PostRequest nicht erfolgreich");
+            throw new AssertionError(e);
+        }
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetProfilePageByName?SessionId=" + masterID+"&name=" + UName2, HttpMethod.POST, message, String.class)
+                    .getStatusCode()).isEqualTo(HttpStatus.OK);
+        } catch (AssertionError e){
+            pw.append("Fail: HTTP PostRequest nicht erfolgreich");
+            throw new AssertionError(e);
+        }
+
+        pw.append(String.format("pass: %b", pass));
+    }
+
+    /*  Test ID: HTTP.T11
+     *  Author: Lucas Krüger
      *  Zweck: Testen des Post Requests zum Speichern neuer Userdaten im Profil
      */
     @Test
     void SaveUserData(){
-        pw.append("HTTP-Test-SaveUserDataTest\nTest ID: HTTP.T10\nDate: " + formatter.format(date)+ '\n');
+        pw.append("HTTP-Test-SaveUserDataTest\nTest ID: HTTP.T11\nDate: " + formatter.format(date)+ '\n');
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
@@ -469,7 +470,7 @@ public class HttpRequestTests {
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/SaveUserData?SessionId=" + masterID + "&uName=" + UName + "&rolle=" + Rolle + "&uDesc=" + UDesc +"&pDesc=" + PDesc, HttpMethod.POST, message, String.class)
-                    .getStatusCode()).isEqualTo(HttpStatus.FOUND);
+                    .getStatusCode()).isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
@@ -478,13 +479,13 @@ public class HttpRequestTests {
         pw.append(String.format("pass: %b", pass));
     }
 
-    /*  Test ID: HTTP.T11
+    /*  Test ID: HTTP.T12
      *  Author: Lucas Krüger
      *  Zweck: Testen des Post Requests zum Ausgeben aller Task
      */
     @Test
     void GetTaskAll(){
-        pw.append("HTTP-Test-GetTaskAllTest\nTest ID: HTTP.T11\nDate: " + formatter.format(date)+ '\n');
+        pw.append("HTTP-Test-GetTaskAllTest\nTest ID: HTTP.T12\nDate: " + formatter.format(date)+ '\n');
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
@@ -500,7 +501,7 @@ public class HttpRequestTests {
         }
 
         try {
-            assertTrue(Responce.getBody().contains("<title>Task Board</title>"));
+            assertTrue(Responce.getBody().contains("<title>Task List</title>"));
         } catch (AssertionError e){
             pw.append("Fail: Page nicht geladen");
             throw new AssertionError(e);
@@ -509,20 +510,20 @@ public class HttpRequestTests {
         pw.append(String.format("pass: %b", pass));
     }
 
-    /*  Test ID: HTTP.T12
+    /*  Test ID: HTTP.T13
      *  Author: Lucas Krüger
      *  Zweck: Testen des Post Requests zum Ausgeben aller Task by USID
      */
     @Test
     void GetTaskByUSID(){
-        pw.append("HTTP-Test-GetTaskByUSIDTest\nTest ID: HTTP.T12\nDate: " + formatter.format(date)+ '\n');
+        pw.append("HTTP-Test-GetTaskByUSIDTest\nTest ID: HTTP.T13\nDate: " + formatter.format(date)+ '\n');
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
         int ID = 0;
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetTakByUSID", HttpMethod.POST, message, String.class).getStatusCode())
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetTaskByUSID", HttpMethod.POST, message, String.class).getStatusCode())
                     .isEqualTo(HttpStatus.BAD_REQUEST);
         } catch (AssertionError e){
             pw.append("Fail: Akzeptiert Bad_Request");
@@ -530,8 +531,8 @@ public class HttpRequestTests {
         }
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetTakByUSID?SessionId=" + masterID +"&USID="+ID, HttpMethod.POST, message, String.class).getStatusCode())
-                    .isEqualTo(HttpStatus.BAD_REQUEST);
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetTaskByUSID?SessionId=" + masterID +"&USID="+ID, HttpMethod.POST, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
@@ -540,13 +541,13 @@ public class HttpRequestTests {
         pw.append(String.format("pass: %b", pass));
     }
 
-    /*  Test ID: HTTP.T13
+    /*  Test ID: HTTP.T14
      *  Author: Lucas Krüger
      *  Zweck: Testen des Post Requests zum Ausgeben aller Task by TLID
      */
     @Test
     void GetTaskByTLID(){
-        pw.append("HTTP-Test-GetTaskByTLIDTest\nTest ID: HTTP.T13\nDate: " + formatter.format(date)+ '\n');
+        pw.append("HTTP-Test-GetTaskByTLIDTest\nTest ID: HTTP.T14\nDate: " + formatter.format(date)+ '\n');
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
@@ -562,7 +563,7 @@ public class HttpRequestTests {
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetTakByUSID?SessionId=" + masterID + "&TLID="+ID, HttpMethod.POST, message, String.class).getStatusCode())
-                    .isEqualTo(HttpStatus.BAD_REQUEST);
+                    .isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
@@ -571,14 +572,14 @@ public class HttpRequestTests {
         pw.append(String.format("pass: %b", pass));
     }
 
-    /*  Test ID: HTTP.T14
+    /*  Test ID: HTTP.T15
      *  Author: Lucas Krüger
      *  Zweck: Testen des Post Requests zum Speichern neuer und überspeichern existenter Task
      */
     // TODO: Ergänze Test mit existenter US, TL und T
     @Test
     void SaveTask(){
-        pw.append("HTTP-Test-SaveTaskTest\nTest ID: HTTP.T14\nDate: " + formatter.format(date)+ '\n');
+        pw.append("HTTP-Test-SaveTaskTest\nTest ID: HTTP.T15\nDate: " + formatter.format(date)+ '\n');
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
@@ -598,7 +599,7 @@ public class HttpRequestTests {
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/SaveTask?SessionId=" + masterID+"&TID="+TID + "&USID=" + USID + "&TLID=" + TLID + "&description=" + description + "&priority=" + priority, HttpMethod.POST, message, String.class).getStatusCode())
-                    .isEqualTo(HttpStatus.BAD_REQUEST);
+                    .isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
@@ -607,14 +608,14 @@ public class HttpRequestTests {
         pw.append(String.format("pass: %b", pass));
     }
 
-    /*  Test ID: HTTP.T15
+    /*  Test ID: HTTP.T16
      *  Author: Lucas Krüger
      *  Zweck: Testen des Post Requests zum Löschen einer Task by ID
      */
     // TODO: Ergänze Test mit existenter US, TL und T
     @Test
     void DeleteTaskByID(){
-        pw.append("HTTP-Test-DeleteTaskTest\nTest ID: HTTP.T15\nDate: " + formatter.format(date)+ '\n');
+        pw.append("HTTP-Test-DeleteTaskTest\nTest ID: HTTP.T16\nDate: " + formatter.format(date)+ '\n');
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
@@ -630,7 +631,7 @@ public class HttpRequestTests {
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/DeleteTask?SessionId=" + masterID+"&TID="+TID, HttpMethod.POST, message, String.class).getStatusCode())
-                    .isEqualTo(HttpStatus.BAD_REQUEST);
+                    .isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
@@ -639,14 +640,14 @@ public class HttpRequestTests {
         pw.append(String.format("pass: %b", pass));
     }
 
-    /*  Test ID: HTTP.T16
+    /*  Test ID: HTTP.T17
      *  Author: Lucas Krüger
      *  Zweck: Testen des Post Requests zum Anzeigen eines Task Board by ID
      */
     // TODO: Ergänze Test mit existenter US, TL und T
     @Test
     void GetTaskBoardByID(){
-        pw.append("HTTP-Test-GetTaskBoardTest\nTest ID: HTTP.T16\nDate: " + formatter.format(date)+ '\n');
+        pw.append("HTTP-Test-GetTaskBoardTest\nTest ID: HTTP.T17\nDate: " + formatter.format(date)+ '\n');
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
@@ -662,7 +663,7 @@ public class HttpRequestTests {
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetTaskBoard?SessionId=" + masterID+"&TBID="+TBID, HttpMethod.POST, message, String.class).getStatusCode())
-                    .isEqualTo(HttpStatus.BAD_REQUEST);
+                    .isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
