@@ -4,8 +4,6 @@ import java.util.List;
 
 import com.team3.project.DAO.DAOUserStory;
 
-import jakarta.persistence.EntityManager;
-
 public class DAOUserStoryService {
     /* Author: Marvin Oliver Prüger
      * Revisited: Tom-Malte Seep
