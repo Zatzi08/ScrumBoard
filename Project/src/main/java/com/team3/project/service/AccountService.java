@@ -1,9 +1,13 @@
 package com.team3.project.service;
 
 import com.team3.project.Classes.Profile;
+import com.team3.project.Classes.Task;
 import com.team3.project.Classes.User;
 import com.team3.project.DAOService.DAOAccountService;
 import org.springframework.stereotype.Service;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 @Service
@@ -50,6 +54,15 @@ public class AccountService {
     }
     public void updateProfile(Profile p){
 
+    }
+
+    public void deleteProfile(Profile p){
+
+    }
+
+    public List<User> getAllUser(){
+        List <User> list = new LinkedList<>();
+        return list;
     }
 
     public void SavePublicData(int id, String name, String rolle, String uDesc, String pDesc) throws Exception {

@@ -17,7 +17,7 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public boolean createTask(Task t){
+    public boolean createTask  (Task t) throws Exception{
         //TODO: Anfrage an DB createTaskDB implementieren : erstelle Task mit gegebenen Argumenten
         //return createTaskDB(description,priority);
         return true;
@@ -44,7 +44,7 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public boolean updateTask(Task task) {
+    public boolean updateTask(Task task){
 
         // wenn ein Wert nicht verändert wird, wird der Methode  null übergeben
         //TODO: implementiere checkTaskID: existiert die gegebene Task
@@ -61,7 +61,7 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public Task getTask(int taskID){
+    public Task getTask(int taskID) throws Exception{
         //Task task = new Task();
         //TODO: implementiere findTask: Rückgabe Task mit  TaskID= taskID
         return null;
@@ -73,7 +73,7 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: T1.B1
      */
-    public List<Task> getAllTask() {
+    public List<Task> getAllTask(){
         return null;//DAOTaskService.getAll(); TODO: Implement wenn DAO fertig
     }
 }

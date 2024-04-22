@@ -51,11 +51,32 @@ public class LogicTest {
     @BeforeEach @AfterEach
     public void emptyDatabase(){
         UserStoryService usService = new UserStoryService();
-        try{
-            Assertions.assertNull(usService.getAllUserStorys()); // Die Datenbank ist leer
-        } catch (AssertionError e){
-            pw.append("not empty Database\n");
-            throw new AssertionError(e);
+        TaskService taskService = new TaskService();
+        AccountService accService = new AccountService();
+
+        List<UserStory> usList = usService.getAllUserStorys();
+        if(usList != null){
+            pw.append("UserStory: not empty Database\n");
+            try{
+                usList.forEach(e -> usService.deleteUserStory(e.getID()));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        List<Task> taskList = taskService.getAllTask();
+        if(taskList != null){
+            pw.append("Task: not empty Database\n");
+            taskList.forEach(taskService::deleteTask);
+        }
+
+        List<User> pList = accService.getAllUser();
+        while(pList != null){
+            if(pList.get(0).getPrivatDescription()!=null){
+                pw.append("Profile: not empty Database\n");
+                accService.deleteProfile(new Profile(pList.get(0).getName(),pList.get(0).getPrivatDescription(),pList.get(0).getWorkDescription()));
+                pList.remove(pList.get(0));
+            }
         }
     }
 
@@ -94,17 +115,13 @@ public class LogicTest {
         }
 
         try {
-            Assertions.assertNotSame(list, usService.getAllUserStorys());//prüfen ob u2 erstellt wird (soll erstellt werden)
+            Assertions.assertNotSame(list, usService.getAllUserStorys());
         } catch (AssertionError e){
             pw.append("Fail: no Userstory created\n");
             pass = false;
             throw new AssertionError(e);
         }
 
-        list = usService.getAllUserStorys();
-
-        /*usService.addUserStory(u3);
-        Assertions.assertSame(list, usService.getAllUserStorys());*/ // prüfen ob u3 erstellt wird (soll nicht erstellt werden)
         DAOUserStoryService.delete(1);
         DAOUserStoryService.delete(2);
         pw.append(String.format("pass: %b", pass));
@@ -503,11 +520,31 @@ public class LogicTest {
 
     /*  Test ID: Logic.T9
      *  Author: Henry Lewis Freyschmidt
-     *  Zweck: Tasklisten-Zuordnung T16.B1
+     *  Zweck: Tasklisten-Zuordnung T16.B1&B2
      */
     @Test
-    void taskList(){
+    //TODO: Datenstruktur zur Zuodrnung von Tsks zu Taskboards fehlt
+    void taskboardAttribute(){
+        pw.append("Logik-Test-taskboardAttribute\nTest ID: Logic.T9\n" + "Date: " + formatter.format(date)+ '\n');
+        TaskService tservice = new TaskService();
+        UserStoryService uservice = new UserStoryService();
+        UserStory u1 = new UserStory("UserStoryT16B1", "T16.B1",2, -1);
 
+        try{
+            uservice.addUserStory(u1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Task t1 = new Task(10, "TaskT16B1", Enumerations.Priority.low, DAOUserStoryService.getByName(u1.getName()).getId());
+
+        try{
+            tservice.createTask(t1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        //TODO: TaskBoard erstellen; Task zuordnen; DB-Abfrage + Vergleich
+        pw.append(String.format("pass = %b", pass));
     }
 }
 
