@@ -3,6 +3,7 @@ package com.team3.project.Faced;
 import com.team3.project.service.AccountService;
 import com.team3.project.service.TaskService;
 import com.team3.project.service.UserStoryService;
+import com.team3.project.service.WebSessionService;
 
 import java.util.Random;
 
@@ -11,13 +12,16 @@ public class LogicToData {
     public final AccountService accountService;
     public final TaskService taskService;
     public final UserStoryService userStoryService;
+    public final WebSessionService webSessionService;
     private static LogicToData instance;
 
     private LogicToData(){
         this.accountService = new AccountService();
         this.userStoryService = new UserStoryService();
         this.taskService = new TaskService();
+        this.webSessionService = new WebSessionService();
     }
+
     public static LogicToData getInstance(){
         if(LogicToData.instance == null) LogicToData.instance = new LogicToData();
         return LogicToData.instance;

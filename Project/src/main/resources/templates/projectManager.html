@@ -39,7 +39,7 @@
     <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
     <span id="closeToggleEdit" class="closeToggleEdit" onclick="EditBox()">&times;</span>
     <div class="editMenu-content">
-        <form class="form" action="/addStory" method="post" id="editForm" autocomplete="off" name="Story">
+        <form class="form" th:action="@{/addStory?SessionId={id}(id=${SessionID})}" method="post" id="editForm" autocomplete="off" name="Story">
             <textarea id="inputName" class="inputEdit" required placeholder="Titel der User-Story eingeben" name="name" form="editForm"></textarea>
             <textarea id="inputDesc" class="inputEdit" required placeholder="Eine passende Beschreibung eingeben" name="description" form="editForm"></textarea>
             <label>Priorität</label>

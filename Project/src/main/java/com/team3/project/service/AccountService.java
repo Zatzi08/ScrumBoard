@@ -52,12 +52,13 @@ public class AccountService {
 
     }
 
-    public void SavePublicData(int id, String name, String rolle, String uDesc, String pDesc) throws Exception {
-        if (id == -1) throw new Exception("id outOfBound");
+    public void SavePublicData(String SessionId, String name, String rolle, String uDesc, String pDesc) throws Exception {
+        if (SessionId == null) throw new Exception("id outOfBound");
         if (name == null) throw new Exception("Null Name");
         if (rolle == null) throw new Exception("Null Rolle");
         if (uDesc == null) throw new Exception("Null uDesc");
         if (pDesc == null) throw new Exception("Null pDes");
+        //int id = DAOAccountService.getUserBySession(SessionId).getID();
         //DAOAccountService.updatePublicData(id,name,rolle,uDesc,pDesc);
 
     }
@@ -67,8 +68,9 @@ public class AccountService {
         return null;//DAOAccountService.getAccountByName(name); TODO: Implement, wenn DB bereit
     }
 
-    public Profile getProfileByID(int id) throws Exception {
-        if (id == -1) throw new Exception("Null ID");
+    public Profile getProfileByID(String SessionId) throws Exception {
+        if (SessionId == null) throw new Exception("Null ID");
         return null; //DAOAccountService.getAccountByID(id); TODO: Implement, wenn DB bereit
     }
+
 }
