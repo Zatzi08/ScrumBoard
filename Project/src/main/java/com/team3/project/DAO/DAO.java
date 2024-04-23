@@ -1,21 +1,15 @@
 package com.team3.project.DAO;
 
-import java.util.List;
-
-// import java.util.List;
-
-// import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import com.team3.project.Classes.UserStory;
 import com.team3.project.DAOService.DAOAccountService;
-import com.team3.project.DAOService.DAOUserStoryService;
 
-public class DAO {
-    private static SessionFactory sessionFactory;
+import jakarta.persistence.EntityManagerFactory;
+
+class DAO {
+    private static EntityManagerFactory sessionFactory;
     public static void main(String[] args) {
         try {
         setUp();
@@ -24,13 +18,31 @@ public class DAO {
         // System.out.println(DAOAccountService.createAccount("newDave2", "pass"));
         // System.out.println(DAOAccountService.updatePassword("newDave2", "test"));
         // System.out.println(DAOAccountService.deleteAccount("max@web.de"));
-        System.out.println(DAOUserStoryService.create("testName", "null", 0));
-        List<DAOUserStory> list = DAOUserStoryService.getAll();
+        //System.out.println(DAOUserStoryService.create("testName", "null", 0));
+        //System.out.println(DAOUserService.getByID(1).getRoles().size());
+        
+        /* List<DAOEvent> list = DAOEventService.getAll();
+        for (DAOEvent test : list) {
+            java.util.Date testing = new SimpleDateFormat("dd.MM.yyyy").parse(test.getTimeFrom());
+            System.out.println(test.getTimeFrom());
+        } */
+        
         //System.out.println(list.get(0).getName()+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        for (DAOUserStory test : list) {
+        /* List<DAOUser> list = DAOUserService.getAll();
+        for (DAOUser test : list) {
             System.out.println(test.getName());
-        }
-        //Usertest();
+            System.out.println(test.getRoles());
+            System.out.println("---");
+        } */
+        /* List<DAORole> list = DAOUserService.getRoleBySessionID(1);
+        for (DAORole daoRole : list) {
+            System.out.println(daoRole.getName());
+        } */
+        //System.out.println(DAOUserService.getById(1).getName());
+        System.out.println(DAOAccountService.checkMail("Peter"));
+        System.out.println(DAOAccountService.checkMail("test@this.com"));
+
+        //Usertest();   
         tearDown();    
         } catch (Exception e) {
             System.out.println(e);

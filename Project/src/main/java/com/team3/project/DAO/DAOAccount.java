@@ -17,12 +17,15 @@ import lombok.Setter;
 public class DAOAccount {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "uID")
     private int uid;
 
     @Column(name = "mail")
     private String email;
 
+    @Column(name = "password")
     private String password;
+
 
     public DAOAccount(){}
     public DAOAccount(String mail, String pw){

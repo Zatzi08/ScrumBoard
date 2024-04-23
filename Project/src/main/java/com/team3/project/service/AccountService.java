@@ -12,10 +12,12 @@ import java.util.List;
 @Service
 public class AccountService {
     public boolean checkMail(String Mail){
-        return DAOAccountService.checkmail(Mail);
+        return DAOAccountService.checkMail(Mail);
     }
-    public boolean login(String Email, String Passwort){
-        return DAOAccountService.LoginCheck(Email,Passwort);
+    public boolean login(String email, String passwort) throws Exception {
+        if( email == null) throw new Exception("Null Email");
+        if( passwort == null) throw new Exception("Null Passwort");
+        return DAOAccountService.loginCheck(email,passwort);
     }
 
     /* Author: Henry L. Freyschmidt
@@ -24,8 +26,11 @@ public class AccountService {
      * Grund: Speichern von Userdaten in Datenbank
      * UserStory/Task-ID: /
      */
-    public boolean register(String username, String email, String passwort){
-        return DAOAccountService.createAccount(email,passwort);
+    public boolean register(String username, String email, String passwort) throws Exception {
+        if( email == null) throw new Exception("Null Email");
+        if( passwort == null) throw new Exception("Null Passwort");
+        if( username == null) throw new Exception("Null Username");
+        return DAOAccountService.create(email,passwort);
     }
 
 

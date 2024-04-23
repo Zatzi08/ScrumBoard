@@ -207,7 +207,7 @@ public class LogicTest {
             throw new AssertionError(e);
         }
         try{
-            DAOAccountService.deleteAccount(user1.getName()); // FIX: Hab hier Name statt ID genutzt, da die Delete Funktion nur auf Name funktioniert
+            DAOAccountService.deleteByMail(user1.getName()); // FIX: Hab hier Name statt ID genutzt, da die Delete Funktion nur auf Name funktioniert
         }catch( Exception e){
             e.printStackTrace();
         }

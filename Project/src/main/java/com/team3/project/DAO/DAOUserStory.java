@@ -18,16 +18,21 @@ public class DAOUserStory {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="usID")
     private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "priority")
     private int priority;
 
 
-    public DAOUserStory(String name,String description,int priority){
-        this.name=name;
-        this.description=description;
-        this.priority=priority;
-    }
     public DAOUserStory(){}
-    
+    public DAOUserStory(String name, String description, int priority) {
+        this.name = name;
+        this.description = description;
+        this.priority = priority;
+    }
 }
