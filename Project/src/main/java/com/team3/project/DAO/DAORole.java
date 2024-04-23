@@ -29,7 +29,7 @@ public class DAORole {
     private List<DAOUser> users;
     
 
-    public DAORole(){}
+    public DAORole() {}
     public DAORole(String name) {
         this.name = name;
     }

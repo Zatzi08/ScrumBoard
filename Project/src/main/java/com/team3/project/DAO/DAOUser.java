@@ -39,7 +39,10 @@ public class DAOUser {
     @Column(name = "sessionID")
     private String sessionId;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @Column(name = "sessionDate")
+    private String sessionDate;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinTable(
         name = "UsersXRoles", 
         joinColumns = @JoinColumn(name = "uid"), 
@@ -48,7 +51,7 @@ public class DAOUser {
     private List<DAORole> roles;
    
 
-    public DAOUser(){}
+    public DAOUser() {}
     /* public DAOUser(String name, String privatDescription, String workDescription, int authorization, String sessionId, List<DAORole> roles){
         this.name = name;
         this.privatDescription = privatDescription;

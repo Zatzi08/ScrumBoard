@@ -31,4 +31,19 @@ public class DAOTaskListService {
     public static DAOTaskList getById(int id) {
         return DAOService.getByID(id, DAOTaskList.class);
     }
+
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: gets entries by TaskBoardId
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /** gets entries by TaskBoardId
+     * @param id identifier taskboardid
+     * @return List of taskList to the taskBoard
+     */
+    public static List<DAOTaskList> getByTaskBoardId(int id) {
+        String parameterName = "taskBoard";
+        return DAOService.getListByPara(DAOTaskList.class, id, parameterName);
+    }
 }

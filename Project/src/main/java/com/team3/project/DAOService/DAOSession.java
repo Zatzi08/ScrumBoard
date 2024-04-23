@@ -76,7 +76,15 @@ final class DAOSession {
         return getEntityManagerFactory().createEntityManager();
     }
 
-
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: closes the EntityManager
+     * Reason: refactoring
+     * UserStory/Task-ID:
+     */
+    /** closes the EntityManager
+     * @param entityManager entityManager the given session
+     */
     static void closeEntityManager(EntityManager entityManager) {
         if (entityManager.isOpen()) {
             entityManager.close();

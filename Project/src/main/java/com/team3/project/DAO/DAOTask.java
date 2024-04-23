@@ -1,10 +1,13 @@
 package com.team3.project.DAO;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,11 +37,14 @@ public class DAOTask {
     @Column(name = "timeNeededA")
     private String timeNeededA;
 
-    @Column(name = "taskListId")
-    private int taskListId;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "taskListId")
+    DAOTaskList taskList;
+    
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "userStoryID")
+    DAOUserStory userStory;
 
-    @Column(name = "userStoryId")
-    private int userStoryId;
 
     DAOTask() {}
 }

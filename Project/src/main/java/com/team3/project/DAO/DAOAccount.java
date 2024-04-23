@@ -27,9 +27,9 @@ public class DAOAccount {
     private String password;
 
 
-    public DAOAccount(){}
-    public DAOAccount(String mail, String pw){
-        this.email =mail;
+    public DAOAccount() {}
+    public DAOAccount(String mail, String pw) {
+        this.email    = mail;
         this.password = pw;
     }
 
