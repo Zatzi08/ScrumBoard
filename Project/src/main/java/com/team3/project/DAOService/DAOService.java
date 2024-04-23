@@ -2,6 +2,7 @@ package com.team3.project.DAOService;
 
 import java.util.List;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
 
 class DAOService {
@@ -20,15 +21,16 @@ class DAOService {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
         String query = "SELECT item FROM " + daoClass.getName() + " AS item";
+        List<Dao> retrieve;
         try {
-            List<Dao> retrieve = entityManager.createQuery(query ,daoClass)
+            retrieve = entityManager.createQuery(query ,daoClass)
                 .getResultList();
-            DAOSession.closeEntityManager(entityManager);
-            return retrieve;
         } catch (Exception e) {
+            retrieve = null;
+        } finally {
             DAOSession.closeEntityManager(entityManager);
-            return null;
         }
+        return retrieve;
     }
 
     /* Author: Tom-Malte Seep
@@ -50,14 +52,15 @@ class DAOService {
          * String query = "SELECT item FROM " + daoClass.getName() + " AS item where id = ?1";
          * Dao retrieve = session.createQuery(query, daoClass).setParameter(1, id).getSingleResult();
         */
+        Dao retrieve;
         try {
-            Dao retrieve = entityManager.find(daoClass, id);
-            DAOSession.closeEntityManager(entityManager);
-            return retrieve;
+            retrieve = entityManager.find(daoClass, id);
         } catch (Exception e) {
+            retrieve = null;
+        } finally {
             DAOSession.closeEntityManager(entityManager);
-            return null;
         }
+        return retrieve;
     }
 
     /* Author: Tom-Malte Seep
@@ -77,16 +80,17 @@ class DAOService {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
         String query = "SELECT item FROM " + daoClass.getName() + " AS item WHERE " + parameterName + " = ?1";
+        Dao retrieve;
         try {
-            Dao retrieve = entityManager.createQuery(query, daoClass)
+            retrieve = entityManager.createQuery(query, daoClass)
                 .setParameter(1, parameter)
                 .getSingleResult();
-            DAOSession.closeEntityManager(entityManager);
-            return retrieve;
         } catch (Exception e) {
+            retrieve = null;
+        } finally {
             DAOSession.closeEntityManager(entityManager);
-            return null;
         }
+        return retrieve;
     }
 
     /* Author: Tom-Malte Seep
@@ -106,16 +110,35 @@ class DAOService {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
         String query = "SELECT item FROM " + daoClass.getName() + " AS item WHERE " + parameterName + " = ?1";
+        List<Dao> retrieve;
         try {
-            List<Dao> retrieve = entityManager.createQuery(query, daoClass)
+            retrieve = entityManager.createQuery(query, daoClass)
                 .setParameter(1, parameter)
                 .getResultList();
-            DAOSession.closeEntityManager(entityManager);
             return retrieve;
         } catch (Exception e) {
+            retrieve = null;
+        } finally {
             DAOSession.closeEntityManager(entityManager);
-            return null;
         }
+        return retrieve;
+    }
+
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: get entries by parameter
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /** get all the instaces by a parameter
+     * @param <Dao>
+     * @param daoClass      the class that is to get
+     * @param parameter     the value of the parameter that should be searched for
+     * @param parameterName the parameter for the Query
+     * @return              list of objects that were searched for
+     */
+    static <Dao> List<Dao> getListByPara(Class<Dao> daoClass, int parameter, String parameterName) {
+        return getListByPara(daoClass, Integer.toString(parameter), parameterName);
     }
 
     /* Author: Tom-Malte Seep
@@ -134,16 +157,17 @@ class DAOService {
     static <Dao> List<Dao> getListByCustomQuery(Class<Dao> daoClass, String query, String parameter) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
+        List<Dao> retrieve;
         try {
-            List<Dao> retrieve = entityManager.createQuery(query, daoClass)
+            retrieve = entityManager.createQuery(query, daoClass)
                 .setParameter(1, parameter)
                 .getResultList();
-            DAOSession.closeEntityManager(entityManager);
-            return retrieve;
         } catch (Exception e) {
+            retrieve = null;
+        } finally {
             DAOSession.closeEntityManager(entityManager);
-            return null;
         }
+        return retrieve;
     }
 
     /* Author: Tom-Malte Seep
@@ -167,12 +191,12 @@ class DAOService {
             retrieve = entityManager.createQuery(query, daoClass)
                 .setParameter(1, parameter)
                 .getSingleResult();
-            DAOSession.closeEntityManager(entityManager);
-            return retrieve;
         } catch (Exception e) {
+            retrieve = null;
+        } finally {
             DAOSession.closeEntityManager(entityManager);
-            return null;
         }
+        return retrieve;
     }
 
     /* Author: Tom-Malte Seep
@@ -191,8 +215,11 @@ class DAOService {
         try {
             entityManager.persist(daoObject);
             entityManager.getTransaction().commit();
-            DAOSession.closeEntityManager(entityManager);
+        } catch (EntityExistsException e) {
+            //
         } catch (Exception e) {
+            //Something went wrong
+        } finally {
             DAOSession.closeEntityManager(entityManager);
         }
     }
@@ -213,8 +240,9 @@ class DAOService {
         try {
             entityManager.merge(daoObject);
             entityManager.getTransaction().commit();
-            DAOSession.closeEntityManager(entityManager);
         } catch (Exception e) {
+            //Something went wrong
+        } finally {
             DAOSession.closeEntityManager(entityManager);
         }
     }
@@ -234,9 +262,9 @@ class DAOService {
         entityManager.getTransaction().begin();
         try {
             entityManager.remove(daoObject);
-            entityManager.getTransaction().commit();
-            DAOSession.closeEntityManager(entityManager);
         } catch (Exception e) {
+            //Something went wrong
+        } finally {
             DAOSession.closeEntityManager(entityManager);
         }
     }
