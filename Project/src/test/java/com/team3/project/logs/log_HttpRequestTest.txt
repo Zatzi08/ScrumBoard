@@ -169,3 +169,28 @@ HTTP-Test-GetProfilPageByIDTest
 Test ID: HTTP.T9
 Date: 22/04/24 14:48:36
 pass: true
+
+HTTP-Test-GetTaskBoardTest
+Test ID: HTTP.T17
+Date: 24/04/24 00:44:22
+pass: true
+
+HTTP-Test-DeleteTaskTest
+Test ID: HTTP.T16
+Date: 24/04/24 00:50:54
+pass: true
+
+HTTP-Test-SaveTaskTest
+Test ID: HTTP.T15
+Date: 24/04/24 00:51:10
+pass: true
+
+HTTP-Test-GetTaskByTLIDTest
+Test ID: HTTP.T14
+Date: 24/04/24 00:52:23
+pass: true
+
+HTTP-Test-GetTaskByUSIDTest
+Test ID: HTTP.T13
+Date: 24/04/24 00:53:50
+pass: true

@@ -2,7 +2,7 @@ package com.team3.project.Controller;
 
 import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.UserStory;
-import com.team3.project.Faced.LogicToData;
+import com.team3.project.Faced.PresentationToLogic;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,9 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class WebController {
     public WebController() {
-        this.logicToData = LogicToData.getInstance();
+        this.presentationToLogic = PresentationToLogic.getInstance();
     }
-    private final LogicToData logicToData;
+    private final PresentationToLogic presentationToLogic;
     private final String MasterID = "EAIFPH8746531";
 
     // TODO: IOExceptions
@@ -67,7 +67,7 @@ public class WebController {
      */
     @RequestMapping(value = "/neuesPasswortPage", method = RequestMethod.POST)
     public ModelAndView neuesPasswortPage(@RequestParam(value = "EMail", required = true) String EMail){
-        if(logicToData.accountService.checkMail(EMail)) {
+        if(presentationToLogic.accountService.checkMail(EMail)) {
             return new ModelAndView("neuesPasswort").addObject("Mail", EMail);
         }
         return index();
@@ -85,7 +85,7 @@ public class WebController {
                                 @RequestParam(value = "EMail", required = true)String EMail){
         // TODO: Mail mit Verifizierungscode + neuen Link für zurücksetzen
         try {
-            logicToData.accountService.resetPasswort(EMail, Passwort);
+            presentationToLogic.accountService.resetPasswort(EMail, Passwort);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -103,8 +103,8 @@ public class WebController {
                                  @RequestParam(value = "EMail", required = true) String EMail,
                                  @RequestParam(value = "Passwort", required = true) String Passwort){
             try {
-                if(!logicToData.accountService.checkMail(EMail)) {
-                    if (logicToData.accountService.register(Username, EMail, Passwort))
+                if(!presentationToLogic.accountService.checkMail(EMail)) {
+                    if (presentationToLogic.accountService.register(Username, EMail, Passwort))
                         return index();
                 }
             } catch (Exception e) {
@@ -124,7 +124,7 @@ public class WebController {
                         @RequestParam(value = "Passwort", required = true) String Passwort) {
         try{
             String id = MasterID; // TODO: getSession, oder Session als Rückgabe von Login
-            if( logicToData.accountService.login(EMail, Passwort))
+            if( presentationToLogic.accountService.login(EMail, Passwort))
                 return ProjectManager(id);
         } catch (Exception e){
             e.printStackTrace();
@@ -147,8 +147,8 @@ public class WebController {
         UserStory story = new UserStory(name, Desc, prio,id);
 
         try {
-            if (logicToData.webSessionService.verify(SessionId)) {
-                logicToData.userStoryService.addUserStory(story);
+            if (presentationToLogic.webSessionService.verify(SessionId)) {
+                presentationToLogic.userStoryService.addUserStory(story);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -165,9 +165,9 @@ public class WebController {
     @RequestMapping("/ProjectManager")
     private ModelAndView ProjectManager(@RequestParam(value = "SessionId",required = true) String id){
         try {
-            if (logicToData.webSessionService.verify(id)) {
+            if (presentationToLogic.webSessionService.verify(id)) {
                 ModelAndView modelAndView = new ModelAndView("projectManager");
-                modelAndView.addObject("Storys", logicToData.userStoryService.getAllUserStorys()).addObject("SessionID", id);
+                modelAndView.addObject("Storys", presentationToLogic.userStoryService.getAllUserStorys()).addObject("SessionID", id);
                 return modelAndView;
             }
         } catch (Exception e){
@@ -198,9 +198,9 @@ public class WebController {
      */
     @RequestMapping(value = "/RequestResetCode", method = RequestMethod.POST)
     private ModelAndView RequestRestCode(@RequestParam(value = "email",required = true) String email){
-        if (logicToData.accountService.checkMail(email)) {
+        if (presentationToLogic.accountService.checkMail(email)) {
             try {
-                String code = logicToData.GeneratCode(1);
+                String code = presentationToLogic.GeneratCode(1);
                 ModelAndView modelAndView = new ModelAndView("neuesPasswort")
                         .addObject("Code", code);
                 return modelAndView;
@@ -223,8 +223,8 @@ public class WebController {
                                          @RequestParam(value = "newPasswort",required = true) String passwort,
                                          @RequestParam(value = "code",required = true) String code){
         try{
-            if (logicToData.accountService.checkMail(email) && logicToData.checkCode(code)) {
-                logicToData.accountService.resetPasswort(email, passwort);
+            if (presentationToLogic.accountService.checkMail(email) && presentationToLogic.checkCode(code)) {
+                presentationToLogic.accountService.resetPasswort(email, passwort);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -246,7 +246,7 @@ public class WebController {
                                     @RequestParam(value = "text",required = true) String text,
                                     @RequestParam(value = "SessionId",required = true) String SessionId){
         try {
-            if (logicToData.webSessionService.verify(SessionId)) {
+            if (presentationToLogic.webSessionService.verify(SessionId)) {
                 System.out.println("From:" + from + "\nTo:" + to + "\nText:\n" + text);
             }
         } catch (Exception e){
@@ -264,15 +264,15 @@ public class WebController {
     @RequestMapping(value = "/GetProfilePage", method = RequestMethod.POST)
     private ModelAndView GetProfilePage(@RequestParam(value = "SessionId",required = true) String SessionId){
         try{
-            if (logicToData.webSessionService.verify(SessionId)){
-                Profile user = logicToData.accountService.getProfileByID(SessionId);
+            if (presentationToLogic.webSessionService.verify(SessionId)){
+                Profile user = presentationToLogic.accountService.getProfileByID(SessionId);
                 if (user != null) return new ModelAndView("profil").addObject("User", user);
             }
         } catch (Exception e){
             e.printStackTrace();
-            return new ModelAndView("Error").addObject("error", e.toString());
+            return error(e);
         }
-        return new ModelAndView("projectManager").addObject("Storys", logicToData.userStoryService.getAllUserStorys()).addObject("SessionId",SessionId);
+        return ProjectManager(SessionId);
     }
 
     /* Author: Lucas Krüger
@@ -285,8 +285,8 @@ public class WebController {
     private ModelAndView GetProfilePageByName(@RequestParam(value = "name",required = true) String name,
                                               @RequestParam(value = "SessionId",required = true) String SessionId){
         try{
-            if (logicToData.webSessionService.verify(SessionId)){
-                Profile user = logicToData.accountService.getProfileByName(name);
+            if (presentationToLogic.webSessionService.verify(SessionId)){
+                Profile user = presentationToLogic.accountService.getProfileByName(name);
                 if (user != null) return new ModelAndView("profil").addObject("User", user);
             }
         } catch (Exception e){
@@ -309,8 +309,8 @@ public class WebController {
                                 @RequestParam(value = "uDesc",required = true) String uDesc,
                                 @RequestParam(value = "pDesc",required = true) String pDesc){
         try {
-            if (logicToData.webSessionService.verify(SessionId)){
-                logicToData.accountService.SavePublicData(SessionId, name, rolle, uDesc, pDesc);
+            if (presentationToLogic.webSessionService.verify(SessionId)){
+                presentationToLogic.accountService.SavePublicData(SessionId, name, rolle, uDesc, pDesc);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -328,9 +328,9 @@ public class WebController {
     @RequestMapping(value = "/GetAllTask", method = RequestMethod.POST)
     private ModelAndView AllTask(@RequestParam(value = "SessionId",required = true) String SessionId){
         try {
-            if (logicToData.webSessionService.verify(SessionId)){
+            if (presentationToLogic.webSessionService.verify(SessionId)){
                 ModelAndView modelAndView = new ModelAndView("Tasklist");
-                modelAndView.addObject("Tasks", logicToData.taskService.getAllTask()).addObject("SessionId", SessionId);
+                modelAndView.addObject("Tasks", presentationToLogic.taskService.getAllTask()).addObject("SessionId", SessionId);
                 return modelAndView;
             }
         } catch (Exception e){
@@ -339,6 +339,27 @@ public class WebController {
         return index();
     }
 
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion:
+     * Grund: /
+     * UserStory/Task-ID: // Todo: Place ID
+     */
+    @RequestMapping(value = "/GetTaskByTLID", method = RequestMethod.POST)
+    private ModelAndView GetTaskByTLID(@RequestParam(value = "SessionId",required = true) String SessionId,
+                          @RequestParam(value = "TLID", required = true, defaultValue = "-1") int TLId){
+        try {
+            if (presentationToLogic.webSessionService.verify(SessionId)){
+                return new ModelAndView("TaskList")
+                        .addObject("SessionId",SessionId)
+                        .addObject("Tasks", presentationToLogic.taskService.getAllTask()); // TODO: GetAllTaskByTLID
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return error(e);
+        }
+        return index();
+    }
 
     /* Author: Lucas Krüger
      * Revisited: /
@@ -346,7 +367,89 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: // Todo: Place ID
      */
+    @RequestMapping(value = "/GetTaskByUSID", method = RequestMethod.POST)
+    private ModelAndView GetTaskByUSID(@RequestParam(value = "SessionId",required = true) String SessionId,
+                                       @RequestParam(value = "USID", required = true, defaultValue = "-1") int TLId){
+        try {
+            if (presentationToLogic.webSessionService.verify(SessionId)){
+                return new ModelAndView("TaskList")
+                        .addObject("SessionId",SessionId)
+                        .addObject("Tasks", presentationToLogic.taskService.getAllTask()); // TODO: GetAllTaskByUSID
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return error(e);
+        }
+        return index();
+    }
 
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion:
+     * Grund: /
+     * UserStory/Task-ID: // Todo: Place ID
+     */
+    @RequestMapping(value = "/SaveTask", method = RequestMethod.POST)
+    private ModelAndView SaveTask(@RequestParam(value = "SessionId",required = true) String SessionId,
+                                  @RequestParam(value = "TID",required = true, defaultValue = "-1")int tid,
+                                  @RequestParam(value = "USID",required = true, defaultValue = "-1") int usid,
+                                  @RequestParam(value = "TLID", required = true, defaultValue = "-1") int tlid,
+                                  @RequestParam(value = "description", required = true) String desc,
+                                  @RequestParam(value ="priority", required = true) int prio){
+        try{
+            if (presentationToLogic.webSessionService.verify(SessionId)){
+                //logicToData.taskService.saveTask(); TODO
+                return AllTask(SessionId);
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+            return error(e);
+        }
+        return index();
+    }
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion:
+     * Grund: /
+     * UserStory/Task-ID: // Todo: Place ID
+     */
+    @RequestMapping(value = "/deleteTask", method = RequestMethod.POST)
+    private ResponseEntity deleteTask(@RequestParam(value = "SessionId", required = true) String Sessionid,
+                                    @RequestParam(value = "TID", required = true, defaultValue = "-1") int tid){
+        try {
+            if (presentationToLogic.webSessionService.verify(Sessionid)){
+                presentationToLogic.taskService.deleteTaskByID(tid);
+                return new ResponseEntity(HttpStatus.OK);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity(HttpStatus.FORBIDDEN);
+    }
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion:
+     * Grund: /
+     * UserStory/Task-ID: // Todo: Place ID
+     */
+    @RequestMapping(value = "/GetTaskBoard", method = RequestMethod.POST)
+    private ModelAndView getTaskBoard(@RequestParam(value = "SessionId", required = true) String Sessionid,
+                                      @RequestParam(value = "TBID", required = true, defaultValue = "-1") int tbid){
+        try {
+            if (presentationToLogic.webSessionService.verify(Sessionid)){
+                ModelAndView modelAndView = new ModelAndView("TaskBoard")
+                        .addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoard(tbid))
+                        .addObject("SessionID", Sessionid);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return error(e);
+        }
+        return index();
+    }
 
     /* Author: Lucas Krüger
      * Revisited:

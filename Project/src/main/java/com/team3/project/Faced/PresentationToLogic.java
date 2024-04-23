@@ -1,30 +1,30 @@
 package com.team3.project.Faced;
 
-import com.team3.project.service.AccountService;
-import com.team3.project.service.TaskService;
-import com.team3.project.service.UserStoryService;
-import com.team3.project.service.WebSessionService;
+import com.team3.project.Controller.WebController;
+import com.team3.project.service.*;
 
 import java.util.Random;
 
 
-public class LogicToData {
+public class PresentationToLogic {
     public final AccountService accountService;
     public final TaskService taskService;
     public final UserStoryService userStoryService;
     public final WebSessionService webSessionService;
-    private static LogicToData instance;
+    private static PresentationToLogic instance;
+    public TaskBoardService taskBoardService;
 
-    private LogicToData(){
+    private PresentationToLogic(){
         this.accountService = new AccountService();
         this.userStoryService = new UserStoryService();
         this.taskService = new TaskService();
         this.webSessionService = new WebSessionService();
+        this.taskBoardService = new TaskBoardService();
     }
 
-    public static LogicToData getInstance(){
-        if(LogicToData.instance == null) LogicToData.instance = new LogicToData();
-        return LogicToData.instance;
+    public static PresentationToLogic getInstance(){
+        if(PresentationToLogic.instance == null) PresentationToLogic.instance = new PresentationToLogic();
+        return PresentationToLogic.instance;
     }
 
     public boolean checkCode(String code) throws Exception {

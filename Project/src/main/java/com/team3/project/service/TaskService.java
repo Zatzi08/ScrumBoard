@@ -76,4 +76,9 @@ public class TaskService {
     public List<Task> getAllTask(){
         return null;//DAOTaskService.getAll(); TODO: Implement wenn DAO fertig
     }
+
+    public void deleteTaskByID(int tid) throws Exception {
+        if (tid == -1) throw new Exception("Null ID");
+        //DAOTaskService.delete(tid);
+    }
 }

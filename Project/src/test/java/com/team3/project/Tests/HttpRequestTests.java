@@ -554,7 +554,7 @@ public class HttpRequestTests {
         int ID = 0;
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetTakByTLID", HttpMethod.POST, message, String.class).getStatusCode())
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetTaskByTLID", HttpMethod.POST, message, String.class).getStatusCode())
                     .isEqualTo(HttpStatus.BAD_REQUEST);
         } catch (AssertionError e){
             pw.append("Fail: Akzeptiert Bad_Request");
@@ -562,7 +562,7 @@ public class HttpRequestTests {
         }
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetTakByUSID?SessionId=" + masterID + "&TLID="+ID, HttpMethod.POST, message, String.class).getStatusCode())
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetTaskByTLID?SessionId=" + masterID + "&TLID="+ID, HttpMethod.POST, message, String.class).getStatusCode())
                     .isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
@@ -612,17 +612,17 @@ public class HttpRequestTests {
      *  Author: Lucas Krüger
      *  Zweck: Testen des Post Requests zum Löschen einer Task by ID
      */
-    // TODO: Ergänze Test mit existenter US, TL und T
+    // TODO: Ergänze Test mit existenter US, TL und T... inkorrekt SID
     @Test
     void DeleteTaskByID(){
         pw.append("HTTP-Test-DeleteTaskTest\nTest ID: HTTP.T16\nDate: " + formatter.format(date)+ '\n');
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
-        int TID = -1;
+        int TID = 1;
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/DeleteTask", HttpMethod.POST, message, String.class).getStatusCode())
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/deleteTask", HttpMethod.POST, message, String.class).getStatusCode())
                     .isEqualTo(HttpStatus.BAD_REQUEST);
         } catch (AssertionError e){
             pw.append("Fail: Akzeptiert Bad_Request");
@@ -630,7 +630,7 @@ public class HttpRequestTests {
         }
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/DeleteTask?SessionId=" + masterID+"&TID="+TID, HttpMethod.POST, message, String.class).getStatusCode())
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/deleteTask?SessionId=" + masterID+"&TID="+TID, HttpMethod.POST, message, String.class).getStatusCode())
                     .isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
@@ -651,7 +651,7 @@ public class HttpRequestTests {
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
-        int TBID = -1;
+        int TBID = 1;
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetTaskBoard", HttpMethod.POST, message, String.class).getStatusCode())
