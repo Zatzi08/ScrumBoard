@@ -294,7 +294,7 @@ public class WebController {
                                 @RequestParam(value = "pDesc",required = true) String pDesc){
         try {
             if (presentationToLogic.webSessionService.verify(SessionId)){
-                presentationToLogic.accountService.SavePublicData(SessionId, name, rolle, uDesc, pDesc);
+                presentationToLogic.accountService.savePublicData(SessionId, name, rolle, uDesc, pDesc);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -403,7 +403,7 @@ public class WebController {
                                     @RequestParam(value = "TID", required = true, defaultValue = "-1") int tid){
         try {
             if (presentationToLogic.webSessionService.verify(Sessionid)){
-                presentationToLogic.taskService.deleteTaskByID(tid);
+                presentationToLogic.taskService.deleteTask(tid);
                 return new ResponseEntity(HttpStatus.OK);
             }
         } catch (Exception e){
