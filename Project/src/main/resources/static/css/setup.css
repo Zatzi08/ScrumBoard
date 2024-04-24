@@ -33,7 +33,7 @@ body {
 
 .reiterBtn {
     color: #d9dcde;
-    background-color: rgba(64,59,59,0);
+    background-color: transparent;
     padding: 12px 10px;
     transition: border-bottom-color 0.4s;
     margin-right:40px;

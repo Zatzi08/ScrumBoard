@@ -13,7 +13,7 @@ align-items: center;
 justify-content: center;
 width: 100%;
 min-height: 100vh;
-background: linear-gradient(to right, #263357, #374970, #6f8ac2, #89a8bd);
+background: linear-gradient(to bottom right, #263357, #374970, #6f8ac2, #89a8bd);
 }
 
 
@@ -76,6 +76,10 @@ User-ID/Task-ID: A3.F1
   color:white;
   background-color:#0f315c;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.Input:focus{
+  background:#0f315c;
 }
 /**
 Revisited: /
