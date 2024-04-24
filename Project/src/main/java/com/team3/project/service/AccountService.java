@@ -51,27 +51,34 @@ public class AccountService {
         Email test = new Email();
         test.sendEmail("henryfreyschmidt2226@gmail.com");
     }*/
-    public void createUser(User user){
+    public void createUser(User user) throws Exception{
 
     }
-    public void addProfile(Profile p){
-
-
+    public void deleteProfile(String sessionID) throws Exception{
+        /* user =  DAOUserService.getUserBySessionID(sessionID);
+        if(user.getDescription() == null){
+        throw new Exception("Profil existiert nicht");
+         }else{
+         DAOUserService.updatePublicData(user.getID(),null,null,null,null);
+         }
+        */
     }
-    public void updateProfile(Profile p){
-
-    }
-
-    public void deleteProfile(Profile p){
-
-    }
+    public void testDeleteProfile(int userID){
+        /*
+        * DAOUserService.updateUname(null,userID);
+        * DAOUserService.updateUserDescription(null, userID);
+        * DAOUserService.updateDescription(null, userID);
+        * */
+    } // Für die Tests notwendig, da in Tests keine SessionID
 
     public List<User> getAllUser(){
         List <User> list = new LinkedList<>();
+        //List <User> list = DAOUserService.getAllUser();
         return list;
+        //TODO: DAOUserService.getAllUser() fehlt
     }
 
-    public void SavePublicData(String SessionId, String name, String rolle, String uDesc, String pDesc) throws Exception {
+    public void savePublicData(String SessionId, String name, String rolle, String uDesc, String pDesc) throws Exception {
         if (SessionId == null) throw new Exception("id outOfBound");
         if (name == null) throw new Exception("Null Name");
         if (rolle == null) throw new Exception("Null Rolle");
