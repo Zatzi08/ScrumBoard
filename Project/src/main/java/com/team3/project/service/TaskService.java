@@ -2,6 +2,9 @@ package com.team3.project.service;
 
 import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.Task;
+import com.team3.project.DAO.DAORole;
+import com.team3.project.DAO.DAOUser;
+import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.Classes.User;
 import org.springframework.stereotype.Service;
 
@@ -17,55 +20,72 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public boolean createTask  (Task t) throws Exception{
-        //TODO: Anfrage an DB createTaskDB implementieren : erstelle Task mit gegebenen Argumenten
-        //return createTaskDB(description,priority);
-        return true;
-    }
 
-    /* Author: Henry L. Freyschmidt
-     * Revisited: /
-     * Funktion: /
-     * Grund: /
-     * UserStory/Task-ID: /
-     */
-    public boolean deleteTask(Task task){
-        //TODO: checkRights(user) implementieren
-        //TODO: deleteTaskDB implementieren
-        //if checkRights == false then throw Exception "Benötigte Rechte nicht vorhanden"
-        // else do deleteTaskDB(taskID)
-        // return deleteTaskDB(taskID);
-        return true;
-    }
-
-    /* Author: Henry L. Freyschmidt
-     * Revisited: /
-     * Funktion: /
-     * Grund: /
-     * UserStory/Task-ID: /
-     */
-    public boolean updateTask(Task task){
-
-        // wenn ein Wert nicht verändert wird, wird der Methode  null übergeben
-        //TODO: implementiere checkTaskID: existiert die gegebene Task
-        //TODO: implementiere updateTaskDB(description, priority): Beschreibung in DB ändern ; nicht veränderte Argumente mit null belegen
-        //if checkTask == false then throw exception "Die Task wurde nicht in der Datenbank gefunden."
-        //else updateTaskDescriptionDB(taskID, description)
-        //return  updateTaskDescriptionDB(taskID, description);
-        return true;
-    }
-
-    /* Author: Henry L. Freyschmidt
-     * Revisited: /
-     * Funktion: /
-     * Grund: /
-     * UserStory/Task-ID: /
-     */
-    public Task getTask(int taskID) throws Exception{
-        //Task task = new Task();
-        //TODO: implementiere findTask: Rückgabe Task mit  TaskID= taskID
+    public Task getTaskByID(int id) throws Exception{
+        // Task t =  DAOTaskService.getTaskbyID(id);
+        // if (t == null){ throw new Exception("Task not found");}
+        // return t;
+        //TODO: DAOTaskService.getTaskByID(ID) fehlt
         return null;
     }
+
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
+
+    public Task getTaskByDescription(String description) throws Exception{
+        // DAOTask t =  DAOTaskService.getTaskbyDescription(description);
+        // if (t == null){ throw new Exception("Task not found");}
+        // return t;
+        return null;
+        //TODO: Task suchen ohne die TaskID zu kennen
+    }
+
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
+    public void saveTask(int taskID, String description, int priority, int userID ) throws Exception{
+        if (description == null | priority > 4 | priority < 0 | userID == -1){
+            throw new Exception("invalid Arguments");
+        }
+        if(taskID == -1){
+            //DAOTaskService.createTask(t);
+        }else{
+            /*if (DAOTaskService.getByID(task.getID()) != null){
+                DAOTaskService.updateName(task.getID(),task.getName());
+                DAOTaskService.updateDescription(task.getID(),task.getDescription());
+                DAOTaskService.updatePriority(task.getID(), task.getPriority());
+            }*/
+            //TODO: DAOTaskService.updateName(ID,Name) fehlt
+            //TODO: DAOTaskService.updateDescription(ID,Description) fehlt
+            //TODO: DAOTaskService.updatePriority(ID,Priority) fehlt
+        }
+        //return createTaskDB(description,priority);
+    }
+
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
+    public void deleteTask(int taskID) throws Exception{
+        /*if(taskID == -1){
+        throw new Exception("not valid TaskID");
+        }else{
+        *  DAOTaskService.deleteTask(taskID);
+        *
+         }*/
+        //TODO: DAOUserService.getRoleBySessionID(sessionID) fehlt
+        //TODO: DAOTaskService.deleteTask(taskID) fehlt
+    }
+
 
     /* Author: Lucas Krüger
      * Revisited: /
@@ -74,11 +94,7 @@ public class TaskService {
      * UserStory/Task-ID: T1.B1
      */
     public List<Task> getAllTask(){
-        return null;//DAOTaskService.getAll(); TODO: Implement wenn DAO fertig
-    }
-
-    public void deleteTaskByID(int tid) throws Exception {
-        if (tid == -1) throw new Exception("Null ID");
-        //DAOTaskService.delete(tid);
+        //return DAOTaskService.getAll();
+        return null; //TODO: DAOTaskService.getAll() fehlt
     }
 }

@@ -46,9 +46,26 @@ public class DAOUserService {
      * @param sessionID 
      * @return List of roles of the user
      */
-    public static List<DAORole> getRoleBySessionID(int sessionID) {
-        String query = "SELECT user FROM DAOUser AS user JOIN FETCH u.roles WHERE sessionId = ?1";
+    public static List<DAORole> getRolesBySessionID(int sessionID) {
+        String query = "SELECT user FROM DAOUser AS user JOIN FETCH user.roles WHERE sessionId = ?1";
         DAOUser user = DAOService.getSingleByCustomQuery(DAOUser.class, query, Integer.toString(sessionID));
         return user.getRoles();
+    }
+
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: gets authorization by sessionID
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /**
+     * gets authorization by sessionID
+     * @param sessionID 
+     * @return authorization int
+     */
+    public static int getAuthorizationBySessionID(int sessionID) {
+        String parameterName = "sessionId";
+        DAOUser user = DAOService.getSingleByPara(DAOUser.class, Integer.toString(sessionID), parameterName);
+        return user.getAuthorization();
     }
 }
