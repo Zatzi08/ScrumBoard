@@ -34,17 +34,4 @@ public class User extends abstraktDataClasses {
         this.roles = roles;
     }
 
-    /* Author: Henry L. Freyschmidt
-     * Funktion: Updated Userstory in Datenbank
-     * Grund: /
-     * UserStory/Task-ID: /
-     */
-    public boolean updateUser(String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles, List<Integer> taskIDs){
-        //TODO:implement checkUserID and updateUserDB
-        //if check(userID)==false then throw expection "User not found"
-        //else updateUserDB: Werte verändern (if Argument == null then Wert nicht ändern)
-        //return updateUserDB(...);
-        return true;
-    }
-
 }

@@ -13,12 +13,10 @@ import java.util.List;
 
 @Service
 public class UserStoryService {
-    private Enumerations enumerations = new Enumerations();
 
-    // TODO: needs Database connection to implement get Object
     /* Author: Lucas Krüger
      * Revisited: /
-     * Funktion: /
+     * Funktion: gibt UserStory aus DB mit bestimmter id
      * Grund: /
      * UserStory/Task-ID: /
      */
@@ -27,26 +25,40 @@ public class UserStoryService {
         return null; //logicToData.daoUserStoryService.getByID(UserStoryID);
     }
 
-    public void addUserStory(UserStory story) throws Exception {
-        if (story == null) throw new Exception("Null Story");
-        if(story.getID() == -1){
-            DAOUserStoryService.create(story.getName(),story.getDescription(), enumerations.getInt(story.getPriority()));
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: Erstellt neue oder updatet existente UserStory in DB
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
+    public void saveUserStory(String name, String desc, int prio, int id) throws Exception {
+        if (name == null) throw new Exception("Null Story-Name");
+        if (desc == null) throw new Exception("Null Story-Desc");
+        if (prio <= -1) throw new Exception("Null Story-prio");
+        if (id < -1) throw new Exception("Null Story-id");
+        if(id == -1){
+            DAOUserStoryService.create(name,desc, prio);
         } else{
-            if (DAOUserStoryService.getByID(story.getID()) != null){
-                DAOUserStoryService.updateName(story.getID(),story.getName());
-                DAOUserStoryService.updateDescription(story.getID(),story.getDescription());
-                Enumerations prio = new Enumerations();
-                DAOUserStoryService.updatePriority(story.getID(), prio.getInt(story.getPriority()));
+            DAOUserStory userStory = DAOUserStoryService.getByID(id);
+            if (userStory != null){
+                if (!userStory.getName().equals(name)) DAOUserStoryService.updateName(id,name);
+                if (!userStory.getDescription().equals(desc)) DAOUserStoryService.updateDescription(id,desc);
+                if (userStory.getPriority() != prio) DAOUserStoryService.updatePriority(id, prio);
             }
         }
     }
 
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: gibt alle UserStorys aus DB aus
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
     public List<UserStory> getAllUserStorys() {
         List<DAOUserStory> user = DAOUserStoryService.getAll();
         if (user != null) {
             List<UserStory> userStories = new LinkedList<>();
             for (DAOUserStory daoUserStory : user) {
-                Enumerations prio = new Enumerations();
                 UserStory toAdd = new UserStory(daoUserStory.getName(), daoUserStory.getDescription(), daoUserStory.getPriority(), daoUserStory.getId());
                 userStories.add(toAdd);
             }
@@ -54,14 +66,15 @@ public class UserStoryService {
         }
         return null;
     }
-    public void deleteUserStory(int uid){
 
+    /* Author: Henry L. Freyschmidt
+     * Revisited: /
+     * Funktion: löscht existente UserStory in DB anhand id
+     * Grund: /
+     * UserStory/Task-ID: /
+     */
+    public void deleteUserStory(int uid) throws Exception {
+        if (uid <= -1) throw new Exception("Null usid");
+        DAOUserStoryService.delete(uid);
     }
-     public void addTask(Task t){
-
-     }
-
-     public void deleteTask(int tID){
-
-     }
 }

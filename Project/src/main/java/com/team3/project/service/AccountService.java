@@ -3,6 +3,7 @@ package com.team3.project.service;
 import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.User;
 import com.team3.project.DAOService.DAOAccountService;
+import com.team3.project.DAOService.DAOUserService;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -40,8 +41,9 @@ public class AccountService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public boolean resetPasswort(String EMail, String Passwort){
-        // TODO: Verification dass überhaupt erlaubt durch Email
+    public boolean resetPasswort(String EMail, String Passwort) throws Exception {
+        if (EMail == null) throw new Exception("Null Mail");
+        if (Passwort == null) throw new Exception("Null Passwort");
         return DAOAccountService.updatePassword(EMail,Passwort);
     }
     /* Email um den Code zu schicken muss von Google geprüft werde, weil es geflaggt wurde
@@ -75,7 +77,7 @@ public class AccountService {
         if (rolle == null) throw new Exception("Null Rolle");
         if (uDesc == null) throw new Exception("Null uDesc");
         if (pDesc == null) throw new Exception("Null pDes");
-        //int id = DAOAccountService.getUserBySession(SessionId).getID();
+        //int id = DAOUserService.getUserBySession(SessionId).getID(); TODO: Implement, wenn DB bereit
         //DAOAccountService.updatePublicData(id,name,rolle,uDesc,pDesc);
 
     }
@@ -87,6 +89,6 @@ public class AccountService {
 
     public Profile getProfileByID(String SessionId) throws Exception {
         if (SessionId == null) throw new Exception("Null ID");
-        return null; //DAOAccountService.getAccountByID(id); TODO: Implement, wenn DB bereit
+        return null;//DAOUserService.getUserBySessionID(SessionId); TODO: Implement, wenn DB bereit
     }
 }

@@ -58,8 +58,14 @@ public class LogicTest {
         if(usList != null){
             pw.append("UserStory: not empty Database\n");
             try{
-                usList.forEach(e -> usService.deleteUserStory(e.getID()));
-            }catch (Exception e){
+                usList.forEach(e -> {
+                    try {
+                        usService.deleteUserStory(e.getID());
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                });
+            } catch (Exception e){
                 e.printStackTrace();
             }
         }
@@ -101,7 +107,7 @@ public class LogicTest {
         UserStory u3 = new UserStory("UserStory3", "Blablah3", 2, 5);
 
         try {
-            usService.addUserStory(u1);
+            usService.saveUserStory("UserStory1", "Blablah1", 1, -1);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -109,7 +115,7 @@ public class LogicTest {
         List<UserStory> list = usService.getAllUserStorys();
 
         try {
-            usService.addUserStory(u2);
+            usService.saveUserStory("UserStory2", "Blablah2", 3, -1);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -141,15 +147,15 @@ public class LogicTest {
         UserStory u3 = new UserStory("UserStory3", "Blablah3", 2, 1);
 
         try {
-            usService.addUserStory(u1);
-            usService.addUserStory(u2);
+            usService.saveUserStory("UserStory1", "Blablah1", 1, -1);
+            usService.saveUserStory("UserStory2", "Blablah2", 3, -1);
         } catch (Exception e){
             e.printStackTrace();
         }
         List<UserStory> list = usService.getAllUserStorys();
         //Assertions.assertSame(list, usService.getAllUserStorys()); // prüfen aktuell gleich
         try {
-            usService.addUserStory(u3); //u1 wird bearbeitet und mit Werten von u3 ersetzt
+            usService.saveUserStory("UserStory3", "Blablah3", 2, 1); //u1 wird bearbeitet und mit Werten von u3 ersetzt
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -292,7 +298,7 @@ public class LogicTest {
         }
 
         try{
-            usService.addUserStory(u1);
+            usService.saveUserStory("UserStory1", "Blablah1", 1, -1);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -335,7 +341,7 @@ public class LogicTest {
         UserStory u1 = new UserStory("Story1", "Blah1", 1, -1);
 
         try{
-            uservice.addUserStory(u1);
+            uservice.saveUserStory("Story1", "Blah1", 1, -1);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -364,7 +370,11 @@ public class LogicTest {
             pass = false;
             throw new AssertionError(e);
         }
-        uservice.deleteUserStory(u1.getID());
+        try {
+            uservice.deleteUserStory(u1.getID());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //Voraussetzung: wenn eine User-Story gelöscht wird, werden dazugehörige Tasks gelöscht
         try{
             //Assertions.assertNotEquals(t1.getDescription(), DAOUserStoryService.getTaskByID(t1.getID()).getDescription());
@@ -396,7 +406,7 @@ public class LogicTest {
         }
 
         try{
-            uservice.addUserStory(u1);
+            uservice.saveUserStory("UStory1", "blaBla1", 1, -1);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -464,7 +474,7 @@ public class LogicTest {
         UserStory u1 = new UserStory("StoryName", "BlahBlah", 1, -1);
 
         try{
-            uservice.addUserStory(u1);
+            uservice.saveUserStory("StoryName", "BlahBlah", 1, -1);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -506,7 +516,11 @@ public class LogicTest {
             pass = false;
             throw new AssertionError(e);
         }
-        uservice.deleteUserStory(u1.getID());
+        try {
+            uservice.deleteUserStory(u1.getID());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try{
             //Assertions.assertEquals(t2.getDescription(), DAOUserStoryService.getTaskByID(t2.getID()).getDescription());
@@ -528,15 +542,14 @@ public class LogicTest {
         pw.append("Logik-Test-taskboardAttribute\nTest ID: Logic.T9\n" + "Date: " + formatter.format(date)+ '\n');
         TaskService tservice = new TaskService();
         UserStoryService uservice = new UserStoryService();
-        UserStory u1 = new UserStory("UserStoryT16B1", "T16.B1",2, -1);
 
         try{
-            uservice.addUserStory(u1);
+            uservice.saveUserStory("UserStoryT16B1", "T16.B1",2, -1);
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        Task t1 = new Task(10, "TaskT16B1", Enumerations.Priority.low, DAOUserStoryService.getByName(u1.getName()).getId());
+        Task t1 = new Task(10, "TaskT16B1", Enumerations.Priority.low, DAOUserStoryService.getByName("UserStoryT16B1").getId());
 
         try{
             tservice.createTask(t1);

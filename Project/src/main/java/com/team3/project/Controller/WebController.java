@@ -17,7 +17,6 @@ public class WebController {
     private final PresentationToLogic presentationToLogic;
     private final String MasterID = "EAIFPH8746531";
 
-    // TODO: IOExceptions
     /* Author: Lucas Krüger
      * Revisited: /
      * Funktion: Laden der Login-Page
@@ -68,7 +67,8 @@ public class WebController {
     @RequestMapping(value = "/neuesPasswortPage", method = RequestMethod.POST)
     public ModelAndView neuesPasswortPage(@RequestParam(value = "EMail", required = true) String EMail){
         if(presentationToLogic.accountService.checkMail(EMail)) {
-            return new ModelAndView("neuesPasswort").addObject("Mail", EMail);
+            return new ModelAndView("neuesPasswort")
+                    .addObject("Mail", EMail);
         }
         return index();
     }
@@ -83,7 +83,6 @@ public class WebController {
     @ResponseBody
     public String neuesPasswort(@RequestParam(value = "Passwort", required = true) String Passwort,
                                 @RequestParam(value = "EMail", required = true)String EMail){
-        // TODO: Mail mit Verifizierungscode + neuen Link für zurücksetzen
         try {
             presentationToLogic.accountService.resetPasswort(EMail, Passwort);
         } catch (Exception e) {
@@ -144,11 +143,9 @@ public class WebController {
                            @RequestParam(value = "priority", required = false) int prio,
                            @RequestParam(value = "id", required = true, defaultValue = "-1") int id,
                            @RequestParam(value = "SessionId", required = true) String SessionId){
-        UserStory story = new UserStory(name, Desc, prio,id);
-
         try {
             if (presentationToLogic.webSessionService.verify(SessionId)) {
-                presentationToLogic.userStoryService.addUserStory(story);
+                presentationToLogic.userStoryService.saveUserStory(name, Desc, prio,id);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -160,7 +157,7 @@ public class WebController {
      * Revisited: /
      * Funktion: Anzeigen aller Userstorys
      * Grund: /
-     * UserStory/Task-ID: U1.B1, U3.B1, U4.B1, U5.B1, U5.B2 // Todo: Fix
+     * UserStory/Task-ID: U1.B1 (UserStory)
      */
     @RequestMapping("/ProjectManager")
     private ModelAndView ProjectManager(@RequestParam(value = "SessionId",required = true) String id){
@@ -172,24 +169,11 @@ public class WebController {
             }
         } catch (Exception e){
             e.printStackTrace();
-            return error(e); // TODO: kann später weg
+            return error(e);
         }
         return index();
     }
 
-    // TODO: Delete
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    private ModelAndView test(@RequestParam(value = "SessionId") String SessionId,
-                              @RequestParam(value = "description") String des){
-        return error(new Exception("you got it"));
-    }
-
-    /*
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    private ResponseEntity test(){
-        return new ResponseEntity(HttpStatus.OK);
-    }
-    */
     /* Author: Lucas Krüger
      * Revisited: /
      * Funktion: Anzeigen des ResetCodes
@@ -200,7 +184,7 @@ public class WebController {
     private ModelAndView RequestRestCode(@RequestParam(value = "email",required = true) String email){
         if (presentationToLogic.accountService.checkMail(email)) {
             try {
-                String code = presentationToLogic.GeneratCode(1);
+                String code = presentationToLogic.webSessionService.GeneratCode(1);
                 ModelAndView modelAndView = new ModelAndView("neuesPasswort")
                         .addObject("Code", code);
                 return modelAndView;
@@ -223,7 +207,7 @@ public class WebController {
                                          @RequestParam(value = "newPasswort",required = true) String passwort,
                                          @RequestParam(value = "code",required = true) String code){
         try{
-            if (presentationToLogic.accountService.checkMail(email) && presentationToLogic.checkCode(code)) {
+            if (presentationToLogic.accountService.checkMail(email) && presentationToLogic.webSessionService.checkCode(code)) {
                 presentationToLogic.accountService.resetPasswort(email, passwort);
             }
         } catch (Exception e){
@@ -238,7 +222,7 @@ public class WebController {
      * Revisited: /
      * Funktion: "Senden" einer Mail
      * Grund: /
-     * UserStory/Task-ID: // Todo: Place ID
+     * UserStory/Task-ID: A4.B3
      */
     @RequestMapping(value = "/SendMail", method = RequestMethod.POST)
     private ResponseEntity SendMail(@RequestParam(value = "senderEmail",required = true) String from,
@@ -343,7 +327,7 @@ public class WebController {
      * Revisited: /
      * Funktion:
      * Grund: /
-     * UserStory/Task-ID: // Todo: Place ID
+     * UserStory/Task-ID: T1.B1
      */
     @RequestMapping(value = "/GetTaskByTLID", method = RequestMethod.POST)
     private ModelAndView GetTaskByTLID(@RequestParam(value = "SessionId",required = true) String SessionId,
@@ -365,7 +349,7 @@ public class WebController {
      * Revisited: /
      * Funktion:
      * Grund: /
-     * UserStory/Task-ID: // Todo: Place ID
+     * UserStory/Task-ID: T1.B1
      */
     @RequestMapping(value = "/GetTaskByUSID", method = RequestMethod.POST)
     private ModelAndView GetTaskByUSID(@RequestParam(value = "SessionId",required = true) String SessionId,
@@ -387,7 +371,7 @@ public class WebController {
      * Revisited: /
      * Funktion:
      * Grund: /
-     * UserStory/Task-ID: // Todo: Place ID
+     * UserStory/Task-ID: T3.D2, T4.D1
      */
     @RequestMapping(value = "/SaveTask", method = RequestMethod.POST)
     private ModelAndView SaveTask(@RequestParam(value = "SessionId",required = true) String SessionId,
@@ -398,7 +382,7 @@ public class WebController {
                                   @RequestParam(value ="priority", required = true) int prio){
         try{
             if (presentationToLogic.webSessionService.verify(SessionId)){
-                //logicToData.taskService.saveTask(); TODO
+                //presentationToLogic.taskService.saveTask(); TODO
                 return AllTask(SessionId);
             }
         } catch(Exception e){
