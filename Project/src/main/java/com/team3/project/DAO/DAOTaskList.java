@@ -28,15 +28,16 @@ public class DAOTaskList {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "orders")
-    private int orders;
+    @Column(name = "sequence")
+    private int sequence;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "taskBoardID")
     private DAOTaskBoard taskBoard;
 
-    @OneToMany(mappedBy = "Tasks")
+    @OneToMany(mappedBy = "taskList")
     private List<DAOTask> tasks;
 
+
     DAOTaskList() {}
-}
+} //TODO change cascade

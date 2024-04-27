@@ -28,7 +28,7 @@ public class DAORole {
     @ManyToMany(mappedBy = "roles")
     private List<DAOUser> users;
     
-
+    
     public DAORole() {}
     public DAORole(String name) {
         this.name = name;

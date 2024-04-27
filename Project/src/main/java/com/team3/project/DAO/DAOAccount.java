@@ -1,6 +1,5 @@
 package com.team3.project.DAO;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,9 +27,8 @@ public class DAOAccount {
 
 
     public DAOAccount() {}
-    public DAOAccount(String mail, String pw) {
-        this.email    = mail;
-        this.password = pw;
+    public DAOAccount(String email, String password) {
+        this.email    = email;
+        this.password = password;
     }
-
 }

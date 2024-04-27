@@ -1,11 +1,17 @@
 package com.team3.project.DAO;
 
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
+
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import com.team3.project.DAOService.DAOAccountService;
+import com.team3.project.DAOService.DAORoleService;
+import com.team3.project.DAOService.DAOUserService;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
 class DAO {
@@ -13,35 +19,25 @@ class DAO {
     public static void main(String[] args) {
         try {
         setUp();
-        // System.out.println(DAOAccountService.checkmail("temp")+"\n");
-        // System.out.println(DAOAccountService.LoginCheck("temp","password"));
-        // System.out.println(DAOAccountService.createAccount("newDave2", "pass"));
-        // System.out.println(DAOAccountService.updatePassword("newDave2", "test"));
-        // System.out.println(DAOAccountService.deleteAccount("max@web.de"));
-        //System.out.println(DAOUserStoryService.create("testName", "null", 0));
-        //System.out.println(DAOUserService.getByID(1).getRoles().size());
-        
-        /* List<DAOEvent> list = DAOEventService.getAll();
-        for (DAOEvent test : list) {
-            java.util.Date testing = new SimpleDateFormat("dd.MM.yyyy").parse(test.getTimeFrom());
-            System.out.println(test.getTimeFrom());
-        } */
-        
-        //System.out.println(list.get(0).getName()+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        /* List<DAOUser> list = DAOUserService.getAll();
-        for (DAOUser test : list) {
-            System.out.println(test.getName());
-            System.out.println(test.getRoles());
-            System.out.println("---");
-        } */
-        /* List<DAORole> list = DAOUserService.getRoleBySessionID(1);
+        /* 
+        List<DAORole> list = DAOUserService.getRoleBySessionID(1);
         for (DAORole daoRole : list) {
             System.out.println(daoRole.getName());
         } */
         //System.out.println(DAOUserService.getById(1).getName());
-        System.out.println(DAOAccountService.checkMail("Peter"));
-        System.out.println(DAOAccountService.checkMail("test@this.com"));
+        DAORole roleDeveloper = DAORoleService.getByID(1);
+        List<DAOUser> users = DAOUserService.getAllAndRoles();
 
+        if (users != null && !users.isEmpty()) {
+            users.stream().forEach(user -> {
+                user.setPassword("null");
+                user.getRoles().add(roleDeveloper);
+            });
+            users.get(0).getRoles().add(DAORoleService.getByID(4));
+            System.out.println(DAOUserService.updateUsers(users));
+        } else System.out.println("Null/Empty - 555555555555555555555555555555555555555");
+        
+        
         //Usertest();   
         tearDown();    
         } catch (Exception e) {
@@ -49,19 +45,25 @@ class DAO {
         }
     }
 
-    // private static void Usertest(){
-    //     Session session = sessionFactory.openSession();
-    //     session.beginTransaction();
-    //     DAOAccount account = new DAOAccount("temp2","password");
-    //     session.persist(account);
-    //     session.getTransaction().commit();
-    //     List<DAOAccount> result = session.createQuery( "select t from DAOAccount t" , DAOAccount.class).list();
-    //     for ( DAOAccount test : result) {
-    //         System.out.println( "account (email:" + test.getEmail() + " pw:"+ test.getPassword() +")");
-    //      }
-    //      session.close();
-    // }
-    
+    private static <T> List<T> getList(Class<T> daoClass, String fetchName) {
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        String query = "SELECT item FROM " + daoClass.getName() + " AS item JOIN FETCH item." + fetchName;
+        List<T> retrieve;
+        try {
+            retrieve = entityManager.createQuery(query, daoClass).getResultList();
+        } catch (Exception e) {
+            retrieve = null;
+        } finally {
+            entityManager.close();
+        }
+        return retrieve;
+    }
+
+    private static int createSessionId() {
+        Random random = new Random();
+        return random.nextInt(10000000, 100000000);
+    }
 
     protected static void setUp() throws Exception {
         // A SessionFactory is set up once for an application!

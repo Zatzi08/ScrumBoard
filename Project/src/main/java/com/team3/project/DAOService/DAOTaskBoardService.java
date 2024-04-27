@@ -31,4 +31,19 @@ public class DAOTaskBoardService {
     public static DAOTaskBoard getById(int id) {
         return DAOService.getByID(id, DAOTaskBoard.class);
     }
+
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: gets entry by ID
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /** gets entry by ID 
+     * @param id identifier
+     * @return user as Object 
+     */
+    public static DAOTaskBoard getWithTaskListsById(int id) {
+        String joinOnAttributeName = "taskLists";
+        return DAOService.getLeftJoinByID(id, DAOTaskBoard.class, joinOnAttributeName);
+    }
 }

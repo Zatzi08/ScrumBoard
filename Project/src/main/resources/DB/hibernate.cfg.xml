@@ -29,9 +29,12 @@
 
 	   <!-- Names the annotated entity class -->
 	   <mapping class="com.team3.project.DAO.DAOAccount"/>
-	   <mapping class="com.team3.project.DAO.DAOUserStory"/>
-	   <mapping class="com.team3.project.DAO.DAOUser"/>
 	   <mapping class="com.team3.project.DAO.DAORole"/>
+	   <mapping class="com.team3.project.DAO.DAOTask"/>
+	   <mapping class="com.team3.project.DAO.DAOTaskBoard"/>
+	   <mapping class="com.team3.project.DAO.DAOTaskList"/>
+	   <mapping class="com.team3.project.DAO.DAOUser"/>
+	   <mapping class="com.team3.project.DAO.DAOUserStory"/>
 
     </session-factory>
 
