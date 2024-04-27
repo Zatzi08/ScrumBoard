@@ -26,7 +26,7 @@ class DAO {
         } */
         //System.out.println(DAOUserService.getById(1).getName());
         DAORole roleDeveloper = DAORoleService.getByID(1);
-        List<DAOUser> users = DAOUserService.getAllAndRoles();
+        List<DAOUser> users = DAOUserService.getAllPlusRoles();
 
         if (users != null && !users.isEmpty()) {
             users.stream().forEach(user -> {

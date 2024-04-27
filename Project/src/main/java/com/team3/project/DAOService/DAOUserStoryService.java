@@ -2,6 +2,7 @@ package com.team3.project.DAOService;
 
 import java.util.List;
 
+import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOUserStory;
 
 public class DAOUserStoryService {
@@ -189,7 +190,18 @@ public class DAOUserStoryService {
         }
         return true;
     }
+
     
+    public static List<DAOTask> getTasksById(int id) {
+        //TODO implement
+        return null;
+    }
+    
+    public static boolean deleteById(int id) {
+        //TODO delete UserStory and linked Tasks
+        return false;
+    }
+
     /* Author: Marvin Oliver Prüger
      * Revisited: Tom-Malte Seep
      * Function: checks if a userStory exists by id
