@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projektmanager</title>
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/projectManager.css">
+    <link rel="stylesheet" href="css/setup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<!--
+       Author: Zana Salih Hama
+       Revisited: /
+       Funktion: Reiter zur Übersicht aller Seiten[-optionen]
+       Grund: Übersichtlichkeit
+       User-ID/Task-ID: /
+    -->
+<div class="Reiter">
+    <button class="reiterBtn" onmouseover = "hover('reiterBtn')" onmouseleave="hoverLeave('reiterBtn')" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
+    <button class = "reiterBtn">Profil </button>
+    <button class = "reiterBtn">Task-Board </button>
+    <button class = "reiterBtn">Kalender </button>
+    <button class = "reiterBtn" id="einstellungBtn">Einstellungen </button>
+</div>
+
+<div id="outerProjectManagerContainer">
+    <button class="selectBtn" id="selectUserstory" onmouseover = "hover('selectUserstory')" onmouseleave="hoverLeave('selectUserstory')" title="Wechsel Ansicht zu Userstories" style= "border-bottom: 1px solid #ffffff">Userstories</button>
+    <span class="userStoryTaskTrenner">|</span>
+    <button class="selectBtn" id="selectTasks" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
+    <button class="addUserStoryBtn" title="Füge eine Task zur Userstory hinzu" onclick="toggleEditMenu('addUserStoryBtn')"><i class="fa fa-plus" style="margin-right: 10px"></i>Task zu US erstellen</button>
+    <div id="innerProjectManagerContainer">
+        <div class="wrapper">
+            <table class="userTaskTable">
+                <thead id="userTaskTableHead">
+                <tr>
+                    <th style="border-top-left-radius: 0; border-top-right-radius: 0; text-align: center; background-color: rgba(25,0,255,0.3); color: white">Tasks zur Userstory</th>
+                </tr>
+                </thead>
+                <tbody id="userTaskTableBody">
+                <tr>
+                    <th>
+                        <label class="userTaskTable-ContentStoryBoard">Story</label>
+                        <span class="userTaskTable-ContentStoryBoard">/</span>
+                        <label class="userTaskTable-ContentStoryBoard">Board</label>
+                        <button class="userTaskTableBody-editBtn" title="Bearbeiten" onclick="toggleEditMenu('editBtn')"><i class="fa fa-edit"></i></button>
+                        <span class="closeUserStoryTaskBtn" onclick="deleteTableRow()" title="Löschen">&times;</span>
+                        <label>Name</label>
+                        <label>Rolle</label>
+                        <label>Priorität</label>
+                        <hr>
+                        <label style="display: inline-block;">Beschreibung</label>
+                        <label class = userTaskTableContentSubdate>Abgabedatum</label>
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--
+           Author: Zana Salih Hama
+           Revisited: /
+           Funktion: Bearbeitungs-/Erstellungsfenster für User-Stories
+           Grund: /
+           User-ID/Task-ID: U3.F1, U4.F1, U5.F1, U5.F2
+-->
+<div class = "editMenu">
+    <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
+    <span id="closeToggleEdit" class="closeToggleEdit" onclick="toggleEditMenu()">&times;</span>
+    <div class="editMenu-content">
+        <form class="form" th:action="@{/addStory?SessionId={id}(id=${SessionID})}" method="post" id="editForm" autocomplete="off" name="Story">
+            <textarea id="inputDesc" class="inputEdit" required placeholder="Eine passende Beschreibung eingeben" name="description" form="editForm"></textarea>
+            <label>Priorität</label>
+            <button type="button" class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: indianred" name="urgent" form="editForm">Urgent</button>
+            <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: lightcoral" name="high" form="editForm">High</button>
+            <button type="button" class="inputEditPrio" id="inputPrioNormal" onclick="highlightPriorityButton('inputPrioNormal')" style="background-color: lightblue" name="normal" form="editForm">Normal</button>
+            <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: lightgreen" name="low" form="editForm">Low</button>
+            <label style="margin-top: 15px">Abgabefrist</label>
+            <input type="datetime-local" id="inputDate" class="inputEdit" placeholder="Abgabefrist">
+            <input type="hidden" id = "editId" name="id" value="-1">
+            <input type="hidden" id = "editPrio" name="priority" value="1">
+            <!-- <div class="ansichtDropdown">
+                <button onClick= "ansichtDropdown()" id="ansichtBtn" class = "ansichtBtn"><i class="fa fa-level-down" style="margin-right: 8px;"></i> Story</button>
+                <div id="ansichtDropdownContent" class="ansichtdropdown-content">
+                    <a href="#">Test1 </a>
+                    <a href="#">Test2 </a>
+                </div>
+            </div>
+            <div class="boardDropdown">
+                <button onClick= "ansichtDropdown()" id="boardBtn" class = "ansichtBtn"><i class="fa fa-level-down" style="margin-right: 8px;"></i> Story</button>
+                <div id="boardDropdownContent" class="boarddropdown-content">
+                    <a href="#">Test1 </a>
+                    <a href="#">Test2 </a>
+                </div>
+            </div> -->
+            <button type="submit" id="editMenu-saveEditBtn">Speichern</button>
+        </form>
+    </div>
+</div>
+
+
+<script src="js/vendor/jquery.js"></script>
+<script src="js/vendor/what-input.js"></script>
+<script src="js/vendor/foundation.js"></script>
+<script src="js/app.js"></script>
+<script type = "text/javascript" src="js/setup.js"></script>
+<script type = "text/javascript" src="js/projectManager.js"></script>
+</body>
+</html>
