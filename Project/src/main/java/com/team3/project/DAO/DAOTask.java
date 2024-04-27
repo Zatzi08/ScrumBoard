@@ -1,5 +1,7 @@
 package com.team3.project.DAO;
 
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,6 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -45,6 +49,15 @@ public class DAOTask {
     @JoinColumn(name = "userStoryID")
     DAOUserStory userStory;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinTable(
+        name = "TasksXUsers", 
+        joinColumns = @JoinColumn(name = "tid"), 
+        inverseJoinColumns = @JoinColumn(name = "uid")    
+    )
+    private List<DAOUser> users;
+    
 
     DAOTask() {}
 }
+//TODO change cascade

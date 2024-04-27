@@ -26,14 +26,20 @@ public class DAOUser {
 
     @Column(name="name")
     private String name;
+    
+    @Column(name = "mail")
+    private String email;
 
-    @Column(name="privatDescription")
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "privatDescription")
     private String privatDescription;
     
-    @Column(name="workDescription")
+    @Column(name = "workDescription")
     private String workDescription;
 
-    @Column(name="authorization")
+    @Column(name = "authorization")
     private int authorization;
 
     @Column(name = "sessionID")
@@ -49,15 +55,57 @@ public class DAOUser {
         inverseJoinColumns = @JoinColumn(name = "rid")    
     )
     private List<DAORole> roles;
-   
+    
+    @ManyToMany(mappedBy = "users")
+    private List<DAOTask> tasks;
 
     public DAOUser() {}
-    /* public DAOUser(String name, String privatDescription, String workDescription, int authorization, String sessionId, List<DAORole> roles){
+    public DAOUser(String name, String email, String password, String sessionDate) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.sessionDate = sessionDate;
+    }
+    /*
+    public DAOUser(String name, String privatDescription, String workDescription, int authorization, String sessionId) {
         this.name = name;
         this.privatDescription = privatDescription;
         this.workDescription = workDescription;
         this.authorization = authorization;
         this.sessionId = sessionId;
-        this.roles = roles;
-    } */
-}
+    }
+    */
+
+    private void cloneValues(DAOUser user) {
+        if (user.getName() != null) {
+            this.setName(user.getName());
+        }
+        if (user.getEmail() != null) {
+            this.setEmail(user.getEmail());
+        }
+        if (user.getPassword() != null) {
+            this.setPassword(user.getPassword());
+        }
+        if (user.getPrivatDescription() != null) {
+            this.setPrivatDescription(user.getPrivatDescription());
+        }
+        if (user.getWorkDescription() != null) {
+            this.setWorkDescription(user.getWorkDescription());
+        }
+        if (user.getAuthorization() != 0) {
+            this.setAuthorization(user.getAuthorization());
+        }
+        if (user.getSessionId() != null) {
+            this.setSessionId(user.getSessionId());
+        }
+        if (user.getSessionDate() != null) {
+            this.setSessionDate(user.getSessionDate());
+        }
+        if (user.getRoles() != null) {
+            this.setRoles(user.getRoles());
+        }
+        if (user.getTasks() != null) {
+            this.setTasks(user.getTasks());
+        }
+    }
+} //TODO change cascade

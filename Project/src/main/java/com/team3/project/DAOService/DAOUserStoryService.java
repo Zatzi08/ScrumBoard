@@ -7,6 +7,20 @@ import com.team3.project.DAO.DAOUserStory;
 public class DAOUserStoryService {
     /* Author: Marvin Oliver Prüger
      * Revisited: Tom-Malte Seep
+     * Function: gets all entries for userStory
+     * Reason: refactoring
+     * UserStory/Task-ID:
+     */
+    /** retrieves all userStories
+     * @return list of all entries
+     */
+    public static List<DAOUserStory> getAll() {
+        List<DAOUserStory> userStories = DAOService.getAll(DAOUserStory.class);
+        return userStories;
+    }
+    
+    /* Author: Marvin Oliver Prüger
+     * Revisited: Tom-Malte Seep
      * Function: gets user story by ID
      * Reason: refactoring
      * UserStory/Task-ID:
@@ -18,6 +32,21 @@ public class DAOUserStoryService {
     public static DAOUserStory getByID(int id) {
         DAOUserStory story = DAOService.getByID(id, DAOUserStory.class);
         return story;
+    }
+
+    
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: gets entry by ID
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /** gets entry by ID 
+     * @param id identifier
+     * @return user as Object 
+     */
+    public static DAOUserStory getWithTasksById(int id) {
+        return DAOService.getLeftJoinByID(id, DAOUserStory.class, "tasks");
     }
 
     /* Author: Marvin Oliver Prüger
@@ -34,20 +63,6 @@ public class DAOUserStoryService {
         String parameterName = "name";
         DAOUserStory story = DAOService.getSingleByPara(DAOUserStory.class, name, parameterName);
         return story;
-    }
-
-    /* Author: Marvin Oliver Prüger
-     * Revisited: Tom-Malte Seep
-     * Function: gets all entries for userStory
-     * Reason: refactoring
-     * UserStory/Task-ID:
-     */
-    /** retrieves all userStories
-     * @return list of all entries
-     */
-    public static List<DAOUserStory> getAll() {
-        List<DAOUserStory> userStories = DAOService.getAll(DAOUserStory.class);
-        return userStories;
     }
 
     /* Author: Marvin Oliver Prüger

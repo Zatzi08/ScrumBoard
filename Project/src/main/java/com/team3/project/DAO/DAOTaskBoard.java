@@ -25,8 +25,9 @@ public class DAOTaskBoard {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "TaskList")
+    @OneToMany(mappedBy = "taskBoard")
     private List<DAOTaskList> taskLists;
 
+    
     DAOTaskBoard() {}
 }

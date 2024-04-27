@@ -2,6 +2,7 @@ package com.team3.project.DAOService;
 
 import java.util.List;
 
+import com.team3.project.DAO.DAOAccount;
 import com.team3.project.DAO.DAORole;
 import com.team3.project.DAO.DAOUser;
 
@@ -16,8 +17,13 @@ public class DAOUserService {
      * without 'fetch'
      * @return list of all users
      */
-    public static List<DAOUser> getAll(){
+    public static List<DAOUser> getAll() {
         return DAOService.getAll(DAOUser.class);
+    }
+
+    public static List<DAOUser> getAllAndRoles() {
+        String joinAttributeName = "roles";
+        return DAOService.getAllLeftJoin(DAOUser.class, joinAttributeName);
     }
 
     /* Author: Tom-Malte Seep
@@ -67,5 +73,39 @@ public class DAOUserService {
         String parameterName = "sessionId";
         DAOUser user = DAOService.getSingleByPara(DAOUser.class, Integer.toString(sessionID), parameterName);
         return user.getAuthorization();
+    }
+
+    
+    public static boolean create(String name, String email, String password, String sessionDate) {
+        if (checkByEmail(email)) {
+            return false; //email already in database
+        }
+        try {
+            DAOService.persist(new DAOUser(name, email, password, sessionDate));
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+    
+    public static boolean updateUsers(List<DAOUser> users) {
+        return DAOService.mergeList(users);
+    }
+
+    /*
+    public static boolean updateUserByMail(String email, DAOUser updatedUser) {
+        String parameterName = "email";
+        DAOUser user = DAOService.getSingleByPara(DAOUser.class, email, parameterName);
+        if (user == null) {
+            return false;
+        }
+        user.cloneValues(updatedUser);
+        return DAOService.mergeB(user);
+    }*/
+
+    public static boolean checkByEmail(String email) {
+        String parameterName = "email";
+        DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
+        return (account != null) ? true : false;
     }
 }

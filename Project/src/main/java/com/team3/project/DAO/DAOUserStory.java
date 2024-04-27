@@ -22,16 +22,16 @@ public class DAOUserStory {
     @Column(name="usID")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String description;
 
     @Column(name = "priority")
     private int priority;
 
-    @OneToMany(mappedBy = "Tasks")
+    @OneToMany(mappedBy = "userStory")
     private List<DAOTask> tasks;
 
 

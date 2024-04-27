@@ -18,7 +18,7 @@ final class DAOSession {
      */
     /** returns the EntityManagerFactory <p>
      * or starts it setup
-     * @return 
+     * @return entityManagerFactory
      */
     private static EntityManagerFactory getEntityManagerFactory(){
         if (entityManagerFactory == null) {
@@ -33,7 +33,7 @@ final class DAOSession {
      * Reason: refactoring
      * UserStory/Task-ID:
      */
-    /** sets the EntityManagerFactory up
+    /** makes the setup for the EntityManagerFactory
      */
     private static void setUp() {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
@@ -57,9 +57,17 @@ final class DAOSession {
     /** tears down the EntityManagerFactory <p>
      * if one exists
      */
-    static void tearDown() {
+    private static void tearDown() {
         if (entityManagerFactory != null) {
             entityManagerFactory.close();
+        }
+    }
+
+    public static void startOrStop(boolean start) {
+        if (start) {
+            getEntityManagerFactory();
+        } else {
+            tearDown();
         }
     }
 
@@ -70,7 +78,7 @@ final class DAOSession {
      * UserStory/Task-ID:
      */
     /** creates new Entity Manager
-     * @return
+     * @return entityManager
      */
     static EntityManager getNewEntityManager() {
         return getEntityManagerFactory().createEntityManager();
@@ -82,8 +90,9 @@ final class DAOSession {
      * Reason: refactoring
      * UserStory/Task-ID:
      */
-    /** closes the EntityManager
-     * @param entityManager entityManager the given session
+    /** closes the EntityManager <p>
+     * for given session
+     * @param entityManager entityManager 
      */
     static void closeEntityManager(EntityManager entityManager) {
         if (entityManager.isOpen()) {

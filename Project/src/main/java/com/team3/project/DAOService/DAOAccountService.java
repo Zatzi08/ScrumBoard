@@ -12,7 +12,7 @@ public class DAOAccountService {
     /** creates a Account with a Mail and a password
      * @param email
      * @param password
-     * @return
+     * @return         true if account creation was successfull
      */
     public static boolean create(String email, String password) {
         if (!checkMail(email)) {
@@ -35,19 +35,14 @@ public class DAOAccountService {
     /** updates the password for an account 
      * @param email
      * @param password new password
-     * @return
+     * @return         true if update was successfull
      */
     public static boolean updatePassword(String email, String password) {
         String parameterName = "email";
         DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
         if (account != null) {
             account.setPassword(password);
-            try {
-                DAOService.merge(account);
-            } catch (Exception e) {
-                return false;
-            }
-            return true;
+            return DAOService.merge(account);
         }
         return false; //no entry
     }
@@ -85,7 +80,7 @@ public class DAOAccountService {
      */
     /** checks if the email exists
      * @param emailToTest   
-     * @return            does email exists
+     * @return            true if email exists
      */
     public static boolean checkMail(String emailToTest) {
         String parameterName = "email";

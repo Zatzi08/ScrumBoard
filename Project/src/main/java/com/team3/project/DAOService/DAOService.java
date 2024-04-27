@@ -1,6 +1,7 @@
 package com.team3.project.DAOService;
 
 import java.util.List;
+import java.util.function.Function;
 
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
@@ -33,6 +34,39 @@ class DAOService {
         return retrieve;
     }
 
+    static <Dao> List<Dao> getAllLeftJoin(Class<Dao> daoClass, String joinOnAttributeName) {
+        EntityManager entityManager = DAOSession.getNewEntityManager();
+        entityManager.getTransaction().begin();
+        String query = "SELECT item FROM " + daoClass.getName() + " AS item LEFT JOIN FETCH item." + joinOnAttributeName;
+        List<Dao> retrieve;
+        try {
+            retrieve = entityManager.createQuery(query, daoClass).getResultList();
+        } catch (Exception e) {
+            retrieve = null;
+        } finally {
+            DAOSession.closeEntityManager(entityManager);
+        }
+        return retrieve;
+    }
+
+    static <Dao> List<Dao> getAllLeftJoin(Class<Dao> daoClass, List<String> JoinOnAttributeName) {
+        EntityManager entityManager = DAOSession.getNewEntityManager();
+        entityManager.getTransaction().begin();
+        StringBuilder query = new StringBuilder("SELECT item FROM " + daoClass.getName() + " AS item");
+        JoinOnAttributeName.stream().forEach(fetchName -> {
+            query.append(" LEFT JOIN FETCH item." + fetchName);
+        });
+        List<Dao> retrieve;
+        try {
+            retrieve = entityManager.createQuery(query.toString(), daoClass).getResultList();
+        } catch (Exception e) {
+            retrieve = null;
+        } finally {
+            DAOSession.closeEntityManager(entityManager);
+        }
+        return retrieve;
+    }
+
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: Get entry by ID
@@ -48,13 +82,38 @@ class DAOService {
     static <Dao> Dao getByID(int id, Class<Dao> daoClass) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
-        /* //old way of retriving the ObjectById
-         * String query = "SELECT item FROM " + daoClass.getName() + " AS item where id = ?1";
-         * Dao retrieve = session.createQuery(query, daoClass).setParameter(1, id).getSingleResult();
-        */
         Dao retrieve;
         try {
             retrieve = entityManager.find(daoClass, id);
+        } catch (Exception e) {
+            retrieve = null;
+        } finally {
+            DAOSession.closeEntityManager(entityManager);
+        }
+        return retrieve;
+    }
+
+
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: Get entry by ID
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /**
+     * gets entry with fetch by ID
+     * @param <Dao>
+     * @param id
+     * @param daoClass
+     * @return
+     */
+    static <Dao> Dao getLeftJoinByID(int id, Class<Dao> daoClass, String joinOnAttributeName) {
+        EntityManager entityManager = DAOSession.getNewEntityManager();
+        entityManager.getTransaction().begin();
+        String query = "SELECT item FROM " + daoClass.getName() + " AS item LEFT JOIN FETCH item." + joinOnAttributeName + "WHERE id = ?1";
+        Dao retrieve;
+        try {
+            retrieve = entityManager.createQuery(query, daoClass).getSingleResult();
         } catch (Exception e) {
             retrieve = null;
         } finally {
@@ -208,7 +267,7 @@ class DAOService {
     /** persists the given object in the database
      * @param daoObject the object to persist
      */
-    static void persist(Object daoObject) {
+    private static void persisting(Object daoObject) {
         //TODO change the parameter type
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
@@ -224,6 +283,15 @@ class DAOService {
         }
     }
 
+    static boolean persist(Object daoObject) {
+        try {
+            DAOService.persisting(daoObject);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: merges the giving object in the database
@@ -233,7 +301,7 @@ class DAOService {
     /** merge the given object in the database
      * @param daoObject the object to persist
      */
-    static void merge(Object daoObject) {
+    private static void merging(Object daoObject) {
         //TODO change the parameter type
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
@@ -247,6 +315,39 @@ class DAOService {
         }
     }
 
+    static boolean merge(Object daoObject) {
+        try {
+            DAOService.merging(daoObject);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    private static <Dao> void mergingList(List<Dao> daoObjects) {
+        EntityManager entityManager = DAOSession.getNewEntityManager();
+        entityManager.getTransaction().begin();
+        try {
+            for (Dao daoObject : daoObjects) {
+                entityManager.merge(daoObject);
+            }
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            //Something went wrong
+        } finally {
+            DAOSession.closeEntityManager(entityManager);
+        }
+    }
+
+    static <Dao> boolean mergeList(List<Dao> daoObjects) {
+        try {
+            DAOService.mergingList(daoObjects);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: deletes a given object from the database
@@ -256,7 +357,7 @@ class DAOService {
     /** deletes a given object from the database
      * @param daoObject
      */
-    protected static void delete(Object daoObject) {
+    static void delete(Object daoObject) {
         //TODO change the parameter type
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
@@ -268,4 +369,6 @@ class DAOService {
             DAOSession.closeEntityManager(entityManager);
         }
     }
+
+
 }
