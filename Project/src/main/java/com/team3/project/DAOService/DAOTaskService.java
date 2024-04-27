@@ -47,4 +47,17 @@ public class DAOTaskService {
         String joinOnAttributeName = "userStory";
         return DAOService.getLeftJoinByID(id, DAOTask.class, joinOnAttributeName);
     }
+
+
+    public static boolean create() {
+        return false; //TODO
+    }
+
+    public static boolean update() {
+        return false; //TODO
+    }
+
+    public static boolean delete() {
+        return false; //TODO
+    }
 }

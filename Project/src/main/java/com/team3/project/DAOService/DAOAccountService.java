@@ -59,7 +59,7 @@ public class DAOAccountService {
      * @return      false if error occured else true
      */
     public static boolean deleteByMail(String email) {
-        String parameterName = "email";
+        String parameterName = "email"; //TODO
         DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
         if (account != null) {
             try { 

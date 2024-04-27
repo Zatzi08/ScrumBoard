@@ -59,12 +59,13 @@ public class DAOUser {
     @ManyToMany(mappedBy = "users")
     private List<DAOTask> tasks;
 
+    
     public DAOUser() {}
-    public DAOUser(String name, String email, String password, String sessionDate) {
+    public DAOUser(String name, String privatDescription, String workDescription, List<DAORole> roles) {
         this.name = name;
-        this.email = email;
-        this.password = password;
-        this.sessionDate = sessionDate;
+        this.privatDescription = privatDescription;
+        this.workDescription = workDescription;
+        this.roles = roles;
     }
     /*
     public DAOUser(String name, String privatDescription, String workDescription, int authorization, String sessionId) {
@@ -76,7 +77,7 @@ public class DAOUser {
     }
     */
 
-    private void cloneValues(DAOUser user) {
+    public void cloneValues(DAOUser user) {
         if (user.getName() != null) {
             this.setName(user.getName());
         }
