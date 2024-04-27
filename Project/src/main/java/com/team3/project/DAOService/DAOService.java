@@ -1,7 +1,6 @@
 package com.team3.project.DAOService;
 
 import java.util.List;
-import java.util.function.Function;
 
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
@@ -349,9 +348,9 @@ class DAOService {
     }
 
     /* Author: Tom-Malte Seep
-     * Revisited: /
+     * Revisited: Marvin
      * Function: deletes a given object from the database
-     * Reason:
+     * Reason: würde nicht commited 
      * UserStory/Task-ID:
      */
     /** deletes a given object from the database
@@ -363,6 +362,7 @@ class DAOService {
         entityManager.getTransaction().begin();
         try {
             entityManager.remove(daoObject);
+            entityManager.getTransaction().commit();
         } catch (Exception e) {
             //Something went wrong
         } finally {
