@@ -155,4 +155,42 @@ function deleteUS(usid, sessionID){
     });
 }
 
+function saveUS($this, sessionID) {
+    id = document.getElementById('editId').value;
+    name = document.getElementById('inputName').value;
+    description = document.getElementById('inputDesc').value;
+    priority = document.getElementById('editPrio').value;
 
+    fetch('/addStory?ID=' + id + '&SessionId=' + sessionID + '&name=' + name + '&description=' + description + '&priority=' + priority, {
+        method: 'POST',
+    }).then(r => {
+        if (r.ok) {
+            location.reload();
+        }
+    });
+}
+
+function SwitchToTasks(sessionID) {
+    url = '/GetAllTask?SessionId=' + sessionID
+    document.location.assign(url)
+}
+
+function SwitchToUserStory(sessionID) {
+    url = '/ProjectManager?SessionId=' + sessionID
+    document.location.assign(url)
+}
+
+function saveTask($this, sessionID) {
+    id = document.getElementById('editId').value;
+    name = document.getElementById('inputName').value;
+    description = document.getElementById('inputDesc').value;
+    priority = document.getElementById('editPrio').value;
+
+    fetch('/saveTask?TID=' + id + '&SessionId=' + sessionID + '&name=' + name + '&description=' + description + '&priority=' + priority, {
+        method: 'POST',
+    }).then(r => {
+        if (r.ok) {
+            location.reload();
+        }
+    });
+}
