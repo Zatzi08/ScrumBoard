@@ -27,11 +27,12 @@
 </div>
 
 <div id = "profilContainer">
-    <div id = "profilInhalt">
-        <div id = "profilName">  <i class = "fa fa-edit" onclick="toggleProfilMenü()"></i>Benutzername </div>
-        <div id = "profilProjektBeschreibung"> Projekt Beschreibung </div>
-        <div id = "rolleProfil"> Rolle <p>.</p> </div>
-        <div id = "profilPersoBeschreibung"> Persönliche Beschreibung </div>
+    <div th:user = "${User}"id = "profilInhalt">
+        <button class = "fa fa-edit" th:uname="${User.uname}" th:udesc="${User.userdesc}" th:projectdesc="${User.description}" onclick="toggleProfilMenü(this.getAttribute('uname'), this.getAttribute('udesc'), this.getAttribute('projectdesc'))"></button>
+        <label th:text = "${User.uname}"id = "profilName">Benutzername </label>
+        <label th:text="${User.userdesc}"id = "profilProjektBeschreibung"> Projekt Beschreibung </label>
+        <label id = "rolleProfil"> Rolle <p>.</p> </label>
+        <label th:text = "${User.description}" id = "profilPersoBeschreibung"> Persönliche Beschreibung </label>
     </div>
 </div>
 
