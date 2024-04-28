@@ -32,7 +32,7 @@ public class UserStoryService {
         if(story.getID() == -1){
             DAOUserStoryService.create(story.getName(),story.getDescription(), enumerations.getInt(story.getPriority()));
         } else{
-            if (DAOUserStoryService.getByID(story.getID()) != null){
+            if (DAOUserStoryService.getById(story.getID()) != null){
                 DAOUserStoryService.updateName(story.getID(),story.getName());
                 DAOUserStoryService.updateDescription(story.getID(),story.getDescription());
                 Enumerations prio = new Enumerations();

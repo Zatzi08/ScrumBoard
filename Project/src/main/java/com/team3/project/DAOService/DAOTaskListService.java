@@ -5,6 +5,7 @@ import java.util.List;
 import com.team3.project.DAO.DAOTaskList;
 
 public class DAOTaskListService {
+    //gets
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: gets all tasklists

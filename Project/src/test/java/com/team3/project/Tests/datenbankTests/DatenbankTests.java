@@ -186,21 +186,21 @@ public class DatenbankTests {
             e.printStackTrace();
         }
         try {
-             assertTrue(DAOAccountService.loginCheck(testMail, testPas));
+             assertTrue(DAOAccountService.checkLogin(testMail, testPas));
         } catch(AssertionError e) {
             pw.append(String.format("fail: existent Login-Details not found\n"));
             pass = false;
             throw new AssertionError(e);
         }
         try {
-            assertFalse(DAOAccountService.loginCheck(testMail, wrongPas));
+            assertFalse(DAOAccountService.checkLogin(testMail, wrongPas));
         } catch(AssertionError e) {
             pw.append(String.format("fail: non-existent Login-Details found\n"));
             pass = false;
             throw new AssertionError(e);
         }
         try {
-            assertFalse(DAOAccountService.loginCheck(testMail, noPas));
+            assertFalse(DAOAccountService.checkLogin(testMail, noPas));
         } catch(AssertionError e) {
             pw.append(String.format("fail: non-existent Login-Details found\n"));
             pass = false;
@@ -212,7 +212,7 @@ public class DatenbankTests {
             e.printStackTrace();
         }
         try {
-            assertFalse(DAOAccountService.loginCheck(testMail, testPas));
+            assertFalse(DAOAccountService.checkLogin(testMail, testPas));
         } catch(AssertionError e) {
             pw.append(String.format("fail: non-existent Login-Details found\n"));
             pass = false;
@@ -245,7 +245,7 @@ public class DatenbankTests {
             e.printStackTrace();
         }
         try {
-            assertTrue(DAOAccountService.loginCheck(testMail, oldPas));
+            assertTrue(DAOAccountService.checkLogin(testMail, oldPas));
         } catch(AssertionError e) {
             pw.append(String.format("fail: existent Login-Details not found\n"));
             pass = false;
@@ -259,14 +259,14 @@ public class DatenbankTests {
             throw new AssertionError(e);
         }
         try {
-            assertTrue(DAOAccountService.loginCheck(testMail, newPas));
+            assertTrue(DAOAccountService.checkLogin(testMail, newPas));
         } catch(AssertionError e) {
             pw.append(String.format("fail: existent Login-Details not found\n"));
             pass = false;
             throw new AssertionError(e);
         }
         try {
-            assertFalse(DAOAccountService.loginCheck(testMail, oldPas));
+            assertFalse(DAOAccountService.checkLogin(testMail, oldPas));
         } catch(AssertionError e) {
             pw.append(String.format("fail: non-existent Login-Details  found\n"));
             pass = false;
@@ -298,7 +298,7 @@ public class DatenbankTests {
             e.printStackTrace();
         }
         try {
-            assertTrue(DAOAccountService.loginCheck(testMail, oldPas));
+            assertTrue(DAOAccountService.checkLogin(testMail, oldPas));
         } catch (AssertionError e) {
             pw.append(String.format("fail: existent Login-Details not found\n"));
             pass = false;
@@ -312,14 +312,14 @@ public class DatenbankTests {
             throw new AssertionError(e);
         }
         try {
-            assertTrue(DAOAccountService.loginCheck(testMail, newPas));
+            assertTrue(DAOAccountService.checkLogin(testMail, newPas));
         } catch (AssertionError e) {
             pw.append(String.format("fail: existent Login-Details not found\n"));
             pass = false;
             throw new AssertionError(e);
         }
         try {
-            assertFalse(DAOAccountService.loginCheck(testMail, oldPas));
+            assertFalse(DAOAccountService.checkLogin(testMail, oldPas));
         } catch(AssertionError e) {
             pw.append(String.format("fail: existent Login-Details not found\n"));
             pass = false;
@@ -401,7 +401,7 @@ public class DatenbankTests {
         }
         int id = DAOUserStoryService.getByName(name).getId();
         try {
-            assertTrue(DAOUserStoryService.getByName(name).getName().equals(DAOUserStoryService.getByID(id).getName()));
+            assertTrue(DAOUserStoryService.getByName(name).getName().equals(DAOUserStoryService.getById(id).getName()));
         } catch(AssertionError e) {
             pw.append(String.format("fail: wrong Name\n"));
             pass = false;

@@ -2,6 +2,8 @@ package com.team3.project.DAO;
 
 import java.util.List;
 
+import com.team3.project.Classes.TaskList;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -58,6 +60,10 @@ public class DAOTask {
     private List<DAOUser> users;
     
 
-    DAOTask() {}
+    public DAOTask() {}
+    public DAOTask(String description, DAOTaskList taskList, DAOUserStory userStory) {
+        this.description = description;
+        this.taskList = taskList;
+        this.userStory = userStory;
+    }
 }
-//TODO change cascade

@@ -67,6 +67,13 @@ public class DAOUser {
         this.workDescription = workDescription;
         this.roles = roles;
     }
+    public DAOUser(String email, String name, String privatDescription, String workDescription, List<DAORole> roles) {
+        this.email = email;
+        this.name = name;
+        this.privatDescription = privatDescription;
+        this.workDescription = workDescription;
+        this.roles = roles;
+    }
     /*
     public DAOUser(String name, String privatDescription, String workDescription, int authorization, String sessionId) {
         this.name = name;
@@ -109,4 +116,4 @@ public class DAOUser {
             this.setTasks(user.getTasks());
         }
     }
-} //TODO change cascade
+}

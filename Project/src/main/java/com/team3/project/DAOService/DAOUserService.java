@@ -9,6 +9,7 @@ import com.team3.project.DAO.DAOUser;
 import io.micrometer.common.lang.Nullable;
 
 public class DAOUserService {
+    //gets 
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: gets all users
@@ -65,24 +66,28 @@ public class DAOUserService {
         return user.getRoles();
     }
 
-    /* Author: Tom-Malte Seep
-     * Revisited: /
-     * Function: gets authorization by sessionID
-     * Reason:
-     * UserStory/Task-ID:
-     */
-    /**
-     * gets authorization by sessionID
-     * @param sessionID 
-     * @return authorization int
-     */
-    public static int getAuthorizationBySessionID(int sessionID) {
-        String parameterName = "sessionId";
-        DAOUser user = DAOService.getSingleByPara(DAOUser.class, Integer.toString(sessionID), parameterName);
-        return user.getAuthorization();
+    static int getIdByMail(String email) {
+        String parameterName = "email";
+        DAOUser user = DAOService.getSingleByPara(DAOUser.class, email, parameterName);
+        return user.getUid();
     }
 
-    
+    //creates
+    public static boolean createByEMail(String email, String name, String privatDescription, String workDescription, List<DAORole> roles) {
+        return DAOService.persist(new DAOUser(email, name, privatDescription, workDescription, roles));
+        //return createById(getIdByMail(email), name, privatDescription, workDescription, roles);
+    }
+
+    public static boolean createById(int id, String name, String privatDescription, String workDescription, List<DAORole> roles) {
+        try {
+            updateById(id, name, privatDescription, workDescription, roles);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    //updates
     public static boolean updateById(int id, @Nullable String name, @Nullable String privatDescription, 
                                      @Nullable String workDescription, @Nullable List<DAORole> roles) {
         try {
@@ -96,38 +101,74 @@ public class DAOUserService {
         }
         return false;
     }
+
+    static boolean updateById(int id, DAOUser user) {
+        return updateById(id, user.getName(), user.getPrivatDescription(), user.getWorkDescription(), user.getRoles());
+    }
     
     public static boolean updateUsers(List<DAOUser> users) {
         return DAOService.mergeList(users);
     }
 
-    /*
-    public static boolean updateUserByMail(String email, DAOUser updatedUser) {
+    public static boolean updateSessionIdById(int id, String sessionId, String sessionDate) {
+        DAOUser user = DAOService.getByID(id, DAOUser.class);
+        if (user != null) {
+            user.setSessionId(sessionId);
+            user.setSessionDate(sessionDate);
+            return DAOService.merge(user);
+        }
+        return false;
+    }
+
+    public static boolean emptySessionIdById(int id) {
+        return updateSessionIdById(id, null, null);
+    }
+
+    //deletes
+    public static boolean deleteById(int id) {
+        DAOUser user = DAOService.getByID(id, DAOUser.class);
+        if (user != null) {
+            try { 
+                DAOService.delete(user);
+            } catch (Exception e) {
+                System.out.println("Error occurred: " + e.toString());
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static boolean deleteByMail(String email) {
         String parameterName = "email";
         DAOUser user = DAOService.getSingleByPara(DAOUser.class, email, parameterName);
-        if (user == null) {
-            return false;
+        if (user != null) {
+            try { 
+                DAOService.delete(user);
+            } catch (Exception e) {
+                System.out.println("Error occurred: " + e.toString());
+                return false;
+            }
         }
-        user.cloneValues(updatedUser);
-        return DAOService.mergeB(user);
-    }*/
-
+        return true;
+    }
+    
+    //checks
     public static boolean checkByEmail(String email) {
         String parameterName = "email";
         DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
         return (account != null) ? true : false;
     }
 
-
-    public static boolean updateSessionId(int id, String sessionId, String sessionDate) {
-        return false; //TODO
-    }
-
-    public static boolean emptySessionId(int id) {
-        return updateSessionId(id, "", "");
-    }
-
     public static boolean checkSessionId(int id) {
-        return false;
+        try {
+            String parameterName = "sessionId";
+            DAOUser user = DAOService.getSingleByPara(DAOUser.class, id, parameterName);
+            if (user == null) {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }

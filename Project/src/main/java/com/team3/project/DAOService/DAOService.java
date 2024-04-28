@@ -6,6 +6,7 @@ import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
 
 class DAOService {
+    //gets
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: get all entries in a table
@@ -92,7 +93,6 @@ class DAOService {
         return retrieve;
     }
 
-
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: Get entry by ID
@@ -149,6 +149,10 @@ class DAOService {
             DAOSession.closeEntityManager(entityManager);
         }
         return retrieve;
+    }
+
+    static <Dao> Dao getSingleByPara(Class<Dao> daoClass, int parameter, String parameterName) {
+        return getSingleByPara(daoClass, Integer.toString(parameter), parameterName);
     }
 
     /* Author: Tom-Malte Seep
@@ -257,6 +261,7 @@ class DAOService {
         return retrieve;
     }
 
+    //creates
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: persists the giving object in the database
@@ -267,7 +272,6 @@ class DAOService {
      * @param daoObject the object to persist
      */
     private static void persisting(Object daoObject) {
-        //TODO change the parameter type
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
         try {
@@ -291,6 +295,31 @@ class DAOService {
         return true;
     }
 
+    private static <Dao> void persistingList(List<Dao> daoObjects) {
+        EntityManager entityManager = DAOSession.getNewEntityManager();
+        entityManager.getTransaction().begin();
+        try {
+            for (Dao daoObject : daoObjects) {
+                entityManager.persist(daoObject);
+            }
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            //Something went wrong
+        } finally {
+            DAOSession.closeEntityManager(entityManager);
+        }
+    }
+
+    static <Dao> boolean persistList(List<Dao> daoObjects) {
+        try {
+            DAOService.persistingList(daoObjects);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    //updates
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: merges the giving object in the database
@@ -340,13 +369,14 @@ class DAOService {
 
     static <Dao> boolean mergeList(List<Dao> daoObjects) {
         try {
-            DAOService.mergingList(daoObjects);
+            mergingList(daoObjects);
         } catch (Exception e) {
             return false;
         }
         return true;
     }
 
+    //deletes
     /* Author: Tom-Malte Seep
      * Revisited: Marvin
      * Function: deletes a given object from the database
@@ -356,8 +386,7 @@ class DAOService {
     /** deletes a given object from the database
      * @param daoObject
      */
-    static void delete(Object daoObject) {
-        //TODO change the parameter type
+    static void deleting(Object daoObject) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
         try {
@@ -370,5 +399,80 @@ class DAOService {
         }
     }
 
+    static boolean delete(Object daoObject) {
+        try {
+            deleting(daoObject);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 
+    static <Dao> boolean deleteById(int id, Class<Dao> daoClass) {
+        EntityManager entityManager = DAOSession.getNewEntityManager();
+        entityManager.getTransaction().begin();
+        boolean returning = true;
+        try {
+            Dao daoObject = entityManager.find(daoClass, id);
+            entityManager.remove(daoObject);
+            entityManager.getTransaction().commit();
+            returning = true;
+        } catch (Exception e) {
+        } finally {
+            entityManager.close();
+        }
+        return returning;
+    }
+
+    static <Dao> void deleteList(Class<Dao> daoClass, List<Dao> daoObjects) {
+        EntityManager entityManager = DAOSession.getNewEntityManager();
+        entityManager.getTransaction().begin();
+        try {
+            for (Dao daoObject : daoObjects) {
+                entityManager.remove(daoObject);
+            }
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            //Something went wrong
+        } finally {
+            DAOSession.closeEntityManager(entityManager);
+        }
+    }
+
+    static <Dao> void deleteAll(Class<Dao> daoClass) {
+        EntityManager entityManager = DAOSession.getNewEntityManager();
+        entityManager.getTransaction().begin();
+        try {
+            String query = "SELECT item FROM " + daoClass.getName() + " AS item";
+            List<Dao> retrieve;
+            try {
+                retrieve = entityManager.createQuery(query , daoClass)
+                    .getResultList();
+            } catch (Exception e) {
+                retrieve = null;
+            }
+            if (retrieve != null) {
+                for (Dao daoObject : retrieve) {
+                    entityManager.remove(daoObject);
+                }
+            }
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+
+        } finally {
+            DAOSession.closeEntityManager(entityManager);
+        }
+    }
+
+    //checks
+    static <Dao> boolean checkExistsById(int id, Class<Dao> daoClass) {
+        try {
+            if (getByID(id, daoClass) == null) {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
 }
