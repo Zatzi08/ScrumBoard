@@ -29,7 +29,7 @@
 <div id="outerProjectManagerContainer">
     <button class="selectBtn" id="selectUserstory" onmouseover = "hover('selectUserstory')" onmouseleave="hoverLeave('selectUserstory')" style= "border-bottom: 1px solid #ffffff" title="Wechsel Ansicht zu Userstories">Userstories</button>
     <span class="userStoryTaskTrenner">|</span>
-    <button class="selectBtn" id="selectTasks" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
+    <button class="selectBtn" id="selectTasks" th:Sid="${SessionID}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
     <button class="addUserStoryBtn" title="Füge eine Userstory hinzu" onclick="toggleEditBox('addUserStoryBtn', -1)"><i class="fa fa-plus" style="margin-right: 10px"></i>Userstory erstellen</button>
     <div id="innerProjectManagerContainer">
         <div class="wrapper">
@@ -70,7 +70,7 @@
     <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
     <span id="closeToggleEdit" class="closeToggleEdit" onclick="toggleEditMenu()">&times;</span>
     <div class="editMenu-content">
-        <form class="form" th:action="@{/addStory?SessionId={id}(id=${SessionID})}" method="post" id="editForm" autocomplete="off" name="Story">
+        <form class="form"  method="post" id="editForm" autocomplete="off" name="Story">
             <textarea id="inputName" class="inputEdit" required placeholder="Titel der User-Story eingeben" name="name" form="editForm"></textarea>
             <textarea id="inputDesc" class="inputEdit" required placeholder="Eine passende Beschreibung eingeben" name="description" form="editForm"></textarea>
             <label>Priorität</label>
@@ -82,7 +82,7 @@
             <input type="datetime-local" id="inputDate" class="inputEdit" placeholder="Abgabefrist">
             <input type="hidden" id = "editId" name="id" value="-1">
             <input type="hidden" id = "editPrio" name="priority" value="1">
-            <button type="submit" id="editMenu-saveEditBtn">Speichern</button>
+            <button type="button" th:sessionID="${SessionID}" onclick="saveUS(this,this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
         </form>
     </div>
 </div>

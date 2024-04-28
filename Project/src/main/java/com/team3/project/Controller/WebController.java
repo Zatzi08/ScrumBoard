@@ -138,19 +138,21 @@ public class WebController {
      * UserStory/Task-ID:
      */
     @RequestMapping(value = "/addStory", method = RequestMethod.POST)
-    public ModelAndView addStory(@RequestParam(value = "name", required = true) String name,
+    public ResponseEntity addStory(@RequestParam(value = "name", required = true) String name,
                            @RequestParam(value = "description", required = true) String Desc,
                            @RequestParam(value = "priority", required = false) int prio,
-                           @RequestParam(value = "id", required = true, defaultValue = "-1") int id,
+                           @RequestParam(value = "ID", required = true, defaultValue = "-1") int id,
                            @RequestParam(value = "SessionId", required = true) String SessionId){
         try {
             if (presentationToLogic.webSessionService.verify(SessionId)) {
                 presentationToLogic.userStoryService.saveUserStory(name, Desc, prio,id);
+                return new ResponseEntity(HttpStatus.OK);
             }
         } catch (Exception e){
             e.printStackTrace();
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        return ProjectManager(SessionId);
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
     /* Author: Lucas Krüger
@@ -309,11 +311,11 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: T1.B1
      */
-    @RequestMapping(value = "/GetAllTask", method = RequestMethod.POST)
+    @RequestMapping(value = "/GetAllTask")
     private ModelAndView AllTask(@RequestParam(value = "SessionId",required = true) String SessionId){
         try {
             if (presentationToLogic.webSessionService.verify(SessionId)){
-                ModelAndView modelAndView = new ModelAndView("Tasklist");
+                ModelAndView modelAndView = new ModelAndView("projectManager-Tasks");
                 modelAndView.addObject("Tasks", presentationToLogic.taskService.getAllTask()).addObject("SessionId", SessionId);
                 return modelAndView;
             }
@@ -373,23 +375,24 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: T3.D2, T4.D1
      */
+    // TODO: Fix tlid
     @RequestMapping(value = "/SaveTask", method = RequestMethod.POST)
-    private ModelAndView SaveTask(@RequestParam(value = "SessionId",required = true) String SessionId,
+    private ResponseEntity<HttpStatus> SaveTask(@RequestParam(value = "SessionId",required = true) String SessionId,
                                   @RequestParam(value = "TID",required = true, defaultValue = "-1")int tid,
                                   @RequestParam(value = "USID",required = true, defaultValue = "-1") int usid,
-                                  @RequestParam(value = "TLID", required = true, defaultValue = "-1") int tlid,
+                                  @RequestParam(value = "TLID", required = false, defaultValue = "-1") int tlid,
                                   @RequestParam(value = "description", required = true) String desc,
                                   @RequestParam(value ="priority", required = true) int prio){
         try{
             if (presentationToLogic.webSessionService.verify(SessionId)){
-                //presentationToLogic.taskService.saveTask(); TODO
-                return AllTask(SessionId);
+                presentationToLogic.taskService.saveTask(tid,desc,prio, usid);
+                return new ResponseEntity<HttpStatus>(HttpStatus.OK);
             }
         } catch(Exception e){
             e.printStackTrace();
-            return error(e);
+            return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
         }
-        return index();
+        return new ResponseEntity<HttpStatus>(HttpStatus.OK);
     }
 
     /* Author: Lucas Krüger
