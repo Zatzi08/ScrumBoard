@@ -30,7 +30,7 @@
     <button class="selectBtn" id="selectUserstory" onmouseover = "hover('selectUserstory')" onmouseleave="hoverLeave('selectUserstory')" style= "border-bottom: 1px solid #ffffff" title="Wechsel Ansicht zu Userstories">Userstories</button>
     <span class="userStoryTaskTrenner">|</span>
     <button class="selectBtn" id="selectTasks" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
-    <button class="addUserStoryBtn" title="Füge eine Userstory hinzu" onclick="toggleEditMenu('addUserStoryBtn')"><i class="fa fa-plus" style="margin-right: 10px"></i>Userstory erstellen</button>
+    <button class="addUserStoryBtn" title="Füge eine Userstory hinzu" onclick="toggleEditBox('addUserStoryBtn', -1)"><i class="fa fa-plus" style="margin-right: 10px"></i>Userstory erstellen</button>
     <div id="innerProjectManagerContainer">
         <div class="wrapper">
             <table class="userTaskTable">
@@ -39,52 +39,17 @@
                         <th style="border-top-left-radius: 0; border-top-right-radius: 0; text-align: center; background-color: rgba(25,0,255,0.3); color: white">Userstories</th>
                     </tr>
                 </thead>
+                <!-- TODO: Delete -->
                 <tbody id="userTaskTableBody">
-                    <tr>
+                    <tr th:each="item : ${Storys}">
                         <th>
-                            <button class="userTaskTableBody-editBtn" title="Bearbeiten" onclick="toggleEditMenu('editBtn')"><i class="fa fa-edit"></i></button>
-                            <span class="closeUserStoryTaskBtn" onclick="deleteTableRow()" title="Löschen">&times;</span>
-                            <label>Name</label>
+                            <button class="userTaskTableBody-editBtn" title="Bearbeiten" th:sname="${item.name}" th:sdescription="${item.description}" th:sid="${item.ID}" onclick="toggleEditBox('editBtn', this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'));"><i class="fa fa-edit"></i></button>
+                            <span class="closeUserStoryTaskBtn" th:USid="${item.ID}" th:Sid="${SessionID}" onclick="deleteUS(this.getAttribute('USid'),this.getAttribute('Sid'))" title="Löschen">&times;</span>
+                            <label th:text = "${item.name}">Name</label>
                             <label>Rolle</label>
-                            <label>Priorität</label>
+                            <label th:text="${item.priority}">Priorität</label>
                             <hr>
-                            <label style="display: inline-block;">Beschreibung</label>
-                            <label class = userTaskTableContentSubdate>Abgabedatum</label>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <button class="userTaskTableBody-editBtn" title="Bearbeiten" onclick="toggleEditMenu('editBtn')"><i class="fa fa-edit"></i></button>
-                            <span class="closeUserStoryTaskBtn" onclick="deleteTableRow()" title="Löschen">&times;</span>
-                            <label>Name 2</label>
-                            <label>Rolle</label>
-                            <label>Priorität</label>
-                            <hr>
-                            <label style="display: inline-block;">Beschreibung</label>
-                            <label class = userTaskTableContentSubdate>Abgabedatum</label>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <button class="userTaskTableBody-editBtn" title="Bearbeiten" onclick="toggleEditMenu('editBtn')"><i class="fa fa-edit"></i></button>
-                            <span class="closeUserStoryTaskBtn" onclick="deleteTableRow()" title="Löschen">&times;</span>
-                            <label>Name 3</label>
-                            <label>Rolle</label>
-                            <label>Priorität</label>
-                            <hr>
-                            <label style="display: inline-block;">Beschreibung</label>
-                            <label class = userTaskTableContentSubdate>Abgabedatum</label>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>
-                            <button class="userTaskTableBody-editBtn" title="Bearbeiten" onclick="toggleEditMenu('editBtn')"><i class="fa fa-edit"></i></button>
-                            <span class="closeUserStoryTaskBtn" onclick="deleteTableRow()" title="Löschen">&times;</span>
-                            <label>Name 4</label>
-                            <label>Rolle</label>
-                            <label>Priorität</label>
-                            <hr>
-                            <label style="display: inline-block;">Beschreibung</label>
+                            <label style="display: inline-block;" th:text="${item.description}">Beschreibung</label>
                             <label class = userTaskTableContentSubdate>Abgabedatum</label>
                         </th>
                     </tr>

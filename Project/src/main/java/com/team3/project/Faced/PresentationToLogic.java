@@ -1,6 +1,7 @@
 package com.team3.project.Faced;
 
 import com.team3.project.Controller.WebController;
+import com.team3.project.DAOService.DAOUserStoryService;
 import com.team3.project.service.*;
 
 import java.util.Random;
@@ -13,6 +14,7 @@ public class PresentationToLogic {
     public final WebSessionService webSessionService;
     private static PresentationToLogic instance;
     public TaskBoardService taskBoardService;
+    public UserStoryService UserStoryService;
 
     private PresentationToLogic(){
         this.accountService = new AccountService();
@@ -20,6 +22,7 @@ public class PresentationToLogic {
         this.taskService = new TaskService();
         this.webSessionService = new WebSessionService();
         this.taskBoardService = new TaskBoardService();
+        this.UserStoryService = new UserStoryService();
     }
 
     public static PresentationToLogic getInstance(){

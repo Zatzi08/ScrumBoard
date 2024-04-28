@@ -419,6 +419,27 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: // Todo: Place ID
      */
+    @RequestMapping(value = "/deleteUS", method = RequestMethod.POST)
+    private ResponseEntity deleteUS(@RequestParam(value = "SessionId", required = true) String Sessionid,
+                                    @RequestParam(value = "ID", required = true, defaultValue = "-1") int id){
+        try {
+            if (presentationToLogic.webSessionService.verify(Sessionid)){
+                presentationToLogic.UserStoryService.deleteUserStory(id);
+                return new ResponseEntity(HttpStatus.OK);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity(HttpStatus.FORBIDDEN);
+    }
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion:
+     * Grund: /
+     * UserStory/Task-ID: // Todo: Place ID
+     */
     @RequestMapping(value = "/GetTaskBoard", method = RequestMethod.POST)
     private ModelAndView getTaskBoard(@RequestParam(value = "SessionId", required = true) String Sessionid,
                                       @RequestParam(value = "TBID", required = true, defaultValue = "-1") int tbid){

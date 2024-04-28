@@ -42,8 +42,8 @@ function toggleEditMenu(id) {
     }
 }
 
-function toggleEditBox(storyId, name, description){
-    EditBox();
+function toggleEditBox(id,storyId, name, description){
+    toggleEditMenu(id);
     document.getElementById("inputName").textContent = name;
     document.getElementById("inputDesc").textContent = description;
     document.getElementById("editId").value = storyId;
@@ -144,4 +144,15 @@ function deleteTableRow() {
         row.remove();
     }
 }
+
+function deleteUS(usid, sessionID){
+    fetch('/deleteUS?ID=' + usid.toString() + '&SessionId=' + sessionID, {
+        method: 'POST',
+    }).then(r => {
+        if (r.ok) {
+            location.reload()
+        }
+    });
+}
+
 
