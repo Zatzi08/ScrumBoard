@@ -1,4 +1,5 @@
 package com.team3.project.Tests.datenbankTests;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,7 +21,7 @@ import com.team3.project.DAOService.DAOAccountService;
 import com.team3.project.DAOService.DAOUserStoryService;
 
 
-public class DatenbankTests {
+public class UserStoryTests {
     private static PrintWriter pw;
     private static Date date;
     private static SimpleDateFormat formatter;
@@ -169,7 +170,7 @@ public class DatenbankTests {
     }
 
     /* Author: Marvin Prüger / Tom-Malte Seep
-     * Function: logincheck test if it works
+     * Function: checkLogin test if it works
      * Reason:
      * UserStory/Task-ID: DB.Acc.T4
      */
@@ -366,7 +367,7 @@ public class DatenbankTests {
             throw new AssertionError(e);
         }
         try {
-            assertTrue(DAOUserStoryService.delete(DAOUserStoryService.getByName(name).getId()));
+            assertTrue(DAOUserStoryService.deleteById(DAOUserStoryService.getByName(name).getId()));
         } catch(AssertionError e) {
             pw.append(String.format("fail: existent User-Story not deleted\n"));
             pass = false;
@@ -408,7 +409,7 @@ public class DatenbankTests {
             throw new AssertionError(e);
         }
         try {
-            DAOUserStoryService.delete(DAOUserStoryService.getByName(name).getId());
+            DAOUserStoryService.deleteById(DAOUserStoryService.getByName(name).getId());
         } catch(Exception e) {
             e.printStackTrace();
             pw.append("Fail: existent User-Story not found\n");
@@ -495,7 +496,7 @@ public class DatenbankTests {
             throw new AssertionError(e);
         }
         try {
-            assertTrue(DAOUserStoryService.delete(id));
+            assertTrue(DAOUserStoryService.deleteById(id));
         } catch(AssertionError e) {
             pw.append(String.format("fail: existent User-Story not deleted\n"));
             pass = false;
@@ -595,12 +596,12 @@ public class DatenbankTests {
             }
         }
         try {
-            DAOUserStoryService.delete(DAOUserStoryService.getByName(name).getId());
+            DAOUserStoryService.deleteById(DAOUserStoryService.getByName(name).getId());
         } catch(Exception e) {
             e.printStackTrace();
         }
         try {
-            DAOUserStoryService.delete(DAOUserStoryService.getByName(newname).getId());
+            DAOUserStoryService.deleteById(DAOUserStoryService.getByName(newname).getId());
         } catch(Exception e) {
             e.printStackTrace();
         }

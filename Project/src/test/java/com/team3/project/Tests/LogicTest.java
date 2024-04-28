@@ -122,8 +122,8 @@ public class LogicTest {
             throw new AssertionError(e);
         }
 
-        DAOUserStoryService.delete(1);
-        DAOUserStoryService.delete(2);
+        DAOUserStoryService.deleteById(1);
+        DAOUserStoryService.deleteById(2);
         pw.append(String.format("pass: %b", pass));
     }
 
@@ -162,8 +162,8 @@ public class LogicTest {
             throw new AssertionError(e);
         }
 
-        DAOUserStoryService.delete(1);
-        DAOUserStoryService.delete(2);
+        DAOUserStoryService.deleteById(1);
+        DAOUserStoryService.deleteById(2);
 
         pw.append(String.format("pass: %b", pass));
     }
