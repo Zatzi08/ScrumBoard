@@ -8,8 +8,10 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import com.team3.project.Classes.UserStory;
 import com.team3.project.DAOService.DAORoleService;
 import com.team3.project.DAOService.DAOUserService;
+import com.team3.project.DAOService.DAOUserStoryService;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -23,11 +25,11 @@ class DAO {
         List<DAORole> list = DAOUserService.getRoleBySessionID(1);
         for (DAORole daoRole : list) {
             System.out.println(daoRole.getName());
-        } */
+        } 
         //System.out.println(DAOUserService.getById(1).getName());
         DAORole roleDeveloper = DAORoleService.getByID(1);
         List<DAOUser> users = DAOUserService.getAllPlusRoles();
-
+        /*
         if (users != null && !users.isEmpty()) {
             users.stream().forEach(user -> {
                 user.setPassword("null");
@@ -36,8 +38,9 @@ class DAO {
             users.get(0).getRoles().add(DAORoleService.getByID(4));
             System.out.println(DAOUserService.updateUsers(users));
         } else System.out.println("Null/Empty - 555555555555555555555555555555555555555");
-        
-        
+        /**/
+
+
         //Usertest();   
         tearDown();    
         } catch (Exception e) {

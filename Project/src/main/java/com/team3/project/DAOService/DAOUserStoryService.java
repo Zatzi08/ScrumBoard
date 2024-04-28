@@ -2,10 +2,10 @@ package com.team3.project.DAOService;
 
 import java.util.List;
 
-import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOUserStory;
 
 public class DAOUserStoryService {
+    //gets
     /* Author: Marvin Oliver Prüger
      * Revisited: Tom-Malte Seep
      * Function: gets all entries for userStory
@@ -30,12 +30,11 @@ public class DAOUserStoryService {
      * @param id identifier
      * @return
      */
-    public static DAOUserStory getByID(int id) {
+    public static DAOUserStory getById(int id) {
         DAOUserStory story = DAOService.getByID(id, DAOUserStory.class);
         return story;
     }
 
-    
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: gets entry by ID
@@ -66,6 +65,7 @@ public class DAOUserStoryService {
         return story;
     }
 
+    //creates
     /* Author: Marvin Oliver Prüger
      * Revisited: Tom-Malte Seep
      * Function: creates a entry for a userStory
@@ -91,28 +91,7 @@ public class DAOUserStoryService {
         return false; //name is already in database
     }
 
-    /* Author: Marvin Oliver Prüger
-     * Revisited: Tom-Malte Seep
-     * Function: removes a userStory from the database
-     * Reason: refactoring
-     * UserStory/Task-ID:
-     */
-    /** removes a userStory from the database
-     * @param id identifier
-     * @return   true if deleted else false
-     */
-    public static boolean delete(int id) {
-        DAOUserStory story = DAOService.getByID(id, DAOUserStory.class);
-        if (story !=  null) {
-            try {
-                DAOService.delete(story);
-            } catch (Exception e) {
-                return false;
-            }
-        }
-        return true;
-    }
-
+    //updates
     /* Author: Marvin Oliver Prüger
      * Revisited: Tom-Malte Seep
      * Function: updates name by id
@@ -190,18 +169,29 @@ public class DAOUserStoryService {
         }
         return true;
     }
-
     
-    public static List<DAOTask> getTasksById(int id) {
-        //TODO implement
-        return null;
-    }
-    
+    //deletes
+    /* Author: Marvin Oliver Prüger
+     * Revisited: Tom-Malte Seep
+     * Function: removes a userStory from the database
+     * Reason: refactoring
+     * UserStory/Task-ID:
+     */
+    /** removes a userStory from the database
+     * @param id identifier
+     * @return   true if deleted else false
+     */
     public static boolean deleteById(int id) {
-        //TODO delete UserStory and linked Tasks
-        return false;
+        DAOUserStory userStory = DAOService.getByID(id, DAOUserStory.class);
+        try {
+            DAOService.delete(userStory);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
+    //checks
     /* Author: Marvin Oliver Prüger
      * Revisited: Tom-Malte Seep
      * Function: checks if a userStory exists by id

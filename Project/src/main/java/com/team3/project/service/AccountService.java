@@ -18,7 +18,7 @@ public class AccountService {
     public boolean login(String email, String passwort) throws Exception {
         if( email == null) throw new Exception("Null Email");
         if( passwort == null) throw new Exception("Null Passwort");
-        return DAOAccountService.loginCheck(email,passwort);
+        return DAOAccountService.checkLogin(email,passwort);
     }
 
     /* Author: Henry L. Freyschmidt

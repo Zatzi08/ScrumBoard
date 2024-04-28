@@ -3,6 +3,7 @@ package com.team3.project.DAOService;
 import com.team3.project.DAO.DAOAccount;
 
 public class DAOAccountService {
+    //creates
     /* Author: Marvin Oliver Prüger
     * Revisited: Tom-Malte Seep
      * Function: creates a account
@@ -26,6 +27,7 @@ public class DAOAccountService {
         return false; //email already in database
     }
     
+    //updates
     /* Author: Marvin Oliver Prüger
     * Revisited: Tom-Malte Seep
     * Function: updates the password for an account
@@ -47,10 +49,12 @@ public class DAOAccountService {
         return false; //no entry
     }
     
+    //deletes
     /* Author: Marvin Oliver Prüger
      * Revisited: Tom-Malte Seep
      * Function: deletes a user by email
      * Reason: refactoring
+     *         cascading issues
      * UserStory/Task-ID:
      */
     /** FOR TESTING ONLY <p>
@@ -59,19 +63,10 @@ public class DAOAccountService {
      * @return      false if error occured else true
      */
     public static boolean deleteByMail(String email) {
-        String parameterName = "email"; //TODO
-        DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
-        if (account != null) {
-            try { 
-                DAOService.delete(account);
-            } catch (Exception e) {
-                System.out.println("Error occurred: " + e.toString());
-                return false;
-            }
-        }
-        return true;
+        return DAOUserService.deleteByMail(email);
     }
 
+    //checks
     /* Author: Marvin Oliver Prüger
      * Revisited: Tom-Malte Seep
      * Function: checks if the email exists
@@ -99,7 +94,7 @@ public class DAOAccountService {
      * @param password 
      * @return         
      */
-    public static boolean loginCheck(String email, String password) {
+    public static boolean checkLogin(String email, String password) {
         String parameterName = "email";
         DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
         return (account != null && account.getPassword().equals(password)) ? true : false;

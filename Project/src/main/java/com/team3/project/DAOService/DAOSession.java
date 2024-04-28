@@ -10,6 +10,7 @@ import jakarta.persistence.EntityManagerFactory;
 final class DAOSession {
     private static EntityManagerFactory entityManagerFactory;
 
+    //entityManagerFactory
     /* Author: Marvin Oliver Prüger
      * Revisited: Tom-Malte Seep
      * Function: returns the EntityManagerFactory
@@ -63,7 +64,7 @@ final class DAOSession {
         }
     }
 
-    public static void startOrStop(boolean start) {
+    static void startOrStop(boolean start) {
         if (start) {
             getEntityManagerFactory();
         } else {
@@ -71,6 +72,7 @@ final class DAOSession {
         }
     }
 
+    //entityManager
     /* Author: Marvin Oliver Prüger
      * Revisited: Tom-Malte Seep
      * Function: creates new Entity Manager

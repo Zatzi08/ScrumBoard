@@ -39,7 +39,7 @@ public class UserStoryService {
         if(id == -1){
             DAOUserStoryService.create(name,desc, prio);
         } else{
-            DAOUserStory userStory = DAOUserStoryService.getByID(id);
+            DAOUserStory userStory = DAOUserStoryService.getById(id);
             if (userStory != null){
                 if (!userStory.getName().equals(name)) DAOUserStoryService.updateName(id,name);
                 if (!userStory.getDescription().equals(desc)) DAOUserStoryService.updateDescription(id,desc);
@@ -75,6 +75,6 @@ public class UserStoryService {
      */
     public void deleteUserStory(int uid) throws Exception {
         if (uid <= -1) throw new Exception("Null usid");
-        DAOUserStoryService.delete(uid);
+        DAOUserStoryService.deleteById(uid);
     }
 }

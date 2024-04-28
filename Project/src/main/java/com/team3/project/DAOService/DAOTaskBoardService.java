@@ -5,6 +5,7 @@ import java.util.List;
 import com.team3.project.DAO.DAOTaskBoard;
 
 public class DAOTaskBoardService {
+    //gets
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: gets all tasks

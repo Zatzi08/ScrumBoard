@@ -245,7 +245,7 @@ public class HttpRequestTests {
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
         }
-        DAOUserStoryService.delete(id);
+        DAOUserStoryService.deleteById(id);
         pw.append(String.format("pass: %b", pass));
     }
 
