@@ -34,6 +34,18 @@ class DAOService {
         return retrieve;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: gets all entries with the joined Attribute
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /** gets all entries with the joined Attribute
+     * @param <Dao>               DAOObjects
+     * @param daoClass            DaoObject.class
+     * @param joinOnAttributeName Attribute Name
+     * @return                    List of returned Objects
+     */
     static <Dao> List<Dao> getAllLeftJoin(Class<Dao> daoClass, String joinOnAttributeName) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
@@ -49,6 +61,18 @@ class DAOService {
         return retrieve;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: gets all entries with the joined Attributes
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /** gets all entries with the joined Attributes
+     * @param <Dao>               DAOObjects
+     * @param daoClass            DaoObject.class
+     * @param joinOnAttributeName Attribute Name
+     * @return                    List of returned Objects
+     */
     static <Dao> List<Dao> getAllLeftJoin(Class<Dao> daoClass, List<String> JoinOnAttributeName) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
@@ -99,8 +123,7 @@ class DAOService {
      * Reason:
      * UserStory/Task-ID:
      */
-    /**
-     * gets entry with fetch by ID
+    /** gets entry with fetch by ID
      * @param <Dao>
      * @param id
      * @param daoClass
@@ -112,7 +135,24 @@ class DAOService {
         String query = "SELECT item FROM " + daoClass.getName() + " AS item LEFT JOIN FETCH item." + joinOnAttributeName + "WHERE id = ?1";
         Dao retrieve;
         try {
-            retrieve = entityManager.createQuery(query, daoClass).getSingleResult();
+            retrieve = entityManager.createQuery(query, daoClass)
+                .setParameter(0, id)
+                .getSingleResult();
+        } catch (Exception e) {
+            retrieve = null;
+        } finally {
+            DAOSession.closeEntityManager(entityManager);
+        }
+        return retrieve;
+    }
+
+    static <Dao> Dao getSingleLeftJoinByPara(Class<Dao> daoClass, String parameter, String parameterName, String joinOnAttributeName) {
+        EntityManager entityManager = DAOSession.getNewEntityManager();
+        entityManager.getTransaction().begin();
+        String query = "SELECT item FROM " + daoClass.getName() + " AS item LEFT JOIN FETCH item." + joinOnAttributeName + "WHERE " + parameterName +  " = ?1";
+        Dao retrieve;
+        try {
+            retrieve = entityManager.createQuery(query, daoClass).setParameter(0, parameter).getSingleResult();
         } catch (Exception e) {
             retrieve = null;
         } finally {
@@ -286,6 +326,16 @@ class DAOService {
         }
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: persists object in the database and returns bool
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /** 
+     * @param daoObject Object to persist
+     * @return          true if persisting is successfull
+     */
     static boolean persist(Object daoObject) {
         try {
             DAOService.persisting(daoObject);
@@ -295,6 +345,12 @@ class DAOService {
         return true;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: persists object in the database and returns bool
+     * Reason:
+     * UserStory/Task-ID:
+     */ 
     private static <Dao> void persistingList(List<Dao> daoObjects) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
