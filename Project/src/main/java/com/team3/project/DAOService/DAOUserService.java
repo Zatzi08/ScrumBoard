@@ -49,6 +49,13 @@ public class DAOUserService {
         return DAOService.getLeftJoinByID(id, DAOUser.class, joinAttributeName);
     }
 
+    public static DAOUser getBySessionId(int sessionId) {
+        String parameterString = "sessionId";
+        String joinOnAttributeName = "roles";
+        DAOUser user = DAOService.getSingleLeftJoinByPara(null, parameterString, parameterString, joinOnAttributeName);
+        return user;
+    }
+
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: gets roles by sessionID

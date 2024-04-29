@@ -74,12 +74,12 @@ public class DAOAccountService {
      * UserStory/Task-ID:
      */
     /** checks if the email exists
-     * @param emailToTest   
+     * @param email   
      * @return            true if email exists
      */
-    public static boolean checkMail(String emailToTest) {
+    public static boolean checkMail(String email) {
         String parameterName = "email";
-        DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, emailToTest, parameterName);
+        DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
         return (account != null) ? true : false;
     }
     

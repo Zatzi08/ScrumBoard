@@ -2,91 +2,81 @@ package com.team3.project.Tests.datenbankTests;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.team3.project.DAO.DAOAccount;
 import com.team3.project.DAOService.DAOAccountService;
+import com.team3.project.DAOService.DAOStart;
 
-public class AccountTests {
-    private static PrintWriter pw;
-    private static Date date;
-    private static SimpleDateFormat formatter;
-    private boolean pass = true;
-
+public class AccountTests extends BaseTest {
     @BeforeAll
-    public static void setup() {
-        try {
-            File log = new File("src/test/java/com/team3/project/logs/log.txt");
-            log.setWritable(true);
-            log.setReadable(true);
-            FileWriter fw = new FileWriter(log, true);
-            pw = new PrintWriter(fw, true);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        formatter = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
-        date = new Date();
+    public static void BeforeAll() {
+        setup();
     }
 
     @BeforeEach
-    public void before() {
-        pw.append("\n\n");
-        pass = true;
+    public void beforeEach() {
+        before();
+    }
+
+    @AfterEach
+    public void afterEach() {
+
     }
 
     @AfterAll
-    public static void closeWriter() {
-        pw.close();
+    public static void afterAll() {
+        
+        tearDown();
     }
 
-        /* Author: Marvin Prüger / Tom-Malte Seep
+    ////////////////////////////////
+    static List<String> mails = new ArrayList<String>();
+    DAOAccount account = new DAOAccount();
+
+    /* Author: Marvin Prüger / Tom-Malte Seep
      * Function: test grundfunktionalität für account
      * Reason:
      * UserStory/Task-ID: DB.Acc.T1
      */
     @Test
     void accGeneralTest() {
-        pw.append("Datenbank-Test-accGeneral\n" + "Test ID: DB.Acc.T1\n" + "Date: " + formatter.format(date) + '\n');
-        String testMail = "testmail1";
-        String testPas = "testpas1";
-        try {
-            assertTrue(DAOAccountService.create(testMail, testPas));
+        printWriterAddTest("accGeneral", "Acc.T1");
+        String testMail     = "testMail1@testmail.com";
+        mails.add(testMail);
+        String testPassword = "password";
+        try { //create account
+            assertTrue(DAOAccountService.create(testMail, testPassword));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: valid Account not created\n"));
-            pass = false;
+            printWriterAddFailure("valid Account not created");
             throw new AssertionError(e);
         }
-        try {
+        try { //check exists(account)
             assertTrue(DAOAccountService.checkMail(testMail));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: existent Mail not found\n"));
-            pass = false;
+            printWriterAddFailure("existent Mail not found");
             throw new AssertionError(e);
         }
-        try {
+        try { //delete account
             assertTrue(DAOAccountService.deleteByMail(testMail));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: existent Account not deleted\n"));
-            pass = false;
+            printWriterAddFailure("existent Account not deleted");
             throw new AssertionError(e);
         }
-        try {
+        try { //check !exists(account)
             assertFalse(DAOAccountService.checkMail(testMail));
         } catch(AssertionError e) {
-            pw.append(String.format("fail:  non-existent Mail found\n"));
-            pass = false;
+            printWriterAddFailure("non-existent Mail found");
             throw new AssertionError(e);
         }
-        pw.append(String.format("pass: %b", pass));
+        printWriterAddPass();
     }
 
     /* Author: Marvin Prüger / Tom-Malte Seep
@@ -95,32 +85,30 @@ public class AccountTests {
     * UserStory/Task-ID: DB.Acc.T2
     */
     @Test
-    void wrongAccountTest() {
-        pw.append("Datenbank-Test-wrongAccount\n" + "Test ID: DB.Acc.T2\n" + "Date: " + formatter.format(date) + '\n');
-        String nullMail = null;
-        String nullPass = null;
-        try {
-            DAOAccountService.create(nullMail, nullPass);
+    void nullAccountTest() {
+        printWriterAddTest("nullAccount", "Acc.T2");
+        String testMail = null;
+        mails.add(testMail);
+        try { //create account = null
+            //TODO Wahrscheinlich obsolet, da create die Exception abfängt
+            DAOAccountService.create(testMail, null);
         } catch (Exception e) {
             assertTrue(true);
         }
-        try {
-            assertFalse(DAOAccountService.checkMail(nullMail));
+        try { //check exists(account = null)
+            assertFalse(DAOAccountService.checkMail(testMail));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: non-existent Mail found \n"));
-            pass = false;
+            printWriterAddFailure("non-existent Mail found");
             throw new AssertionError(e);
         }
-        try {
-            assertTrue(DAOAccountService.deleteByMail(nullMail));
+        try { //delete account = null
+            assertTrue(DAOAccountService.deleteByMail(testMail));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: non-existent Account was deleted\n"));
-            pass = false;
+            printWriterAddFailure("non-existent Account was deleted");
             throw new AssertionError(e);
         }
-        pw.append(String.format("pass = %b", pass));
+        printWriterAddPass();
     }
-
 
     /* Author: Marvin Prüger / Tom-Malte Seep
      * Function: create mit mail/pass = ""
@@ -128,39 +116,35 @@ public class AccountTests {
      * UserStory/Task-ID: DB.Acc.T3
      */
     @Test
-    void wrongAccount2Test() {
-        pw.append("Datenbank-Test-wrongAccount2\n" + "Test ID: DB.Acc.T3\n" + "Date: " + formatter.format(date) + '\n');
-        String noMail = "";
-        String noPass = "";
-        try {
-            assertTrue(DAOAccountService.create(noMail,noPass));
+    void emptyAccountTest() {
+        printWriterAddTest("emptyAccount", "Acc.T3");
+        String testMail = "";
+        mails.add(testMail);
+        try { //create account.mail = ""
+            assertTrue(DAOAccountService.create(testMail, ""));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: valid Account not created\n"));
-            pass = false;
+            printWriterAddFailure("valid Account not created");
             throw new AssertionError(e);
         }
-        try {
-            assertTrue(DAOAccountService.checkMail(noMail));
+        try { //check exists(account.mail = "")
+            assertTrue(DAOAccountService.checkMail(testMail));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: existent Account not found\n"));
-            pass = false;
+            printWriterAddFailure("existent Account not found");
             throw new AssertionError(e);
         }
-        try {
-            assertTrue(DAOAccountService.deleteByMail(noMail));
+        try { //delete account.mail = "" 
+            assertTrue(DAOAccountService.deleteByMail(testMail));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: existent Account not deleted\n"));
-            pass = false;
+            printWriterAddFailure("existent Account not deleted");
             throw new AssertionError(e);
         }
-        try {
-            assertFalse(DAOAccountService.checkMail(noMail));
+        try { //check !exists(account.mail = "")
+            assertFalse(DAOAccountService.checkMail(testMail));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: existent Mail not found\n"));
-            pass = false;
+            printWriterAddFailure("existent Mail not found");
             throw new AssertionError(e);
         }
-        pw.append(String.format("pass = %b", pass));
+        printWriterAddPass();
     }
 
     /* Author: Marvin Prüger / Tom-Malte Seep
@@ -170,50 +154,48 @@ public class AccountTests {
      */
     @Test
     void loginTest() {
-        pw.append("Datenbank-Test-loginTest\n" + "Test ID: DB.Acc.T4\n" + "Date: " + formatter.format(date) + '\n');
+        printWriterAddTest("login", "Acc.T4");
         String testMail = "testmail";
-        String testPas = "testpas";
-        String wrongPas = "12345";
-        String noPas = null;
-        try {
-            DAOAccountService.create(testMail,testPas);
+        mails.add(testMail);
+        String testPassword = "testpas";
+        String wrongPassword = "12345";
+        String nullPassword = null;
+        try { //create account
+            DAOAccountService.create(testMail, testPassword);
         } catch(Exception e) {
-            e.printStackTrace();
-        }
-        try {
-             assertTrue(DAOAccountService.checkLogin(testMail, testPas));
-        } catch(AssertionError e) {
-            pw.append(String.format("fail: existent Login-Details not found\n"));
-            pass = false;
+            printWriterAddFailure("create Mail unsuccessfull");
             throw new AssertionError(e);
         }
-        try {
-            assertFalse(DAOAccountService.checkLogin(testMail, wrongPas));
+        try { //check account.password == testPassword
+             assertTrue(DAOAccountService.checkLogin(testMail, testPassword));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: non-existent Login-Details found\n"));
-            pass = false;
+            printWriterAddFailure("existent Login-Details not found");
             throw new AssertionError(e);
         }
-        try {
-            assertFalse(DAOAccountService.checkLogin(testMail, noPas));
+        try { //check account.password == wrongPassword
+            assertFalse(DAOAccountService.checkLogin(testMail, wrongPassword));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: non-existent Login-Details found\n"));
-            pass = false;
+            printWriterAddFailure("non-existent Login-Details found");
             throw new AssertionError(e);
         }
-        try {
+        try { //check account.password == null
+            assertFalse(DAOAccountService.checkLogin(testMail, nullPassword));
+        } catch(AssertionError e) {
+            printWriterAddFailure("non-existent Login-Details found");
+            throw new AssertionError(e);
+        }
+        try { //delete account
             DAOAccountService.deleteByMail(testMail);
         } catch(Exception e) {
             e.printStackTrace();
         }
-        try {
-            assertFalse(DAOAccountService.checkLogin(testMail, testPas));
+        try { //check account(=null).password == testPassword
+            assertFalse(DAOAccountService.checkLogin(testMail, testPassword));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: non-existent Login-Details found\n"));
-            pass = false;
+            printWriterAddFailure("non-existent Login-Details found");
             throw new AssertionError(e);
         }
-        pw.append(String.format("pass = %b", pass));
+        printWriterAddPass();
     }
 
     /* Author: Marvin Prüger / Tom-Malte Seep
@@ -222,58 +204,54 @@ public class AccountTests {
      * UserStory/Task-ID: DB.Acc.T5
      */
     @Test
-    void updatePassTest() {
-        pw.append("Datenbank-Test-updatePassTest\n" + "Test ID: DB.Acc.T5\n" + "Date: " + formatter.format(date) + '\n');
+    void updatePasswordTest() {
+        printWriterAddTest("updatePassword", "Acc.T5");
         String testMail = "testmail2";
-        String oldPas = "testpas2";
-        String newPas = "12345";
-        try {
-            assertFalse(DAOAccountService.updatePassword(testMail, newPas));
+        mails.add(testMail);
+        String oldPassword = "testpas2";
+        String newPassword = "12345";
+        try { 
+            assertFalse(DAOAccountService.updatePassword(testMail, newPassword));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: non-existent Account found + Password updated\n"));
-            pass = false;
+            printWriterAddFailure("non-existent Account found + Password updated");
             throw new AssertionError(e);
         }
         try {
-            DAOAccountService.create(testMail, oldPas);
+            DAOAccountService.create(testMail, oldPassword);
         } catch(Exception e) {
             e.printStackTrace();
         }
         try {
-            assertTrue(DAOAccountService.checkLogin(testMail, oldPas));
+            assertTrue(DAOAccountService.checkLogin(testMail, oldPassword));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: existent Login-Details not found\n"));
-            pass = false;
+            printWriterAddFailure("existent Login-Details not found");
             throw new AssertionError(e);
         }
         try {
-            assertTrue(DAOAccountService.updatePassword(testMail, newPas));
+            assertTrue(DAOAccountService.updatePassword(testMail, newPassword));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: existent Account not updated with new valid Password \n"));
-            pass = false;
+            printWriterAddFailure("existent Account not updated with new valid Password");
             throw new AssertionError(e);
         }
         try {
-            assertTrue(DAOAccountService.checkLogin(testMail, newPas));
+            assertTrue(DAOAccountService.checkLogin(testMail, newPassword));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: existent Login-Details not found\n"));
-            pass = false;
+            printWriterAddFailure("existent Login-Details not found");
             throw new AssertionError(e);
         }
         try {
-            assertFalse(DAOAccountService.checkLogin(testMail, oldPas));
+            assertFalse(DAOAccountService.checkLogin(testMail, oldPassword));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: non-existent Login-Details  found\n"));
-            pass = false;
+            printWriterAddFailure("non-existent Login-Details found");
             throw new AssertionError(e);
         }
         try {
             DAOAccountService.deleteByMail(testMail);
         } catch(Exception e) {
+            printWriterAddFailure("existent Account not deleted");
             e.printStackTrace();
-            pw.append(String.format("fail: existent Account not deleted\n"));
-            pass = false;
         }
+        printWriterAddPass();
     }
 
     /* Author: Marvin Prüger / Tom-Malte Seep
@@ -282,9 +260,11 @@ public class AccountTests {
      * UserStory/Task-ID: DB.Acc.T6
      */
     @Test
-    void newOldPasTest() {
-        pw.append("Datenbank-Test-newOldPasTest\n" + "Test ID: DB.Acc.T6\n" + "Date: " + formatter.format(date) + '\n');
+    void newOldPasswordTest() {
+        printWriterAddTest("newOldPassword", null);
+        printWriter.append("Datenbank-Test-newOldPasTest\n" + "Test ID: DB.Acc.T6\n" + "Date: " + formatter.format(date) + '\n');
         String testMail = "testmail3";
+        mails.add(testMail);
         String oldPas = "testpas3";
         String newPas = "testpas";
         try {
@@ -295,29 +275,25 @@ public class AccountTests {
         try {
             assertTrue(DAOAccountService.checkLogin(testMail, oldPas));
         } catch (AssertionError e) {
-            pw.append(String.format("fail: existent Login-Details not found\n"));
-            pass = false;
+            printWriterAddFailure("existent Login-Details not found");
             throw new AssertionError(e);
         }
         try {
             assertTrue(DAOAccountService.updatePassword(testMail, newPas));
         } catch (AssertionError e) {
-            pw.append(String.format("fail: existent Account not with valid new Password updated\n"));
-            pass = false;
+            printWriterAddFailure("existent Account not with valid new Password updated");
             throw new AssertionError(e);
         }
         try {
             assertTrue(DAOAccountService.checkLogin(testMail, newPas));
         } catch (AssertionError e) {
-            pw.append(String.format("fail: existent Login-Details not found\n"));
-            pass = false;
+            printWriterAddFailure("existent Login-Details not found");
             throw new AssertionError(e);
         }
         try {
             assertFalse(DAOAccountService.checkLogin(testMail, oldPas));
         } catch(AssertionError e) {
-            pw.append(String.format("fail: existent Login-Details not found\n"));
-            pass = false;
+            printWriterAddFailure("existent Login-Details not found");
             throw new AssertionError(e);
         }
         try {
@@ -325,6 +301,6 @@ public class AccountTests {
         } catch(Exception e) {
             e.printStackTrace();
         }
-        pw.append(String.format("pass = %b", pass));
+        printWriterAddPass();
     }
 }
