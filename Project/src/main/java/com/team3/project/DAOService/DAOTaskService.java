@@ -3,7 +3,6 @@ package com.team3.project.DAOService;
 import java.util.List;
 
 import com.team3.project.DAO.DAOTask;
-import com.team3.project.DAO.DAOTaskList;
 import com.team3.project.DAO.DAOUserStory;
 
 public class DAOTaskService {
@@ -56,14 +55,14 @@ public class DAOTaskService {
     }
 
     //creates
-    public static boolean create(String description, DAOTaskList taskList, DAOUserStory userStory) {
-        DAOTask task = new DAOTask(description, taskList, userStory);
+    public static boolean create(String description, /*DAOTaskList taskList,*/ DAOUserStory userStory) {
+        DAOTask task = new DAOTask(description, /*taskList,*/ userStory);
         return DAOService.persist(task);
     }
-    public static boolean create(String description, int taskListId, int userStoryId) {
-        DAOTaskList taskList = DAOService.getByID(taskListId, DAOTaskList.class);
+    public static boolean create(String description, /*int taskListId,*/ int userStoryId) {
+        /*DAOTaskList taskList = DAOService.getByID(taskListId, DAOTaskList.class);*/
         DAOUserStory userStory = DAOService.getByID(userStoryId, DAOUserStory.class);
-        return create(description, taskList, userStory);
+        return create(description, /*taskList,*/ userStory);
     }
 
     //updates
