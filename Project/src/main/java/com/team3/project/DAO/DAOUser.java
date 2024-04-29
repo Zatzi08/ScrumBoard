@@ -61,6 +61,12 @@ public class DAOUser {
 
     
     public DAOUser() {}
+    /** DO NOT USE
+     * @param name
+     * @param privatDescription
+     * @param workDescription
+     * @param roles
+     */
     public DAOUser(String name, String privatDescription, String workDescription, List<DAORole> roles) {
         this.name = name;
         this.privatDescription = privatDescription;

@@ -2,8 +2,6 @@ package com.team3.project.DAO;
 
 import java.util.List;
 
-import com.team3.project.Classes.TaskList;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,9 +41,11 @@ public class DAOTask {
     @Column(name = "timeNeededA")
     private String timeNeededA;
 
+    /*
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "taskListId")
     DAOTaskList taskList;
+    */
     
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "userStoryID")
@@ -61,9 +61,9 @@ public class DAOTask {
     
 
     public DAOTask() {}
-    public DAOTask(String description, DAOTaskList taskList, DAOUserStory userStory) {
+    public DAOTask(String description, /*DAOTaskList taskList,*/ DAOUserStory userStory) {
         this.description = description;
-        this.taskList = taskList;
+        /*this.taskList = taskList;*/
         this.userStory = userStory;
     }
 }
