@@ -147,7 +147,7 @@ public class AccountTests extends BaseTest {
     }
 
     /* Author: Marvin Prüger / Tom-Malte Seep
-     * Function: logincheck test if it works
+     * Function: checkLogin test if it works
      * Reason:
      * UserStory/Task-ID: DB.Acc.T4
      */
