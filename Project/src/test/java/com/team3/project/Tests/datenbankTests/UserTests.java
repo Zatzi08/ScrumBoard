@@ -3,12 +3,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
@@ -16,13 +11,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.Null;
 
 import com.team3.project.DAOService.DAOStartService;
 import com.team3.project.DAOService.DAOUserService;
-import com.team3.project.Classes.User;
 import com.team3.project.DAO.DAORole;
-import com.team3.project.DAO.DAOUser;
 
 
 public class UserTests extends BaseTest {
