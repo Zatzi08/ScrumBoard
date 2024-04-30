@@ -57,9 +57,9 @@ public class DAOUserService {
     }
 
     /* Author: Tom-Malte Seep
-     * Revisited: /
+     * Revisited: Marvin Prüger
      * Function: gets roles by sessionID
-     * Reason:
+     * Reason: made getIdByMail public
      * UserStory/Task-ID:
      */
     /**
@@ -73,7 +73,7 @@ public class DAOUserService {
         return user.getRoles();
     }
 
-    static int getIdByMail(String email) {
+    public static int getIdByMail(String email) {
         String parameterName = "email";
         DAOUser user = DAOService.getSingleByPara(DAOUser.class, email, parameterName);
         return user.getUid();
