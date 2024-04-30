@@ -139,7 +139,8 @@ public class DAOUserService {
     public static boolean updateById(int id, @Nullable String name, @Nullable String privatDescription, 
                                      @Nullable String workDescription, @Nullable List<DAORole> roles) {
         try {
-            DAOUser user = DAOService.getByID(id, DAOUser.class);
+            String joinOnAttributeName = "roles";
+            DAOUser user = DAOService.getLeftJoinByID(id, DAOUser.class, joinOnAttributeName);
             if (user != null) {
                 user.cloneValues(new DAOUser(name, privatDescription, workDescription, roles));
                 return DAOService.merge(user);
