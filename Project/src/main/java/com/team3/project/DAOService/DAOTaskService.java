@@ -3,7 +3,6 @@ package com.team3.project.DAOService;
 import java.util.List;
 
 import com.team3.project.DAO.DAOTask;
-import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAO.DAOUserStory;
 
 public class DAOTaskService {
@@ -35,7 +34,7 @@ public class DAOTaskService {
         return DAOService.getByID(id, DAOTask.class);
     }
     
-    /* Author: Marvin
+    /* Author: Marvin Oliver Prüger
      * Revisited: /
      * Function: gets entry by description
      * Reason:
@@ -45,9 +44,9 @@ public class DAOTaskService {
      * @param  description
      * @return Task as Object 
      */
-    public static DAOTask getByDescription(String des) {
+    public static DAOTask getByDescription(String description) {
         String parameterName = "description";
-        return DAOService.getSingleByPara(DAOTask.class, des , parameterName);
+        return DAOService.getSingleByPara(DAOTask.class, description, parameterName);
     }
 
     /* Author: Tom-Malte Seep
@@ -65,16 +64,35 @@ public class DAOTaskService {
         return DAOService.getLeftJoinByID(id, DAOTask.class, joinOnAttributeName);
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static List<DAOTask> getListByUserStoryId(int id) {
         String parameterName = "userStory";
         return DAOService.getListByPara(DAOTask.class, id, parameterName);
     }
 
     //creates
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static boolean create(String description, /*DAOTaskList taskList,*/ DAOUserStory userStory) {
         DAOTask task = new DAOTask(description, /*taskList,*/ userStory);
         return DAOService.persist(task);
     }
+
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static boolean create(String description, /*int taskListId,*/ int userStoryId) {
         /*DAOTaskList taskList = DAOService.getByID(taskListId, DAOTaskList.class);*/
         DAOUserStory userStory = DAOService.getByID(userStoryId, DAOUserStory.class);
@@ -82,6 +100,12 @@ public class DAOTaskService {
     }
 
     //updates
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static boolean updateById(int id, int userStoryId) {
         DAOTask task = DAOService.getByID(id, DAOTask.class);
         task.setUserStory(DAOUserStoryService.getById(userStoryId));
@@ -89,6 +113,12 @@ public class DAOTaskService {
     }
 
     //deletes
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static boolean deleteById(int id) {
         DAOTask task = DAOService.getByID(id, DAOTask.class);
         return DAOService.delete(task);

@@ -7,11 +7,23 @@ import com.team3.project.DAO.DAOTaskList;
 import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAO.DAOUserStory;
 
-public class DAOStart {
+public class DAOStartService {
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static void start() {
         DAOSession.startOrStop(true);
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static <Dao> void clearDB(String name) {
         switch (name.toLowerCase()) {
             case "account":

@@ -64,6 +64,12 @@ final class DAOSession {
         }
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     static void startOrStop(boolean start) {
         if (start) {
             getEntityManagerFactory();
