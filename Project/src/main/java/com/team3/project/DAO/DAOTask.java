@@ -58,7 +58,6 @@ public class DAOTask {
         inverseJoinColumns = @JoinColumn(name = "uid")    
     )
     private List<DAOUser> users;
-    
 
     public DAOTask() {}
     public DAOTask(String description, /*DAOTaskList taskList,*/ DAOUserStory userStory) {

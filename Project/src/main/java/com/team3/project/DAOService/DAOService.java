@@ -148,9 +148,17 @@ class DAOService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: gets a Single entry with a specific parameter
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** gets a Single entry with a specific parameter
+     * @param <Dao>
+     * @param daoClass
+     * @param parameter
+     * @param parameterName
+     * @param joinOnAttributeName
+     * @return
      */
     static <Dao> Dao getSingleLeftJoinByPara(Class<Dao> daoClass, String parameter, String parameterName, String joinOnAttributeName) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
@@ -331,6 +339,7 @@ class DAOService {
             entityManager.getTransaction().commit();
         } catch (EntityExistsException e) {
             //
+            System.out.println("testeteststst\n"+e);
         } catch (Exception e) {
             //Something went wrong
         } finally {
