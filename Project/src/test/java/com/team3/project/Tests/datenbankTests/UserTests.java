@@ -39,6 +39,7 @@ public class UserTests extends BaseTest {
     @AfterEach
     public void afterEach() {
     DAOStartService.clearDB("User");
+    DAOStartService.clearDB("Role");
     }
 
     @AfterAll
@@ -54,7 +55,7 @@ public class UserTests extends BaseTest {
     private String TestWorkDescription = "TestWorkDescription";
     private DAORole TestRole = new DAORole("TestRol");
     private DAORole TestRole2 = new DAORole("TestRol2");
-    private List<DAORole> TestRols = new ArrayList<>();
+    private List<DAORole> TestRoles = new ArrayList<>();
 
     /* Author: Marvin Prüger
      * Function: User Create Test
@@ -64,9 +65,9 @@ public class UserTests extends BaseTest {
     @Test 
     void CreateUserTest(){
         printWriterAddTest("CreateUserTest", "P1.D1");
-        TestRols.add(TestRole);
+        TestRoles.add(TestRole);
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestPasword, TestName, TestPrivatDescription, TestWorkDescription, TestRols));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestPasword, TestName, TestPrivatDescription, TestWorkDescription, TestRoles));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
@@ -99,9 +100,9 @@ public class UserTests extends BaseTest {
     @Test 
     void GetByIDTest(){
         printWriterAddTest("GetByIDTest", "P1.D2");
-        TestRols.add(TestRole);
+        TestRoles.add(TestRole);
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestPasword, TestName, TestPrivatDescription, TestWorkDescription, TestRols));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestPasword, TestName, TestPrivatDescription, TestWorkDescription, TestRoles));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
@@ -109,13 +110,13 @@ public class UserTests extends BaseTest {
         try {
             assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getEmail(),TestEmail);
         } catch (Exception e) {
-            printWriterAddFailure("did not retrived right User");
+            printWriterAddFailure("did not retrieved right User");
             throw new AssertionError(e);
         }
         try{
-            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getRoles().get(0).getName(),TestRols.get(0).getName());
+            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getRoles().get(0).getName(),TestRoles.get(0).getName());
         } catch (Exception e) {
-            printWriterAddFailure("retrived worng rols");
+            printWriterAddFailure("retrieved wrong roles");
             throw new AssertionError(e);
         }
         try {
@@ -135,16 +136,16 @@ public class UserTests extends BaseTest {
     @Test 
     void UpdateUserTest(){
         printWriterAddTest("UpdateUserTest", "P2.D1");
-        TestRols.add(TestRole);
+        TestRoles.add(TestRole);
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRols));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRoles));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
         }
-        TestRols.add(TestRole2);
+        TestRoles.add(TestRole2);
         try {
-            assertTrue(DAOUserService.updateById(DAOUserService.getIdByMail(TestEmail), TestName2, TestPrivatDescription, TestWorkDescription, TestRols));
+            assertTrue(DAOUserService.updateById(DAOUserService.getIdByMail(TestEmail), TestName2, TestPrivatDescription, TestWorkDescription, TestRoles));
         } catch (Exception e) {
             printWriterAddFailure("did not update");
             throw new AssertionError(e);
@@ -156,7 +157,7 @@ public class UserTests extends BaseTest {
             throw new AssertionError(e);
         }
         try{
-            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getRoles().get(0).getName(),TestRols.get(0).getName());
+            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getRoles().get(0).getName(),TestRoles.get(0).getName());
         } catch (Exception e) {
             printWriterAddFailure("did not update rols");
             throw new AssertionError(e);
@@ -177,11 +178,11 @@ public class UserTests extends BaseTest {
     @Test 
     void UpadteSessionIDTest(){
         printWriterAddTest("UpadteSessionIDTest", "S7.D3");
-        TestRols.add(TestRole);
+        TestRoles.add(TestRole);
         String sessionID = "5";
         String sessionDate = "5";
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRols));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRoles));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
@@ -221,11 +222,11 @@ public class UserTests extends BaseTest {
     @Test 
     void EmptySessionIDTest(){
         printWriterAddTest("EmptySessionIDTest", "S7.D6");
-        TestRols.add(TestRole);
+        TestRoles.add(TestRole);
         String sessionID = "5";
         String sessionDate = "5";
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRols));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRoles));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
@@ -264,11 +265,11 @@ public class UserTests extends BaseTest {
     @Test 
     void CheckSessionIDTest(){
         printWriterAddTest("EmptySessionIDTest", "S7.D6");
-        TestRols.add(TestRole);
+        TestRoles.add(TestRole);
         String sessionID = "5";
         String sessionDate = "5";
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRols));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRoles));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);

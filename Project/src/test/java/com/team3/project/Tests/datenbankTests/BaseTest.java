@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.team3.project.DAOService.DAOStartService;
+
 public class BaseTest {
     protected static PrintWriter printWriter;
     protected static Date date;
@@ -24,6 +26,8 @@ public class BaseTest {
         }
         formatter = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         date = new Date();
+
+        DAOStartService.start();
     }
 
     protected static void before() {
