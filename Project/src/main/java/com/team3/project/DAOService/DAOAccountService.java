@@ -11,8 +11,8 @@ public class DAOAccountService {
      * UserStory/Task-ID:
      */
     /** creates a Account with a Mail and a password
-     * @param email
-     * @param password
+     * @param email    email
+     * @param password password
      * @return         true if account creation was successfull
      */
     public static boolean create(String email, String password) {
@@ -35,7 +35,7 @@ public class DAOAccountService {
     * UserStory/Task-ID:
     */
     /** updates the password for an account 
-     * @param email
+     * @param email    email
      * @param password new password
      * @return         true if update was successfull
      */
@@ -59,7 +59,7 @@ public class DAOAccountService {
      */
     /** FOR TESTING ONLY <p>
      * deletes a user by mail
-     * @param email
+     * @param email email
      * @return      false if error occured else true
      */
     public static boolean deleteByMail(String email) {
@@ -74,8 +74,8 @@ public class DAOAccountService {
      * UserStory/Task-ID:
      */
     /** checks if the email exists
-     * @param email   
-     * @return            true if email exists
+     * @param email email 
+     * @return      true if email exists
      */
     public static boolean checkMail(String email) {
         String parameterName = "email";
@@ -90,9 +90,9 @@ public class DAOAccountService {
      * UserStory/Task-ID:
      */
     /** checks if password is right for mail
-     * @param email     
-     * @param password 
-     * @return         
+     * @param email     email
+     * @param password  password
+     * @return          true if account exists and has the password
      */
     public static boolean checkLogin(String email, String password) {
         String parameterName = "email";

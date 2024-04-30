@@ -23,7 +23,7 @@ import lombok.Setter;
 public class DAOTask {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rID")
+    @Column(name = "tID")
     private int tid;
 
     @Column(name = "description")
@@ -41,17 +41,15 @@ public class DAOTask {
     @Column(name = "timeNeededA")
     private String timeNeededA;
 
-    /*
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "taskListId")
     DAOTaskList taskList;
-    */
     
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "userStoryID")
     DAOUserStory userStory;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
         name = "TasksXUsers", 
         joinColumns = @JoinColumn(name = "tid"), 

@@ -48,7 +48,7 @@ public class DAOUser {
     @Column(name = "sessionDate")
     private String sessionDate;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
         name = "UsersXRoles", 
         joinColumns = @JoinColumn(name = "uid"), 

@@ -13,7 +13,7 @@ public class DAOTaskListService {
      * UserStory/Task-ID:
      */
     /** gets all entries 
-     * @return list of all tasks
+     * @return List of DAOTaskLists
      */
     public static List<DAOTaskList> getAll(){
         return DAOService.getAll(DAOTaskList.class);
@@ -27,7 +27,7 @@ public class DAOTaskListService {
      */
     /** gets entry by ID 
      * @param id identifier
-     * @return user as Object 
+     * @return   DAOTaskList
      */
     public static DAOTaskList getById(int id) {
         return DAOService.getByID(id, DAOTaskList.class);
@@ -36,13 +36,13 @@ public class DAOTaskListService {
     
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: gets entry by ID
+     * Function: gets entry by ID with task
      * Reason:
      * UserStory/Task-ID:
      */
-    /** gets entry by ID 
+    /** gets entry by ID with task
      * @param id identifier
-     * @return user as Object 
+     * @return   DAOTaskList
      */
     public static DAOTaskList getWithTasksById(int id) {
         String joinOnAttributeName = "tasks";
@@ -55,9 +55,9 @@ public class DAOTaskListService {
      * Reason:
      * UserStory/Task-ID:
      */
-    /** gets entries by TaskBoardId
-     * @param id identifier taskboardid
-     * @return List of taskList to the taskBoard
+    /** gets List of DAOTaskList by TaskBoardId
+     * @param id identifier of taskboardid
+     * @return   List of DAOTaskLists to the taskBoard
      */
     public static List<DAOTaskList> getByTaskBoardId(int id) {
         String parameterName = "taskBoard";

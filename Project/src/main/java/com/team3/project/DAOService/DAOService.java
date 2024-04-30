@@ -14,9 +14,9 @@ class DAOService {
      * UserStory/Task-ID: 
      */
     /** gets all the objects
-     * @param <Dao>
-     * @param daoClass the class that is to get
-     * @return         list of all the entries in the table
+     * @param <Dao>    DAOObjects
+     * @param daoClass DAOObject.class
+     * @return         List of all the entries in the table
      */
     static <Dao> List<Dao> getAll(Class<Dao> daoClass) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
@@ -98,10 +98,10 @@ class DAOService {
      * UserStory/Task-ID:
      */
      /** gets a single object by ID
-      * @param <Dao>
+      * @param <Dao>    DAOObjects
       * @param id       the integer id for the object
       * @param daoClass the class that is to get
-      * @return         object of the daoclass type with the id
+      * @return         DAOObject with id
       */
     static <Dao> Dao getByID(int id, Class<Dao> daoClass) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
@@ -124,10 +124,10 @@ class DAOService {
      * UserStory/Task-ID:
      */
     /** gets entry with fetch by ID
-     * @param <Dao>
-     * @param id
-     * @param daoClass
-     * @return
+     * @param <Dao>    DAOObjects
+     * @param id       identifier
+     * @param daoClass DAOObject.class
+     * @return         DAOObject with id and joined attribute
      */
     static <Dao> Dao getLeftJoinByID(int id, Class<Dao> daoClass, String joinOnAttributeName) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
@@ -148,17 +148,17 @@ class DAOService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: gets a Single entry with a specific parameter
+     * Function: gets a single entry with a specific parameter
      * Reason:
      * UserStory/Task-ID:
      */
-    /** gets a Single entry with a specific parameter
-     * @param <Dao>
-     * @param daoClass
-     * @param parameter
-     * @param parameterName
-     * @param joinOnAttributeName
-     * @return
+    /** gets a single entry with a specific parameter
+     * @param <Dao>               DAOObjects
+     * @param daoClass            DAOObject.class
+     * @param parameter           parameter value
+     * @param parameterName       parameter name
+     * @param joinOnAttributeName name of joined attribute
+     * @return                    DAOObject
      */
     static <Dao> Dao getSingleLeftJoinByPara(Class<Dao> daoClass, String parameter, String parameterName, String joinOnAttributeName) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
@@ -182,11 +182,11 @@ class DAOService {
      * UserStory/Task-ID:
      */
     /** get a single instance by the parameter
-     * @param <Dao>
-     * @param daoClass      the class that is to get
-     * @param parameter     the value of the parameter that should be searched for
-     * @param parameterName the parameter for the Query
-     * @return              object that was searched for
+     * @param <Dao>         DAOObjects
+     * @param daoClass      DAOObject.class
+     * @param parameter     parameter value
+     * @param parameterName parameter name
+     * @return              DAOObject
      */
     static <Dao> Dao getSingleByPara(Class<Dao> daoClass, String parameter, String parameterName) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
@@ -207,9 +207,16 @@ class DAOService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
-     * Reason:
+     * Function: get a single instance by the parameter
+     * Reason: overload the function
      * UserStory/Task-ID:
+     */
+    /** get a single instance by the parameter
+     * @param <Dao>         DAOObjects
+     * @param daoClass      DAOObject.class
+     * @param parameter     parameter value
+     * @param parameterName parameter name
+     * @return              DAOObject
      */
     static <Dao> Dao getSingleByPara(Class<Dao> daoClass, int parameter, String parameterName) {
         return getSingleByPara(daoClass, Integer.toString(parameter), parameterName);
@@ -222,11 +229,11 @@ class DAOService {
      * UserStory/Task-ID:
      */
     /** get all the instaces by a parameter
-     * @param <Dao>
-     * @param daoClass      the class that is to get
-     * @param parameter     the value of the parameter that should be searched for
-     * @param parameterName the parameter for the Query
-     * @return              list of objects that were searched for
+     * @param <Dao>         DAOObjects
+     * @param daoClass      DAOObject.class
+     * @param parameter     parameter value
+     * @param parameterName parameter name
+     * @return              List of DAOObjects
      */
     static <Dao> List<Dao> getListByPara(Class<Dao> daoClass, String parameter, String parameterName) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
@@ -237,7 +244,6 @@ class DAOService {
             retrieve = entityManager.createQuery(query, daoClass)
                 .setParameter(1, parameter)
                 .getResultList();
-            return retrieve;
         } catch (Exception e) {
             retrieve = null;
         } finally {
@@ -249,15 +255,15 @@ class DAOService {
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: get entries by parameter
-     * Reason:
+     * Reason: overload the function
      * UserStory/Task-ID:
      */
     /** get all the instaces by a parameter
-     * @param <Dao>
-     * @param daoClass      the class that is to get
-     * @param parameter     the value of the parameter that should be searched for
-     * @param parameterName the parameter for the Query
-     * @return              list of objects that were searched for
+     * @param <Dao>         DAOObjects
+     * @param daoClass      DAOObject.class
+     * @param parameter     parameter value
+     * @param parameterName parameter name
+     * @return              List of DAOObjects
      */
     static <Dao> List<Dao> getListByPara(Class<Dao> daoClass, int parameter, String parameterName) {
         return getListByPara(daoClass, Integer.toString(parameter), parameterName);
@@ -270,11 +276,11 @@ class DAOService {
      * UserStory/Task-ID:
      */
     /** gets the objects by a custom query
-     * @param <Dao>
-     * @param daoClass  the searched class
+     * @param <Dao>     DAOObjects
+     * @param daoClass  DAOObject.class
      * @param query     query
-     * @param parameter the parameter name
-     * @return          list of Objects of daoClass type
+     * @param parameter parameter name
+     * @return          List of DAOObjects
      */
     static <Dao> List<Dao> getListByCustomQuery(Class<Dao> daoClass, String query, String parameter) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
@@ -299,11 +305,11 @@ class DAOService {
      * UserStory/Task-ID:
      */
     /** gets a single object by a custom query
-     * @param <Dao>
-     * @param daoClass  the searched class
+     * @param <Dao>     DAOObjects
+     * @param daoClass  DAOObject.class
      * @param query     query
-     * @param parameter the parameter name
-     * @return          object of daoClass type
+     * @param parameter parameter name
+     * @return          DAOObject
      */
     static <Dao> Dao getSingleByCustomQuery(Class<Dao> daoClass, String query, String parameter) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
@@ -353,8 +359,8 @@ class DAOService {
      * Reason:
      * UserStory/Task-ID:
      */
-    /** 
-     * @param daoObject Object to persist
+    /** persists an Object
+     * @param daoObject DAOObject to persist
      * @return          true if persisting is successfull
      */
     static boolean persist(Object daoObject) {
@@ -368,10 +374,14 @@ class DAOService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: persists object in the database and returns bool
+     * Function: persists objects in the database
      * Reason:
      * UserStory/Task-ID:
      */ 
+    /** persists a List of Object
+     * @param <Dao>      DAOObjects
+     * @param daoObjects List of DAOObjects
+     */
     private static <Dao> void persistingList(List<Dao> daoObjects) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
@@ -389,9 +399,14 @@ class DAOService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: persists objects in the database and returns bool
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** persists a List of Object
+     * @param <Dao>      DAOObjects
+     * @param daoObjects DAOObject.class
+     * @return           true if persist is successfull
      */
     static <Dao> boolean persistList(List<Dao> daoObjects) {
         try {
@@ -413,7 +428,6 @@ class DAOService {
      * @param daoObject the object to persist
      */
     private static void merging(Object daoObject) {
-        //TODO change the parameter type
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
         try {
@@ -428,9 +442,13 @@ class DAOService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: merge object in the database and returns bool
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** merges object
+     * @param daoObject DAOObject
+     * @return          true if merge is successfull
      */
     static boolean merge(Object daoObject) {
         try {
@@ -443,9 +461,13 @@ class DAOService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: merges a List of DAOObjects
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** merges a List of DAOObjects
+     * @param <Dao>      DAOObjects
+     * @param daoObjects List of DAOObjects
      */
     private static <Dao> void mergingList(List<Dao> daoObjects) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
@@ -464,9 +486,14 @@ class DAOService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: merges a List of DAOObjects and return a boolean
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** merges a List of DAOObjects
+     * @param <Dao>      DAOObjects
+     * @param daoObjects List of DAOObjects
+     * @return           true if mergeList is successfull
      */
     static <Dao> boolean mergeList(List<Dao> daoObjects) {
         try {
@@ -481,7 +508,7 @@ class DAOService {
     /* Author: Tom-Malte Seep
      * Revisited: Marvin
      * Function: deletes a given object from the database
-     * Reason: würde nicht commited 
+     * Reason: wurde nicht commited 
      * UserStory/Task-ID:
      */
     /** deletes a given object from the database
@@ -502,9 +529,13 @@ class DAOService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: deletes a object and returns a boolean
      * Reason:
      * UserStory/Task-ID:
+     */ 
+    /** deletes a DAOObject
+     * @param daoObject DAOObject
+     * @return          true if delete was successfull
      */
     static boolean delete(Object daoObject) {
         try {
@@ -517,9 +548,15 @@ class DAOService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: deletes a object by id and returns a boolean
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** deletes a object by id
+     * @param <Dao>    DAOObjects
+     * @param id       identifier
+     * @param daoClass DAOObjects.class
+     * @return         true if delete is successfull
      */
     static <Dao> boolean deleteById(int id, Class<Dao> daoClass) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
@@ -539,9 +576,14 @@ class DAOService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: deletes a List of objects
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** deletes a List of objects
+     * @param <Dao>      DAOObjects
+     * @param daoClass   DAOObject.class
+     * @param daoObjects List of DAOObjects
      */
     static <Dao> void deleteList(Class<Dao> daoClass, List<Dao> daoObjects) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
@@ -560,9 +602,13 @@ class DAOService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: deletes all entries to a DAOObject.class
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** deletes all entries of a DAOObject.class
+     * @param <Dao>    DAOObjects
+     * @param daoClass DAOObject.class
      */
     static <Dao> void deleteAll(Class<Dao> daoClass) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
@@ -592,9 +638,15 @@ class DAOService {
     //checks
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: checks if an entry exists
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** checks if an entry exists
+     * @param <Dao>    DAOObjects
+     * @param id       identifier
+     * @param daoClass DAOObject.class
+     * @return         true if DAOObject exists
      */
     static <Dao> boolean checkExistsById(int id, Class<Dao> daoClass) {
         try {
