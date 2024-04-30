@@ -105,9 +105,26 @@ public class DAOTaskService {
      * Reason:
      * UserStory/Task-ID:
      */
-    public static boolean updateById(int id, int userStoryId) {
+    public static boolean updateUserStoryById(int id, int userStoryId) {
         DAOTask task = DAOService.getByID(id, DAOTask.class);
         task.setUserStory(DAOUserStoryService.getById(userStoryId));
+        return DAOService.merge(task);
+    }
+    
+    /* Author: Marvin
+     * Revisited: /
+     * Function: Updates the description
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /**
+     * @param description
+     * @param TaskId
+     * @return
+     */
+    public static boolean updateDescriptonById(String description, int TaskId) {
+        DAOTask task = DAOService.getByID(TaskId, DAOTask.class);
+        task.setDescription(description);;
         return DAOService.merge(task);
     }
 
