@@ -80,6 +80,14 @@ public class DAOUser {
         this.workDescription = workDescription;
         this.roles = roles;
     }
+    public DAOUser(String email, String password, String name, String privatDescription, String workDescription, List<DAORole> roles) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.privatDescription = privatDescription;
+        this.workDescription = workDescription;
+        this.roles = roles;
+    }
     /*
     public DAOUser(String name, String privatDescription, String workDescription, int authorization, String sessionId) {
         this.name = name;

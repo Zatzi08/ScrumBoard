@@ -57,9 +57,9 @@ public class DAOUserService {
     }
 
     /* Author: Tom-Malte Seep
-     * Revisited: Marvin Prüger
+     * Revisited: / 
      * Function: gets roles by sessionID
-     * Reason: made getIdByMail public
+     * Reason: /
      * UserStory/Task-ID:
      */
     /**
@@ -73,6 +73,12 @@ public class DAOUserService {
         return user.getRoles();
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: Marvin Prüger
+     * Function: gets id by mail
+     * Reason: made getIdByMail public
+     * UserStory/Task-ID:
+     */
     public static int getIdByMail(String email) {
         String parameterName = "email";
         DAOUser user = DAOService.getSingleByPara(DAOUser.class, email, parameterName);
@@ -80,9 +86,13 @@ public class DAOUserService {
     }
 
     //creates
-    public static boolean createByEMail(String email, String name, String privatDescription, String workDescription, List<DAORole> roles) {
-        return DAOService.persist(new DAOUser(email, name, privatDescription, workDescription, roles));
+    public static boolean createByEMail(String email, String password, String name, String privatDescription, String workDescription, List<DAORole> roles) {
+        return DAOService.persist(new DAOUser(email, password, name, privatDescription, workDescription, roles));
         //return createById(getIdByMail(email), name, privatDescription, workDescription, roles);
+    }
+
+    public static boolean createByEMail(String email, String name, String privatDescription, String workDescription, List<DAORole> roles) {
+        return createById(getIdByMail(email), name, privatDescription, workDescription, roles);
     }
 
     public static boolean createById(int id, String name, String privatDescription, String workDescription, List<DAORole> roles) {
