@@ -99,7 +99,7 @@ public class TaskTest extends BaseTest{
         }
         DAOTaskService.create(TaskDes2, DAOUserStoryService.getByName(TestUserStoryName));
         try {
-            assertEquals(DAOTaskService.getListByUserStoryId(DAOUserStoryService.getByName(TestUserStoryName).getId()).get(1),TaskDes2);
+            assertEquals(DAOTaskService.getListByUserStoryId(DAOUserStoryService.getByName(TestUserStoryName).getId()).get(1).getDescription(),TaskDes2);
         } catch (Exception e) {
             printWriterAddFailure("UserStory did not have all tasks");
             throw new AssertionError(e);
