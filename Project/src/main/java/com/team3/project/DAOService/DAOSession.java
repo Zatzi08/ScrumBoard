@@ -66,9 +66,12 @@ final class DAOSession {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: starts and stops the EntityManagerFactory
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** starts and stops the EntityManagerFactory 
+     * @param start true = start / false = stop
      */
     static void startOrStop(boolean start) {
         if (start) {

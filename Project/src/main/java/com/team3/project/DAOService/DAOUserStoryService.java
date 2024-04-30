@@ -13,7 +13,7 @@ public class DAOUserStoryService {
      * UserStory/Task-ID:
      */
     /** retrieves all userStories
-     * @return list of all entries
+     * @return list of DAOUserStory
      */
     public static List<DAOUserStory> getAll() {
         List<DAOUserStory> userStories = DAOService.getAll(DAOUserStory.class);
@@ -28,7 +28,7 @@ public class DAOUserStoryService {
      */
     /** gets user story by ID
      * @param id identifier
-     * @return
+     * @return   DAOUserStory
      */
     public static DAOUserStory getById(int id) {
         DAOUserStory story = DAOService.getByID(id, DAOUserStory.class);
@@ -43,10 +43,11 @@ public class DAOUserStoryService {
      */
     /** gets entry by ID 
      * @param id identifier
-     * @return user as Object 
+     * @return   DAOUserStory with List of DAOTasks
      */
     public static DAOUserStory getWithTasksById(int id) {
-        return DAOService.getLeftJoinByID(id, DAOUserStory.class, "tasks");
+        String joinOnAttributeName = "tasks";
+        return DAOService.getLeftJoinByID(id, DAOUserStory.class, joinOnAttributeName);
     }
 
     /* Author: Marvin Oliver Prüger
@@ -56,8 +57,8 @@ public class DAOUserStoryService {
      * UserStory/Task-ID:
      */
     /** gets userStory by name
-     * @param name
-     * @return
+     * @param name name
+     * @return     DAOUserStory
      */
     public static DAOUserStory getByName(String name) {
         String parameterName = "name";
@@ -73,10 +74,10 @@ public class DAOUserStoryService {
      * UserStory/Task-ID:
      */
     /** creates a entry for a userStory
-     * @param name
-     * @param description
-     * @param priority
-     * @return
+     * @param name        name
+     * @param description description
+     * @param priority    priority
+     * @return            true if create is successfull
      */
     public static boolean create(String name, String description, int priority) {
         if (!checkName(name)) {
@@ -100,7 +101,7 @@ public class DAOUserStoryService {
      */
     /** updates name by id
      * @param id   identifier
-     * @param name new name
+     * @param name name
      * @return     true if updated else false
      */
     public static boolean updateName(int id, String name) {
@@ -128,8 +129,8 @@ public class DAOUserStoryService {
      */
     /** updates a description by id
      * @param id          identifier
-     * @param description new Description
-     * @return            true if updates else false
+     * @param description description
+     * @return            true if update is successfull
      */
     public static boolean updateDescription(int id, String description) {
         DAOUserStory story = DAOService.getByID(id, DAOUserStory.class);
@@ -153,8 +154,8 @@ public class DAOUserStoryService {
      */
     /** updates priority by id
      * @param id       identifier 
-     * @param priority new priority
-     * @return         true if updates else false
+     * @param priority priority
+     * @return         true if update is successfull
      */
     public static boolean updatePriority(int id, int priority) {
         DAOUserStory story = DAOService.getByID(id, DAOUserStory.class);
@@ -179,7 +180,7 @@ public class DAOUserStoryService {
      */
     /** removes a userStory from the database
      * @param id identifier
-     * @return   true if deleted else false
+     * @return   true if delete is successfull
      */
     public static boolean deleteById(int id) {
         DAOUserStory userStory = DAOService.getByID(id, DAOUserStory.class);
@@ -214,8 +215,8 @@ public class DAOUserStoryService {
      * UserStory/Task-ID:
      */
     /** checks if a userStory exists by name
-     * @param name name of userStory
-     * @return   true if userStory exists
+     * @param name name
+     * @return     true if userStory exists
      */
      public static boolean checkName(String name) {
         String parameterName = "name";

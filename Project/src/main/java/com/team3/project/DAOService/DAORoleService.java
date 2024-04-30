@@ -13,7 +13,7 @@ public class DAORoleService {
      * UserStory/Task-ID:
      */
     /** gets all roles
-     * @return list of all roles
+     * @return list of DAORoles
      */
     public static List<DAORole> getAll() {
         List<DAORole> roles = DAOService.getAll(DAORole.class);
@@ -28,8 +28,8 @@ public class DAORoleService {
      * UserStory/Task-ID:
      */
     /** gets a role by ID
-     * @param id identifier for roles
-     * @return   searched object
+     * @param id identifier
+     * @return   DAORole
      */
     public static DAORole getByID(int id) {
         DAORole role = DAOService.getByID(id, DAORole.class);
@@ -43,8 +43,8 @@ public class DAORoleService {
      * UserStory/Task-ID:
      */
     /** gets a role by name
-     * @param name 
-     * @return     searched object
+     * @param name name
+     * @return     DAORole
      */
     public static DAORole getByName(String name) {
         String parameterName = "name";

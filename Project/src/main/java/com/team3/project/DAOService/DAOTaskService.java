@@ -14,7 +14,7 @@ public class DAOTaskService {
      * UserStory/Task-ID:
      */
     /** gets all entries
-     * @return list of all tasks
+     * @return List of DAOTasks
      */
     public static List<DAOTask> getAll(){
         return DAOService.getAll(DAOTask.class);
@@ -28,7 +28,7 @@ public class DAOTaskService {
      */
     /** gets entry by ID 
      * @param id identifier
-     * @return user as Object 
+     * @return   DAOTask
      */
     public static DAOTask getById(int id) {
         return DAOService.getByID(id, DAOTask.class);
@@ -41,8 +41,8 @@ public class DAOTaskService {
      * UserStory/Task-ID:
      */
     /** gets entry by description 
-     * @param  description
-     * @return Task as Object 
+     * @param  description description
+     * @return             DAOTask
      */
     public static DAOTask getByDescription(String description) {
         String parameterName = "description";
@@ -55,9 +55,9 @@ public class DAOTaskService {
      * Reason:
      * UserStory/Task-ID:
      */
-    /** gets entry by ID 
+    /** gets entry by ID with DAOUserStory
      * @param id identifier
-     * @return user as Object 
+     * @return   DAOTask
      */
     public static DAOTask getWithUserStorysById(int id) {
         String joinOnAttributeName = "userStory";
@@ -66,21 +66,30 @@ public class DAOTaskService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: get entries of tasks by userStoryid
      * Reason:
      * UserStory/Task-ID:
      */
-    public static List<DAOTask> getListByUserStoryId(int id) {
-        String parameterName = "userStory";
-        return DAOService.getListByPara(DAOTask.class, id, parameterName);
+    /** get entries of tasks by userStoryid
+     * @param userStoryId identifier userstory
+     * @return            List of DAOTasks
+     */
+    public static List<DAOTask> getListByUserStoryId(int userStoryId) {
+        String parameterName = "userStory.id";
+        return DAOService.getListByPara(DAOTask.class, userStoryId, parameterName);
     }
 
     //creates
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: creates a task with the DAOUserStory
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** creates a task with the DAOUserStory
+     * @param description description
+     * @param userStory   DAOUserStory
+     * @return            true if create was successfull
      */
     public static boolean create(String description, /*DAOTaskList taskList,*/ DAOUserStory userStory) {
         return DAOService.merge(new DAOTask(description, /*taskList,*/ userStory));
@@ -88,9 +97,14 @@ public class DAOTaskService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
-     * Reason:
+     * Function: creates a task with the userStoryid
+     * Reason: overload
      * UserStory/Task-ID:
+     */
+    /** creates a task with the userStoryid
+     * @param description description
+     * @param userStoryId identifier DAOUserStory
+     * @return            true if create was successfull
      */
     public static boolean create(String description, /*int taskListId,*/ int userStoryId) {
         /*DAOTaskList taskList = DAOService.getByID(taskListId, DAOTaskList.class);*/
@@ -101,9 +115,14 @@ public class DAOTaskService {
     //updates
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: adds a userStoryId to a task
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** updates a DAOTask with a DAOUserStory
+     * @param id          identifier
+     * @param userStoryId identifier DAOUserStory
+     * @return            true if update was successfull
      */
     public static boolean updateUserStoryById(int id, int userStoryId) {
         DAOTask task = DAOService.getByID(id, DAOTask.class);
@@ -113,17 +132,17 @@ public class DAOTaskService {
     
     /* Author: Marvin
      * Revisited: /
-     * Function: Updates the description
+     * Function: updates the description
      * Reason:
      * UserStory/Task-ID:
      */
-    /**
-     * @param description
-     * @param TaskId
-     * @return
+    /** updates the description
+     * @param id          identifier
+     * @param description description
+     * @return            true if update was successfull
      */
-    public static boolean updateDescriptonById(String description, int TaskId) {
-        DAOTask task = DAOService.getByID(TaskId, DAOTask.class);
+    public static boolean updateDescriptonById(int id, String description) {
+        DAOTask task = DAOService.getByID(id, DAOTask.class);
         task.setDescription(description);;
         return DAOService.merge(task);
     }
@@ -131,9 +150,13 @@ public class DAOTaskService {
     //deletes
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: deletes a entry by id
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** delete DAOTask by id
+     * @param id identifier
+     * @return   true if delete is successfull
      */
     public static boolean deleteById(int id) {
         DAOTask task = DAOService.getByID(id, DAOTask.class);

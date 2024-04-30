@@ -10,6 +10,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import com.team3.project.Classes.UserStory;
+import com.team3.project.DAO.DAORole;
 import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOUserStory;
 
@@ -49,8 +50,11 @@ class DAO {
             System.out.println(DAOUserService.updateUsers(users));
         } else System.out.println("Null/Empty - 555555555555555555555555555555555555555");
         /**/
+        /*
         DAOUserStory userStory = DAOUserStoryService.getById(1);
         System.out.println(DAOTaskService.create("Farbe kaufen", userStory.getId()));
+        /**/
+        System.out.println(DAOTaskService.getListByUserStoryId(1));
 
         //Usertest();   
         tearDown();    

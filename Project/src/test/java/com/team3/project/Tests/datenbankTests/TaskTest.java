@@ -70,7 +70,7 @@ public class TaskTest extends BaseTest{
             throw new AssertionError(e);
         }
         try {
-            assertTrue(DAOTaskService.updateDescriptonById(TaskDes2, DAOTaskService.getByDescription(TaskDes1).getTid()));
+            assertTrue(DAOTaskService.updateDescriptonById(DAOTaskService.getByDescription(TaskDes1).getTid(), TaskDes2));
         } catch (Exception e) {
             printWriterAddFailure("Task was not updated");
             throw new AssertionError(e);

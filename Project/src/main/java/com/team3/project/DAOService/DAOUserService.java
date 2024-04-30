@@ -18,7 +18,7 @@ public class DAOUserService {
      */
     /** gets all entries <p>
      * without 'fetch'
-     * @return list of all users
+     * @return List of DAOUser
      */
     public static List<DAOUser> getAll() {
         return DAOService.getAll(DAOUser.class);
@@ -26,9 +26,12 @@ public class DAOUserService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: gets all entries
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** gets all DAOUser
+     * @return List of DAOUser with filled roles
      */
     public static List<DAOUser> getAllPlusRoles() {
         String joinAttributeName = "roles";
@@ -44,7 +47,7 @@ public class DAOUserService {
     /** gets entry by ID <p>
      * without 'fetch'
      * @param id identifier
-     * @return user as Object 
+     * @return   DAOUser
      */
     public static DAOUser getById(int id) {
         return DAOService.getByID(id, DAOUser.class);
@@ -52,9 +55,13 @@ public class DAOUserService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: gets entry by id
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** gets entry by id
+     * @param id identifier
+     * @return   DAOUser with filled roles
      */
     public static DAOUser getByIdPlusRoles(int id) {
         String joinAttributeName = "roles";
@@ -63,32 +70,19 @@ public class DAOUserService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: gets entry by sessionId
      * Reason:
      * UserStory/Task-ID:
      */
-    public static DAOUser getBySessionId(int sessionId) {
+    /** gets entry by sessionId
+     * @param sessionId sessionId
+     * @return          DAOUser
+     */
+    public static DAOUser getBySessionId(String sessionId) {
         String parameterString = "sessionId";
         String joinOnAttributeName = "roles";
-        DAOUser user = DAOService.getSingleLeftJoinByPara(null, parameterString, parameterString, joinOnAttributeName);
+        DAOUser user = DAOService.getSingleLeftJoinByPara(DAOUser.class, sessionId, parameterString, joinOnAttributeName);
         return user;
-    }
-
-    /* Author: Tom-Malte Seep
-     * Revisited: / 
-     * Function: gets roles by sessionID
-     * Reason: /
-     * UserStory/Task-ID:
-     */
-    /**
-     * gets roles by sessionID
-     * @param sessionID 
-     * @return List of roles of the user
-     */
-    public static List<DAORole> getRolesBySessionID(int sessionID) {
-        String query = "SELECT user FROM DAOUser AS user JOIN FETCH user.roles WHERE sessionId = ?1";
-        DAOUser user = DAOService.getSingleByCustomQuery(DAOUser.class, query, Integer.toString(sessionID));
-        return user.getRoles();
     }
 
     /* Author: Tom-Malte Seep
@@ -96,6 +90,10 @@ public class DAOUserService {
      * Function: gets id by mail
      * Reason: made getIdByMail public
      * UserStory/Task-ID:
+     */
+    /** gets id by mail
+     * @param email email
+     * @return      identifier
      */
     public static int getIdByMail(String email) {
         String parameterName = "email";
@@ -106,31 +104,37 @@ public class DAOUserService {
     //creates
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: creates an entry
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** creates an entry
+     * @param email             email
+     * @param password          password
+     * @param name              name
+     * @param privatDescription privatDescription
+     * @param workDescription   workDescription
+     * @param roles             roles
+     * @return                  true if create was successfull
      */
     public static boolean createByEMail(String email, String password, String name, String privatDescription, String workDescription, List<DAORole> roles) {
         return DAOService.persist(new DAOUser(email, password, name, privatDescription, workDescription, roles));
-        //return createById(getIdByMail(email), name, privatDescription, workDescription, roles);
-    }
-
-    /* Author: Tom-Malte Seep
-     * Revisited: /
-     * Function: 
-     * Reason:
-     * UserStory/Task-ID:
-     */
-    public static boolean updateByEMail(String email, String name, String privatDescription, String workDescription, List<DAORole> roles) {
-        return updateById(getIdByMail(email), name, privatDescription, workDescription, roles);
     }
 
     //updates
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: updates by id
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** updates the entry
+     * @param id                identifier
+     * @param name              name
+     * @param privatDescription privatDescription
+     * @param workDescription   workDescription
+     * @param roles             roles
+     * @return                  true if update was successfull
      */
     public static boolean updateById(int id, @Nullable String name, @Nullable String privatDescription, 
                                      @Nullable String workDescription, @Nullable List<DAORole> roles) {
@@ -148,9 +152,14 @@ public class DAOUserService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: updates by a DAOUser Object
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** 
+     * @param id   identifier
+     * @param user DAOUser
+     * @return     true if update was successfull
      */
     static boolean updateById(int id, DAOUser user) {
         return updateById(id, user.getName(), user.getPrivatDescription(), user.getWorkDescription(), user.getRoles());
@@ -158,19 +167,48 @@ public class DAOUserService {
     
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: updates a List of DAOUsers
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** updates a List of DAOUsers
+     * @param users List of DAOUsers
+     * @return      true if update was successfull
      */
     public static boolean updateUsers(List<DAOUser> users) {
         return DAOService.mergeList(users);
     }
 
+    
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: updates by email
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** updates by email
+     * @param email             email
+     * @param name              name
+     * @param privatDescription privatDescription
+     * @param workDescription   workDescription
+     * @param roles             roles
+     * @return                  true if update was successfull
+     */
+    public static boolean updateByEMail(String email, String name, String privatDescription, String workDescription, List<DAORole> roles) {
+        return updateById(getIdByMail(email), name, privatDescription, workDescription, roles);
+    }
+
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: updates the sessionID and sessionDate by id
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /** updates the sessionID and sessionDate by id
+     * @param id          identifier
+     * @param sessionId   sessionId
+     * @param sessionDate sessionDate
+     * @return            true if update was successfull
      */
     public static boolean updateSessionIdById(int id, String sessionId, String sessionDate) {
         DAOUser user = DAOService.getByID(id, DAOUser.class);
@@ -184,9 +222,13 @@ public class DAOUserService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: clears the sessionid 
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** clears the sessionid 
+     * @param id identifier
+     * @return   true if update was successfull
      */
     public static boolean emptySessionIdById(int id) {
         return updateSessionIdById(id, null, null);
@@ -195,9 +237,13 @@ public class DAOUserService {
     //deletes
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: deletes entry by id
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** deletes entry by id
+     * @param id identifier
+     * @return   true if delete is successfull
      */
     public static boolean deleteById(int id) {
         DAOUser user = DAOService.getByID(id, DAOUser.class);
@@ -214,9 +260,13 @@ public class DAOUserService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: deletes by email
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** deletes by email
+     * @param email email
+     * @return      true if delete was successfull
      */
     static boolean deleteByMail(String email) {
         String parameterName = "email";
@@ -235,9 +285,13 @@ public class DAOUserService {
     //checks
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: checks if email exists
      * Reason:
      * UserStory/Task-ID:
+     */
+    /** checks if email exists
+     * @param email email
+     * @return      true if entry with mail exists
      */
     public static boolean checkByEmail(String email) {
         String parameterName = "email";
@@ -247,14 +301,18 @@ public class DAOUserService {
 
     /* Author: Tom-Malte Seep
      * Revisited: /
-     * Function: 
+     * Function: checks if sessionId exists
      * Reason:
      * UserStory/Task-ID:
      */
-    public static boolean checkSessionId(int id) {
+    /** checks if sessionId exists
+     * @param sessionId sessionId
+     * @return          true if entry with sessionId exists
+     */
+    public static boolean checkSessionId(int sessionId) {
         try {
             String parameterName = "sessionId";
-            DAOUser user = DAOService.getSingleByPara(DAOUser.class, id, parameterName);
+            DAOUser user = DAOService.getSingleByPara(DAOUser.class, sessionId, parameterName);
             if (user == null) {
                 return false;
             }

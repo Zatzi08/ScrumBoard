@@ -27,7 +27,7 @@ public class DAOTaskBoardService {
      */
     /** gets entry by ID 
      * @param id identifier
-     * @return user as Object 
+     * @return   DAOTaskBoard 
      */
     public static DAOTaskBoard getById(int id) {
         return DAOService.getByID(id, DAOTaskBoard.class);
@@ -41,7 +41,7 @@ public class DAOTaskBoardService {
      */
     /** gets entry by ID 
      * @param id identifier
-     * @return user as Object 
+     * @return   DAOTaskBoard
      */
     public static DAOTaskBoard getWithTaskListsById(int id) {
         String joinOnAttributeName = "taskLists";
