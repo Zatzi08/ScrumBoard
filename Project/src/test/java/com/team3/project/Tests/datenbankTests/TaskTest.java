@@ -55,13 +55,41 @@ public class TaskTest extends BaseTest{
     List<DAOTask> TestTasks = new ArrayList<>();
 
     /* Author: Marvin Prüger
-     * Function: User Create Test
+     * Function: create/update/delete Task
+     * Reason:
+     * UserStory/Task-ID: T3.D2/T4.D1/T5.D1
+     */
+    @Test 
+    void GenerlTaskTest(){
+        printWriterAddTest("GenerlTaskTest", "T3.D2/T4.D1/T5.D1");
+        DAOUserStoryService.create(TestUserStoryName, TestUserStoryDes, TestUserStoryPrio);
+        try {
+            assertTrue(DAOTaskService.create(TaskDes1, DAOUserStoryService.getByName(TestUserStoryName)));
+        } catch (Exception e) {
+            printWriterAddFailure("Task was not added to UserStory");
+            throw new AssertionError(e);
+        }
+        try {
+            assertTrue(DAOTaskService.updateDescriptonById(TaskDes2, DAOTaskService.getByDescription(TaskDes1).getTid()));
+        } catch (Exception e) {
+            printWriterAddFailure("Task was not updated");
+            throw new AssertionError(e);
+        }        
+        try {
+            assertTrue(DAOTaskService.deleteById(DAOTaskService.getByDescription(TaskDes1).getTid()));
+        } catch (Exception e) {
+            printWriterAddFailure("Task was not deleated");
+            throw new AssertionError(e);
+        }
+    }
+    /* Author: Marvin Prüger
+     * Function: generl Task Test
      * Reason:
      * UserStory/Task-ID: T1.D1
      */
     @Test 
-    void getTaskFromUserStroy(){
-        printWriterAddTest("getTaskFromUserStroy", "T1.D1");
+    void GenerlTaskTests(){
+        printWriterAddTest("GenerlTaskTest", "T1.D1");
         DAOUserStoryService.create(TestUserStoryName, TestUserStoryDes, TestUserStoryPrio);
         try {
             assertTrue(DAOTaskService.create(TaskDes1, DAOUserStoryService.getByName(TestUserStoryName)));
@@ -73,7 +101,7 @@ public class TaskTest extends BaseTest{
         TestTasks.add(DAOTaskService.getByDescription(TaskDes1));
         TestTasks.add(DAOTaskService.getByDescription(TaskDes2));
         try {
-            assertEquals(/*DAOTaskService.getListByUserStoryId(DAOUserStoryService.getByName(TestUserStoryName).getId())*/,TestTasks);
+            assertEquals(DAOTaskService.getListByUserStoryId(DAOUserStoryService.getByName(TestUserStoryName).getId()),TestTasks);
         } catch (Exception e) {
             printWriterAddFailure("UserStory did not have all tasks");
             throw new AssertionError(e);
@@ -93,4 +121,5 @@ public class TaskTest extends BaseTest{
         DAOUserStoryService.deleteById(DAOUserStoryService.getByName(TestUserStoryName).getId());
         printWriterAddPass();
     }
+
 }

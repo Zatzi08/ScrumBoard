@@ -44,6 +44,7 @@ public class UserTests extends BaseTest {
     }
 
     private String TestEmail = "TestEmail";
+    private String TestPasword = "TestPasword";
     private String TestName = "TestName";
     private String TestName2 = "TestName2";
     private String TestPrivatDescription = "TestPrivatDescription";
@@ -62,7 +63,7 @@ public class UserTests extends BaseTest {
         printWriterAddTest("CreateUserTest", "P1.D1");
         TestRols.add(TestRole);
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPrivatDescription, TestWorkDescription, TestRols));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestPasword, TestName, TestPrivatDescription, TestWorkDescription, TestRols));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
@@ -80,7 +81,7 @@ public class UserTests extends BaseTest {
             throw new AssertionError(e);
         }
         try {
-            assertTrue(DAOUserService.checkByEmail(TestEmail));
+            assertFalse(DAOUserService.checkByEmail(TestEmail));
         } catch (Exception e) {
             printWriterAddFailure("created User exists exist after delat");
             throw new AssertionError(e);
@@ -97,7 +98,7 @@ public class UserTests extends BaseTest {
         printWriterAddTest("GetByIDTest", "P1.D2");
         TestRols.add(TestRole);
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPrivatDescription, TestWorkDescription, TestRols));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestPasword, TestName, TestPrivatDescription, TestWorkDescription, TestRols));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
@@ -133,7 +134,7 @@ public class UserTests extends BaseTest {
         printWriterAddTest("UpdateUserTest", "P2.D1");
         TestRols.add(TestRole);
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPrivatDescription, TestWorkDescription, TestRols));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRols));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
@@ -177,7 +178,7 @@ public class UserTests extends BaseTest {
         String sessionID = "5";
         String sessionDate = "5";
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPrivatDescription, TestWorkDescription, TestRols));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRols));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
@@ -221,7 +222,7 @@ public class UserTests extends BaseTest {
         String sessionID = "5";
         String sessionDate = "5";
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPrivatDescription, TestWorkDescription, TestRols));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRols));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
@@ -264,7 +265,7 @@ public class UserTests extends BaseTest {
         String sessionID = "5";
         String sessionDate = "5";
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPrivatDescription, TestWorkDescription, TestRols));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRols));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
