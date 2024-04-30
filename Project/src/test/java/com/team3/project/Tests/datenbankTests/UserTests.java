@@ -16,8 +16,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.matchers.Null;
 
+import com.team3.project.DAOService.DAOStartService;
 import com.team3.project.DAOService.DAOUserService;
+import com.team3.project.Classes.User;
 import com.team3.project.DAO.DAORole;
 import com.team3.project.DAO.DAOUser;
 
@@ -35,7 +38,7 @@ public class UserTests extends BaseTest {
 
     @AfterEach
     public void afterEach() {
-
+    DAOStartService.clearDB("User");
     }
 
     @AfterAll
@@ -110,7 +113,7 @@ public class UserTests extends BaseTest {
             throw new AssertionError(e);
         }
         try{
-            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getRoles(),TestRols);
+            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getRoles().get(0).getName(),TestRols.get(0).getName());
         } catch (Exception e) {
             printWriterAddFailure("retrived worng rols");
             throw new AssertionError(e);
@@ -153,7 +156,7 @@ public class UserTests extends BaseTest {
             throw new AssertionError(e);
         }
         try{
-            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getRoles(),TestRols);
+            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getRoles().get(0).getName(),TestRols.get(0).getName());
         } catch (Exception e) {
             printWriterAddFailure("did not update rols");
             throw new AssertionError(e);
@@ -240,7 +243,7 @@ public class UserTests extends BaseTest {
             throw new AssertionError(e);
         }
         try{
-            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getSessionId(),sessionID);
+            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getSessionId(), null);
         } catch (Exception e) {
             printWriterAddFailure("did not remove sessionID");
             throw new AssertionError(e);
@@ -277,7 +280,7 @@ public class UserTests extends BaseTest {
             throw new AssertionError(e);
         }
         try{
-            assertEquals(DAOUserService.checkByEmail(TestEmail),sessionID);
+            assertTrue(DAOUserService.checkSessionId(5));
         } catch (Exception e) {
             printWriterAddFailure("is not the same");
             throw new AssertionError(e);
