@@ -1,5 +1,6 @@
 package com.team3.project.DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
@@ -9,6 +10,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import com.team3.project.Classes.UserStory;
+import com.team3.project.DAOService.DAOAccountService;
 import com.team3.project.DAOService.DAORoleService;
 import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.DAOService.DAOUserStoryService;
@@ -21,6 +23,16 @@ class DAO {
     public static void main(String[] args) {
         try {
         setUp();
+        //  String TestEmail = "TestEmail";
+        //  String TestName = "TestName";
+        //  String TestName2 = "TestName2";
+        //  String TestPrivatDescription = "TestPrivatDescription";
+        //  String TestWorkDescription = "TestWorkDescription";
+        //  DAORole TestRole = new DAORole("TestRol");
+        //  DAORole TestRole2 = new DAORole("TestRol2");
+        //  List<DAORole> TestRols = new ArrayList<>();
+        // DAOAccountService.create(TestEmail, "TestPW");
+        // DAOUserService.createByEMail(TestEmail, TestName, TestPrivatDescription, TestWorkDescription, TestRols);
         /* 
         List<DAORole> list = DAOUserService.getRoleBySessionID(1);
         for (DAORole daoRole : list) {

@@ -3,6 +3,7 @@ package com.team3.project.DAOService;
 import java.util.List;
 
 import com.team3.project.DAO.DAOTask;
+import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAO.DAOUserStory;
 
 public class DAOTaskService {
@@ -32,6 +33,21 @@ public class DAOTaskService {
      */
     public static DAOTask getById(int id) {
         return DAOService.getByID(id, DAOTask.class);
+    }
+    
+    /* Author: Marvin
+     * Revisited: /
+     * Function: gets entry by description
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /** gets entry by description 
+     * @param  description
+     * @return Task as Object 
+     */
+    public static DAOTask getByDescription(String des) {
+        String parameterName = "description";
+        return DAOService.getSingleByPara(DAOTask.class, des , parameterName);
     }
 
     /* Author: Tom-Malte Seep
