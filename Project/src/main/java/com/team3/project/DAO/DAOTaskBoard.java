@@ -27,7 +27,6 @@ public class DAOTaskBoard {
 
     @OneToMany(mappedBy = "taskBoard")
     private List<DAOTaskList> taskLists;
-
     
     DAOTaskBoard() {}
 }

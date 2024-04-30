@@ -83,8 +83,7 @@ public class DAOTaskService {
      * UserStory/Task-ID:
      */
     public static boolean create(String description, /*DAOTaskList taskList,*/ DAOUserStory userStory) {
-        DAOTask task = new DAOTask(description, /*taskList,*/ userStory);
-        return DAOService.persist(task);
+        return DAOService.merge(new DAOTask(description, /*taskList,*/ userStory));
     }
 
     /* Author: Tom-Malte Seep

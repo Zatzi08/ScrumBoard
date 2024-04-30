@@ -1,4 +1,4 @@
-package com.team3.project.DAO;
+package com.team3.project.DAOService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +10,8 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import com.team3.project.Classes.UserStory;
-import com.team3.project.DAOService.DAOAccountService;
-import com.team3.project.DAOService.DAORoleService;
-import com.team3.project.DAOService.DAOUserService;
-import com.team3.project.DAOService.DAOUserStoryService;
+import com.team3.project.DAO.DAOTask;
+import com.team3.project.DAO.DAOUserStory;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -37,11 +35,11 @@ class DAO {
         List<DAORole> list = DAOUserService.getRoleBySessionID(1);
         for (DAORole daoRole : list) {
             System.out.println(daoRole.getName());
-        } 
+        }
         //System.out.println(DAOUserService.getById(1).getName());
         DAORole roleDeveloper = DAORoleService.getByID(1);
         List<DAOUser> users = DAOUserService.getAllPlusRoles();
-        /*
+
         if (users != null && !users.isEmpty()) {
             users.stream().forEach(user -> {
                 user.setPassword("null");
@@ -51,7 +49,8 @@ class DAO {
             System.out.println(DAOUserService.updateUsers(users));
         } else System.out.println("Null/Empty - 555555555555555555555555555555555555555");
         /**/
-
+        DAOUserStory userStory = DAOUserStoryService.getById(1);
+        System.out.println(DAOTaskService.create("Farbe kaufen", userStory.getId()));
 
         //Usertest();   
         tearDown();    
