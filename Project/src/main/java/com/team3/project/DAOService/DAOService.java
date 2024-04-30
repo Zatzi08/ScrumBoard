@@ -132,11 +132,11 @@ class DAOService {
     static <Dao> Dao getLeftJoinByID(int id, Class<Dao> daoClass, String joinOnAttributeName) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
-        String query = "SELECT item FROM " + daoClass.getName() + " AS item LEFT JOIN FETCH item." + joinOnAttributeName + "WHERE id = ?1";
+        String query = "SELECT item FROM " + daoClass.getName() + " AS item LEFT JOIN FETCH item." + joinOnAttributeName + " WHERE item.id = ?1";
         Dao retrieve;
         try {
             retrieve = entityManager.createQuery(query, daoClass)
-                .setParameter(0, id)
+                .setParameter(1, id)
                 .getSingleResult();
         } catch (Exception e) {
             retrieve = null;
@@ -146,10 +146,16 @@ class DAOService {
         return retrieve;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     static <Dao> Dao getSingleLeftJoinByPara(Class<Dao> daoClass, String parameter, String parameterName, String joinOnAttributeName) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
-        String query = "SELECT item FROM " + daoClass.getName() + " AS item LEFT JOIN FETCH item." + joinOnAttributeName + "WHERE " + parameterName +  " = ?1";
+        String query = "SELECT item FROM " + daoClass.getName() + " AS item LEFT JOIN FETCH item." + joinOnAttributeName + "WHERE item." + parameterName +  " = ?1";
         Dao retrieve;
         try {
             retrieve = entityManager.createQuery(query, daoClass).setParameter(0, parameter).getSingleResult();
@@ -191,6 +197,12 @@ class DAOService {
         return retrieve;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     static <Dao> Dao getSingleByPara(Class<Dao> daoClass, int parameter, String parameterName) {
         return getSingleByPara(daoClass, Integer.toString(parameter), parameterName);
     }
@@ -366,6 +378,12 @@ class DAOService {
         }
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     static <Dao> boolean persistList(List<Dao> daoObjects) {
         try {
             DAOService.persistingList(daoObjects);
@@ -399,6 +417,12 @@ class DAOService {
         }
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     static boolean merge(Object daoObject) {
         try {
             DAOService.merging(daoObject);
@@ -408,6 +432,12 @@ class DAOService {
         return true;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     private static <Dao> void mergingList(List<Dao> daoObjects) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
@@ -423,6 +453,12 @@ class DAOService {
         }
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     static <Dao> boolean mergeList(List<Dao> daoObjects) {
         try {
             mergingList(daoObjects);
@@ -455,6 +491,12 @@ class DAOService {
         }
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     static boolean delete(Object daoObject) {
         try {
             deleting(daoObject);
@@ -464,6 +506,12 @@ class DAOService {
         return true;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     static <Dao> boolean deleteById(int id, Class<Dao> daoClass) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
@@ -480,6 +528,12 @@ class DAOService {
         return returning;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     static <Dao> void deleteList(Class<Dao> daoClass, List<Dao> daoObjects) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
@@ -495,6 +549,12 @@ class DAOService {
         }
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     static <Dao> void deleteAll(Class<Dao> daoClass) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
@@ -521,6 +581,12 @@ class DAOService {
     }
 
     //checks
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     static <Dao> boolean checkExistsById(int id, Class<Dao> daoClass) {
         try {
             if (getByID(id, daoClass) == null) {

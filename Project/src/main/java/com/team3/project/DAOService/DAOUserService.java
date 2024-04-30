@@ -24,6 +24,12 @@ public class DAOUserService {
         return DAOService.getAll(DAOUser.class);
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static List<DAOUser> getAllPlusRoles() {
         String joinAttributeName = "roles";
         return DAOService.getAllLeftJoin(DAOUser.class, joinAttributeName);
@@ -44,11 +50,23 @@ public class DAOUserService {
         return DAOService.getByID(id, DAOUser.class);
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static DAOUser getByIdPlusRoles(int id) {
         String joinAttributeName = "roles";
         return DAOService.getLeftJoinByID(id, DAOUser.class, joinAttributeName);
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static DAOUser getBySessionId(int sessionId) {
         String parameterString = "sessionId";
         String joinOnAttributeName = "roles";
@@ -86,25 +104,34 @@ public class DAOUserService {
     }
 
     //creates
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static boolean createByEMail(String email, String password, String name, String privatDescription, String workDescription, List<DAORole> roles) {
         return DAOService.persist(new DAOUser(email, password, name, privatDescription, workDescription, roles));
         //return createById(getIdByMail(email), name, privatDescription, workDescription, roles);
     }
 
-    public static boolean createByEMail(String email, String name, String privatDescription, String workDescription, List<DAORole> roles) {
-        return createById(getIdByMail(email), name, privatDescription, workDescription, roles);
-    }
-
-    public static boolean createById(int id, String name, String privatDescription, String workDescription, List<DAORole> roles) {
-        try {
-            updateById(id, name, privatDescription, workDescription, roles);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    public static boolean updateByEMail(String email, String name, String privatDescription, String workDescription, List<DAORole> roles) {
+        return updateById(getIdByMail(email), name, privatDescription, workDescription, roles);
     }
 
     //updates
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static boolean updateById(int id, @Nullable String name, @Nullable String privatDescription, 
                                      @Nullable String workDescription, @Nullable List<DAORole> roles) {
         try {
@@ -119,14 +146,32 @@ public class DAOUserService {
         return false;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     static boolean updateById(int id, DAOUser user) {
         return updateById(id, user.getName(), user.getPrivatDescription(), user.getWorkDescription(), user.getRoles());
     }
     
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static boolean updateUsers(List<DAOUser> users) {
         return DAOService.mergeList(users);
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static boolean updateSessionIdById(int id, String sessionId, String sessionDate) {
         DAOUser user = DAOService.getByID(id, DAOUser.class);
         if (user != null) {
@@ -137,11 +182,23 @@ public class DAOUserService {
         return false;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static boolean emptySessionIdById(int id) {
         return updateSessionIdById(id, null, null);
     }
 
     //deletes
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static boolean deleteById(int id) {
         DAOUser user = DAOService.getByID(id, DAOUser.class);
         if (user != null) {
@@ -155,6 +212,12 @@ public class DAOUserService {
         return true;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     static boolean deleteByMail(String email) {
         String parameterName = "email";
         DAOUser user = DAOService.getSingleByPara(DAOUser.class, email, parameterName);
@@ -170,12 +233,24 @@ public class DAOUserService {
     }
     
     //checks
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static boolean checkByEmail(String email) {
         String parameterName = "email";
         DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
         return (account != null) ? true : false;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: 
+     * Reason:
+     * UserStory/Task-ID:
+     */
     public static boolean checkSessionId(int id) {
         try {
             String parameterName = "sessionId";
