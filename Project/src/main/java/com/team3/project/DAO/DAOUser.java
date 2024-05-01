@@ -73,12 +73,22 @@ public class DAOUser {
         this.workDescription = workDescription;
         this.roles = roles;
     }
-    public DAOUser(String email, String name, String privatDescription, String workDescription, List<DAORole> roles) {
-        this.email = email;
+    /** DO NOT USE
+     * @param name
+     * @param privatDescription
+     * @param workDescription
+     * @param roles
+     * @param sessionId
+     * @param sessionDate
+     */
+    public DAOUser(String name, String privatDescription, String workDescription, List<DAORole> roles,
+                   String sessionId, String sessionDate) {
         this.name = name;
         this.privatDescription = privatDescription;
         this.workDescription = workDescription;
         this.roles = roles;
+        this.sessionId = sessionId;
+        this.sessionDate = sessionDate;
     }
     public DAOUser(String email, String password, String name, String privatDescription, String workDescription, List<DAORole> roles) {
         this.email = email;
@@ -87,6 +97,17 @@ public class DAOUser {
         this.privatDescription = privatDescription;
         this.workDescription = workDescription;
         this.roles = roles;
+    }
+    public DAOUser(String email, String password, String name, String privatDescription, String workDescription, List<DAORole> roles,
+                   String sessionId, String sessionDate) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.privatDescription = privatDescription;
+        this.workDescription = workDescription;
+        this.roles = roles;
+        this.sessionId = sessionId;
+        this.sessionDate = sessionDate;
     }
     /*
     public DAOUser(String name, String privatDescription, String workDescription, int authorization, String sessionId) {
