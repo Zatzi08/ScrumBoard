@@ -196,7 +196,7 @@ public class LogicTest {
         int uid = DAOUserService.getIdByMail("dave@gmail.com");
 
         try{
-            Assertions.assertNull(aservice.getProfileByMail("dave@gmail.com"));
+            Assertions.assertNull(aservice.getProfileByEmail("dave@gmail.com"));
         }catch(AssertionError | Exception e){
             e.printStackTrace();
             pw.append("Fail: non-existent User-Profile-description found\n");
@@ -211,7 +211,7 @@ public class LogicTest {
         }
 
         try{
-            Assertions.assertNotNull(aservice.getProfileByMail("dave@gmail.com"));
+            Assertions.assertNotNull(aservice.getProfileByEmail("dave@gmail.com"));
         }catch(AssertionError | Exception e){
             pw.append("Fail: existent User-Profile-description not found\n");
             pass = false;

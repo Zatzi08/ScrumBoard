@@ -3,16 +3,21 @@ package com.team3.project.service;
 import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.Task;
 import com.team3.project.DAO.DAORole;
+import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOUser;
+import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.Classes.User;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 // Interagiert mit Repository, also create, delete, get, set
 @Service
 public class TaskService {
+
+    private final Enumerations enumerations = new Enumerations();
 
     /* Author: Henry L. Freyschmidt
      * Revisited: /
@@ -97,4 +102,18 @@ public class TaskService {
         //return DAOTaskService.getAll();
         return null; //TODO: DAOTaskService.getAll() fehlt
     }
+
+    public List<Task> getTaskbyUSID(int usId) throws Exception {
+        if (usId == -1) throw new Exception("Null USID");
+        List<DAOTask> tasks = DAOTaskService.getListByUserStoryId(usId);
+        if (tasks.isEmpty()) return null;
+        List<Task> List = new LinkedList<Task>();
+        for (DAOTask task : tasks) {
+            Task toAdd = new Task(task.getTid(),task.getDescription(), enumerations.IntToPriority(task.getPriority()), usId);
+            List.add(toAdd);
+        }
+        return List;
+    }
+
+
 }

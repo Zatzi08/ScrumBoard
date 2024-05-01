@@ -406,19 +406,19 @@ public class HttpRequestTests {
 
     /*  Test ID: HTTP.T10
      *  Author: Lucas Krüger
-     *  Zweck: Testen des Post Requests zum Öffnen einer ProfilPage by UserName
+     *  Zweck: Testen des Post Requests zum Öffnen einer ProfilPage by Email
      */
     @Test
-    void GetProfilPageByName(){
-        pw.append("HTTP-Test-GetProfilPageByNameTest\nTest ID: HTTP.T10\nDate: " + formatter.format(date)+ '\n');
+    void GetProfilPageByEmail(){
+        pw.append("HTTP-Test-GetProfilPageByEmailTest\nTest ID: HTTP.T10\nDate: " + formatter.format(date)+ '\n');
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
-        String UName1 = "Dave";
-        String UName2 = "NotDave";
+        String Email1 = "Test@Mail.com";
+        String Email2 = "NotTest@Mail.com";
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetProfilePageByName", HttpMethod.POST, message, String.class).getStatusCode())
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetProfilePageByEmail", HttpMethod.POST, message, String.class).getStatusCode())
                     .isEqualTo(HttpStatus.BAD_REQUEST);
         } catch (AssertionError e){
             pw.append("Fail: Akzeptiert Bad_Request");
@@ -426,7 +426,7 @@ public class HttpRequestTests {
         }
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetProfilePageByName?SessionId=" + masterID+"&name=" + UName1, HttpMethod.POST, message, String.class)
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetProfilePageByEmail?SessionId=" + masterID+"&email=" + Email1, HttpMethod.POST, message, String.class)
                     .getStatusCode()).isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
@@ -434,7 +434,7 @@ public class HttpRequestTests {
         }
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetProfilePageByName?SessionId=" + masterID+"&name=" + UName2, HttpMethod.POST, message, String.class)
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/GetProfilePageByEmail?SessionId=" + masterID+"&email=" + Email2, HttpMethod.POST, message, String.class)
                     .getStatusCode()).isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
@@ -501,7 +501,7 @@ public class HttpRequestTests {
         }
 
         try {
-            assertTrue(Responce.getBody().contains("<title>Task List</title>"));
+            assertTrue(Responce.getBody().contains("<title>Projektmanager</title>"));
         } catch (AssertionError e){
             pw.append("Fail: Page nicht geladen");
             throw new AssertionError(e);

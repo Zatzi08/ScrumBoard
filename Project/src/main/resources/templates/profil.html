@@ -19,7 +19,7 @@
        User-ID/Task-ID: /
     -->
 <div class="Reiter">
-    <button class="reiterBtn" >Projekt Manager</button>
+    <button type="button" th:Sid="${SessionId}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" class="reiterBtn" >Projekt Manager</button>
     <button class = "reiterBtn"onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Profil </button>
     <button class = "reiterBtn">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
@@ -27,27 +27,27 @@
 </div>
 
 <div id = "profilContainer">
-    <div th:user = "${User}"id = "profilInhalt">
+    <div id = "profilInhalt">
         <button class = "fa fa-edit" th:uname="${User.uname}" th:udesc="${User.userdesc}" th:projectdesc="${User.description}" onclick="toggleProfilMenü(this.getAttribute('uname'), this.getAttribute('udesc'), this.getAttribute('projectdesc'))"></button>
-        <label th:text = "${User.uname}"id = "profilName">Benutzername </label>
-        <label th:text="${User.userdesc}"id = "profilProjektBeschreibung"> Projekt Beschreibung </label>
+        <label th:text = "${User.uname}" id = "profilName">Benutzername </label>
+        <label th:text="${User.userdesc}" id = "profilProjektBeschreibung"> Projekt Beschreibung </label>
         <label id = "rolleProfil"> Rolle <p>.</p> </label>
         <label th:text = "${User.description}" id = "profilPersoBeschreibung"> Persönliche Beschreibung </label>
     </div>
 </div>
 
 <div id = "profilEditMenü">
-<form id = "profilForm" action = "/GetProfileByID" method = "post" autocomplete="off">
+<form id = "profilForm" autocomplete="off">
     <span class = "fa fa-close" onclick="toggleProfilMenü()"></span>
     <label class = "labelProfil">Benutzername:</label>
-    <textarea class = "profilInput" form = "profilForm" placeholder = "Benutzername bearbeiten" name = benutzername style = " height:30px;"></textarea>
+    <textarea id="inputName" class = "profilInput" form = "profilForm" placeholder = "Benutzername bearbeiten" name = benutzername style = " height:30px;"></textarea>
     <label class = "labelProfil">projektbezogene Beschreibung:</label>
-    <textarea class = "profilInput" form = "profilForm" placeholder = "projektbezogene Beschreibung bearbeiten" name = projektBeschreibung></textarea>
+    <textarea id="inputWDesc" class = "profilInput" form = "profilForm" placeholder = "projektbezogene Beschreibung bearbeiten" name = projektBeschreibung></textarea>
     <label class = "labelProfil" >Rolle:</label>
-    <textarea class = "profilInput" form = "profilForm" placeholder = "Rolle bearbeiten" name = rolle style = "height:30px;"></textarea>
+    <textarea id="inputRolle" class = "profilInput" form = "profilForm" placeholder = "Rolle bearbeiten" name = rolle style = "height:30px;"></textarea>
     <label class = "labelProfil">persönliche Beschreibung:</label>
-    <textarea class = "profilInput" form = "profilForm" placeholder = "persönliche Beschreibung bearbeiten" name = persoBeschreibung></textarea>
-    <button type = "submit" id = "profilEditBtn">Speichern</button>
+    <textarea id="inputPDesc" class = "profilInput" form = "profilForm" placeholder = "persönliche Beschreibung bearbeiten" name = persoBeschreibung></textarea>
+    <button type = "button" th:sessionID="${SessionID}" onclick="saveProfile(this.getAttribute('sessionID'))" id = "profilEditBtn">Speichern</button>
 </form>
 </div>
 
@@ -55,6 +55,7 @@
     <script src="js/vendor/what-input.js"></script>
     <script src="js/vendor/foundation.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/communication.js"></script>
     <script type = "text/javascript" src="js/setup.js"></script>
     <script type = "text/javascript" src="js/profil.js"></script>
 </body>
