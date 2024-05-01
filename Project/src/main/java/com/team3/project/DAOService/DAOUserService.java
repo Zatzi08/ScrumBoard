@@ -1,6 +1,9 @@
 package com.team3.project.DAOService;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.team3.project.DAO.DAOAccount;
 import com.team3.project.DAO.DAORole;
@@ -117,7 +120,14 @@ public class DAOUserService {
      * @param roles             roles
      * @return                  true if create was successfull
      */
-    public static boolean createByEMail(String email, String password, String name, String privatDescription, String workDescription, List<DAORole> roles) {
+    public static boolean createByEMail(String email, String password, @Nullable String name, @Nullable String privatDescription, 
+                                        @Nullable String workDescription, @Nullable List<DAORole> roles,
+                                        @Nullable String sessionId, @Nullable String sessionDate, boolean newSessionId) {
+        if (newSessionId) {
+            String createdSessionId = (sessionId != null) ? sessionId : createSessionId();
+            String createdSessionDate = (sessionDate != null) ? sessionDate : createSessionDate();
+            return DAOService.persist(new DAOUser(email, password, name, privatDescription, workDescription, roles, createdSessionId, createdSessionDate));
+        }
         return DAOService.persist(new DAOUser(email, password, name, privatDescription, workDescription, roles));
     }
 
@@ -137,12 +147,20 @@ public class DAOUserService {
      * @return                  true if update was successfull
      */
     public static boolean updateById(int id, @Nullable String name, @Nullable String privatDescription, 
-                                     @Nullable String workDescription, @Nullable List<DAORole> roles) {
+                                     @Nullable String workDescription, @Nullable List<DAORole> roles,
+                                     @Nullable String sessionId, @Nullable String sessionDate,
+                                     boolean newSessionId) {
         try {
             String joinOnAttributeName = "roles";
             DAOUser user = DAOService.getLeftJoinByID(id, DAOUser.class, joinOnAttributeName);
             if (user != null) {
-                user.cloneValues(new DAOUser(name, privatDescription, workDescription, roles));
+                if (newSessionId) {
+                    String createdSessionId = (sessionId != null) ? sessionId : createSessionId();
+                    String createdSessionDate = (sessionDate != null) ? sessionDate : createSessionDate();
+                    user.cloneValues(new DAOUser(name, privatDescription, workDescription, roles, createdSessionId, createdSessionDate));
+                } else {
+                    user.cloneValues(new DAOUser(name, privatDescription, workDescription, roles));
+                }
                 return DAOService.merge(user);
             }
         } catch (Exception e) {
@@ -158,12 +176,14 @@ public class DAOUserService {
      * UserStory/Task-ID:
      */
     /** 
-     * @param id   identifier
-     * @param user DAOUser
+     * @param id           identifier
+     * @param user         DAOUser
+     * @param newSessionId create a newSessionId
      * @return     true if update was successfull
      */
-    static boolean updateById(int id, DAOUser user) {
-        return updateById(id, user.getName(), user.getPrivatDescription(), user.getWorkDescription(), user.getRoles());
+    static boolean updateById(int id, DAOUser user, boolean newSessionId) {
+        return updateById(id, user.getName(), user.getPrivatDescription(), user.getWorkDescription(), user.getRoles(), 
+                          user.getSessionId(), user.getSessionDate(), newSessionId);
     }
     
     /* Author: Tom-Malte Seep
@@ -180,7 +200,6 @@ public class DAOUserService {
         return DAOService.mergeList(users);
     }
 
-    
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: updates by email
@@ -196,7 +215,29 @@ public class DAOUserService {
      * @return                  true if update was successfull
      */
     public static boolean updateByEMail(String email, String name, String privatDescription, String workDescription, List<DAORole> roles) {
-        return updateById(getIdByMail(email), name, privatDescription, workDescription, roles);
+        return updateById(getIdByMail(email), name, privatDescription, workDescription, roles, null, null, false);
+    }
+    
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: updates by email
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /** updates by email
+     * @param email             email
+     * @param name              name
+     * @param privatDescription privatDescription
+     * @param workDescription   workDescription
+     * @param roles             roles
+     * @param sessionId         sessionId
+     * @param sessionDate       sessionDate
+     * @param newSessionId      is creating a new sessionId
+     * @return                  true if update was successfull
+     */
+    public static boolean updateByEMail(String email, String name, String privatDescription, String workDescription, List<DAORole> roles,
+                                        String sessionId, String sessionDate, boolean newSessionId) {
+        return updateById(getIdByMail(email), name, privatDescription, workDescription, roles, null, null, newSessionId);
     }
 
     /* Author: Tom-Malte Seep
@@ -310,7 +351,7 @@ public class DAOUserService {
      * @param sessionId sessionId
      * @return          true if entry with sessionId exists
      */
-    public static boolean checkSessionId(int sessionId) {
+    public static boolean checkSessionId(String sessionId) {
         try {
             String parameterName = "sessionId";
             DAOUser user = DAOService.getSingleByPara(DAOUser.class, sessionId, parameterName);
@@ -321,5 +362,25 @@ public class DAOUserService {
             return false;
         }
         return true;
+    }
+
+
+    private static String createSessionId() {
+        List<String> sessionIds = new ArrayList<String>();
+        DAOUserService.getAll().stream().forEach(user -> {
+            if (user.getSessionId() != null && user.getSessionId() != "") {
+                sessionIds.add(user.getSessionId());
+            }
+        });
+        int minBound = 10000000, maxBound = 100000000;
+        String sessionId = "";
+        while (sessionIds.contains(sessionId)) {
+            sessionId = Integer.toString(new Random().nextInt(minBound, maxBound));
+        }
+        return sessionId;
+    }
+
+    private static String createSessionDate() {
+        return LocalDate.now().toString();
     }
 }

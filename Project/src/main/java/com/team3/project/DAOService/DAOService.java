@@ -163,10 +163,10 @@ class DAOService {
     static <Dao> Dao getSingleLeftJoinByPara(Class<Dao> daoClass, String parameter, String parameterName, String joinOnAttributeName) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
-        String query = "SELECT item FROM " + daoClass.getName() + " AS item LEFT JOIN FETCH item." + joinOnAttributeName + "WHERE item." + parameterName +  " = ?1";
+        String query = "SELECT item FROM " + daoClass.getName() + " AS item LEFT JOIN FETCH item." + joinOnAttributeName + " WHERE item." + parameterName +  " = ?1";
         Dao retrieve;
         try {
-            retrieve = entityManager.createQuery(query, daoClass).setParameter(0, parameter).getSingleResult();
+            retrieve = entityManager.createQuery(query, daoClass).setParameter(1, parameter).getSingleResult();
         } catch (Exception e) {
             retrieve = null;
         } finally {
@@ -345,7 +345,6 @@ class DAOService {
             entityManager.getTransaction().commit();
         } catch (EntityExistsException e) {
             //
-            System.out.println("testeteststst\n"+e);
         } catch (Exception e) {
             //Something went wrong
         } finally {
