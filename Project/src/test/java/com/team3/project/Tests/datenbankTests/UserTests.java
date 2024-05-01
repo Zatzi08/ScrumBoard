@@ -138,6 +138,7 @@ public class UserTests extends BaseTest {
         TestRoles.add(TestRole2);
         try {
             assertTrue(DAOUserService.updateById(DAOUserService.getIdByMail(TestEmail), TestName2, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, false));
+            assertTrue(DAOUserService.updateById(DAOUserService.getIdByMail(TestEmail), TestName2, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, false));
         } catch (Exception e) {
             printWriterAddFailure("did not update");
             throw new AssertionError(e);
@@ -273,6 +274,7 @@ public class UserTests extends BaseTest {
             throw new AssertionError(e);
         }
         try{
+            assertTrue(DAOUserService.checkSessionId("5"));
             assertTrue(DAOUserService.checkSessionId("5"));
         } catch (Exception e) {
             printWriterAddFailure("is not the same");
