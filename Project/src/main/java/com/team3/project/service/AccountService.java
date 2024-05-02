@@ -2,7 +2,10 @@ package com.team3.project.service;
 
 import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.User;
+import com.team3.project.DAO.DAORole;
+import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOAccountService;
+import com.team3.project.DAOService.DAORoleService;
 import com.team3.project.DAOService.DAOUserService;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,7 @@ public class AccountService {
     public boolean checkMail(String Mail){
         return DAOAccountService.checkMail(Mail);
     }
+
     public boolean login(String email, String passwort) throws Exception {
         if( email == null) throw new Exception("Null Email");
         if( passwort == null) throw new Exception("Null Passwort");
@@ -78,24 +82,29 @@ public class AccountService {
         //TODO: DAOUserService.getAllUser() fehlt
     }
 
-    public void savePublicData(String SessionId, String name, String rolle, String uDesc, String pDesc) throws Exception {
-        if (SessionId == null) throw new Exception("id outOfBound");
+    public void savePublicData(String sessionId, String name, String rolle, String wDesc, String pDesc) throws Exception {
+        if (sessionId == null) throw new Exception("id outOfBound");
         if (name == null) throw new Exception("Null Name");
         if (rolle == null) throw new Exception("Null Rolle");
-        if (uDesc == null) throw new Exception("Null uDesc");
+        if (wDesc == null) throw new Exception("Null uDesc");
         if (pDesc == null) throw new Exception("Null pDes");
-        //int id = DAOUserService.getUserBySession(SessionId).getID(); TODO: Implement, wenn DB bereit
-        //DAOAccountService.updatePublicData(id,name,rolle,uDesc,pDesc);
-
+        DAOUser user = DAOUserService.getBySessionId(sessionId);
+        if (user == null) throw new Exception("User not found");
+        DAOUserService.updateByEMail(user.getEmail(), name,pDesc, wDesc, user.getRoles());
     }
 
-    public Profile getProfileByName(String name) throws Exception {
-        if (name == null) throw new Exception("Null Name");
-        return null;//DAOAccountService.getAccountByName(name); TODO: Implement, wenn DB bereit
+    public Profile getProfileByEmail(String email) throws Exception {
+        if (email == null) throw new Exception("Null EMail");
+        DAOUser user = DAOUserService.getById(DAOUserService.getIdByMail(email));
+        if (user == null) throw new Exception("User not found");
+        return new Profile(user.getName(), user.getPrivatDescription(), user.getWorkDescription());
     }
 
-    public Profile getProfileByID(String SessionId) throws Exception {
-        if (SessionId == null) throw new Exception("Null ID");
-        return null;//DAOUserService.getUserBySessionID(SessionId); TODO: Implement, wenn DB bereit
+    public Profile getProfileByID(String sessionId) throws Exception {
+        if (sessionId == null) throw new Exception("Null ID");
+        DAOUser user = DAOUserService.getBySessionId(sessionId);
+        if (user == null) throw new Exception("User not found");
+
+        return new Profile(user.getName(), user.getPrivatDescription(), user.getWorkDescription());
     }
 }

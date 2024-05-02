@@ -10,7 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 public class User extends abstraktDataClasses {
-    private int ID;
     private String name;
     private String privatDescription;
     private String workDescription;

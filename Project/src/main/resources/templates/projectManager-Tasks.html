@@ -47,7 +47,7 @@
                         <label class="userTaskTable-ContentStoryBoard">Board</label>
                         <button class="userTaskTableBody-editBtn" title="Bearbeiten" onclick="toggleEditMenu('editBtn')"><i class="fa fa-edit"></i></button>
                         <span class="closeUserStoryTaskBtn" onclick="deleteTableRow()" title="Löschen">&times;</span>
-                        <label th:text = "${item.name}">Name</label>
+                        <!-- <label th:text = "${item.name}">Name</label> -->
                         <label>Rolle</label>
                         <label th:text = "${item.priority}">Priorität</label>
                         <hr>
@@ -83,7 +83,7 @@
             <input type="datetime-local" id="inputDate" class="inputEdit" placeholder="Abgabefrist">
             <input type="hidden" id = "editId" name="id" value="-1">
             <input type="hidden" id = "editPrio" name="priority" value="1">
-            <button type="button" th:sessionID="${SessionID}" onclick="saveTask(this,this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
+            <button type="button" th:sessionID="${SessionId}" onclick="saveTask(this,this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
         </form>
     </div>
 </div>
@@ -93,6 +93,7 @@
 <script src="js/vendor/what-input.js"></script>
 <script src="js/vendor/foundation.js"></script>
 <script src="js/app.js"></script>
+<script src="js/communication.js"></script>
 <script type = "text/javascript" src="js/setup.js"></script>
 <script type = "text/javascript" src="js/projectManager.js"></script>
 </body>

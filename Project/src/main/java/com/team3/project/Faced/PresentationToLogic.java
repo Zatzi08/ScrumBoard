@@ -14,7 +14,7 @@ public class PresentationToLogic {
     public final WebSessionService webSessionService;
     private static PresentationToLogic instance;
     public TaskBoardService taskBoardService;
-    public UserStoryService UserStoryService;
+
 
     private PresentationToLogic(){
         this.accountService = new AccountService();
@@ -22,7 +22,6 @@ public class PresentationToLogic {
         this.taskService = new TaskService();
         this.webSessionService = new WebSessionService();
         this.taskBoardService = new TaskBoardService();
-        this.UserStoryService = new UserStoryService();
     }
 
     public static PresentationToLogic getInstance(){

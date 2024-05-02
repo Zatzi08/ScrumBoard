@@ -7,6 +7,8 @@ import com.team3.project.Classes.UserStory;
 import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.Task;
 import com.team3.project.Classes.Enumerations;
+import com.team3.project.DAO.DAOUserStory;
+import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.service.AccountService;
 import com.team3.project.service.TaskService;
 import com.team3.project.DAOService.DAOUserStoryService;
@@ -184,17 +186,17 @@ public class LogicTest {
     void createProfile(){
         pw.append("Logik-Test-createProfile\nTest ID: Logic.T3\n" + "Date: " + formatter.format(date)+ '\n');
         AccountService aservice = new AccountService();
-        User user1 = new User("Dave", 123,"","", Enumerations.Role.manager);
-        Profile profil1 = new Profile("Dave", "bin langweilig", "Manager");
 
         try{
-            aservice.createUser(user1);
+            aservice.createUser("dave@gmail.com", "123","Dave","","");
         }catch (Exception e){
             e.printStackTrace();
         }
 
+        int uid = DAOUserService.getIdByMail("dave@gmail.com");
+
         try{
-            Assertions.assertNull(aservice.getProfileByName(user1.getName()).getUserdesc());
+            Assertions.assertNull(aservice.getProfileByEmail("dave@gmail.com"));
         }catch(AssertionError | Exception e){
             e.printStackTrace();
             pw.append("Fail: non-existent User-Profile-description found\n");
@@ -203,26 +205,26 @@ public class LogicTest {
         }
 
         try{
-            aservice.savePublicData("EAIFPH8746531","Dave", "developer", "Langweiler","Entwickler");
+            DAOUserService.updateById(uid, "Dave", "bin langweilig", "Manager", null);
         }catch(Exception e){
             e.printStackTrace();
         }
 
         try{
-            Assertions.assertNotNull(aservice.getProfileByName(user1.getName()).getUserdesc());
+            Assertions.assertNotNull(aservice.getProfileByEmail("dave@gmail.com"));
         }catch(AssertionError | Exception e){
             pw.append("Fail: existent User-Profile-description not found\n");
             pass = false;
             throw new AssertionError(e);
         }
         try{
-            DAOAccountService.deleteByMail(user1.getName()); //FIX: Hab hier Name statt ID genutzt, da die Delete Funktion nur auf Name funktioniert
+            DAOAccountService.deleteByMail("dave@gmail.com"); //FIX: Hab hier Name statt ID genutzt, da die Delete Funktion nur auf Name funktioniert
         }catch( Exception e){
             e.printStackTrace();
         }
 
         try{
-            Assertions.assertNull(aservice.getProfileByName(user1.getName()).getUserdesc());
+            Assertions.assertNull(aservice.getProfileByMail("dave@gmail.com"));
         }catch(AssertionError | Exception e){
             e.printStackTrace();
             pw.append("Fail: non-existent User-Profile-description found\n");
@@ -241,24 +243,24 @@ public class LogicTest {
     void updateProfile(){
         pw.append("Logik-Test-updateUserStory\nTest ID: Logic.T4\n" + "Date: " + formatter.format(date)+ '\n');
         AccountService aservice = new AccountService();
-        User user1 = new User("Dave", 123,"","", Enumerations.Role.manager);
-        Profile profil1 = new Profile("Dave", "bin langweilig", "Manager");
         String newdescription = "new Manager";
 
         try{
-            aservice.createUser(user1);
+            aservice.createUser("dave@gmx.de", "passw","Dave" ,"","");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        int uid = DAOUserService.getIdByMail("dave@gmx.de");
+
+        try{
+            DAOUserService.updateById(uid, "Dave", "Langweiler", "nett", null);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            aservice.savePublicData("EAIFPH8746531","Dave", "Langweiler", "nett","Manager");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        try{
-            Assertions.assertNotEquals(aservice.getProfileByName(user1.getName()).getUserdesc(), newdescription);
+            Assertions.assertNotEquals(aservice.getProfileByMail("dave@gmx.de").getUserdesc(), newdescription);
         }catch (AssertionError | Exception e){
             e.printStackTrace();
             pw.append("Fail: User-Profile desciption is wrong\n");
@@ -267,13 +269,13 @@ public class LogicTest {
         }
 
         try{
-            aservice.savePublicData("EAIFPH8746531","Dave", "Langweiler", newdescription,"Manager");
+            DAOUserService.updateById(uid, "Dave", newdescription, "nett", null);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            Assertions.assertEquals(aservice.getProfileByName(user1.getName()).getUserdesc(), newdescription);
+            Assertions.assertEquals(aservice.getProfileByMail("dave@gmx.de").getUserdesc(), newdescription);
         }catch (AssertionError | Exception e){
             e.printStackTrace();
             pw.append("Fail: User-Profile-Description does not contain updated value\n");

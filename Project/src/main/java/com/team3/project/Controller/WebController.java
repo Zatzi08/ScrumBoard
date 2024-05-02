@@ -1,7 +1,6 @@
 package com.team3.project.Controller;
 
 import com.team3.project.Classes.Profile;
-import com.team3.project.Classes.UserStory;
 import com.team3.project.Faced.PresentationToLogic;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -122,9 +121,10 @@ public class WebController {
     public ModelAndView login(@RequestParam(value = "EMail", required = true) String EMail,
                         @RequestParam(value = "Passwort", required = true) String Passwort) {
         try{
-            String id = MasterID; // TODO: getSession, oder Session als Rückgabe von Login
-            if( presentationToLogic.accountService.login(EMail, Passwort))
+            if( presentationToLogic.accountService.login(EMail, Passwort)) {
+                String id = presentationToLogic.webSessionService.getSessionID(EMail);
                 return ProjectManager(id);
+            }
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -133,7 +133,7 @@ public class WebController {
 
     /* Author: Lucas Krüger
      * Revisited: /
-     * Funktion: Übergabe von Daten als UserStory.class an Logic/Data
+     * Funktion: Übergabe von Daten für UserStory an Logic/Data
      * Grund: Übergeben von UserStorys
      * UserStory/Task-ID:
      */
@@ -166,7 +166,8 @@ public class WebController {
         try {
             if (presentationToLogic.webSessionService.verify(id)) {
                 ModelAndView modelAndView = new ModelAndView("projectManager");
-                modelAndView.addObject("Storys", presentationToLogic.userStoryService.getAllUserStorys()).addObject("SessionID", id);
+                modelAndView.addObject("Storys", presentationToLogic.userStoryService.getAllUserStorys())
+                        .addObject("SessionID", id);
                 return modelAndView;
             }
         } catch (Exception e){
@@ -186,7 +187,7 @@ public class WebController {
     private ModelAndView RequestRestCode(@RequestParam(value = "email",required = true) String email){
         if (presentationToLogic.accountService.checkMail(email)) {
             try {
-                String code = presentationToLogic.webSessionService.GeneratCode(1);
+                String code = presentationToLogic.webSessionService.generatCode(1);
                 ModelAndView modelAndView = new ModelAndView("neuesPasswort")
                         .addObject("Code", code);
                 return modelAndView;
@@ -195,7 +196,9 @@ public class WebController {
                 return error(e);
             }
         }
-        return new ModelAndView("passwortForgot").addObject("error", true).addObject("EMail", email);
+        return new ModelAndView("passwortForgot")
+                .addObject("error", true)
+                .addObject("EMail", email);
     }
 
     /* Author: Lucas Krüger
@@ -247,33 +250,37 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: P1.B1
      */
-    @RequestMapping(value = "/GetProfilePage", method = RequestMethod.POST)
+    @RequestMapping(value = "/GetProfilePage")
     private ModelAndView GetProfilePage(@RequestParam(value = "SessionId",required = true) String SessionId){
         try{
             if (presentationToLogic.webSessionService.verify(SessionId)){
                 Profile user = presentationToLogic.accountService.getProfileByID(SessionId);
-                if (user != null) return new ModelAndView("profil").addObject("User", user);
+                if (user != null) return new ModelAndView("profil")
+                        .addObject("User" , user)
+                        .addObject("SessionId", SessionId);
             }
         } catch (Exception e){
             e.printStackTrace();
             return error(e);
         }
-        return ProjectManager(SessionId);
+        return index();
     }
 
     /* Author: Lucas Krüger
      * Revisited: /
-     * Funktion: Ausgeben aller Profile gleichen Namens
+     * Funktion: Ausgeben aller Profile nach E-Mail
      * Grund: /
      * UserStory/Task-ID: P1.B1
      */
-    @RequestMapping(value = "/GetProfilePageByName", method = RequestMethod.POST)
-    private ModelAndView GetProfilePageByName(@RequestParam(value = "name",required = true) String name,
+    @RequestMapping(value = "/GetProfilePageByEmail", method = RequestMethod.POST)
+    private ModelAndView GetProfilePageByName(@RequestParam(value = "email",required = true) String email,
                                               @RequestParam(value = "SessionId",required = true) String SessionId){
         try{
             if (presentationToLogic.webSessionService.verify(SessionId)){
-                Profile user = presentationToLogic.accountService.getProfileByName(name);
-                if (user != null) return new ModelAndView("profil").addObject("User", user);
+                Profile user = presentationToLogic.accountService.getProfileByEmail(email);
+                if (user != null) return new ModelAndView("profil")
+                        .addObject("User", user)
+                        .addObject("SessionId", SessionId);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -288,15 +295,15 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: P2.B1
      */
-    @RequestMapping(value = "SaveUserData", method = RequestMethod.POST)
+    @RequestMapping(value = "/SaveUserData", method = RequestMethod.POST)
     private ModelAndView SaveUserData(@RequestParam(value = "SessionId",required = true) String SessionId,
                                 @RequestParam(value = "uName", required = true) String name,
                                 @RequestParam(value = "rolle",required = true) String rolle,
-                                @RequestParam(value = "uDesc",required = true) String uDesc,
+                                @RequestParam(value = "wDesc",required = true) String wDesc,
                                 @RequestParam(value = "pDesc",required = true) String pDesc){
         try {
             if (presentationToLogic.webSessionService.verify(SessionId)){
-                presentationToLogic.accountService.savePublicData(SessionId, name, rolle, uDesc, pDesc);
+                presentationToLogic.accountService.savePublicData(SessionId, name, rolle, wDesc, pDesc);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -336,7 +343,7 @@ public class WebController {
                           @RequestParam(value = "TLID", required = true, defaultValue = "-1") int TLId){
         try {
             if (presentationToLogic.webSessionService.verify(SessionId)){
-                return new ModelAndView("TaskList")
+                return new ModelAndView("projectManager-Tasks")
                         .addObject("SessionId",SessionId)
                         .addObject("Tasks", presentationToLogic.taskService.getAllTask()); // TODO: GetAllTaskByTLID
             }
@@ -355,12 +362,12 @@ public class WebController {
      */
     @RequestMapping(value = "/GetTaskByUSID", method = RequestMethod.POST)
     private ModelAndView GetTaskByUSID(@RequestParam(value = "SessionId",required = true) String SessionId,
-                                       @RequestParam(value = "USID", required = true, defaultValue = "-1") int TLId){
+                                       @RequestParam(value = "USID", required = true, defaultValue = "-1") int USId){
         try {
             if (presentationToLogic.webSessionService.verify(SessionId)){
-                return new ModelAndView("TaskList")
+                return new ModelAndView("projectManager-TasksZuUserstory")
                         .addObject("SessionId",SessionId)
-                        .addObject("Tasks", presentationToLogic.taskService.getAllTask()); // TODO: GetAllTaskByUSID
+                        .addObject("Tasks", presentationToLogic.taskService.getTaskbyUSID(USId));
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -378,14 +385,12 @@ public class WebController {
     // TODO: Fix tlid
     @RequestMapping(value = "/SaveTask", method = RequestMethod.POST)
     private ResponseEntity<HttpStatus> SaveTask(@RequestParam(value = "SessionId",required = true) String SessionId,
-                                  @RequestParam(value = "TID",required = true, defaultValue = "-1")int tid,
-                                  @RequestParam(value = "USID",required = true, defaultValue = "-1") int usid,
-                                  @RequestParam(value = "TLID", required = false, defaultValue = "-1") int tlid,
+                                  @RequestParam(value = "TID",required = true, defaultValue = "-1") int tid,
                                   @RequestParam(value = "description", required = true) String desc,
                                   @RequestParam(value ="priority", required = true) int prio){
         try{
             if (presentationToLogic.webSessionService.verify(SessionId)){
-                presentationToLogic.taskService.saveTask(tid,desc,prio, usid);
+                presentationToLogic.taskService.saveTask(tid,desc,prio, 1);
                 return new ResponseEntity<HttpStatus>(HttpStatus.OK);
             }
         } catch(Exception e){
@@ -402,18 +407,18 @@ public class WebController {
      * UserStory/Task-ID: // Todo: Place ID
      */
     @RequestMapping(value = "/deleteTask", method = RequestMethod.POST)
-    private ResponseEntity deleteTask(@RequestParam(value = "SessionId", required = true) String Sessionid,
+    private ResponseEntity<HttpStatus> deleteTask(@RequestParam(value = "SessionId", required = true) String Sessionid,
                                     @RequestParam(value = "TID", required = true, defaultValue = "-1") int tid){
         try {
             if (presentationToLogic.webSessionService.verify(Sessionid)){
                 presentationToLogic.taskService.deleteTask(tid);
-                return new ResponseEntity(HttpStatus.OK);
+                return new ResponseEntity<HttpStatus>(HttpStatus.OK);
             }
         } catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
+        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
     }
 
     /* Author: Lucas Krüger
@@ -423,18 +428,18 @@ public class WebController {
      * UserStory/Task-ID: // Todo: Place ID
      */
     @RequestMapping(value = "/deleteUS", method = RequestMethod.POST)
-    private ResponseEntity deleteUS(@RequestParam(value = "SessionId", required = true) String Sessionid,
+    private ResponseEntity<HttpStatus> deleteUS(@RequestParam(value = "SessionId", required = true) String Sessionid,
                                     @RequestParam(value = "ID", required = true, defaultValue = "-1") int id){
         try {
             if (presentationToLogic.webSessionService.verify(Sessionid)){
-                presentationToLogic.UserStoryService.deleteUserStory(id);
-                return new ResponseEntity(HttpStatus.OK);
+                presentationToLogic.userStoryService.deleteUserStory(id);
+                return new ResponseEntity<HttpStatus>(HttpStatus.OK);
             }
         } catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
+        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
     }
 
     /* Author: Lucas Krüger
@@ -473,7 +478,14 @@ public class WebController {
     }*/
 
     @RequestMapping("/test")
-    private ModelAndView test(){
-        return new ModelAndView("profil");
+    private ModelAndView test() {
+        try {
+            return new ModelAndView("profil")
+                    .addObject("User" , presentationToLogic.accountService.getProfileByEmail("Test@Mail.com"))
+                    .addObject("SessionID", MasterID);
+        } catch (Exception e){
+            e.printStackTrace();
+            return error(e);
+        }
     }
 }
