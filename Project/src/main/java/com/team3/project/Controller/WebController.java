@@ -255,7 +255,9 @@ public class WebController {
         try{
             if (presentationToLogic.webSessionService.verify(SessionId)){
                 Profile user = presentationToLogic.accountService.getProfileByID(SessionId);
-                if (user != null) return new ModelAndView("profil").addObject("User" , user).addObject("SessionId", SessionId);//.addObject("User", presentationToLogic.accountService.getProfileByID(SessionId));
+                if (user != null) return new ModelAndView("profil")
+                        .addObject("User" , user)
+                        .addObject("SessionId", SessionId);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -276,7 +278,9 @@ public class WebController {
         try{
             if (presentationToLogic.webSessionService.verify(SessionId)){
                 Profile user = presentationToLogic.accountService.getProfileByEmail(email);
-                if (user != null) return new ModelAndView("profil").addObject("User", user);
+                if (user != null) return new ModelAndView("profil")
+                        .addObject("User", user)
+                        .addObject("SessionId", SessionId);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -295,11 +299,11 @@ public class WebController {
     private ModelAndView SaveUserData(@RequestParam(value = "SessionId",required = true) String SessionId,
                                 @RequestParam(value = "uName", required = true) String name,
                                 @RequestParam(value = "rolle",required = true) String rolle,
-                                @RequestParam(value = "uDesc",required = true) String uDesc,
+                                @RequestParam(value = "wDesc",required = true) String wDesc,
                                 @RequestParam(value = "pDesc",required = true) String pDesc){
         try {
             if (presentationToLogic.webSessionService.verify(SessionId)){
-                presentationToLogic.accountService.savePublicData(SessionId, name, rolle, uDesc, pDesc);
+                presentationToLogic.accountService.savePublicData(SessionId, name, rolle, wDesc, pDesc);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -381,14 +385,12 @@ public class WebController {
     // TODO: Fix tlid
     @RequestMapping(value = "/SaveTask", method = RequestMethod.POST)
     private ResponseEntity<HttpStatus> SaveTask(@RequestParam(value = "SessionId",required = true) String SessionId,
-                                  @RequestParam(value = "TID",required = true, defaultValue = "-1")int tid,
-                                  @RequestParam(value = "USID",required = true, defaultValue = "-1") int usid,
-                                  @RequestParam(value = "TLID", required = false, defaultValue = "-1") int tlid,
+                                  @RequestParam(value = "TID",required = true, defaultValue = "-1") int tid,
                                   @RequestParam(value = "description", required = true) String desc,
                                   @RequestParam(value ="priority", required = true) int prio){
         try{
             if (presentationToLogic.webSessionService.verify(SessionId)){
-                presentationToLogic.taskService.saveTask(tid,desc,prio, usid);
+                presentationToLogic.taskService.saveTask(tid,desc,prio, 1);
                 return new ResponseEntity<HttpStatus>(HttpStatus.OK);
             }
         } catch(Exception e){

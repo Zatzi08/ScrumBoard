@@ -14,16 +14,18 @@ function SwitchToTasks(sessionID) {
     document.location.assign(url)
 }
 
-
+function SwitchToTasksbyUSID(sessionID, USID) {
+    let url = '/GetAllTaskByUSID?SessionId=' + sessionID + '&USID=' + USID
+    document.location.assign(url)
+}
 
 // Post Requests
 function saveTask($this, sessionID) {
     let id = document.getElementById('editId').value;
-    name = document.getElementById('inputName').value;
     let description = document.getElementById('inputDesc').value;
     let priority = document.getElementById('editPrio').value;
 
-    fetch('/saveTask?TID=' + id + '&SessionId=' + sessionID + '&name=' + name + '&description=' + description + '&priority=' + priority, {
+    fetch('/SaveTask?TID=' + id + '&SessionId=' + sessionID + '&description=' + description + '&priority=' + priority, {
         method: 'POST',
     }).then(r => {
         if (r.ok) {
@@ -38,7 +40,7 @@ function saveUS($this, sessionID) {
     description = document.getElementById('inputDesc').value;
     priority = document.getElementById('editPrio').value;
 
-    fetch('/SaveUserData?SessionId=' + sessionID + '&uName=' + name + '&uDesc=' + description + "&pDesc=" + wdescription + "&rolle=" + rolle, {
+    fetch('/addStory?ID=' + id + '&SessionId=' + sessionID + '&name=' + name + '&description=' + description + '&priority=' + priority, {
         method: 'POST',
     }).then(r => {
         if (r.ok) {
@@ -52,9 +54,8 @@ function saveProfile(sessionID) {
     pdescription = document.getElementById('inputPDesc').value;
     wdescription = document.getElementById('inputWDesc').value;
     rolle = document.getElementById('inputRolle').value;
-
-    fetch('/addStory?ID=' + id + '&SessionId=' + sessionID + '&name=' + name + '&description=' + description + '&priority=' + priority, {
-        method: 'POST',
+    fetch('/SaveUserData?SessionId=' + sessionID + '&uName=' + name + '&wDesc=' + wdescription + "&pDesc=" + pdescription + "&rolle=" + rolle,{
+        method: 'Post',
     }).then(r => {
         if (r.ok) {
             location.reload();

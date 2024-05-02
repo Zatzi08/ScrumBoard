@@ -89,8 +89,8 @@ public class AccountService {
         if (wDesc == null) throw new Exception("Null uDesc");
         if (pDesc == null) throw new Exception("Null pDes");
         DAOUser user = DAOUserService.getBySessionId(sessionId);
+        if (user == null) throw new Exception("User not found");
         DAOUserService.updateByEMail(user.getEmail(), name,pDesc, wDesc, user.getRoles());
-
     }
 
     public Profile getProfileByEmail(String email) throws Exception {
