@@ -7,6 +7,7 @@ import com.team3.project.Classes.UserStory;
 import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.Task;
 import com.team3.project.Classes.Enumerations;
+import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.service.AccountService;
@@ -86,11 +87,11 @@ public class LogicTest {
             });
         }
 
-        List<User> pList = accService.getAllUser();
+        List<DAOUser> pList = DAOUserService.getAll();
         while(pList != null){
-            if(pList.get(0).getPrivatDescription()!=null){
+            if(pList.get(0).getPrivatDescription()!=null || pList.get(0).getWorkDescription()!=null){
                 pw.append("Profile: not empty Database\n");
-                accService.testDeleteProfile(pList.get(0).getID());
+                DAOUserService.updateById(pList.get(0).getUid(), pList.get(0).getName(),"","",null,pList.get(0).getSessionId(), pList.get(0).getSessionDate(), false);
                 pList.remove(pList.get(0));
             }
         }
@@ -203,9 +204,9 @@ public class LogicTest {
             pass = false;
             throw new AssertionError(e);
         }
-
+        //TODO: sessionID, sessionDate sollen nicht null sein. Woher kann ich SessionDate kriegen?
         try{
-            DAOUserService.updateById(uid, "Dave", "bin langweilig", "Manager", null);
+            DAOUserService.updateById(uid, "Dave", "bin langweilig", "Manager", null,null, null, true);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -224,7 +225,7 @@ public class LogicTest {
         }
 
         try{
-            Assertions.assertNull(aservice.getProfileByMail("dave@gmail.com"));
+            Assertions.assertNull(aservice.getProfileByEmail("dave@gmail.com"));
         }catch(AssertionError | Exception e){
             e.printStackTrace();
             pw.append("Fail: non-existent User-Profile-description found\n");
@@ -252,15 +253,16 @@ public class LogicTest {
         }
 
         int uid = DAOUserService.getIdByMail("dave@gmx.de");
+        String sessionID = DAOUserService.getById(uid).getSessionId();
 
         try{
-            DAOUserService.updateById(uid, "Dave", "Langweiler", "nett", null);
+            DAOUserService.updateById(uid, "Dave", "Langweiler", "nett", null, sessionID, null, false);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            Assertions.assertNotEquals(aservice.getProfileByMail("dave@gmx.de").getUserdesc(), newdescription);
+            Assertions.assertNotEquals(aservice.getProfileByEmail("dave@gmx.de").getUserdesc(), newdescription);
         }catch (AssertionError | Exception e){
             e.printStackTrace();
             pw.append("Fail: User-Profile desciption is wrong\n");
@@ -269,13 +271,13 @@ public class LogicTest {
         }
 
         try{
-            DAOUserService.updateById(uid, "Dave", newdescription, "nett", null);
+            DAOUserService.updateById(uid, "Dave", newdescription, "nett", null, sessionID, null, false);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            Assertions.assertEquals(aservice.getProfileByMail("dave@gmx.de").getUserdesc(), newdescription);
+            Assertions.assertEquals(aservice.getProfileByEmail("dave@gmx.de").getUserdesc(), newdescription);
         }catch (AssertionError | Exception e){
             e.printStackTrace();
             pw.append("Fail: User-Profile-Description does not contain updated value\n");
