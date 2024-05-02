@@ -206,7 +206,7 @@ public class LogicTest {
         }
         //TODO: sessionID, sessionDate sollen nicht null sein. Woher kann ich SessionDate kriegen?
         try{
-            DAOUserService.updateById(uid, "Dave", "bin langweilig", "Manager", null,null, null, true);
+            DAOUserService.updateById(uid, "Dave", "bin langweilig", "Manager", null,DAOUserService.getById(uid).getSessionId(), DAOUserService.getById(uid).getSessionDate(), true);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -256,7 +256,7 @@ public class LogicTest {
         String sessionID = DAOUserService.getById(uid).getSessionId();
 
         try{
-            DAOUserService.updateById(uid, "Dave", "Langweiler", "nett", null, sessionID, null, false);
+            DAOUserService.updateById(uid, "Dave", "Langweiler", "nett", null, sessionID, DAOUserService.getBySessionId(sessionID).getSessionDate(), false);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -271,7 +271,7 @@ public class LogicTest {
         }
 
         try{
-            DAOUserService.updateById(uid, "Dave", newdescription, "nett", null, sessionID, null, false);
+            DAOUserService.updateById(uid, "Dave", newdescription, "nett", null, sessionID, DAOUserService.getBySessionId(sessionID).getSessionDate(), false);
         }catch (Exception e){
             e.printStackTrace();
         }
