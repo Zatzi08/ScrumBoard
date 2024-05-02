@@ -3,7 +3,11 @@ package com.team3.project.DAOService;
 import java.util.List;
 
 import com.team3.project.DAO.DAOTask;
+import com.team3.project.DAO.DAOTaskList;
+import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAO.DAOUserStory;
+
+import io.micrometer.common.lang.Nullable;
 
 public class DAOTaskService {
     //gets
@@ -115,6 +119,58 @@ public class DAOTaskService {
     //updates
     /* Author: Tom-Malte Seep
      * Revisited: /
+     * Function: updates an entry
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /** updates a DAOTask
+     * @param id          identifier
+     * @param description description
+     * @param priority    priority
+     * @param doDate      doDate
+     * @param timeNeededG timeNeededG
+     * @param timeNeededA timeNeededA
+     * @param taskList    DAOTaskList
+     * @param userStory   DAOUserStory
+     * @param users       List of DAOUsers
+     * @return            true if update is successfull
+     */
+    public static boolean updateById(int id, @Nullable String description, int priority, @Nullable String doDate, 
+                                     @Nullable String timeNeededG, @Nullable String timeNeededA, @Nullable DAOTaskList taskList, 
+                                     @Nullable DAOUserStory userStory, @Nullable List<DAOUser> users) {
+        DAOTask task = DAOService.getByID(id, DAOTask.class);
+        task.cloneTask(new DAOTask(description, priority, doDate, timeNeededG, timeNeededA, taskList, userStory, users));
+        return DAOService.merge(task);
+    }
+
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: updates an entry
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /** updates a DAOTask
+     * @param id          identifier
+     * @param description description
+     * @param doDate      doDate
+     * @param timeNeededG timeNeededG
+     * @param timeNeededA timeNeededA
+     * @param taskList    DAOTaskList
+     * @param userStory   DAOUserStory
+     * @param users       List of DAOUsers
+     * @return            true if update is successfull
+     */
+    public static boolean updateById(int id, @Nullable String description, @Nullable String doDate, 
+                                     @Nullable String timeNeededG, @Nullable String timeNeededA, @Nullable DAOTaskList taskList, 
+                                     @Nullable DAOUserStory userStory, @Nullable List<DAOUser> users) {
+        DAOTask task = DAOService.getByID(id, DAOTask.class);
+        task.cloneTask(new DAOTask(description, id, doDate, timeNeededG, timeNeededA, taskList, userStory, users));
+        return DAOService.merge(task);
+    }
+
+
+    /* Author: Tom-Malte Seep
+     * Revisited: /
      * Function: adds a userStoryId to a task
      * Reason:
      * UserStory/Task-ID:
@@ -143,7 +199,25 @@ public class DAOTaskService {
      */
     public static boolean updateDescriptonById(int id, String description) {
         DAOTask task = DAOService.getByID(id, DAOTask.class);
-        task.setDescription(description);;
+        task.setDescription(description);
+        return DAOService.merge(task);
+    }
+
+    
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: updates the priority
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /** updates the priority
+     * @param id       identifier
+     * @param priority priority
+     * @return         true if update was successfull
+     */
+    public static boolean updatePriorityById(int id, int priority) {
+        DAOTask task = DAOService.getByID(id, DAOTask.class);
+        task.setPriority(priority);
         return DAOService.merge(task);
     }
 

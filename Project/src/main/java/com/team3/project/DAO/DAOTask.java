@@ -63,4 +63,44 @@ public class DAOTask {
         /*this.taskList = taskList;*/
         this.userStory = userStory;
     }
+    public DAOTask(String description, int priority, String doDate, 
+                   String timeNeededG, String timeNeededA, DAOTaskList taskList, 
+                   DAOUserStory userStory, List<DAOUser> users) {
+        this.description = description;
+        this.priority = priority;
+        this.doDate = doDate;
+        this.timeNeededG = timeNeededG;
+        this.timeNeededA = timeNeededA;
+        this.taskList = taskList;
+        this.userStory = userStory;
+        this.users = users;
+    }
+
+
+    public void cloneTask(DAOTask task) {
+        if (task.description != null) {
+            this.description = task.description;
+        }
+        if (task.priority > 0) {
+            this.priority = task.priority;
+        }
+        if (task.doDate != null) {
+            this.doDate = task.doDate;
+        }
+        if (task.timeNeededG != null) {
+            this.timeNeededG = task.timeNeededG;
+        }
+        if (task.timeNeededA != null) {
+            this.timeNeededA = task.timeNeededA;
+        }
+        if (task.taskList != null) {
+            this.taskList = task.taskList;
+        }
+        if (task.userStory != null) {
+            this.userStory = task.userStory;
+        }
+        if (task.users != null) {
+            this.users = task.users;
+        }
+    }
 }
