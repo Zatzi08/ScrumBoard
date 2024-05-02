@@ -2,12 +2,8 @@ package com.team3.project.service;
 
 import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.Task;
-import com.team3.project.DAO.DAORole;
 import com.team3.project.DAO.DAOTask;
-import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOTaskService;
-import com.team3.project.DAOService.DAOUserService;
-import com.team3.project.Classes.User;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -55,23 +51,19 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public void saveTask(int taskID, String description, int priority, int userID ) throws Exception{
-        if (description == null | priority > 4 | priority < 0 | userID == -1){
+    public void saveTask(int taskID, String description, int priority, int USID ) throws Exception{
+        if (description == null | priority > 4 | priority < 0 | USID == -1){
             throw new Exception("invalid Arguments");
         }
         if(taskID == -1){
-            //DAOTaskService.createTask(t);
+            DAOTaskService.create(description,USID);
         }else{
-            /*if (DAOTaskService.getByID(task.getID()) != null){
-                DAOTaskService.updateName(task.getID(),task.getName());
-                DAOTaskService.updateDescription(task.getID(),task.getDescription());
-                DAOTaskService.updatePriority(task.getID(), task.getPriority());
-            }*/
-            //TODO: DAOTaskService.updateName(ID,Name) fehlt
-            //TODO: DAOTaskService.updateDescription(ID,Description) fehlt
-            //TODO: DAOTaskService.updatePriority(ID,Priority) fehlt
+            DAOTask task = DAOTaskService.getById(taskID);
+            if (task != null){
+                DAOTaskService.updateDescriptonById(taskID,description);
+                DAOTaskService.updateUserStoryById(taskID,USID);
+            }
         }
-        //return createTaskDB(description,priority);
     }
 
     /* Author: Henry L. Freyschmidt
@@ -99,8 +91,17 @@ public class TaskService {
      * UserStory/Task-ID: T1.B1
      */
     public List<Task> getAllTask(){
-        //return DAOTaskService.getAll();
-        return null; //TODO: DAOTaskService.getAll() fehlt
+        List<DAOTask> tasks = DAOTaskService.getAll();
+        if (tasks != null) {
+            List<Task> taskList = new LinkedList<>();
+            Enumerations prio = new Enumerations();
+            for (DAOTask task : tasks) {
+                Task toAdd = new Task(task.getTid(),task.getDescription(), prio.IntToPriority(task.getPriority()), task.getUserStory().getId());
+                taskList.add(toAdd);
+            }
+            return taskList;
+        }
+        return null;
     }
 
     public List<Task> getTaskbyUSID(int usId) throws Exception {

@@ -31,7 +31,7 @@ public class WebSessionService {
         if (user.getSessionId() == null){
             String sessionID = generatCode(0);
               //TODO: Make SessionIDs greater again / lass die Schleife in nem Error abbrechen nach x Wiederholungen
-            while (!DAOUserService.checkSessionId(sessionID)){
+            while (DAOUserService.checkSessionId(sessionID)){
                 sessionID = generatCode(0);
             }
             DAOUserService.updateSessionIdById(user.getUid(),sessionID, dformat.format(currentDate));
