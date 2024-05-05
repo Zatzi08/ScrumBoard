@@ -22,7 +22,12 @@ public class UserStoryService {
      */
     public UserStory getUserStory(int userStoryID) throws Exception {
         if (userStoryID == -1) throw new Exception("Null UserStoryID");
-        return null; //logicToData.daoUserStoryService.getByID(UserStoryID);
+
+        DAOUserStory story = DAOUserStoryService.getById(userStoryID);
+        if (story == null) throw new Exception("UserStory not found");
+        Enumerations enume = new Enumerations();
+
+        return new UserStory(story.getName(), story.getDescription(), story.getPriority(), story.getId());
     }
 
     /* Author: Lucas Krüger

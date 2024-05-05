@@ -38,7 +38,7 @@ public class AccountService {
         if( email == null) throw new Exception("Null Email");
         if( passwort == null) throw new Exception("Null Passwort");
         if( username == null) throw new Exception("Null Username");
-        return DAOAccountService.create(email,passwort);
+        return DAOUserService.createByEMail(email,passwort, username,null,null,null, null, null, false);
     }
 
 
@@ -61,6 +61,7 @@ public class AccountService {
     public void createUser(User user) throws Exception{
 
     }
+
     public void deleteProfile(String sessionID) throws Exception{
         /* user =  DAOUserService.getUserBySessionID(sessionID);
         if(user.getDescription() == null){
@@ -70,12 +71,13 @@ public class AccountService {
          }
         */
     }
+
     public void testDeleteProfile(int userID){
         /*
         * DAOUserService.updateUname(null,userID);
         * DAOUserService.updateUserDescription(null, userID);
         * DAOUserService.updateDescription(null, userID);
-        * */
+        */
     } // Für die Tests notwendig, da in Tests keine SessionID
 
     public List<User> getAllUser(){

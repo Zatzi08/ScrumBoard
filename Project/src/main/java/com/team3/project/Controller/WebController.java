@@ -378,7 +378,7 @@ public class WebController {
                 return new ModelAndView("projectManager-TasksZuUserstory")
                         .addObject("SessionId",SessionId)
                         .addObject("Tasks", presentationToLogic.taskService.getTaskbyUSID(USId))
-                        .addObject("StoryID", USId);
+                        .addObject("StoryName", presentationToLogic.userStoryService.getUserStory(USId).getName());
             }
         } catch (Exception e){
             e.printStackTrace();

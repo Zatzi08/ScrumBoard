@@ -21,7 +21,6 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-
     public Task getTaskByID(int id) throws Exception{
         // Task t =  DAOTaskService.getTaskbyID(id);
         // if (t == null){ throw new Exception("Task not found");}
@@ -36,7 +35,6 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-
     public Task getTaskByDescription(String description) throws Exception{
         // DAOTask t =  DAOTaskService.getTaskbyDescription(description);
         // if (t == null){ throw new Exception("Task not found");}
