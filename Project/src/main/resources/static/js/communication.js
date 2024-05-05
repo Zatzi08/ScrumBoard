@@ -72,3 +72,13 @@ function deleteUS(usid, sessionID){
         }
     });
 }
+
+function deleteT(Tid, sessionID){
+    fetch('/deleteTask?TID=' + Tid.toString() + '&SessionId=' + sessionID, {
+        method: 'POST',
+    }).then(r => {
+        if (r.ok) {
+            location.reload()
+        }
+    });
+}

@@ -148,3 +148,9 @@ function deleteTableRow() {
 
     }
 }
+
+function toggleEditBoxT(id, TId, description){
+    toggleEditMenu(id);
+    document.getElementById("inputDesc").textContent = description;
+    document.getElementById("editId").value = TId;
+}

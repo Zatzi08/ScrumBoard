@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class HttpRequestTests {
     @LocalServerPort
     private int port;
-    private String masterID = "EAIFPH8746531";
+    private final String masterID = "EAIFPH8746531";
     @Autowired
     public TestRestTemplate restTemplate;
 
@@ -67,7 +67,7 @@ public class HttpRequestTests {
      */
     @Test
     void LoginTest(){
-        pw.append("HTTP-Test-LoginTest\nTest ID: HTTP.T1\nDate: " + formatter.format(date)+ '\n');
+        pw.append("HTTP-Test-LoginTest\nTest ID: HTTP.T1\nDate: ").append(formatter.format(date)).append(String.valueOf('\n'));
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
@@ -376,7 +376,7 @@ public class HttpRequestTests {
 
     /*  Test ID: HTTP.T9
      *  Author: Lucas Krüger
-     *  Zweck: Testen des Post Requests zum Öffnen einer ProfilPage by UserID/SessionID
+     *  Zweck: Testen des Post Requests zum Öffnen einer ProfilPage by UserID/SessionId
      */
     @Test
     void GetProfilPageByID(){
