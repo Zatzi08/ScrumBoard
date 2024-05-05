@@ -73,14 +73,11 @@ public class TaskService {
      * UserStory/Task-ID: /
      */
     public void deleteTask(int taskID) throws Exception{
-        /*if(taskID == -1){
+        if(taskID == -1){
         throw new Exception("not valid TaskID");
         }else{
-        *  DAOTaskService.deleteTask(taskID);
-        *
-         }*/
-        //TODO: DAOUserService.getRoleBySessionID(sessionID) fehlt
-        //TODO: DAOTaskService.deleteTask(taskID) fehlt
+            DAOTaskService.deleteById(taskID);
+        }
     }
 
 

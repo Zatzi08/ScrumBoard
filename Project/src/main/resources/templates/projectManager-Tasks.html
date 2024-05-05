@@ -20,7 +20,7 @@
     -->
 <div class="Reiter">
     <button class="reiterBtn" onmouseover = "hover('reiterBtn')" onmouseleave="hoverLeave('reiterBtn')" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
-    <button class = "reiterBtn">Profil </button>
+    <button class = "reiterBtn" th:Sid="${SessionId}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
     <button class = "reiterBtn">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
     <button class = "reiterBtn" id="einstellungBtn">Einstellungen </button>
@@ -45,8 +45,8 @@
                         <label class="userTaskTable-ContentStoryBoard">Story</label>
                         <span class="userTaskTable-ContentStoryBoard">/</span>
                         <label class="userTaskTable-ContentStoryBoard">Board</label>
-                        <button class="userTaskTableBody-editBtn" title="Bearbeiten" onclick="toggleEditMenu('editBtn')"><i class="fa fa-edit"></i></button>
-                        <span class="closeUserStoryTaskBtn" onclick="deleteTableRow()" title="Löschen">&times;</span>
+                        <button class="userTaskTableBody-editBtn" title="Bearbeiten"  th:description="${item.description}" th:Tid="${item.ID}" onclick="toggleEditBoxT('editBtn', this.getAttribute('Tid'), this.getAttribute('description'));"><i class="fa fa-edit"></i></button>
+                        <span class="closeUserStoryTaskBtn" th:Tid="${item.ID}" th:Sid="${SessionId}" onclick="deleteT(this.getAttribute('Tid'),this.getAttribute('Sid'))" title="Löschen">&times;</span>
                         <!-- <label th:text = "${item.name}">Name</label> -->
                         <label>Rolle</label>
                         <label th:text = "${item.priority}">Priorität</label>

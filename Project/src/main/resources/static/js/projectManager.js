@@ -48,6 +48,7 @@ function toggleEditBox(id,storyId, name, description){
     document.getElementById("inputDesc").textContent = description;
     document.getElementById("editId").value = storyId;
 }
+
 /*
 * Author: Zana Salih Hama
 * Revisited: /
@@ -143,4 +144,10 @@ function deleteTableRow() {
     if (row) {
         row.remove();
     }
+}
+
+function toggleEditBoxT(id, TId, description){
+    toggleEditMenu(id);
+    document.getElementById("inputDesc").textContent = description;
+    document.getElementById("editId").value = TId;
 }

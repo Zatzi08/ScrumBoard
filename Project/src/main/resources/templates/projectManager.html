@@ -20,7 +20,7 @@
     -->
 <div class="Reiter">
     <button class="reiterBtn" onmouseover = "hover('reiterBtn')" onmouseleave="hoverLeave('reiterBtn')" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
-    <button type="button"  th:Sid="${SessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
+    <button type="button"  th:Sid="${SessionId}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
     <button class = "reiterBtn">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
     <button class = "reiterBtn" id="einstellungBtn">Einstellungen </button>
@@ -29,7 +29,7 @@
 <div id="outerProjectManagerContainer">
     <button class="selectBtn" id="selectUserstory" onmouseover = "hover('selectUserstory')" onmouseleave="hoverLeave('selectUserstory')" style= "border-bottom: 1px solid #ffffff" title="Wechsel Ansicht zu Userstories">Userstories</button>
     <span class="userStoryTaskTrenner">|</span>
-    <button class="selectBtn" id="selectTasks" th:Sid="${SessionID}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
+    <button class="selectBtn" id="selectTasks" th:Sid="${SessionId}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
     <button class="addUserStoryBtn" title="Füge eine Userstory hinzu" onclick="toggleEditBox('addUserStoryBtn', -1)"><i class="fa fa-plus" style="margin-right: 10px"></i>Userstory erstellen</button>
     <div id="innerProjectManagerContainer">
         <div class="wrapper">
@@ -44,7 +44,7 @@
                     <tr th:each="item : ${Storys}">
                         <th>
                             <button class="userTaskTableBody-editBtn" title="Bearbeiten" th:sname="${item.name}" th:sdescription="${item.description}" th:sid="${item.ID}" onclick="toggleEditBox('editBtn', this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'));"><i class="fa fa-edit"></i></button>
-                            <span class="closeUserStoryTaskBtn" th:USid="${item.ID}" th:Sid="${SessionID}" onclick="deleteUS(this.getAttribute('USid'),this.getAttribute('Sid'))" title="Löschen">&times;</span>
+                            <span class="closeUserStoryTaskBtn" th:USid="${item.ID}" th:Sid="${SessionId}" onclick="deleteUS(this.getAttribute('USid'),this.getAttribute('Sid'))" title="Löschen">&times;</span>
                             <label th:text = "${item.name}">Name</label>
                             <label>Rolle</label>
                             <label th:text="${item.priority}">Priorität</label>
@@ -82,7 +82,7 @@
             <input type="datetime-local" id="inputDate" class="inputEdit" placeholder="Abgabefrist">
             <input type="hidden" id = "editId" name="id" value="-1">
             <input type="hidden" id = "editPrio" name="priority" value="1">
-            <button type="button" th:sessionID="${SessionID}" onclick="saveUS(this,this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
+            <button type="button" th:SessionId="${SessionId}" onclick="saveUS(this,this.getAttribute('SessionId'))" id="editMenu-saveEditBtn">Speichern</button>
         </form>
     </div>
 </div>

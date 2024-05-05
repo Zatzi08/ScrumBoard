@@ -167,7 +167,7 @@ public class WebController {
             if (presentationToLogic.webSessionService.verify(id)) {
                 ModelAndView modelAndView = new ModelAndView("projectManager");
                 modelAndView.addObject("Storys", presentationToLogic.userStoryService.getAllUserStorys())
-                        .addObject("SessionID", id);
+                        .addObject("SessionId", id);
                 return modelAndView;
             }
         } catch (Exception e){
@@ -455,7 +455,7 @@ public class WebController {
             if (presentationToLogic.webSessionService.verify(Sessionid)){
                 ModelAndView modelAndView = new ModelAndView("TaskBoard")
                         .addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoard(tbid))
-                        .addObject("SessionID", Sessionid);
+                        .addObject("SessionId", Sessionid);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -482,7 +482,7 @@ public class WebController {
         try {
             return new ModelAndView("profil")
                     .addObject("User" , presentationToLogic.accountService.getProfileByEmail("Test@Mail.com"))
-                    .addObject("SessionID", MasterID);
+                    .addObject("SessionId", MasterID);
         } catch (Exception e){
             e.printStackTrace();
             return error(e);
