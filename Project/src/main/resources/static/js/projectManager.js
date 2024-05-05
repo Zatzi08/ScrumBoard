@@ -143,4 +143,8 @@ function deleteTableRow() {
     if (row) {
         row.remove();
     }
+
+    function taskToUS(){
+
+    }
 }
