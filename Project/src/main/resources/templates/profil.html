@@ -43,8 +43,6 @@
     <textarea id="inputName" class = "profilInput" form = "profilForm" placeholder = "Benutzername bearbeiten" name = benutzername style = " height:30px;"></textarea>
     <label class = "labelProfil">projektbezogene Beschreibung:</label>
     <textarea id="inputWDesc" class = "profilInput" form = "profilForm" placeholder = "projektbezogene Beschreibung bearbeiten" name = projektBeschreibung></textarea>
-    <label class = "labelProfil" >Rolle:</label>
-    <textarea id="inputRolle" class = "profilInput" form = "profilForm" placeholder = "Rolle bearbeiten" name = rolle style = "height:30px;"></textarea>
     <label class = "labelProfil">persönliche Beschreibung:</label>
     <textarea id="inputPDesc" class = "profilInput" form = "profilForm" placeholder = "persönliche Beschreibung bearbeiten" name = persoBeschreibung></textarea>
     <button type = "button" th:sessionID="${SessionId}" onclick="saveProfile(this.getAttribute('sessionID'))" id = "profilEditBtn">Speichern</button>
