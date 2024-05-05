@@ -20,38 +20,38 @@
     -->
 <div class="Reiter">
     <button class="reiterBtn" onmouseover = "hover('reiterBtn')" onmouseleave="hoverLeave('reiterBtn')" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
-    <button class = "reiterBtn">Profil </button>
+    <button class = "reiterBtn" th:Sid="${SessionId}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
     <button class = "reiterBtn">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
     <button class = "reiterBtn" id="einstellungBtn">Einstellungen </button>
 </div>
 
 <div id="outerProjectManagerContainer">
-    <button class="selectBtn" id="selectUserstory" onmouseover = "hover('selectUserstory')" onmouseleave="hoverLeave('selectUserstory')" title="Wechsel Ansicht zu Userstories" style= "border-bottom: 1px solid #ffffff">Userstories</button>
+    <button class="selectBtn" th:Sid="${SessionId}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" id="selectUserstory" onmouseover = "hover('selectUserstory')" onmouseleave="hoverLeave('selectUserstory')" title="Wechsel Ansicht zu Userstories">Userstories</button>
     <span class="userStoryTaskTrenner">|</span>
-    <button class="selectBtn" id="selectTasks" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
-    <button class="addUserStoryBtn" title="Füge eine Task zur Userstory hinzu" onclick="toggleEditMenu('addUserStoryBtn')"><i class="fa fa-plus" style="margin-right: 10px"></i>Task zu US erstellen</button>
+    <button class="selectBtn" id="selectTasks" th:Sid="${SessionId}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks" style= "border-bottom: 1px solid #ffffff">Tasks</button>
+    <button class="addUserStoryBtn" title="Füge eine Task hinzu" onclick="toggleEditMenu('addUserStoryBtn')"><i class="fa fa-plus" style="margin-right: 10px"></i>Task erstellen</button>
     <div id="innerProjectManagerContainer">
         <div class="wrapper">
             <table class="userTaskTable">
                 <thead id="userTaskTableHead">
                 <tr>
-                    <th style="border-top-left-radius: 0; border-top-right-radius: 0; text-align: center; background-color: rgba(25,0,255,0.3); color: white">Tasks zur Userstory</th>
+                    <th style="border-top-left-radius: 0; border-top-right-radius: 0; text-align: center; background-color: rgba(25,0,255,0.3); color: white" th:text="@{Tasks zur Story {id}(id=${StoryID})}" ></th>
                 </tr>
                 </thead>
                 <tbody id="userTaskTableBody">
-                <tr>
+                <tr th:each="item : ${Tasks}">
                     <th>
                         <label class="userTaskTable-ContentStoryBoard">Story</label>
                         <span class="userTaskTable-ContentStoryBoard">/</span>
                         <label class="userTaskTable-ContentStoryBoard">Board</label>
-                        <button class="userTaskTableBody-editBtn" title="Bearbeiten" onclick="toggleEditMenu('editBtn')"><i class="fa fa-edit"></i></button>
-                        <span class="closeUserStoryTaskBtn" onclick="deleteTableRow()" title="Löschen">&times;</span>
-                        <label>Name</label>
+                        <button class="userTaskTableBody-editBtn" title="Bearbeiten"  th:description="${item.description}" th:Tid="${item.ID}" onclick="toggleEditBoxT('editBtn', this.getAttribute('Tid'), this.getAttribute('description'));"><i class="fa fa-edit"></i></button>
+                        <span class="closeUserStoryTaskBtn" th:Tid="${item.ID}" th:Sid="${SessionId}" onclick="deleteT(this.getAttribute('Tid'),this.getAttribute('Sid'))" title="Löschen">&times;</span>
+                        <!-- <label th:text = "${item.name}">Name</label> -->
                         <label>Rolle</label>
-                        <label>Priorität</label>
+                        <label th:text = "${item.priority}">Priorität</label>
                         <hr>
-                        <label style="display: inline-block;">Beschreibung</label>
+                        <label style="display: inline-block;" th:text = "${item.description}">Beschreibung</label>
                         <label class = userTaskTableContentSubdate>Abgabedatum</label>
                     </th>
                 </tr>
@@ -72,7 +72,7 @@
     <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
     <span id="closeToggleEdit" class="closeToggleEdit" onclick="toggleEditMenu()">&times;</span>
     <div class="editMenu-content">
-        <form class="form" th:action="@{/addStory?SessionId={id}(id=${SessionID})}" method="post" id="editForm" autocomplete="off" name="Story">
+        <form class="form" id="editForm" autocomplete="off" name="Story">
             <textarea id="inputDesc" class="inputEdit" required placeholder="Eine passende Beschreibung eingeben" name="description" form="editForm"></textarea>
             <label>Priorität</label>
             <button type="button" class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: indianred" name="urgent" form="editForm">Urgent</button>
@@ -83,21 +83,7 @@
             <input type="datetime-local" id="inputDate" class="inputEdit" placeholder="Abgabefrist">
             <input type="hidden" id = "editId" name="id" value="-1">
             <input type="hidden" id = "editPrio" name="priority" value="1">
-            <!-- <div class="ansichtDropdown">
-                <button onClick= "ansichtDropdown()" id="ansichtBtn" class = "ansichtBtn"><i class="fa fa-level-down" style="margin-right: 8px;"></i> Story</button>
-                <div id="ansichtDropdownContent" class="ansichtdropdown-content">
-                    <a href="#">Test1 </a>
-                    <a href="#">Test2 </a>
-                </div>
-            </div>
-            <div class="boardDropdown">
-                <button onClick= "ansichtDropdown()" id="boardBtn" class = "ansichtBtn"><i class="fa fa-level-down" style="margin-right: 8px;"></i> Story</button>
-                <div id="boardDropdownContent" class="boarddropdown-content">
-                    <a href="#">Test1 </a>
-                    <a href="#">Test2 </a>
-                </div>
-            </div> -->
-            <button type="submit" id="editMenu-saveEditBtn">Speichern</button>
+            <button type="button" th:sessionID="${SessionId}" onclick="saveTask(this,this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
         </form>
     </div>
 </div>

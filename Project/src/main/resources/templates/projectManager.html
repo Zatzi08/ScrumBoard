@@ -41,7 +41,7 @@
                 </thead>
                 <!-- TODO: Delete -->
                 <tbody id="userTaskTableBody">
-                    <tr th:each="item : ${Storys}" onclick="taskToUS()">
+                    <tr th:each="item : ${Storys}" th:USid="${item.ID}" th:Sid="${SessionId}" onclick="SwitchToTasksbyUSID(this.getAttribute('Sid'), this.getAttribute('USid'))">
                         <th>
                             <button class="userTaskTableBody-editBtn" title="Bearbeiten" th:sname="${item.name}" th:sdescription="${item.description}" th:sid="${item.ID}" onclick="toggleEditBox('editBtn', this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'));"><i class="fa fa-edit"></i></button>
                             <span class="closeUserStoryTaskBtn" th:USid="${item.ID}" th:Sid="${SessionId}" onclick="deleteUS(this.getAttribute('USid'),this.getAttribute('Sid'))" title="Löschen">&times;</span>
