@@ -40,11 +40,14 @@ function saveUS($this, sessionID) {
     description = document.getElementById('inputDesc').value;
     priority = document.getElementById('editPrio').value;
 
-    fetch('/addStory?ID=' + id + '&SessionId=' + sessionID + '&name=' + name + '&description=' + description + '&priority=' + priority, {
+    fetch('/saveStory?ID=' + id + '&SessionId=' + sessionID + '&name=' + name + '&description=' + description + '&priority=' + priority, {
         method: 'POST',
     }).then(r => {
         if (r.ok) {
             location.reload();
+        }
+        if (r.status === 403){
+            // TODO: Hier PopUp
         }
     });
 }
@@ -69,6 +72,9 @@ function deleteUS(usid, sessionID){
     }).then(r => {
         if (r.ok) {
             location.reload()
+        }
+        if (r.status === 403){
+            // TODO: Hier PopUp
         }
     });
 }

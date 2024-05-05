@@ -64,10 +64,16 @@ public class WebController {
      * UserStory/Task-ID: /
      */
     @RequestMapping(value = "/neuesPasswortPage", method = RequestMethod.POST)
-    public ModelAndView neuesPasswortPage(@RequestParam(value = "EMail", required = true) String EMail){
-        if(presentationToLogic.accountService.checkMail(EMail)) {
-            return new ModelAndView("neuesPasswort")
-                    .addObject("Mail", EMail);
+    public ModelAndView neuesPasswortPage(@RequestParam(value = "EMail", required = true) String EMail) {
+        try {
+            if (presentationToLogic.accountService.checkMail(EMail)) {
+                return new ModelAndView("neuesPasswort")
+                        .addObject("Mail", EMail)
+                        .addObject("Code", presentationToLogic.webSessionService.generatCode(1));
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+            return error(e);
         }
         return index();
     }
@@ -79,15 +85,15 @@ public class WebController {
      * UserStory/Task-ID: /
      */
     @RequestMapping(value = "/neuesPasswort", method = RequestMethod.POST)
-    @ResponseBody
-    public String neuesPasswort(@RequestParam(value = "Passwort", required = true) String Passwort,
+    public ModelAndView neuesPasswort(@RequestParam(value = "Passwort", required = true) String Passwort,
                                 @RequestParam(value = "EMail", required = true)String EMail){
         try {
             presentationToLogic.accountService.resetPasswort(EMail, Passwort);
         } catch (Exception e) {
             e.printStackTrace();
+            return error(e);
         }
-        return "redirect:/";
+        return index();
     }
 
     /* Author: Lucas Krüger
@@ -137,20 +143,24 @@ public class WebController {
      * Grund: Übergeben von UserStorys
      * UserStory/Task-ID:
      */
-    @RequestMapping(value = "/addStory", method = RequestMethod.POST)
-    public ResponseEntity addStory(@RequestParam(value = "name", required = true) String name,
+    @RequestMapping(value = "/saveStory", method = RequestMethod.POST)
+    public ResponseEntity<HttpStatus> saveStory(@RequestParam(value = "name", required = true) String name,
                            @RequestParam(value = "description", required = true) String Desc,
                            @RequestParam(value = "priority", required = false) int prio,
                            @RequestParam(value = "ID", required = true, defaultValue = "-1") int id,
                            @RequestParam(value = "SessionId", required = true) String SessionId){
         try {
             if (presentationToLogic.webSessionService.verify(SessionId)) {
-                presentationToLogic.userStoryService.saveUserStory(name, Desc, prio,id);
-                return new ResponseEntity(HttpStatus.OK);
+                if (presentationToLogic.accountService.checkAuthorityLevel2(SessionId)){
+                    presentationToLogic.userStoryService.saveUserStory(name, Desc, prio, id);
+                    return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
+                }
             }
         } catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
@@ -429,12 +439,14 @@ public class WebController {
      * UserStory/Task-ID: // Todo: Place ID
      */
     @RequestMapping(value = "/deleteUS", method = RequestMethod.POST)
-    private ResponseEntity<HttpStatus> deleteUS(@RequestParam(value = "SessionId", required = true) String Sessionid,
+    private ResponseEntity<HttpStatus> deleteUS(@RequestParam(value = "SessionId", required = true) String SessionId,
                                     @RequestParam(value = "ID", required = true, defaultValue = "-1") int id){
         try {
-            if (presentationToLogic.webSessionService.verify(Sessionid)){
-                presentationToLogic.userStoryService.deleteUserStory(id);
-                return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+            if (presentationToLogic.webSessionService.verify(SessionId)){
+                if (presentationToLogic.accountService.checkAuthorityLevel2(SessionId)){
+                    presentationToLogic.userStoryService.deleteUserStory(id);
+                    return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+                } else return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
             }
         } catch (Exception e){
             e.printStackTrace();

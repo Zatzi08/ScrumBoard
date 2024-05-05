@@ -220,7 +220,7 @@ public class HttpRequestTests {
         int prio2 = 1;
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/addStory?SessionId=" + masterID , HttpMethod.POST, message, String.class).getStatusCode())
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/saveStory?SessionId=" + masterID , HttpMethod.POST, message, String.class).getStatusCode())
                     .isEqualTo(HttpStatus.BAD_REQUEST);
         } catch (AssertionError e){
             pw.append("Fail: Akzeptiert Bad_Request");
@@ -228,7 +228,7 @@ public class HttpRequestTests {
         }
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/addStory?SessionId=" + masterID + "&name=" + name + "&description=" + desc + "&priority=" + prio1 + "&id=-1", HttpMethod.POST, message, String.class)
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/saveStory?SessionId=" + masterID + "&name=" + name + "&description=" + desc + "&priority=" + prio1 + "&id=-1", HttpMethod.POST, message, String.class)
                     .getStatusCode()).isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");

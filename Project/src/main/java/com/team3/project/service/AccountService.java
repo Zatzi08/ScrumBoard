@@ -15,6 +15,9 @@ import java.util.List;
 
 @Service
 public class AccountService {
+
+    private final String MasterID = "EAIFPH8746531";
+
     public boolean checkMail(String Mail){
         return DAOAccountService.checkMail(Mail);
     }
@@ -106,5 +109,16 @@ public class AccountService {
         if (user == null) throw new Exception("User not found");
 
         return new Profile(user.getName(), user.getPrivatDescription(), user.getWorkDescription());
+    }
+
+    public boolean checkAuthorityLevel2(String sessionId) throws Exception {
+        if (sessionId == null) throw new Exception("Null SessionID");
+        if (sessionId.equals(MasterID)) return true;
+        else {
+            DAOUser user = DAOUserService.getBySessionId(sessionId);
+            if (user == null) throw new Exception("User not found");
+            // TODO: Ordentliche Authorities festlegen
+            return user.getAuthorization() >= 2;
+        }
     }
 }
