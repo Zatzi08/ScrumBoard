@@ -360,14 +360,15 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: T1.B1
      */
-    @RequestMapping(value = "/GetTaskByUSID", method = RequestMethod.POST)
+    @RequestMapping(value = "/GetTaskByUSID")
     private ModelAndView GetTaskByUSID(@RequestParam(value = "SessionId",required = true) String SessionId,
                                        @RequestParam(value = "USID", required = true, defaultValue = "-1") int USId){
         try {
             if (presentationToLogic.webSessionService.verify(SessionId)){
                 return new ModelAndView("projectManager-TasksZuUserstory")
                         .addObject("SessionId",SessionId)
-                        .addObject("Tasks", presentationToLogic.taskService.getTaskbyUSID(USId));
+                        .addObject("Tasks", presentationToLogic.taskService.getTaskbyUSID(USId))
+                        .addObject("StoryID", USId);
             }
         } catch (Exception e){
             e.printStackTrace();

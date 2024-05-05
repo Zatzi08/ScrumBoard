@@ -15,7 +15,7 @@ function SwitchToTasks(sessionID) {
 }
 
 function SwitchToTasksbyUSID(sessionID, USID) {
-    let url = '/GetAllTaskByUSID?SessionId=' + sessionID + '&USID=' + USID
+    let url = '/GetTaskByUSID?SessionId=' + sessionID + '&USID=' + USID
     document.location.assign(url)
 }
 
