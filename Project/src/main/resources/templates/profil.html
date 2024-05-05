@@ -30,9 +30,9 @@
     <div id = "profilInhalt">
         <button class = "fa fa-edit" th:uname="${User.uname}" th:udesc="${User.userdesc}" th:projectdesc="${User.description}" onclick="toggleProfilMenü(this.getAttribute('uname'), this.getAttribute('udesc'), this.getAttribute('projectdesc'))"></button>
         <label th:text = "${User.uname}" id = "profilName">Benutzername </label>
-        <label th:text="${User.userdesc}" id = "profilProjektBeschreibung"> Projekt Beschreibung </label>
-        <label id = "rolleProfil"> Rolle <p>.</p> </label>
-        <label th:text = "${User.description}" id = "profilPersoBeschreibung"> Persönliche Beschreibung </label>
+        <label th:text="${User.description}" id = "profilProjektBeschreibung"> Projekt Beschreibung </label>
+        <!--<label id = "rolleProfil"> Rolle <p>.</p> </label>-->
+        <label th:text = "${User.userdesc}" id = "profilPersoBeschreibung"> Persönliche Beschreibung </label>
     </div>
 </div>
 
