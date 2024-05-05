@@ -47,7 +47,7 @@ function saveUS($this, sessionID) {
             location.reload();
         }
         if (r.status === 403){
-            // TODO: Hier PopUp
+            window.alert("Unzureichende Rechte! Bei Anfrage kontaktieren Sie bitte den Admin!");
         }
     });
 }
@@ -74,7 +74,7 @@ function deleteUS(usid, sessionID){
             location.reload()
         }
         if (r.status === 403){
-            // TODO: Hier PopUp
+            window.alert("Unzureichende Rechte! Bei Anfrage kontaktieren Sie bitte den Admin!");
         }
     });
 }
