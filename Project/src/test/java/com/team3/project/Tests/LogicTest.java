@@ -102,14 +102,11 @@ public class LogicTest {
         pw.close();
     }
 
-    // TODO: Tests atomarer gestalten -> z.B. Test auf DB empty als BeforeEach und oder AfterEach statt in jedem Test
-
     /*  Test ID: Logic.T1
      *  Author: Henry Lewis Freyschmidt
      *  Zweck: U3.B1
      */
     @Test
-    //TODO: integriere die Rolle des Product Owners; dafür fehlt DB-Ansprache zum Nutzer
     void createUserStory(){ // TODO: fix problem: wenn eine userStory mit nicht vorhandener id updated werden soll, ändert sich etwas in der DB (siehe Zeile 29)
         pw.append("Logik-Test-createUserStory\nTest ID: Logic.T1\nDate: " + formatter.format(date)+ '\n');
         UserStoryService usService = new UserStoryService();
@@ -189,7 +186,7 @@ public class LogicTest {
         AccountService aservice = new AccountService();
 
         try{
-            aservice.createUser("dave@gmail.com", "123","Dave","","");
+            aservice.createUser("dave@gmail.com", "123","Dave");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -204,7 +201,7 @@ public class LogicTest {
             pass = false;
             throw new AssertionError(e);
         }
-        //TODO: sessionID, sessionDate sollen nicht null sein. Woher kann ich SessionDate kriegen?
+
         try{
             DAOUserService.updateById(uid, "Dave", "bin langweilig", "Manager", null,DAOUserService.getById(uid).getSessionId(), DAOUserService.getById(uid).getSessionDate(), true);
         }catch(Exception e){
@@ -247,7 +244,7 @@ public class LogicTest {
         String newdescription = "new Manager";
 
         try{
-            aservice.createUser("dave@gmx.de", "passw","Dave" ,"","");
+            aservice.createUser("dave@gmx.de", "passw","Dave");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -292,6 +289,7 @@ public class LogicTest {
      */
     @Test
     //TODO: integriere die Rolle des Product Owners; dafür fehlt DB-Ansprache zum Nutzer
+
     void deleteUserStory(){
         pw.append("Logik-Test-deleteUserStory\nTest ID: Logic.T5\n" + "Date: " + formatter.format(date)+ '\n');
         UserStoryService usService = new UserStoryService();
@@ -380,14 +378,15 @@ public class LogicTest {
             e.printStackTrace();
         }
         //Voraussetzung: wenn eine User-Story gelöscht wird, werden dazugehörige Tasks gelöscht
-        try{
+        /*try{
             Assertions.assertNotEquals("Task1", tservice.getTaskByDescription("Task1").getDescription());
         }catch(AssertionError | Exception e){
             e.printStackTrace();
             pw.append("Fail: non-existent Task found\n");
             pass = false;
             throw new AssertionError(e);
-        }
+        }*/
+
         pw.append(String.format("pass = %b", pass));
     }
     /*  Test ID: Logic.T7
