@@ -175,12 +175,14 @@
 }
 
 .userTaskTableBody-editBtn{
+    position:relative;
     display: inline;
     margin-left: 90%;
     cursor: pointer;
 }
 
 .closeUserStoryTaskBtn{
+    position: relative;
     display: inline;
     position: absolute;
     font-size: 22px;
@@ -335,3 +337,15 @@ hr {
 .storydropdown-content a:hover {background-color: #d9dcde;}
 
 .show {display:block;}
+
+#USDropdown{
+    background-color: #283d48;
+    color: #afafaf;
+    border: 2px solid #6e7f91;
+    border-radius: 8px;
+}
+#USDropdown option:hover{
+    background-color: #3a5865;
+
+
+}
