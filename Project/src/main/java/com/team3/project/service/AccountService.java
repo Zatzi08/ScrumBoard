@@ -58,8 +58,8 @@ public class AccountService {
         Email test = new Email();
         test.sendEmail("henryfreyschmidt2226@gmail.com");
     }*/
-    public void createUser(User user) throws Exception{
-
+    public void createUser(String email, String password, String name) throws Exception{
+        DAOUserService.createByEMail(email, password, name, null, null, null, null, null, true);
     }
 
     public void deleteProfile(String sessionID) throws Exception{
