@@ -24,8 +24,9 @@ function saveTask($this, sessionID) {
     let id = document.getElementById('editId').value;
     let description = document.getElementById('inputDesc').value;
     let priority = document.getElementById('editPrio').value;
+    let USID = document.getElementById('USDropdown').value;
 
-    fetch('/SaveTask?TID=' + id + '&SessionId=' + sessionID + '&description=' + description + '&priority=' + priority, {
+    fetch('/SaveTask?TID=' + id + '&SessionId=' + sessionID + '&description=' + description + '&priority=' + priority + "&USID=" + USID, {
         method: 'POST',
     }).then(r => {
         if (r.ok) {

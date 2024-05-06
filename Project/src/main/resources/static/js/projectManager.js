@@ -149,8 +149,10 @@ function deleteTableRow() {
     }
 }
 
-function toggleEditBoxT(id, TId, description){
+function toggleEditBoxT(id, TId, description, USID){
     toggleEditMenu(id);
     document.getElementById("inputDesc").textContent = description;
     document.getElementById("editId").value = TId;
+    let EID = 'USDropdown:'+USID
+    document.getElementById('USDropdown').value = document.getElementById(EID).value;
 }

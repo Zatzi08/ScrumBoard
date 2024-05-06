@@ -332,9 +332,10 @@ public class WebController {
     private ModelAndView AllTask(@RequestParam(value = "SessionId",required = true) String SessionId){
         try {
             if (presentationToLogic.webSessionService.verify(SessionId)){
-                ModelAndView modelAndView = new ModelAndView("projectManager-Tasks");
-                modelAndView.addObject("Tasks", presentationToLogic.taskService.getAllTask()).addObject("SessionId", SessionId);
-                return modelAndView;
+                return new ModelAndView("projectManager-Tasks")
+                        .addObject("Tasks", presentationToLogic.taskService.getAllTask())
+                        .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys())
+                        .addObject("SessionId", SessionId);
             }
         } catch (Exception e){
             return error(e);
@@ -378,7 +379,8 @@ public class WebController {
                 return new ModelAndView("projectManager-TasksZuUserstory")
                         .addObject("SessionId",SessionId)
                         .addObject("Tasks", presentationToLogic.taskService.getTaskbyUSID(USId))
-                        .addObject("StoryName", presentationToLogic.userStoryService.getUserStory(USId).getName());
+                        .addObject("StoryName", presentationToLogic.userStoryService.getUserStory(USId).getName())
+                        .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys());
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -398,10 +400,11 @@ public class WebController {
     private ResponseEntity<HttpStatus> SaveTask(@RequestParam(value = "SessionId",required = true) String SessionId,
                                   @RequestParam(value = "TID",required = true, defaultValue = "-1") int tid,
                                   @RequestParam(value = "description", required = true) String desc,
+                                  @RequestParam(value = "USID", required = true) int USID,
                                   @RequestParam(value ="priority", required = true) int prio){
         try{
             if (presentationToLogic.webSessionService.verify(SessionId)){
-                presentationToLogic.taskService.saveTask(tid,desc,prio, 1);
+                presentationToLogic.taskService.saveTask(tid,desc,prio, USID);
                 return new ResponseEntity<HttpStatus>(HttpStatus.OK);
             }
         } catch(Exception e){

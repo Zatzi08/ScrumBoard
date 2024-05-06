@@ -45,7 +45,7 @@
                         <label class="userTaskTable-ContentStoryBoard">Story</label>
                         <span class="userTaskTable-ContentStoryBoard">/</span>
                         <label class="userTaskTable-ContentStoryBoard">Board</label>
-                        <button class="userTaskTableBody-editBtn" title="Bearbeiten"  th:description="${item.description}" th:Tid="${item.ID}" onclick="toggleEditBoxT('editBtn', this.getAttribute('Tid'), this.getAttribute('description'));"><i class="fa fa-edit"></i></button>
+                        <button class="userTaskTableBody-editBtn" title="Bearbeiten" th:USID="${item.userStoryID}"  th:description="${item.description}" th:Tid="${item.ID}" onclick="toggleEditBoxT('editBtn', this.getAttribute('Tid'), this.getAttribute('description'), this.getAttribute('USID'));"><i class="fa fa-edit"></i></button>
                         <span class="closeUserStoryTaskBtn" th:Tid="${item.ID}" th:Sid="${SessionId}" onclick="deleteT(this.getAttribute('Tid'),this.getAttribute('Sid'))" title="Löschen">&times;</span>
                         <!-- <label th:text = "${item.name}">Name</label> -->
                         <label>Rolle</label>
@@ -84,9 +84,9 @@
             <input type="datetime-local" id="inputDate" class="inputEdit" placeholder="Abgabefrist">
             <input type="hidden" id = "editId" name="id" value="-1">
             <input type="hidden" id = "editPrio" name="priority" value="1">
-            <select class="form-control" id="TaskDropdown">
+            <select class="form-control" id="USDropdown">
                 <option value="0" selected = "selected">Wähle zugehörige User-Story</option>
-                <option th:each="US : ${UserStory}" th:value="${US.name}" th:text="${US.name}"></option>
+                <option th:each="US : ${UserStory}" th:id="@{USDropdown:{id}(id=${US.ID})}" th:value="${US.ID}" th:text="${US.name}"></option>
             </select>
             <button type="button" th:sessionID="${SessionId}" onclick="saveTask(this,this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
         </form>
