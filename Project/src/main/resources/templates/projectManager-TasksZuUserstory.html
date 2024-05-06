@@ -81,6 +81,10 @@
             <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: lightgreen" name="low" form="editForm">Low</button>
             <label style="margin-top: 15px">Abgabefrist</label>
             <input type="datetime-local" id="inputDate" class="inputEdit" placeholder="Abgabefrist">
+            <select class="form-control" id="TaskToUSDropdown">
+                <option value="0" selected = "selected">Wähle zugehörige User-Story</option>
+                <option th:each="US : ${UserStory}" th:value="${US.name}" th:text="${US.name}"></option>
+            </select>
             <input type="hidden" id = "editId" name="id" value="-1">
             <input type="hidden" id = "editPrio" name="priority" value="1">
             <button type="button" th:sessionID="${SessionId}" onclick="saveTask(this,this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>

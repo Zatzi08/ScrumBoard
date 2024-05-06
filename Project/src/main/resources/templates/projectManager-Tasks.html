@@ -53,6 +53,7 @@
                         <hr>
                         <label style="display: inline-block;" th:text = "${item.description}">Beschreibung</label>
                         <label class = userTaskTableContentSubdate>Abgabedatum</label>
+
                     </th>
                 </tr>
                 </tbody>
@@ -83,6 +84,10 @@
             <input type="datetime-local" id="inputDate" class="inputEdit" placeholder="Abgabefrist">
             <input type="hidden" id = "editId" name="id" value="-1">
             <input type="hidden" id = "editPrio" name="priority" value="1">
+            <select class="form-control" id="TaskDropdown">
+                <option value="0" selected = "selected">Wähle zugehörige User-Story</option>
+                <option th:each="US : ${UserStory}" th:value="${US.name}" th:text="${US.name}"></option>
+            </select>
             <button type="button" th:sessionID="${SessionId}" onclick="saveTask(this,this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
         </form>
     </div>
