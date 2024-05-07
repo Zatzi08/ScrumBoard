@@ -253,11 +253,11 @@ public class UserTests extends BaseTest {
         /* Author: Marvin Prüger
      * Function: SessionID Test
      * Reason:
-     * UserStory/Task-ID: S7.D6
+     * UserStory/Task-ID: S7.D7
      */
     @Test 
     void CheckSessionIDTest(){
-        printWriterAddTest("EmptySessionIDTest", "S7.D6");
+        printWriterAddTest("CheckSessionIDTest", "S7.D7");
         TestRoles.add(TestRole);
         String sessionID = "5";
         String sessionDate = "5";
