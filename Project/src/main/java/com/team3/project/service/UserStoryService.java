@@ -3,7 +3,9 @@ package com.team3.project.service;
 import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.Task;
 import com.team3.project.Classes.UserStory;
+import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOUserStory;
+import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.DAOService.DAOUserStoryService;
 import org.springframework.stereotype.Service;
 
@@ -80,6 +82,8 @@ public class UserStoryService {
      */
     public void deleteUserStory(int uid) throws Exception {
         if (uid <= -1) throw new Exception("Null usid");
+        List <DAOTask> tasks = DAOTaskService.getListByUserStoryId(uid);
+        tasks.forEach(x -> DAOTaskService.deleteById(x.getTid()));
         DAOUserStoryService.deleteById(uid);
     }
 }

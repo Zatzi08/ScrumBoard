@@ -21,12 +21,11 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: /
      */
+
     public Task getTaskByID(int id) throws Exception{
-        // Task t =  DAOTaskService.getTaskbyID(id);
-        // if (t == null){ throw new Exception("Task not found");}
-        // return t;
-        //TODO: DAOTaskService.getTaskByID(ID) fehlt
-        return null;
+        DAOTask dt =  DAOTaskService.getById(id);
+        if (dt == null){ throw new Exception("Task not found");}
+        return new Task(dt.getTid(),dt.getDescription(), dt.getPriority() , dt.getUserStory().getId());
     }
 
     /* Author: Henry L. Freyschmidt
@@ -35,12 +34,11 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: /
      */
+
     public Task getTaskByDescription(String description) throws Exception{
-        // DAOTask t =  DAOTaskService.getTaskbyDescription(description);
-        // if (t == null){ throw new Exception("Task not found");}
-        // return t;
-        return null;
-        //TODO: Task suchen ohne die TaskID zu kennen
+        DAOTask dt =  DAOTaskService.getByDescription(description);
+        if (dt == null) throw new Exception("Task not found");
+        return new Task(dt.getTid(),dt.getDescription(), dt.getPriority(), dt.getUserStory().getId());
     }
 
     /* Author: Henry L. Freyschmidt
@@ -50,9 +48,9 @@ public class TaskService {
      * UserStory/Task-ID: /
      */
     public void saveTask(int taskID, String description, int priority, int USID ) throws Exception{
-        if (description == null | priority > 4 | priority < 0 | USID == -1){
-            throw new Exception("invalid Arguments");
-        }
+        if (description == null ) throw new Exception("null description");
+        if (priority < 0 || priority > 4) throw new Exception("wrong priority");
+        if(USID == -1) throw new Exception("invalid UserStory-ID");
         if(taskID == -1){
             DAOTaskService.create(description,USID);
         }else{
@@ -71,11 +69,8 @@ public class TaskService {
      * UserStory/Task-ID: /
      */
     public void deleteTask(int taskID) throws Exception{
-        if(taskID == -1){
-        throw new Exception("not valid TaskID");
-        }else{
-            DAOTaskService.deleteById(taskID);
-        }
+        if(taskID == -1) throw new Exception("not valid TaskID");
+        DAOTaskService.deleteById(taskID);
     }
 
 
@@ -91,7 +86,7 @@ public class TaskService {
             List<Task> taskList = new LinkedList<>();
             Enumerations prio = new Enumerations();
             for (DAOTask task : tasks) {
-                Task toAdd = new Task(task.getTid(),task.getDescription(), prio.IntToPriority(task.getPriority()), task.getUserStory().getId());
+                Task toAdd = new Task(task.getTid(),task.getDescription(), task.getPriority(), task.getUserStory().getId());
                 taskList.add(toAdd);
             }
             return taskList;
@@ -105,7 +100,7 @@ public class TaskService {
         if (tasks.isEmpty()) return null;
         List<Task> List = new LinkedList<Task>();
         for (DAOTask task : tasks) {
-            Task toAdd = new Task(task.getTid(),task.getDescription(), enumerations.IntToPriority(task.getPriority()), usId);
+            Task toAdd = new Task(task.getTid(),task.getDescription(), task.getPriority(), usId);
             List.add(toAdd);
         }
         return List;

@@ -20,10 +20,11 @@ public class Task extends abstraktDataClasses {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public Task(int tID, String description, Priority priority, int userStoryID){
+    public Task(int tID, String description, int priority, int userStoryID){
         super(tID);
+        Enumerations prior = new Enumerations();
         this.description = description;
-        this.priority = priority;
+        this.priority = prior.IntToPriority(priority);
         this.userStoryID = userStoryID;
     }
 

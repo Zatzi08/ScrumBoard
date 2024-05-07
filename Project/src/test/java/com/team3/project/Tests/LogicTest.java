@@ -77,7 +77,7 @@ public class LogicTest {
             }
         }
 
-        List<Task> taskList = taskService.getAllTask();
+        /*List<Task> taskList = taskService.getAllTask();
         if(taskList != null){
             pw.append("Task: not empty Database\n");
             taskList.forEach(x -> {
@@ -87,7 +87,7 @@ public class LogicTest {
                     e.printStackTrace();
                 }
             });
-        }
+        }*/
 
         List<DAOUser> pList = DAOUserService.getAll();
         if(!pList.isEmpty()){
@@ -206,6 +206,15 @@ public class LogicTest {
         }
 
         try{
+            Assertions.assertEquals(0, aservice.getAuthority(DAOUserService.getById(DAOUserService.getIdByMail("dave@gmail.com")).getSessionId()));
+        }catch (AssertionError | Exception e){
+            e.printStackTrace();
+            pw.append("Fail: User created with wrong authority");
+            pass = false;
+            throw new AssertionError(e);
+        }
+
+        try{
             Assertions.assertNotNull(aservice.getProfileByEmail("dave@gmail.com"));
         }catch(AssertionError | Exception e){
             pw.append("Fail: existent User not found\n");
@@ -216,7 +225,7 @@ public class LogicTest {
         int uid = DAOUserService.getIdByMail("dave@gmail.com");
 
         try{
-            aservice.savePublicData(DAOUserService.getById(uid).getSessionId(), "Dave", null, "Manager", "bin langweilig");
+            aservice.savePublicData(DAOUserService.getById(uid).getSessionId(), "Dave", "", "Manager", "bin langweilig");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -258,7 +267,16 @@ public class LogicTest {
         String sessionID = DAOUserService.getById(uid).getSessionId();
 
         try{
-            aservice.savePublicData(DAOUserService.getById(uid).getSessionId(),"Dave", null,"Entwickler", "nett" );
+            Assertions.assertEquals(0, aservice.getAuthority(sessionID));
+        }catch (AssertionError | Exception e){
+            e.printStackTrace();
+            pw.append("Fail: User created with wrong authority");
+            pass = false;
+            throw new AssertionError(e);
+        }
+
+        try{
+            aservice.savePublicData(DAOUserService.getById(uid).getSessionId(),"Dave", "","Entwickler", "nett" );
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -273,7 +291,7 @@ public class LogicTest {
         }
 
         try{
-            aservice.savePublicData(DAOUserService.getById(uid).getSessionId(),"Dave", null,"Entwickler", newdescription );
+            aservice.savePublicData(DAOUserService.getById(uid).getSessionId(),"Dave", "","Entwickler", newdescription );
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -375,11 +393,16 @@ public class LogicTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         //Voraussetzung: wenn eine User-Story gelöscht wird, werden dazugehörige Tasks gelöscht
+        List <DAOTask> tasks = DAOTaskService.getListByUserStoryId(usid);
+
         try{
-            Assertions.assertNull(tservice.getTaskByID(tid));
+            Assertions.assertEquals(tasks.size(), 0);
         }catch(AssertionError | Exception e){
-            DAOTaskService.deleteById(tid);
+            for (DAOTask task : tasks){
+                DAOTaskService.deleteById(task.getTid());
+            }
             e.printStackTrace();
             pw.append("Fail: Deletion of User-Story did not delete Task\n");
             pass = false;
@@ -414,10 +437,10 @@ public class LogicTest {
             throw new AssertionError(e);
         }
 
-        int uid =  DAOUserStoryService.getByName("UStory1").getId();
+        int usid =  DAOUserStoryService.getByName("UStory1").getId();
 
         try{
-            tservice.saveTask(-1,"Task1", 0, uid);
+            tservice.saveTask(-1,"Task1", 0, usid);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -433,13 +456,13 @@ public class LogicTest {
         }
 
         try{
-            tservice.saveTask(tid, newdescription, 0,uid);
+            tservice.saveTask(tid, newdescription, 0,usid);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            Assertions.assertEquals(newdescription, DAOUserStoryService.getById(tid).getDescription());
+            Assertions.assertEquals(newdescription, DAOTaskService.getById(tid).getDescription());
         }catch(AssertionError e){
             pw.append("Fail: updated Task-description not found\n");
             pass = false;
@@ -447,15 +470,19 @@ public class LogicTest {
         }
 
         try{
-            DAOUserStoryService.deleteById(uid);
+            uservice.deleteUserStory(usid);
         }catch (Exception e){
             e.printStackTrace();
         }
 
+        List <DAOTask> tasks = DAOTaskService.getListByUserStoryId(usid);
+
         try{
-            Assertions.assertNull(tservice.getTaskByID(tid));
+            Assertions.assertEquals(tasks.size(), 0);
         }catch(AssertionError | Exception e){
-            DAOTaskService.deleteById(tid);
+            for (DAOTask task : tasks){
+                DAOTaskService.deleteById(task.getTid());
+            }
             e.printStackTrace();
             pw.append("Fail: Deletion of User-Story did not delete Task\n");
             pass = false;
@@ -480,10 +507,10 @@ public class LogicTest {
             e.printStackTrace();
         }
 
-        int uid = DAOUserStoryService.getByName("StoryName").getId();
+        int usid = DAOUserStoryService.getByName("StoryName").getId();
 
         try{
-            tservice.saveTask(-1,"TaskDescription",0,uid);
+            tservice.saveTask(-1,"TaskDescription",0,usid);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -491,7 +518,7 @@ public class LogicTest {
         int tid1 = DAOTaskService.getByDescription("TaskDescription").getTid();
 
         try{
-            tservice.saveTask(-1,"TaskDescription2",0,uid);
+            tservice.saveTask(-1,"TaskDescription2",0,usid);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -499,7 +526,7 @@ public class LogicTest {
         int tid2 = DAOTaskService.getByDescription("TaskDescription2").getTid();
 
         try{
-            Assertions.assertEquals("TaskDescription2", DAOTaskService.getById(tid2));
+            Assertions.assertEquals("TaskDescription2", DAOTaskService.getById(tid2).getDescription());
         }catch(AssertionError e){
             pw.append("Fail: existent Task not found\n");
             pass = false;
@@ -507,17 +534,19 @@ public class LogicTest {
         }
 
         try {
-            uservice.deleteUserStory(uid);
+            uservice.deleteUserStory(usid);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        List <DAOTask> tasks = DAOTaskService.getListByUserStoryId(usid);
+
         try{
-            Assertions.assertNull(tservice.getTaskByID(tid1));
-            Assertions.assertNull(tservice.getTaskByID(tid2));
+            Assertions.assertEquals(tasks.size(), 0);
         }catch(AssertionError | Exception e){
-            DAOTaskService.deleteById(tid1);
-            DAOTaskService.deleteById(tid2);
+            for (DAOTask task : tasks){
+                DAOTaskService.deleteById(task.getTid());
+            }
             e.printStackTrace();
             pw.append("Fail: Deletion of User-Story did not delete Task\n");
             pass = false;
