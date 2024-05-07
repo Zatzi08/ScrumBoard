@@ -7,8 +7,10 @@ import com.team3.project.Classes.UserStory;
 import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.Task;
 import com.team3.project.Classes.Enumerations;
+import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAO.DAOUserStory;
+import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.service.AccountService;
 import com.team3.project.service.TaskService;
@@ -88,8 +90,20 @@ public class LogicTest {
         }
 
         List<DAOUser> pList = DAOUserService.getAll();
-        while(pList != null){
-            if(pList.get(0).getPrivatDescription()!=null || pList.get(0).getWorkDescription()!=null){
+        if(!pList.isEmpty()){
+            pList.forEach(x -> {
+                try{
+                    if(!x.getPrivatDescription().isEmpty()|| !x.getWorkDescription().isEmpty()){
+                        DAOUserService.updateById(x.getUid(), x.getName(), null, null, null, x.getSessionId(), x.getSessionDate(), false);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            });
+        }
+        while(!pList.isEmpty()){
+
+            if(pList.get(0).getPrivatDescription()!=null || pList.get(0).getPrivatDescription() != ""|| pList.get(0).getWorkDescription() != "" || pList.get(0).getWorkDescription() != null){
                 pw.append("Profile: not empty Database\n");
                 DAOUserService.updateById(pList.get(0).getUid(), pList.get(0).getName(),"","",null,pList.get(0).getSessionId(), pList.get(0).getSessionDate(), false);
                 pList.remove(pList.get(0));
@@ -191,25 +205,24 @@ public class LogicTest {
             e.printStackTrace();
         }
 
-        int uid = DAOUserService.getIdByMail("dave@gmail.com");
-
         try{
-            Assertions.assertNull(aservice.getProfileByEmail("dave@gmail.com"));
+            Assertions.assertNotNull(aservice.getProfileByEmail("dave@gmail.com"));
         }catch(AssertionError | Exception e){
-            e.printStackTrace();
-            pw.append("Fail: non-existent User-Profile-description found\n");
+            pw.append("Fail: existent User not found\n");
             pass = false;
             throw new AssertionError(e);
         }
 
+        int uid = DAOUserService.getIdByMail("dave@gmail.com");
+
         try{
-            DAOUserService.updateById(uid, "Dave", "bin langweilig", "Manager", null,DAOUserService.getById(uid).getSessionId(), DAOUserService.getById(uid).getSessionDate(), true);
+            aservice.savePublicData(DAOUserService.getById(uid).getSessionId(), "Dave", null, "Manager", "bin langweilig");
         }catch(Exception e){
             e.printStackTrace();
         }
 
         try{
-            Assertions.assertNotNull(aservice.getProfileByEmail("dave@gmail.com"));
+            Assertions.assertNotNull(aservice.getProfileByEmail("dave@gmail.com").getDescription());
         }catch(AssertionError | Exception e){
             pw.append("Fail: existent User-Profile-description not found\n");
             pass = false;
@@ -221,14 +234,6 @@ public class LogicTest {
             e.printStackTrace();
         }
 
-        try{
-            Assertions.assertNull(aservice.getProfileByEmail("dave@gmail.com"));
-        }catch(AssertionError | Exception e){
-            e.printStackTrace();
-            pw.append("Fail: non-existent User-Profile-description found\n");
-            pass = false;
-            throw new AssertionError(e);
-        }
 
         pw.append(String.format("pass: %b", pass));
     }
@@ -253,7 +258,7 @@ public class LogicTest {
         String sessionID = DAOUserService.getById(uid).getSessionId();
 
         try{
-            DAOUserService.updateById(uid, "Dave", "Langweiler", "nett", null, sessionID, DAOUserService.getBySessionId(sessionID).getSessionDate(), false);
+            aservice.savePublicData(DAOUserService.getById(uid).getSessionId(),"Dave", null,"Entwickler", "nett" );
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -268,7 +273,7 @@ public class LogicTest {
         }
 
         try{
-            DAOUserService.updateById(uid, "Dave", newdescription, "nett", null, sessionID, DAOUserService.getBySessionId(sessionID).getSessionDate(), false);
+            aservice.savePublicData(DAOUserService.getById(uid).getSessionId(),"Dave", null,"Entwickler", newdescription );
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -281,7 +286,13 @@ public class LogicTest {
             pass = false;
             throw new AssertionError(e);
         }
-        pw.append(String.format("pass = %b",pass));
+
+        try{
+            DAOUserService.deleteById(uid);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        pw.append(String.format("pass = %b \n",pass));
     }
     /*  Test ID: Logic.T5
      *  Author: Henry Lewis Freyschmidt
@@ -293,14 +304,6 @@ public class LogicTest {
     void deleteUserStory(){
         pw.append("Logik-Test-deleteUserStory\nTest ID: Logic.T5\n" + "Date: " + formatter.format(date)+ '\n');
         UserStoryService usService = new UserStoryService();
-
-        try{
-            Assertions.assertEquals(DAOUserStoryService.getByName("UserStory1").getDescription(), "Blablah1");
-        }catch (AssertionError e){
-            pw.append("Fail: non-existent User-Story found\n");
-            pass = false;
-            throw new AssertionError(e);
-        }
 
         try{
             usService.saveUserStory("UserStory1", "Blablah1", 1, -1);
@@ -332,7 +335,7 @@ public class LogicTest {
             throw new AssertionError(e);
         }
 
-        pw.append(String.format("pass = %b", pass));
+        pw.append(String.format("pass = %b\n", pass));
     }
 
     /*  Test ID: Logic.T6
@@ -349,45 +352,41 @@ public class LogicTest {
         }catch (Exception e){
             e.printStackTrace();
         }
-        int uid = DAOUserStoryService.getByName("Story1").getId();
 
-        try{
-            //Assertions.assertNotEquals("Task1", DAOUserStoryService.getTaskByID(t1.getID()).getDescription());
-        }catch(AssertionError e){
-            pw.append("Fail: non-existent Task found\n");
-            pass = false;
-            throw new AssertionError(e);
-        }
+        int usid = DAOUserStoryService.getByName("Story1").getId();
 
         try {
-            tservice.saveTask(-1, "Task1", 0, uid);
+            tservice.saveTask(-1, "Task1", 0, usid);
         }catch (Exception e){
             e.printStackTrace();
         }
 
+        int tid = DAOTaskService.getByDescription("Task1").getTid();
+
         try{
-           //Assertions.assertEquals(t1.getDescription(), tservice.getTaskByName("Task1").getDescription());
-        }catch(AssertionError e){
+           Assertions.assertEquals("Task1", tservice.getTaskByID(tid).getDescription());
+        }catch(AssertionError | Exception  e  ){
             pw.append("Fail: existent Task not found\n");
             pass = false;
             throw new AssertionError(e);
         }
         try {
-            uservice.deleteUserStory(uid);
+            uservice.deleteUserStory(usid);
         } catch (Exception e) {
             e.printStackTrace();
         }
         //Voraussetzung: wenn eine User-Story gelöscht wird, werden dazugehörige Tasks gelöscht
-        /*try{
-            Assertions.assertNotEquals("Task1", tservice.getTaskByDescription("Task1").getDescription());
+        try{
+            Assertions.assertNull(tservice.getTaskByID(tid));
         }catch(AssertionError | Exception e){
+            DAOTaskService.deleteById(tid);
             e.printStackTrace();
-            pw.append("Fail: non-existent Task found\n");
+            pw.append("Fail: Deletion of User-Story did not delete Task\n");
             pass = false;
             throw new AssertionError(e);
-        }*/
+        }
 
-        pw.append(String.format("pass = %b", pass));
+        pw.append(String.format("pass = %b\n", pass));
     }
     /*  Test ID: Logic.T7
      *  Author: Henry Lewis Freyschmidt
@@ -400,14 +399,6 @@ public class LogicTest {
         TaskService tservice = new TaskService();
         UserStory u1 = new UserStory("UStory1", "blaBla1", 1, -1);
         String newdescription = "newblaBla1";
-
-        try {
-            Assertions.assertNull(DAOUserStoryService.getByName("UStory1").getDescription());
-        }catch (AssertionError e){
-            pw.append("Fail: non-existent User-Story found\n");
-            pass = false;
-            throw new AssertionError(e);
-        }
 
         try{
             uservice.saveUserStory("UStory1", "blaBla1", 1, -1);
@@ -422,15 +413,8 @@ public class LogicTest {
             pass = false;
             throw new AssertionError(e);
         }
-        int uid =  DAOUserStoryService.getByName("UStory1").getId();
 
-        try{
-            //Assertions.assertNull(DAOUserStoryService.getTaskByID(t1.getID()).getDescription());
-        }catch(AssertionError e){
-            pw.append("Fail: non-existent Task found\n");
-            pass = false;
-            throw new AssertionError(e);
-        }
+        int uid =  DAOUserStoryService.getByName("UStory1").getId();
 
         try{
             tservice.saveTask(-1,"Task1", 0, uid);
@@ -438,30 +422,46 @@ public class LogicTest {
             e.printStackTrace();
         }
 
+        int tid = DAOTaskService.getByDescription("Task1").getTid();
+
         try{
-            //Assertions.assertEquals(t1.getDescription(), DAOUserStoryService.getTaskByID(t1.getID()).getDescription());
+            Assertions.assertNotNull(DAOUserStoryService.getById(tid));
         }catch(AssertionError e){
             pw.append("Fail: existent Task not found\n");
             pass = false;
             throw new AssertionError(e);
         }
 
-        //TODO: Task ohne TaskID finden
         try{
-            //tservice.saveTask(tid, newdescription, 0,uid);
+            tservice.saveTask(tid, newdescription, 0,uid);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            //Assertions.assertEquals(t1.getDescription(), DAOUserStoryService.getTaskByID(t1.getID()).getDescription());
+            Assertions.assertEquals(newdescription, DAOUserStoryService.getById(tid).getDescription());
         }catch(AssertionError e){
-            pw.append("Fail: updated Task not found\n");
+            pw.append("Fail: updated Task-description not found\n");
             pass = false;
             throw new AssertionError(e);
         }
 
-        pw.append(String.format("pass = %b",pass));
+        try{
+            DAOUserStoryService.deleteById(uid);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertNull(tservice.getTaskByID(tid));
+        }catch(AssertionError | Exception e){
+            DAOTaskService.deleteById(tid);
+            e.printStackTrace();
+            pw.append("Fail: Deletion of User-Story did not delete Task\n");
+            pass = false;
+            throw new AssertionError(e);
+        }
+        pw.append(String.format("pass = %b\n",pass));
     }
 
     /*  Test ID: Logic.T8
@@ -488,36 +488,24 @@ public class LogicTest {
             e.printStackTrace();
         }
 
+        int tid1 = DAOTaskService.getByDescription("TaskDescription").getTid();
+
         try{
             tservice.saveTask(-1,"TaskDescription2",0,uid);
         }catch (Exception e){
             e.printStackTrace();
         }
 
+        int tid2 = DAOTaskService.getByDescription("TaskDescription2").getTid();
+
         try{
-            //Assertions.assertEquals(t1.getDescription(), DAOUserStoryService.getTaskByID(t1.getID()).getDescription());
+            Assertions.assertEquals("TaskDescription2", DAOTaskService.getById(tid2));
         }catch(AssertionError e){
             pw.append("Fail: existent Task not found\n");
             pass = false;
             throw new AssertionError(e);
         }
 
-        int tID = 0;
-
-        try{
-            tID = tservice.getTaskByDescription("TaskDescription").getID();
-            tservice.deleteTask(tID);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        try{
-            //Assertions.assertEquals(t1.getDescription(), tservice.getTaskByID(tID).getDescription());
-        }catch(AssertionError e){
-            pw.append("Fail: deleted Task found\n");
-            pass = false;
-            throw new AssertionError(e);
-        }
         try {
             uservice.deleteUserStory(uid);
         } catch (Exception e) {
@@ -525,21 +513,27 @@ public class LogicTest {
         }
 
         try{
-            //Assertions.assertEquals(t2.getDescription(), DAOUserStoryService.getTaskByID(t2.getID()).getDescription());
-        }catch(AssertionError e){
-            pw.append("Fail: deleted Task found\n");
+            Assertions.assertNull(tservice.getTaskByID(tid1));
+            Assertions.assertNull(tservice.getTaskByID(tid2));
+        }catch(AssertionError | Exception e){
+            DAOTaskService.deleteById(tid1);
+            DAOTaskService.deleteById(tid2);
+            e.printStackTrace();
+            pw.append("Fail: Deletion of User-Story did not delete Task\n");
             pass = false;
             throw new AssertionError(e);
         }
-        pw.append(String.format("pass = %b", pass));
+
+        pw.append(String.format("pass = %b\n", pass));
     }
 
     /*  Test ID: Logic.T9
      *  Author: Henry Lewis Freyschmidt
      *  Zweck: Tasklisten-Zuordnung T16.B1&B2
      */
-    @Test
+
     //TODO: Datenstruktur zur Zuodrnung von Tsks zu Taskboards fehlt
+    /*@Test
     void taskboardAttribute(){
         pw.append("Logik-Test-taskboardAttribute\nTest ID: Logic.T9\n" + "Date: " + formatter.format(date)+ '\n');
         TaskService tservice = new TaskService();
@@ -557,8 +551,8 @@ public class LogicTest {
             e.printStackTrace();
         }
         //TODO: TaskBoard erstellen; Task zuordnen; DB-Abfrage + Vergleich
-        pw.append(String.format("pass = %b", pass));
-    }
+        pw.append(String.format("pass = %b\n", pass));
+    }*/
 }
 
 /* erster Draft: Erfüllungsbedingungen für die User-Storys vom Sprint 2
