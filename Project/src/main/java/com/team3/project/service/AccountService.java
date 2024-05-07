@@ -2,10 +2,8 @@ package com.team3.project.service;
 
 import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.User;
-import com.team3.project.DAO.DAORole;
 import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOAccountService;
-import com.team3.project.DAOService.DAORoleService;
 import com.team3.project.DAOService.DAOUserService;
 import org.springframework.stereotype.Service;
 
@@ -113,14 +111,13 @@ public class AccountService {
         return new Profile(user.getName(), user.getPrivatDescription(), user.getWorkDescription());
     }
 
-    public boolean checkAuthorityLevel2(String sessionId) throws Exception {
+    public int getAuthority(String sessionId) throws Exception {
         if (sessionId == null) throw new Exception("Null SessionID");
-        if (sessionId.equals(MasterID)) return true;
+        if (sessionId.equals(MasterID)) return 999999999;
         else {
             DAOUser user = DAOUserService.getBySessionId(sessionId);
             if (user == null) throw new Exception("User not found");
-            // TODO: Ordentliche Authorities festlegen
-            return user.getAuthorization() >= 2;
+            return user.getAuthorization();
         }
     }
 }

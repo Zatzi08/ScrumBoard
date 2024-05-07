@@ -151,7 +151,7 @@ public class WebController {
                            @RequestParam(value = "SessionId", required = true) String SessionId){
         try {
             if (presentationToLogic.webSessionService.verify(SessionId)) {
-                if (presentationToLogic.accountService.checkAuthorityLevel2(SessionId)){
+                if (presentationToLogic.accountService.getAuthority(SessionId)  >= 2){
                     presentationToLogic.userStoryService.saveUserStory(name, Desc, prio, id);
                     return new ResponseEntity<HttpStatus>(HttpStatus.OK);
                 } else {
@@ -446,7 +446,7 @@ public class WebController {
                                     @RequestParam(value = "ID", required = true, defaultValue = "-1") int id){
         try {
             if (presentationToLogic.webSessionService.verify(SessionId)){
-                if (presentationToLogic.accountService.checkAuthorityLevel2(SessionId)){
+                if (presentationToLogic.accountService.getAuthority(SessionId) >= 2){
                     presentationToLogic.userStoryService.deleteUserStory(id);
                     return new ResponseEntity<HttpStatus>(HttpStatus.OK);
                 } else return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
