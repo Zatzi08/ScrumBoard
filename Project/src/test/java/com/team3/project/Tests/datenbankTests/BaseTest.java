@@ -26,7 +26,7 @@ public class BaseTest {
         }
         formatter = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         date = new Date();
-
+        printWriter.append("Datenbank-Tests:\n\n");
         DAOStartService.start();
     }
 
@@ -61,5 +61,6 @@ public class BaseTest {
 
     protected void printWriterAddPass() {
         printWriter.append(String.format("pass: %b", pass));
+        printWriter.append("\n\n\n");
     }
 }
