@@ -85,7 +85,7 @@
             <input type="hidden" id = "editId" name="id" value="-1">
             <input type="hidden" id = "editPrio" name="priority" value="1">
             <select class="form-control" id="USDropdown">
-                <option value="0" selected = "selected">Wähle zugehörige User-Story</option>
+                <option value="-1" selected = "selected">Wähle zugehörige User-Story</option>
                 <option th:each="US : ${UserStory}" th:id="@{USDropdown:{id}(id=${US.ID})}" th:value="${US.ID}" th:text="${US.name}"></option>
             </select>
             <button type="button" th:sessionID="${SessionId}" onclick="saveTask(this,this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>

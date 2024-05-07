@@ -418,7 +418,7 @@ public class WebController {
      * Revisited: /
      * Funktion:
      * Grund: /
-     * UserStory/Task-ID: // Todo: Place ID
+     * UserStory/Task-ID: T5.B1
      */
     @RequestMapping(value = "/deleteTask", method = RequestMethod.POST)
     private ResponseEntity<HttpStatus> deleteTask(@RequestParam(value = "SessionId", required = true) String Sessionid,
@@ -439,7 +439,7 @@ public class WebController {
      * Revisited: /
      * Funktion:
      * Grund: /
-     * UserStory/Task-ID: // Todo: Place ID
+     * UserStory/Task-ID: U6.B1
      */
     @RequestMapping(value = "/deleteUS", method = RequestMethod.POST)
     private ResponseEntity<HttpStatus> deleteUS(@RequestParam(value = "SessionId", required = true) String SessionId,
