@@ -50,7 +50,7 @@ public class TaskTest extends BaseTest{
      */
     @Test 
     void GenerlTaskTest(){
-        printWriterAddTest("GenerlTaskTest", "T3.D2/T4.D1/T5.D1");
+        printWriterAddTest("GenerlTaskTest", "T.T1");
         DAOUserStoryService.create(TestUserStoryName, TestUserStoryDes, TestUserStoryPrio);
         try {
             assertTrue(DAOTaskService.create(TaskDes1, DAOUserStoryService.getByName(TestUserStoryName)));
@@ -78,7 +78,7 @@ public class TaskTest extends BaseTest{
      */
     @Test 
     void getallTaskOfUserStory(){
-        printWriterAddTest("GenerlTaskTest", "T1.D1");
+        printWriterAddTest("GenerlTaskTest", "T.T2");
         DAOUserStoryService.create(TestUserStoryName, TestUserStoryDes, TestUserStoryPrio);
         try {
             assertTrue(DAOTaskService.create(TaskDes1, DAOUserStoryService.getByName(TestUserStoryName)));

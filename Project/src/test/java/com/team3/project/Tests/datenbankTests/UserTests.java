@@ -56,7 +56,7 @@ public class UserTests extends BaseTest {
      */
     @Test 
     void CreateUserTest(){
-        printWriterAddTest("CreateUserTest", "P1.D1");
+        printWriterAddTest("CreateUserTest", "U.T1");
         TestRoles.add(TestRole);
         try {
             assertTrue(DAOUserService.createByEMail(TestEmail, TestPasword, TestName, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, false));
@@ -91,7 +91,7 @@ public class UserTests extends BaseTest {
      */
     @Test 
     void GetByIDTest(){
-        printWriterAddTest("GetByIDTest", "P1.D2");
+        printWriterAddTest("GetByIDTest", "U.T2");
         TestRoles.add(TestRole);
         try {
             assertTrue(DAOUserService.createByEMail(TestEmail, TestPasword, TestName, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, false));
@@ -127,7 +127,7 @@ public class UserTests extends BaseTest {
      */
     @Test 
     void UpdateUserTest(){
-        printWriterAddTest("UpdateUserTest", "P2.D1");
+        printWriterAddTest("UpdateUserTest", "U.T3");
         TestRoles.add(TestRole);
         try {
             assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, false));
@@ -170,7 +170,7 @@ public class UserTests extends BaseTest {
      */
     @Test 
     void UpadteSessionIDTest(){
-        printWriterAddTest("UpadteSessionIDTest", "S7.D3");
+        printWriterAddTest("UpadteSessionIDTest", "U.T4");
         TestRoles.add(TestRole);
         String sessionID = "5";
         String sessionDate = "5";
@@ -214,7 +214,7 @@ public class UserTests extends BaseTest {
      */
     @Test 
     void EmptySessionIDTest(){
-        printWriterAddTest("EmptySessionIDTest", "S7.D6");
+        printWriterAddTest("EmptySessionIDTest", "U.T5");
         TestRoles.add(TestRole);
         String sessionID = "5";
         String sessionDate = "5";
@@ -257,7 +257,7 @@ public class UserTests extends BaseTest {
      */
     @Test 
     void CheckSessionIDTest(){
-        printWriterAddTest("CheckSessionIDTest", "S7.D7");
+        printWriterAddTest("CheckSessionIDTest", "U.T6");
         TestRoles.add(TestRole);
         String sessionID = "5";
         String sessionDate = "5";
