@@ -239,7 +239,7 @@ public class HttpRequestTests {
         int id = userStories.get(userStories.size()-1).getId();
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/addStory?SessionId=" + masterID + "&name=" + name + "&description=" + desc2 + "&priority=" + prio2 + "&id=" + id, HttpMethod.POST, message, String.class)
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/saveStory?SessionId=" + masterID + "&name=" + name + "&description=" + desc2 + "&priority=" + prio2 + "&id=" + id, HttpMethod.POST, message, String.class)
                     .getStatusCode()).isEqualTo(HttpStatus.OK);
         }  catch (AssertionError e){
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
