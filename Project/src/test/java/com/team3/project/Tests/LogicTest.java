@@ -85,6 +85,7 @@ public class LogicTest {
 
         List<DAOUser> pList = DAOUserService.getAll();
         if(!pList.isEmpty()){
+            pw.append("Profile: not empty Database\n");
             pList.forEach(x -> {
                 try{
                     if(!x.getPrivatDescription().isEmpty()|| !x.getWorkDescription().isEmpty()){
@@ -94,14 +95,6 @@ public class LogicTest {
                     e.printStackTrace();
                 }
             });
-        }
-        while(!pList.isEmpty()){
-
-            if(pList.get(0).getPrivatDescription()!=null || pList.get(0).getPrivatDescription() != ""|| pList.get(0).getWorkDescription() != "" || pList.get(0).getWorkDescription() != null){
-                pw.append("Profile: not empty Database\n");
-                DAOUserService.updateById(pList.get(0).getUid(), pList.get(0).getName(),"","",null,pList.get(0).getSessionId(), pList.get(0).getSessionDate(), false);
-                pList.remove(pList.get(0));
-            }
         }
     }
 
