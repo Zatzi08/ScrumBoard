@@ -308,7 +308,7 @@ public class WebController {
     @RequestMapping(value = "/SaveUserData", method = RequestMethod.POST)
     private ModelAndView SaveUserData(@RequestParam(value = "SessionId",required = true) String SessionId,
                                 @RequestParam(value = "uName", required = true) String name,
-                                @RequestParam(value = "rolle",required = true) String rolle,
+                                @RequestParam(value = "rolle",required = false, defaultValue = "-1") String rolle,
                                 @RequestParam(value = "wDesc",required = true) String wDesc,
                                 @RequestParam(value = "pDesc",required = true) String pDesc){
         try {

@@ -57,8 +57,8 @@ function saveProfile(sessionID) {
     name = document.getElementById('inputName').value;
     pdescription = document.getElementById('inputPDesc').value;
     wdescription = document.getElementById('inputWDesc').value;
-    rolle = document.getElementById('inputRolle').value;
-    fetch('/SaveUserData?SessionId=' + sessionID + '&uName=' + name + '&wDesc=' + wdescription + "&pDesc=" + pdescription + "&rolle=" + rolle,{
+    // rolle = document.getElementById('inputRolle').value;  + "&rolle=" + rolle
+    fetch('/SaveUserData?SessionId=' + sessionID + '&uName=' + name + '&wDesc=' + wdescription + "&pDesc=" + pdescription ,{
         method: 'Post',
     }).then(r => {
         if (r.ok) {
