@@ -82,7 +82,7 @@ public class TaskService {
      */
     public List<Task> getAllTask(){
         List<DAOTask> tasks = DAOTaskService.getAll();
-        if (tasks != null) {
+        if (!tasks.isEmpty()) {
             List<Task> taskList = new LinkedList<>();
             Enumerations prio = new Enumerations();
             for (DAOTask task : tasks) {

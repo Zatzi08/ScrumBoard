@@ -1,15 +1,9 @@
 package com.team3.project.Tests;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
-import com.team3.project.Classes.Enumerations;
-import com.team3.project.Classes.User;
-import com.team3.project.Classes.UserStory;
-import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.Task;
-import com.team3.project.Classes.Enumerations;
+import com.team3.project.Classes.UserStory;
 import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOUser;
-import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.service.AccountService;
@@ -24,7 +18,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+
 
 public class LogicTest {
 
@@ -55,14 +49,14 @@ public class LogicTest {
         pass = true;
     }
 
-    @BeforeEach @AfterEach
+    @BeforeEach
     public void emptyDatabase(){
         UserStoryService usService = new UserStoryService();
         TaskService taskService = new TaskService();
         AccountService accService = new AccountService();
 
         List<UserStory> usList = usService.getAllUserStorys();
-        if(usList != null){
+        if(!usList.isEmpty()){
             pw.append("UserStory: not empty Database\n");
             try{
                 usList.forEach(e -> {
@@ -78,7 +72,7 @@ public class LogicTest {
         }
 
         /*List<Task> taskList = taskService.getAllTask();
-        if(taskList != null){
+        if(!taskList.isEmpty()){
             pw.append("Task: not empty Database\n");
             taskList.forEach(x -> {
                 try {
