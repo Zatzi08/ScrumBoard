@@ -20,14 +20,15 @@
 
   <div class="loginBackground">
     <div class="container">
+      <label id = "headerLogin">Passwort zurücksetzen</label>
     <form action="/neuesPasswortPage" method="post" autocomplete="off">
-      <label></label>
-        <input type="email" required placeholder="Email" id="emailPasswortInput" name="EMail">
-        <button id="passwortResetBtn" type="submit">Anfordern</button>
-        <p id = "noAccount"> Kein Account?
-          <a href="/RegisterPage">Hier Registrieren!</a></p>
+        <input id = "emailInput" type="email" required placeholder="Email" class = "Input" name="EMail" style = "margin-top: 25%;">
+        <button id="passwortResetBtn" onclick="emailPopup()">Anfordern</button>
+        <p id = "noAccount"> Kein Account? <a href="/RegisterPage">Hier Registrieren!</a></p>
       </form>
+        <div id = "emailGesendetPopup" >Email versendet!</div>
     </div>
+
 </div>
   
 </body>

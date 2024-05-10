@@ -1,74 +1,102 @@
 package com.team3.project.DAOService;
 
-import java.util.List;
-import org.hibernate.Session;
-
 import com.team3.project.DAO.DAOAccount;
 
 public class DAOAccountService {
-    
-    public static boolean checkmail(String totest){
-        Session session = DAOSession.getNewSession();
-        session.beginTransaction();
-        List<DAOAccount> user = session.createQuery( "from DAOAccount where email = ?1" , DAOAccount.class).setParameter(1, totest).list();
-        if (user.isEmpty()) {
-            session.close();
-            return false;
-        }
-        session.close();
-        return true;
-    }
-
-    public static boolean LoginCheck(String mail,String totest){
-        Session session = DAOSession.getNewSession();
-        session.beginTransaction();
-        DAOAccount user = session.createQuery( "from DAOAccount where email = ?1" , DAOAccount.class).setParameter(1, mail).uniqueResult();
-        if (user!=null && user.getPassword().equals(totest)) {
-            session.close();
+    //creates
+    /* Author: Marvin Oliver Prüger
+    * Revisited: Tom-Malte Seep
+     * Function: creates a account
+     * Reason: refactoring
+     * UserStory/Task-ID:
+     */
+    /** creates a Account with a Mail and a password
+     * @param email    email
+     * @param password password
+     * @return         true if account creation was successfull
+     */
+    public static boolean create(String email, String password) {
+        if (!checkMail(email)) {
+            try {
+                DAOService.persist(new DAOAccount(email, password));
+            } catch (Exception e) {
+                return false;
+            }
             return true;
         }
-        session.close();
-        return false;
-    }
-    public static boolean createAccount(String email, String password){
-        DAOAccount newaAccount = new DAOAccount(email, password);
-        if(!checkmail(email)){
-            Session session = DAOSession.getNewSession();
-            session.beginTransaction();
-            session.persist(newaAccount);
-            session.getTransaction().commit();
-            session.close();
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean updatePassword(String email, String newpassword){
-        if(checkmail(email)){
-            Session session = DAOSession.getNewSession();
-            session.beginTransaction();
-            DAOAccount user = session.createQuery( "from DAOAccount where email = ?1" , DAOAccount.class).setParameter(1, email).uniqueResult();
-            user.setPassword(newpassword);
-            session.persist(user);            
-            session.getTransaction().commit();
-            session.close();
-            return true;
-        }
-    return false;
+        return false; //email already in database
     }
     
-    public static boolean deleteAccount(String email){
-        if(checkmail(email)){
-            Session session = DAOSession.getNewSession();
-            session.beginTransaction();
-            DAOAccount user = session.createQuery( "from DAOAccount where email = ?1" , DAOAccount.class).setParameter(1, email).uniqueResult();
-            session.remove(user);
-            session.getTransaction().commit();
-            session.close();
-            return true;
+    //updates
+    /* Author: Marvin Oliver Prüger
+    * Revisited: Tom-Malte Seep
+    * Function: updates the password for an account
+    * Reason: refactoring
+    * UserStory/Task-ID:
+    */
+    /** updates the password for an account 
+     * @param email    email
+     * @param password new password
+     * @return         true if update was successfull
+     */
+    public static boolean updatePassword(String email, String password) {
+        String parameterName = "email";
+        DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
+        if (account != null) {
+            account.setPassword(password);
+            return DAOService.merge(account);
         }
-    return false;
+        return false; //no entry
+    }
+    
+    //deletes
+    /* Author: Marvin Oliver Prüger
+     * Revisited: Tom-Malte Seep
+     * Function: deletes a user by email
+     * Reason: refactoring
+     *         cascading issues
+     * UserStory/Task-ID:
+     */
+    /** FOR TESTING ONLY <p>
+     * deletes a user by mail
+     * @param email email
+     * @return      false if error occured else true
+     */
+    public static boolean deleteByMail(String email) {
+        return DAOUserService.deleteByMail(email);
+    }
+
+    //checks
+    /* Author: Marvin Oliver Prüger
+     * Revisited: Tom-Malte Seep
+     * Function: checks if the email exists
+     * Reason: refactoring
+     * UserStory/Task-ID:
+     */
+    /** checks if the email exists
+     * @param email email 
+     * @return      true if email exists
+     */
+    public static boolean checkMail(String email) {
+        String parameterName = "email";
+        DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
+        return (account != null) ? true : false;
+    }
+    
+    /* Author: Marvin Oliver Prüger
+     * Revisited: Tom-Malte Seep
+     * Function: checks if the password is correct for mail
+     * Reason: refactoring
+     * UserStory/Task-ID:
+     */
+    /** checks if password is right for mail
+     * @param email     email
+     * @param password  password
+     * @return          true if account exists and has the password
+     */
+    public static boolean checkLogin(String email, String password) {
+        String parameterName = "email";
+        DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
+        return (account != null && account.getPassword().equals(password)) ? true : false;
     }
 }
-
-//"select t from DAOAccount t"

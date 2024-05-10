@@ -1,359 +1,4 @@
 /*
-  Author:  Zana Salih Hama,
-  Revisited: /
-  Funktion: Hintergrund für Project Managers
-  Grund: /
-  User-ID/Task-ID: U1.F1
-*/
-body {
-  background-color: #23262f;
-  color: #ffffff;
-  background-image:url("https://cdn.pixabay.com/photo/2023/10/10/12/36/lofi-8306352_1280.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.ProjectManagerBackground {
-  position: relative;
-}
-
-/*
-  Author:  Zana Salih Hama, Paula Krasnovska
-  Revisited: /
-  Funktion: Reiter und Buttons für Reiter
-  Grund: /
-  User-ID/Task-ID: U1.F1
-*/
-.Reiter {
-  background-color: rgba(16, 22, 58, 0.6);
-  height: 75px;
-  width: 100%;
-}
-
-.container {margin-top: 20px;}
-
-.reiterBtn {
-  color: #ffffff;
-  padding: 12px 10px;
-  transition: border-bottom-color 0.4s;
-  margin-right:40px;
-  margin-top: 30px;
-}
-
-.reiterBtn:hover {
-  border-bottom-color: #ba55d3;
-  color: #ba55d3;
-}
-#einstellungBtn{
-  position:absolute;
-  right:0;
-}
-
-/*
-  Author:  Zana Salih Hama, Paula Krasnovska
-  Revisited: /
-  Funktion: Buttons für Ansicht und Filter
-  Grund: /
-  User-ID/Task-ID: U1.F1
-*/
-#ansichtBtn {
-  display: inline-flex;
-  background-color: rgba(0, 116, 204, 0.6);
-  color: #ffffff;
-  padding: 12px 16px;
-  margin-right:20px;
-  border: none;
-  cursor: pointer;
-  transition-duration: 0.4s;
-  border-radius: 15px;
-  margin-left: 10px;
-  font-size: 14px;
-}
-
-#ansichtBtn:hover, #createUserStoryBtn:hover {
-  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
-  0 17px 50px 0 rgba(0, 0, 0, 0.19);
-  background-color: rgb(12, 29, 49);
-  cursor: pointer;
-}
-
-#filterBtn {
-  display: inline-flex;
-  background-color: rgba(0, 116, 204, 0.6);
-  color: #ffffff;
-  padding: 12px 16px;
-  margin-right:20px;
-  border: none;
-  font-size: 14px;
-  cursor: pointer;
-  transition-duration: 0.4s;
-  border-radius: 15px;
-}
-
-#filterBtn:hover {
-  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
-  0 17px 50px 0 rgba(0, 0, 0, 0.19);
-  background-color: rgb(12, 29, 49);
-  cursor: pointer;
-}
-
-.filterDropdown, .ansichtDropdown{
-  position: relative;
-  display: inline-block;
-}
-
-/*
-  Author:  Paula Krasnovska
-  Revisited: /
-  Funktion: Drop Down Inhalt der Buttons beim Klicken
-  Grund: Benutzerfreundlichkeit
-  User-ID/Task-ID: /
-*/
-.filterdropdown-content,.ansichtdropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  border-radius: 15px;
-  width: 200px;
-  overflow:auto;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.filterdropdown-content a, .ansichtdropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  border-bottom: 1px solid #403b3b;
-  display: block;
-}
-
-.ansichtdropdown-content a:hover {background-color: #d9dcde;}
-.filterdropdown-content a:hover {background-color: #d9dcde;}
-
-
-.show {display:block;}
-
-
-/*
-  Author:  Paula Krasnovska
-  Revisited: /
-  Funktion: Suchleiste und Suchbutton
-  Grund: Suche nach User Storys und Tasks
-  User-ID/Task-ID: /
-*/
-.suchleiste{
-  position:absolute;
-  margin-left:100px;
-  margin-top:-40px;
-  right:10px;
-}
-
-.searchBtn {
-  display: inline-flex;
-  background-color: #0074cc;
-  color: #ffffff;
-  padding: 12px 16px;
-  margin-left:10px;
-  border: none;
-  cursor: pointer;
-  transition-duration: 0.4s;
-  border-radius: 50px;
-  text-align: center;
-  height: 35px;
-}
-
-.searchBtn:hover {
-  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
-  0 17px 50px 0 rgba(0, 0, 0, 0.19);
-  background-color: rgb(12, 29, 49);
-  cursor: pointer;
-}
-
-#sucheInput{
-  border-radius: 50px;
-  height: 35px;
-  font-size: 13px;
-}
-
-/*
-  Author: Zana Salih Hama
-  Revisited: /
-  Funktion: Cancel Button Suchleite
-  Grund: Benutzerfreundlichkeit
-  User-ID/Task-ID: /
-*/
-#sucheInput::-webkit-search-cancel-button {margin-left: 10px;}
-
-/*
-  Author: Zana Salih Hama
-  Revisited: /
-  Funktion: User Story erstellen Button
-  Grund:
-  User-ID/Task-ID: U3.F1
-*/
-#createUserStoryBtn{
-  display: inline-flex;
-  background-color: rgba(0, 116, 204, 0.3);
-  color: #ffffff;
-  padding: 12px 16px;
-  margin-right:20px;
-  border: none;
-  cursor: pointer;
-  transition-duration: 0.4s;
-  border-radius: 15px;
-  width: 200px;
-  margin-top: 30px;
-  margin-left: 10px;
-  font-size: 16px;
-}
-
-/*
-  Author: Zana Salih Hama
-  Revisited: /
-  Funktion: User Story
-  Grund: Benutzerfreundlichkeit
-  User-ID/Task-ID: U1.F1
-*/
-.userStoryContainer{
-  position:relative;
-  width: 300px;
-  height:200px;
-  background-color: #87939f;
-  color:#3b3b3b;
-  border-top-left-radius:15px;
-  border-top-right-radius:15px;
-  margin-top:30px;
-  margin-left:10px;
-  transition: all 0.5s ease;
-  list-style-type: none;
-}
-
-.userStoryContainer:hover{
-  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
-  0 17px 50px 0 rgba(0, 0, 0, 0.19);
-}
-
-.userStoryText{
-  position:absolute;
-  top:15%;
-  left:10px;
-  right:10px;
-}
-
-#userStoryTitel{
-  position:absolute;
-  width:280px;
-  border-bottom: 1px solid #606060;
-}
-
-#userStoryBeschreibung{
-  margin-top: 25px;
-  right: 0;
-  width:280px;
-  height:130px;
-}
-
-.editBtn{
-  position:absolute;
-  margin-top: 1px;
-  top:5px;
-  right:5px;
-  color:rgb(12, 29, 49);
-}
-
-.editBtn:hover{color:black;}
-
-/*
-  Author: Zana Salih Hama
-  Revisited: /
-  Funktion: User Story Zoom
-  Grund: Benutzerfreundlichkeit
-  User-ID/Task-ID:
-*/
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-  overflow-y: scroll;
-}
-
-.userStoryContainer.zoomed {
-  position: relative;
-  margin: 0 auto;
-  width: 300px;
-  z-index: 1000;
-  filter: brightness(1.2);
-  transform: scale(1.4);
-}
-
-#zoomUserStoryBtn{
-  margin-left: 230px;
-}
-
-/*
-  Author: Paula Krasnovska
-  Revisited: /
-  Funktion: Task ausklappen, Task hinzufügen Buttons, Task selbst
-  Grund: Zugehörigkeit zu User Storys
-  User-ID/Task-ID: U1.F1
-*/
-
-#ausklappbarBtn {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  color: #0c3d5d;
-  transition: transform 0.3s ease;
-}
-
-#ausklappbarBtn.rotate {transform: rotate(90deg);}
-#ausklappbarBtn:hover{color: black;}
-
-#neueTaskBtn{
-  position:absolute;
-  top:0;
-  width:300px;
-  background-color: rgba(20, 35, 65, 0.79);
-  color:#87939f;
-  padding: 3px;
-}
-
-#neueTaskBtn i{
-  position: absolute;
-  right:5px;
-}
-
-#neueTaskBtn:hover{
-  background-color: rgb(13, 21, 37);
-  transition: right 0.5s ease;
-  cursor:pointer;
-}
-
-#taskContainer {
-  width: 300px;
-  position: relative;
-  margin-top: 175px;
-  margin-left: -20px;
-  background-color: #105686;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  overflow: hidden;
-  transition: height 0.5s ease;
-  height: 0;
-}
-
-#taskContainer.show {height: 100px;}
-#taskBeschreibung{
-  margin-top: 50px;
-  padding: 10px;
-}
-
-/*
   Author: Zana Salih Hama
   Revisited: /
   Funktion: User Story Bearbeitungsmenü
@@ -362,84 +7,77 @@ body {
 */
 
 .editMenu {
-  position: fixed;
-  z-index: 1000;
-  top: 75px;
-  right: -350px;
-  width: 300px;
-  height: 85%;
-  background-color: rgb(11, 20, 38);
-  color: white;
-  padding: 20px;
-  border-radius: 10px;
-  transition: right 0.5s ease;
-  overflow: auto;
+    display: none;
+    position: fixed;
+    width: 50%;
+    height: auto;
+    background-color: rgb(46, 46, 61);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    overflow: auto;
+    margin-top: -625px;
+    margin-left: 25%;
+    z-index: 1000;
 }
 
-
-.editMenu.visible {right: 0;}
-#addOrEdit{width:20px; height:10px; display:block; color:rgb(11, 20, 38); background-color: #22bb5b}
+.editMenu::-webkit-scrollbar{
+    display: none;
+}
 
 #editMenu-saveEditBtn {
-  position: page;
-  bottom: 50px;
-  border-radius: 10px;
-  width: 80px;
-  height: 17px;
-  background-color: white;
-  font-size: 14px;
-  left: 30px;
-  margin-left: 35%;
+    position: page;
+    bottom: 30px;
+    border-radius: 10px;
+    width: 80px;
+    height: 20px;
+    background-color: white;
+    font-size: 14px;
+    left: 30px;
+    margin-left:43%;
 }
 
 #editMenu-saveEditBtn:hover{
-  background-color: lightgrey;
-  transition: right 0.5s ease;
-  cursor:pointer;
-}
-
-#addMenuBtn {
-  position: page;
-  bottom: 50px;
-  border-radius: 10px;
-  width: 80px;
-  height: 17px;
-  background-color: white;
-  font-size: 14px;
-  left: 30px;
-  margin-left: 35%;
-  display:none;
+    background-color: lightgrey;
+    transition: right 0.5s ease;
+    cursor:pointer;
 }
 
 .inputEdit {
-  width: 100%;
-  border: 2px solid #6e7f91;
-  border-radius: 8px;
-  font-size: 12px;
-  transition: border-color 0.3s;
-  line-height: 1;
-  resize: vertical;
+    width: 100%;
+    border: 2px solid #6e7f91;
+    border-radius: 8px;
+    font-size: 12px;
+    transition: border-color 0.3s;
+    line-height: 1;
+    resize: vertical;
+    background-color: #283d48;
+    color: #afafaf;
+}
+
+.inputEdit:focus{
+    background: rgba(217, 220, 222, 0);
 }
 
 .inputEditPrio {
-  border-radius: .5rem;
-  box-shadow: white;
-  color: #111827;
-  padding: .75rem 1rem;
-  text-align: center;
-  font-size: 12px;
-  width: 56px;
-  height: 30px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+    border-radius: .5rem;
+    box-shadow: white;
+    color: #111827;
+    padding: .75rem 1rem;
+    text-align: center;
+    font-size: 12px;
+    width: 56px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .inputEditPrio:hover {background-color: rgb(249,250,251);}
 
 .inputEditPrio:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
 }
 
 .inputEditPrio:focus-visible {box-shadow: none;}
@@ -450,37 +88,264 @@ body {
 .editMenu-content form label{color: white;}
 
 .closeToggleEdit {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
-  cursor: pointer;
-  color: white;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
 }
 
-/*
-  Author: Zana Salih Hama
-  Revisited: /
-  Funktion: Scrollen-Funktion für Bearbeitung und Zoom
-  Grund:
-  User-ID/Task-ID: U3.F1
-*/
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    overflow-y: scroll;
+}
 
-::-webkit-scrollbar {width: 20px;}
+.userStoryTaskTrenner{
+    display: inline-block;
+    margin-top: -5px;
+    margin-left: -8px;
+}
+
+.selectBtn{
+    display: inline-flex;
+    color: #ffffff;
+    background-color: rgba(64,59,59,0);
+    margin-right:20px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 14px;
+    height: 20px;
+}
+
+#outerProjectManagerContainer{
+    position: relative;
+    display: inline-flex;
+    background-color: rgba(13, 71, 115, 0.7);
+    color: #ffffff;
+    padding: 12px 16px;
+    margin-right:20px;
+    border: none;
+    border-radius: 15px;
+    width: 95%;
+    margin-top: 30px;
+    margin-left: 30px;
+    font-size: 16px;
+    height: 600px;
+}
+
+#innerProjectManagerContainer{
+    display: block;
+    position: relative;
+    max-height: 550px;
+    background-color: rgba(13, 71, 115, 0);
+    color: #ffffff;
+    padding: 12px 16px;
+    margin-right:20px;
+    border: none;
+    width: 1600px;
+    margin-top: 30px;
+    margin-left: -150px;
+    font-size: 16px;
+    height: 510px;
+    border-radius: 10px;
+}
+
+.addUserStoryBtn{
+    position: absolute;
+    margin-top: -4px;
+    margin-bottom: 1000px;
+    margin-left: 83.5%;
+    width: 160px;
+    height: 25px;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    padding: 1px;
+}
+
+.addUserStoryBtn:hover{
+    background-color: black;
+}
+
+.userTaskTableBody-editBtn{
+    position:relative;
+    display: inline;
+    margin-left: 90%;
+    cursor: pointer;
+}
+
+.closeUserStoryTaskBtn{
+    position: relative;
+    display: inline;
+    position: absolute;
+    font-size: 22px;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-top: -0.6%;
+}
+
+#userTaskTableHead {
+    position: sticky;
+    top: 0;
+    background-color: #000000;
+    cursor: default;
+}
+
+.wrapper {
+    height: 500px;
+    overflow: auto;
+    top: -4px;
+    cursor: default;
+}
+
+.userTaskTable {
+    position: relative;
+    width: 98%;
+    border-collapse: separate;
+    table-layout: auto;
+    font-size: 10pt;
+    border-spacing: 0 20px;
+    cursor: default;
+}
+
+.userTaskTable th,
+.userTaskTable td {
+    padding: 10px;
+    text-align: left;
+    width: 20%;
+    border: 0 solid #adadad;
+    border-radius: 10px;
+    cursor: default;
+}
+
+.userTaskTable th {
+    background-color: rgba(255, 255, 255, 0.66);
+    color: black;
+    white-space: nowrap;
+}
+
+.userTaskTable tbody tr {
+    transition: background-color 0.3s;
+}
+
+.userTaskTable tbody tr:hover{
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    color: black;
+    white-space: nowrap;
+}
+
+.userTaskTable tbody tr.dragging {
+    opacity: 0.5;
+}
+
+.userTaskTable tbody tr.drag-over {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.userTaskTable tbody tr.dragging td {
+    cursor: grabbing;
+}
+
+.userTaskTableContentSubdate{
+    color: #919297;
+    font-size: 12px;
+    margin-left: 93%;
+}
+
+.userTaskTable-ContentStoryBoard{
+    display: inline;
+    font-size: 12px;
+    color: grey;
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+}
 ::-webkit-scrollbar-track {background-color: transparent;}
 ::-webkit-scrollbar-thumb {
-  background-color: #d6dee1;
-  border-radius: 20px;
-  border: 6px solid transparent;
-  background-clip: content-box;
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
 }
 ::-webkit-scrollbar-thumb:hover {background-color: #a8bbbf;}
 
-.overlay::-webkit-scrollbar {
-  display: none;
+hr {
+    border: 1px solid #bebebe;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
-.scroll-helper-pivot {
-  width: 100%;
-  height: 50%;
+#storyBtn {
+    background-color: rgba(255, 255, 255, 0.6);
+    color: #ffffff;
+    padding: 12px 16px;
+    margin-right:20px;
+    border: none;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    border-radius: 15px;
+    font-size: 14px;
+}
+
+#boardBtn {
+    display: inline-flex;
+    background-color: rgba(0, 116, 204, 0.6);
+    color: #ffffff;
+    padding: 12px 16px;
+    margin-right:20px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    border-radius: 15px;
+}
+
+.storyDropdown{
+    position: relative;
+}
+
+.storydropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    border-radius: 15px;
+    width: 100px;
+    overflow:auto;
+    font-size: 12px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.storydropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    border-bottom: 1px solid #403b3b;
+    display: block;
+}
+
+.storydropdown-content a:hover {background-color: #d9dcde;}
+
+.show {display:block;}
+
+#USDropdown{
+    background-color: #283d48;
+    color: #afafaf;
+    border: 2px solid #6e7f91;
+    border-radius: 8px;
+}
+#USDropdown option:hover{
+    background-color: #3a5865;
+
+
 }

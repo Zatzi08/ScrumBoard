@@ -9,15 +9,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Task {
-    private int taskID;
+public class Task extends abstraktDataClasses {
     private String description;
     private Priority priority;
     private int userStoryID;
-
-    public Task(){
-
-    }
 
     /* Author: Henry L. Freyschmidt
      * Revisited: /
@@ -25,10 +20,11 @@ public class Task {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public Task(int tID, String description, Priority priority, int UserStoryID){
-        this.taskID = tID;
+    public Task(int tID, String description, int priority, int userStoryID){
+        super(tID);
+        Enumerations prior = new Enumerations();
         this.description = description;
-        this.priority = priority;
+        this.priority = prior.IntToPriority(priority);
         this.userStoryID = userStoryID;
     }
 

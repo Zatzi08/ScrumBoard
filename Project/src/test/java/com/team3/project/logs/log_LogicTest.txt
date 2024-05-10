@@ -1,0 +1,279 @@
+Test-Log-Logic
+
+Logik-Test-createUserStory
+Date: 09/04/24 13:49:32
+pass: true
+
+Logik-Test-updateUserStory
+Date: 09/04/24 13:49:32
+pass: true
+
+Logik-Test-createUserStory
+Date: 10/04/24 13:11:12
+pass: true
+
+Logik-Test-updateUserStory
+Date: 10/04/24 13:11:12
+pass: true
+
+UserStory: not empty Database
+Task: not empty Database
+UserStory: not empty Database
+Task: not empty Database
+
+
+UserStory: not empty Database
+Task: not empty Database
+Profile: not empty Database
+Logik-Test-createUserStory
+Test ID: Logic.T1
+Date: 07/05/24 12:36:14
+pass: trueUserStory: not empty Database
+Task: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Task: not empty Database
+Profile: not empty Database
+Logik-Test-createProfile
+Test ID: Logic.T3
+Date: 07/05/24 12:36:51
+pass: trueUserStory: not empty Database
+Task: not empty Database
+
+
+UserStory: not empty Database
+Task: not empty Database
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 07/05/24 12:37:07
+pass = trueUserStory: not empty Database
+Task: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Task: not empty Database
+Profile: not empty Database
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 07/05/24 12:37:29
+UserStory: not empty Database
+Task: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Task: not empty Database
+Profile: not empty Database
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 07/05/24 12:39:21
+UserStory: not empty Database
+Task: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Task: not empty Database
+Profile: not empty Database
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 07/05/24 12:40:47
+pass = trueUserStory: not empty Database
+Task: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Task: not empty Database
+Profile: not empty Database
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 07/05/24 12:41:40
+pass = trueUserStory: not empty Database
+
+
+UserStory: not empty Database
+UserStory: not empty Database
+
+
+UserStory: not empty Database
+UserStory: not empty Database
+
+
+UserStory: not empty Database
+UserStory: not empty Database
+
+
+UserStory: not empty Database
+UserStory: not empty Database
+
+
+UserStory: not empty Database
+UserStory: not empty Database
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 07/05/24 15:31:42
+pass = true
+UserStory: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 07/05/24 15:31:54
+Fail: Deletion of User-Story did not delete Task
+UserStory: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 07/05/24 15:36:53
+Fail: Deletion of User-Story did not delete Task
+UserStory: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 07/05/24 15:40:29
+pass = true
+UserStory: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 07/05/24 15:42:35
+Fail: updated Task-description not found
+UserStory: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 07/05/24 15:51:59
+Fail: updated Task-description not found
+UserStory: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 07/05/24 15:53:47
+Fail: Deletion of User-Story did not delete Task
+UserStory: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 07/05/24 15:54:50
+Fail: Deletion of User-Story did not delete Task
+UserStory: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 07/05/24 15:55:55
+Fail: Deletion of User-Story did not delete Task
+UserStory: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 07/05/24 15:57:33
+pass = true
+UserStory: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 07/05/24 15:57:53
+Fail: existent Task not found
+UserStory: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 07/05/24 15:58:35
+pass = true
+UserStory: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 07/05/24 16:17:41
+Fail: User created with wrong authorityUserStory: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 07/05/24 16:18:44
+Fail: User-Profile-Description does not contain updated value
+UserStory: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 07/05/24 16:20:29
+Fail: User-Profile-Description does not contain updated value
+UserStory: not empty Database
+Profile: not empty Database
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 07/05/24 16:21:06
+pass = true 
+UserStory: not empty Database
+
+
+UserStory: not empty Database
+Logik-Test-createProfile
+Test ID: Logic.T3
+Date: 07/05/24 16:21:20
+pass: trueUserStory: not empty Database

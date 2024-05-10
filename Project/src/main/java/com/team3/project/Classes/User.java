@@ -9,9 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class User {
-    private Account account;
-    private int userID;
+public class User extends abstraktDataClasses {
     private String name;
     private String privatDescription;
     private String workDescription;
@@ -19,35 +17,20 @@ public class User {
     private List<Integer> taskIDs;
     private int authorization; //von der DB gestellt
 
-    public User(){}
-
     /* Author: Henry L. Freyschmidt
      * Revisited: /
-     * Funktion: /
+     * Funktion: User Konstruktor
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public User(Account account, String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles, List<Integer> taskIDs){
-        this.account = account;
+
+    //Frage von Henry: soll beim Konstruktor von User die Profil-Sachen dabei sein?
+    public User(String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles){
+        super(userID);
         this.name = name;
-        this.userID = userID;
         this.privatDescription = privatDescription;
         this.workDescription = workDescription;
         this.roles = roles;
-        this.taskIDs = taskIDs;
-    }
-
-    /* Author: Henry L. Freyschmid
-     * Funktion: Updated Userstory in Datenbank
-     * Grund: /
-     * UserStory/Task-ID: /
-     */
-    public boolean updateUser(String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles, List<Integer> taskIDs){
-        //TODO:implement checkUserID and updateUserDB
-        //if check(userID)==false then throw expection "User not found"
-        //else updateUserDB: Werte verändern (if Argument == null then Wert nicht ändern)
-        //return updateUserDB(...);
-        return true;
     }
 
 }

@@ -70,6 +70,11 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.45.1.0</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -77,11 +82,13 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <!--das brauch ich(marvin) damit es bei mir funktioniert. wenn du das hier siehst hab ich das ausversehn hochgeladen. enfern das selbst oder sag mir das ich das weg machen soll-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.1.0</version>
             </plugin>
+            <!--bis hier-->
         </plugins>
     </build>
 </project>
