@@ -80,7 +80,7 @@ public class UserStoryService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public void deleteUserStory(int uid) throws Exception {
+    public void deleteUserStoryandLinkedTasks(int uid) throws Exception {
         if (uid <= -1) throw new Exception("Null usid");
         List <DAOTask> tasks = DAOTaskService.getListByUserStoryId(uid);
         tasks.forEach(x -> DAOTaskService.deleteById(x.getTid()));

@@ -447,7 +447,7 @@ public class WebController {
         try {
             if (presentationToLogic.webSessionService.verify(SessionId)){
                 if (presentationToLogic.accountService.getAuthority(SessionId) >= 2){
-                    presentationToLogic.userStoryService.deleteUserStory(id);
+                    presentationToLogic.userStoryService.deleteUserStoryandLinkedTasks(id);
                     return new ResponseEntity<HttpStatus>(HttpStatus.OK);
                 } else return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
             }

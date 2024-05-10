@@ -61,7 +61,7 @@ public class LogicTest {
             try{
                 usList.forEach(e -> {
                     try {
-                        usService.deleteUserStory(e.getID());
+                        usService.deleteUserStoryandLinkedTasks(e.getID());
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -327,7 +327,7 @@ public class LogicTest {
         int u1id = DAOUserStoryService.getByName("UserStory1").getId();
 
         try{
-            usService.deleteUserStory(u1id);
+            usService.deleteUserStoryandLinkedTasks(u1id);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -376,7 +376,7 @@ public class LogicTest {
             throw new AssertionError(e);
         }
         try {
-            uservice.deleteUserStory(usid);
+            uservice.deleteUserStoryandLinkedTasks(usid);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -457,7 +457,7 @@ public class LogicTest {
         }
 
         try{
-            uservice.deleteUserStory(usid);
+            uservice.deleteUserStoryandLinkedTasks(usid);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -521,7 +521,7 @@ public class LogicTest {
         }
 
         try {
-            uservice.deleteUserStory(usid);
+            uservice.deleteUserStoryandLinkedTasks(usid);
         } catch (Exception e) {
             e.printStackTrace();
         }
