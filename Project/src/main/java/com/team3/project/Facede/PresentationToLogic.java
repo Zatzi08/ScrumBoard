@@ -1,10 +1,6 @@
-package com.team3.project.Faced;
+package com.team3.project.Facede;
 
-import com.team3.project.Controller.WebController;
-import com.team3.project.DAOService.DAOUserStoryService;
 import com.team3.project.service.*;
-
-import java.util.Random;
 
 
 public class PresentationToLogic {
@@ -12,8 +8,8 @@ public class PresentationToLogic {
     public final TaskService taskService;
     public final UserStoryService userStoryService;
     public final WebSessionService webSessionService;
-    private static PresentationToLogic instance;
     public TaskBoardService taskBoardService;
+    private static PresentationToLogic instance;
 
 
     private PresentationToLogic(){

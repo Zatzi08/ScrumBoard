@@ -1,7 +1,7 @@
 package com.team3.project.Controller;
 
 import com.team3.project.Classes.Profile;
-import com.team3.project.Faced.PresentationToLogic;
+import com.team3.project.Facede.PresentationToLogic;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
