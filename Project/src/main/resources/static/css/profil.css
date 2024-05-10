@@ -1,0 +1,138 @@
+#profilContainer{
+
+    position: relative;
+    margin: 1%;
+    margin-left:5%;
+    margin-right:5%;
+    height: 600px;
+    width:90%;
+    background-image: linear-gradient(to bottom right, #23262f, #26375d);
+    border-radius: 15px;
+
+}
+
+#profilInhalt{
+    position: absolute;
+    margin: 2%;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+    height: 400px;
+
+}
+
+#profilName{
+    display: inline-block;
+    color: white;
+    width: 500px;
+
+}
+
+#profilInhalt button{
+    display: block;
+    position: absolute;
+    margin-left:100%;
+    color: white;
+
+}
+
+#profilInhalt button:hover{
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    color: #8a8a8a;
+    cursor:pointer;
+}
+
+#profilProjektBeschreibung{
+    margin-top: 20px;
+    color: white;
+}
+
+#profilPersoBeschreibung{
+    margin-top: 20px;
+    color: white;
+}
+
+#rolleProfil{
+    margin-top:100px;
+    color: white;
+}
+
+#rolleProfil p{
+    width:100%;
+    margin-right:2%;
+    border-bottom: 2px solid #58749d;
+    color: #26335d;
+}
+
+#profilEditMenü{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    top:0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.47);
+}
+#profilEditMenü span:hover{
+    cursor: pointer;
+    color: grey;
+}
+
+#profilForm{
+    width: 80%;
+    height: 550px;
+    background-image: linear-gradient(to bottom right, rgb(46, 46, 61), #26375d);
+    margin: 1% auto; /* 15% from the top and centered */
+    padding: 20px;
+    color:black;
+    border-radius: 15px;
+}
+
+.profilInput{
+    display: block;
+    width: 95%;
+    height:70px;
+    border-radius: 5px;
+    border: #606060 solid 1px;
+    background-color: #283d48;
+    color: #afafaf;
+    resize:none;
+    border-radius: 8px;
+}
+
+.profilInput:focus{
+    background: rgba(217, 220, 222, 0);
+}
+
+.labelProfil{
+    margin-top: 15px;
+    color: white;
+}
+
+#profilEditBtn{
+    position: relative;
+    height:30px;
+    margin-top: 15px;
+    background-color: #4b6294;
+    border-radius: 10px;
+    color:white;
+}
+
+#profilEditBtn:hover{
+    cursor: pointer;
+    background-color: #26335d;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+#profilForm span{
+    display: block;
+    position: relative;
+    margin-left: 98%;
+
+    color:white;
+}
+
+
+/*Todo: Hübsche Fonts raussuchen, Strich zentrieren, margins und Abstände anpassen*/

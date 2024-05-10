@@ -1,5 +1,6 @@
 package com.team3.project.Websocket;
 
+import com.sun.jdi.IntegerValue;
 import com.team3.project.Classes.UserStory;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import com.team3.project.Classes.Enumerations;
@@ -36,7 +37,7 @@ public class WebsocketController {
         String description = message.substring(message.indexOf(":", message.indexOf(":")+1)+1,message.indexOf(",", message.indexOf(",")+1));
         String priority = message.substring(message.indexOf(":",message.indexOf(":",message.indexOf(":")+1)+1)+1);
         int id = 0;
-        UserStory userStory = new UserStory( name, description, enumerations.StringToPriority(priority), id);
+        UserStory userStory = new UserStory( name, description, Integer.valueOf(priority), id);
         // saveUser(userstory)
         // TODO: Implement saveUserstory
     }

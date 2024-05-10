@@ -5,6 +5,12 @@ public class Enumerations {
     // default Priority = low
     public enum Priority {low, normal, high, urgent;}
     public enum Role {admin, productOwner,  manager, nutzer}
+    /*Legende:
+    * nutzer = 0
+    * manager = 1
+    * productOwner = 2
+    * admin = 3
+    */
 
     /* Author: Lucas Krüger
      * Revisited: /

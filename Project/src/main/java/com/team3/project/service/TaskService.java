@@ -2,23 +2,30 @@ package com.team3.project.service;
 
 import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.Task;
-import com.team3.project.Classes.User;
+import com.team3.project.DAO.DAOTask;
+import com.team3.project.DAOService.DAOTaskService;
 import org.springframework.stereotype.Service;
+
+import java.util.LinkedList;
+import java.util.List;
 
 // Interagiert mit Repository, also create, delete, get, set
 @Service
 public class TaskService {
 
+    private final Enumerations enumerations = new Enumerations();
+
     /* Author: Henry L. Freyschmidt
      * Revisited: /
      * Funktion: /
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public boolean createTask(String description, Enumerations.Priority priority){
-        //TODO: Anfrage an DB createTaskDB implementieren : erstelle Task mit gegebenen Argumenten
-        //return createTaskDB(description,priority);
-        return true;
+
+    public Task getTaskByID(int id) throws Exception{
+        DAOTask dt =  DAOTaskService.getById(id);
+        if (dt == null){ throw new Exception("Task not found");}
+        return new Task(dt.getTid(),dt.getDescription(), dt.getPriority() , dt.getUserStory().getId());
     }
 
     /* Author: Henry L. Freyschmidt
@@ -27,13 +34,11 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public boolean deleteTask(Task task){
-        //TODO: checkRights(user) implementieren
-        //TODO: deleteTaskDB implementieren
-        //if checkRights == false then throw Exception "Benötigte Rechte nicht vorhanden"
-        // else do deleteTaskDB(taskID)
-        // return deleteTaskDB(taskID);
-        return true;
+
+    public Task getTaskByDescription(String description) throws Exception{
+        DAOTask dt =  DAOTaskService.getByDescription(description);
+        if (dt == null) throw new Exception("Task not found");
+        return new Task(dt.getTid(),dt.getDescription(), dt.getPriority(), dt.getUserStory().getId());
     }
 
     /* Author: Henry L. Freyschmidt
@@ -42,15 +47,20 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public boolean updateTask(Task task) {
-
-        // wenn ein Wert nicht verändert wird, wird der Methode  null übergeben
-        //TODO: implementiere checkTaskID: existiert die gegebene Task
-        //TODO: implementiere updateTaskDB(description, priority): Beschreibung in DB ändern ; nicht veränderte Argumente mit null belegen
-        //if checkTask == false then throw exception "Die Task wurde nicht in der Datenbank gefunden."
-        //else updateTaskDescriptionDB(taskID, description)
-        //return  updateTaskDescriptionDB(taskID, description);
-        return true;
+    public void saveTask(int taskID, String description, int priority, int USID ) throws Exception{
+        if (description == null ) throw new Exception("null description");
+        if (priority < 0 || priority > 4) throw new Exception("wrong priority");
+        if(USID == -1) throw new Exception("invalid UserStory-ID");
+        if(taskID == -1){
+            DAOTaskService.create(description,USID);
+        }else{
+            DAOTask task = DAOTaskService.getById(taskID);
+            if (task != null){
+                DAOTaskService.updateDescriptonById(taskID,description);
+                DAOTaskService.updateUserStoryById(taskID,USID);
+                DAOTaskService.updatePriorityById(taskID,priority);
+            }
+        }
     }
 
     /* Author: Henry L. Freyschmidt
@@ -59,9 +69,43 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public Task getTask(int taskID){
-        Task task = new Task();
-        //TODO: implementiere findTask: Rückgabe Task mit  TaskID= taskID
-        return task;
+    public void deleteTask(int taskID) throws Exception{
+        if(taskID == -1) throw new Exception("not valid TaskID");
+        DAOTaskService.deleteById(taskID);
     }
+
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: Erfragt alle Tasks aus der Datenbank
+     * Grund: /
+     * UserStory/Task-ID: T1.B1
+     */
+    public List<Task> getAllTask(){
+        List<DAOTask> tasks = DAOTaskService.getAll();
+        if (!tasks.isEmpty()) {
+            List<Task> taskList = new LinkedList<>();
+            Enumerations prio = new Enumerations();
+            for (DAOTask task : tasks) {
+                Task toAdd = new Task(task.getTid(),task.getDescription(), task.getPriority(), task.getUserStory().getId());
+                taskList.add(toAdd);
+            }
+            return taskList;
+        }
+        return null;
+    }
+
+    public List<Task> getTaskbyUSID(int usId) throws Exception {
+        if (usId == -1) throw new Exception("Null USID");
+        List<DAOTask> tasks = DAOTaskService.getListByUserStoryId(usId);
+        if (tasks.isEmpty()) return null;
+        List<Task> List = new LinkedList<Task>();
+        for (DAOTask task : tasks) {
+            Task toAdd = new Task(task.getTid(),task.getDescription(), task.getPriority(), usId);
+            List.add(toAdd);
+        }
+        return List;
+    }
+
+
 }
