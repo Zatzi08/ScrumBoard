@@ -51,10 +51,7 @@ public class Email {
     }
 
     public void sendEmail(String Email){ //Authentifizierungscode an Email aus Argument schicken
-        //TODO: getAuthentification(Email): Zahl aus DB ablesen
-        //getAuthentification mit beliebigen int simuliert
         int test = 10;
         this.sendSimpleMessage(Email, "Test", String.format("Ihr Authentifikationscode ist wie folgt: %d",test));
-
     }
 }

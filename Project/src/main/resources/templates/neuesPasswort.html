@@ -20,9 +20,9 @@
     <div class="container">
         <label id = "headerLogin">Passwort ändern</label>
       <form action="/neuesPasswort" method="post" autocomplete="off">
-        <input required placeholder="Sicherheitscode" class = "Input" name = "Sicherheitscode">
+        <input required placeholder="Sicherheitscode" th:value="${Code}" class = "Input" name = "Sicherheitscode">
         <input type="password" required placeholder="Passwort ändern" class = "Input" name="Passwort">
-          <input type="hidden" name="EMail" th:value="${Mail}">
+        <input type="hidden" name="EMail" th:value="${Mail}">
         <button id="newPasswortBtn" type="submit">Ändern</button>
       <p id = "yesAccount"> Du besitzt doch einen Account?
         <a href="/RegisterPage">Hier anmelden! </a></p>

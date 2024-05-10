@@ -22,7 +22,7 @@
     <div class="container">
       <label id = "headerLogin">Passwort zurücksetzen</label>
     <form action="/neuesPasswortPage" method="post" autocomplete="off">
-        <input type="email" required placeholder="Email" class = "Input" name="EMail" style = "margin-top: 25%;">
+        <input id = "emailInput" type="email" required placeholder="Email" class = "Input" name="EMail" style = "margin-top: 25%;">
         <button id="passwortResetBtn" onclick="emailPopup()">Anfordern</button>
         <p id = "noAccount"> Kein Account? <a href="/RegisterPage">Hier Registrieren!</a></p>
       </form>
