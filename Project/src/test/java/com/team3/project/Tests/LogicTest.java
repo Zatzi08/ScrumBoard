@@ -111,6 +111,36 @@ public class LogicTest {
     void createUserStory(){ // TODO: fix problem: wenn eine userStory mit nicht vorhandener id updated werden soll, ändert sich etwas in der DB (siehe Zeile 29)
         pw.append("Logik-Test-createUserStory\nTest ID: Logic.T1\nDate: " + formatter.format(date)+ '\n');
         UserStoryService usService = new UserStoryService();
+        int count_correct_exceptions = 0;
+        int count_correct_exception_checks = 0;
+
+        try {
+            count_correct_exception_checks++;
+            usService.saveUserStory(null, "Blablah1", 1, -1);
+        } catch (Exception e){
+            count_correct_exceptions ++;
+        }
+
+        try {
+            count_correct_exception_checks++;
+            usService.saveUserStory("null", null, 1, -1);
+        } catch (Exception e){
+            count_correct_exceptions ++;
+        }
+
+        try {
+            count_correct_exception_checks++;
+            usService.saveUserStory("null", "Blablah1", -1, -1);
+        } catch (Exception e){
+            count_correct_exceptions ++;
+        }
+
+        try {
+            count_correct_exception_checks++;
+            usService.saveUserStory("null", "Blablah1", 1, -10);
+        } catch (Exception e){
+            count_correct_exceptions ++;
+        }
 
         try {
             usService.saveUserStory("UserStory1", "Blablah1", 1, -1);
@@ -134,8 +164,32 @@ public class LogicTest {
             throw new AssertionError(e);
         }
 
-        DAOUserStoryService.deleteById(1);
-        DAOUserStoryService.deleteById(2);
+        int uid1 = DAOUserStoryService.getByName("UserStory1").getId();
+        int uid2 = DAOUserStoryService.getByName("UserStory2").getId();
+
+        try{
+            usService.deleteUserStoryandLinkedTasks(uid1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            usService.deleteUserStoryandLinkedTasks(uid2);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            count_correct_exception_checks++;
+            usService.deleteUserStoryandLinkedTasks(-1);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        if (count_correct_exceptions != count_correct_exception_checks){
+            pass = false;
+            pw.append("Fail: Wrong Exception-Handling\n");
+        }
         pw.append(String.format("pass: %b", pass));
     }
 
@@ -171,8 +225,20 @@ public class LogicTest {
             throw new AssertionError(e);
         }
 
-        DAOUserStoryService.deleteById(1);
-        DAOUserStoryService.deleteById(2);
+        int uid1 = DAOUserStoryService.getByName("UserStory1").getId();
+        int uid2 = DAOUserStoryService.getByName("UserStory2").getId();
+
+        try{
+            usService.deleteUserStoryandLinkedTasks(uid1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            usService.deleteUserStoryandLinkedTasks(uid2);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         pw.append(String.format("pass: %b", pass));
     }
@@ -185,9 +251,32 @@ public class LogicTest {
     void createProfile(){
         pw.append("Logik-Test-createProfile\nTest ID: Logic.T3\n" + "Date: " + formatter.format(date)+ '\n');
         AccountService aservice = new AccountService();
+        int count_correct_exceptions = 0;
+        int count_correct_exception_checks = 0;
 
         try{
-            aservice.createUser("dave@gmail.com", "123","Dave");
+            count_correct_exception_checks++;
+            aservice.register(null,"dave@gmail.com", "123");
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            aservice.register("Dave",null, "123");
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            aservice.register("Dave","dave@gmail.com", null);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            aservice.register("Dave","dave@gmail.com", "123");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -212,6 +301,41 @@ public class LogicTest {
         int uid = DAOUserService.getIdByMail("dave@gmail.com");
 
         try{
+            count_correct_exception_checks++;
+            aservice.savePublicData(null, "Dave", "", "Manager", "bin langweilig");
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            aservice.savePublicData(DAOUserService.getById(uid).getSessionId(), null, "", "Manager", "bin langweilig");
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            aservice.savePublicData(DAOUserService.getById(uid).getSessionId(), "Dave", null, "Manager", "bin langweilig");
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            aservice.savePublicData(DAOUserService.getById(uid).getSessionId(), "Dave", "", null, "bin langweilig");
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            aservice.savePublicData(DAOUserService.getById(uid).getSessionId(), "Dave", "", "Manager", null);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
             aservice.savePublicData(DAOUserService.getById(uid).getSessionId(), "Dave", "", "Manager", "bin langweilig");
         }catch(Exception e){
             e.printStackTrace();
@@ -230,6 +354,10 @@ public class LogicTest {
             e.printStackTrace();
         }
 
+        if(count_correct_exception_checks != count_correct_exceptions){
+            pass = false;
+            pw.append("Fail: Wrong Exception-Handling\n");
+        }
 
         pw.append(String.format("pass: %b", pass));
     }
@@ -245,7 +373,7 @@ public class LogicTest {
         String newdescription = "new Manager";
 
         try{
-            aservice.createUser("dave@gmx.de", "passw","Dave");
+            aservice.register("Dave", "dave@gmx.de", "passw");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -309,6 +437,8 @@ public class LogicTest {
     void deleteUserStory(){
         pw.append("Logik-Test-deleteUserStory\nTest ID: Logic.T5\n" + "Date: " + formatter.format(date)+ '\n');
         UserStoryService usService = new UserStoryService();
+        int count_correct_exceptions = 0;
+        int count_correct_exception_checks = 0;
 
         try{
             usService.saveUserStory("UserStory1", "Blablah1", 1, -1);
@@ -327,6 +457,13 @@ public class LogicTest {
         int u1id = DAOUserStoryService.getByName("UserStory1").getId();
 
         try{
+            count_correct_exception_checks++;
+            usService.deleteUserStoryandLinkedTasks(-1);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
             usService.deleteUserStoryandLinkedTasks(u1id);
         }catch (Exception e){
             e.printStackTrace();
@@ -338,6 +475,11 @@ public class LogicTest {
             pw.append("Fail: deleted User Story found\n");
             pass = false;
             throw new AssertionError(e);
+        }
+
+        if(count_correct_exceptions != count_correct_exception_checks){
+            pw.append("Fail: Wrong Exception-Handling\n");
+            pass = false;
         }
 
         pw.append(String.format("pass = %b\n", pass));
@@ -352,6 +494,9 @@ public class LogicTest {
         pw.append("Logik-Test-createTask\nTest ID: Logic.T6\n" + "Date: " + formatter.format(date)+ '\n');
         UserStoryService uservice = new UserStoryService();
         TaskService tservice = new TaskService();
+        int count_correct_exceptions = 0;
+        int count_correct_exception_checks = 0;
+
         try{
             uservice.saveUserStory("Story1", "Blah1", 1, -1);
         }catch (Exception e){
@@ -359,6 +504,27 @@ public class LogicTest {
         }
 
         int usid = DAOUserStoryService.getByName("Story1").getId();
+
+        try{
+            count_correct_exception_checks++;
+            tservice.saveTask(-1, "Task1", 0, -1);
+        }catch(Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            tservice.saveTask(-1, null, 0, usid);
+        }catch(Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            tservice.saveTask(-1, "Task1", -10, usid);
+        }catch(Exception e){
+            count_correct_exceptions++;
+        }
 
         try {
             tservice.saveTask(-1, "Task1", 0, usid);
@@ -394,6 +560,11 @@ public class LogicTest {
             pw.append("Fail: Deletion of User-Story did not delete Task\n");
             pass = false;
             throw new AssertionError(e);
+        }
+
+        if(count_correct_exceptions != count_correct_exception_checks){
+            pw.append("Fail: Wrong Exception-Handling\n");
+            pass = false;
         }
 
         pw.append(String.format("pass = %b\n", pass));

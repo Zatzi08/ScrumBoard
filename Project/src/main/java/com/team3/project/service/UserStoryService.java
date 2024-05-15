@@ -23,7 +23,7 @@ public class UserStoryService {
      * UserStory/Task-ID: /
      */
     public UserStory getUserStory(int userStoryID) throws Exception {
-        if (userStoryID == -1) throw new Exception("Null UserStoryID");
+        if (userStoryID == -1) throw new Exception("Invalid UserStoryID");
 
         DAOUserStory story = DAOUserStoryService.getById(userStoryID);
         if (story == null) throw new Exception("UserStory not found");
