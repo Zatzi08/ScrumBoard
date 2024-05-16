@@ -25,14 +25,26 @@ function saveTask($this, sessionID) {
     let description = document.getElementById('inputDesc').value;
     let priority = document.getElementById('editPrio').value;
     let USID = document.getElementById('USDropdown').value;
+    let dueDate = document.getElementById('inputDate').value;
+    let timeNeededG = -1;//TODO document.getElementById().value
+    let timeNeededA = -1;//TODO document.getElementById().value
 
-    fetch('/saveTask?tID=' + id + '&description=' + description + '&priority=' + priority + "&USID=" + USID, {
+    fetch('/saveTask', {
         method: 'POST',
         cache: 'no-cache',
         headers: {
             'Content-Type': 'application/json',
             'sessionID': sessionID
-        }
+        },
+        body: JSON.stringify({
+                'tID': id,
+                'description': description,
+                'priority': priority,
+                'userStoryID': USID,
+                'dueDate': dueDate,
+                'timeNeededG': timeNeededG,
+                'timeNeededA': timeNeededA
+            })
     }).then(r => {
         if (r.ok) {
             location.reload();

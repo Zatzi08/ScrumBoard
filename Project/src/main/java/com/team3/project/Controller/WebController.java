@@ -1,6 +1,7 @@
 package com.team3.project.Controller;
 
 import com.team3.project.Classes.Profile;
+import com.team3.project.Classes.Task;
 import com.team3.project.Facede.PresentationToLogic;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -378,7 +379,7 @@ public class WebController {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 return new ModelAndView("projectManager-TasksZuUserstory")
                         .addObject("SessionId",sessionID)
-                        .addObject("Tasks", presentationToLogic.taskService.getTaskbyUSID(USId))
+                        .addObject("Tasks", presentationToLogic.taskService.getTasksbyUSID(USId))
                         .addObject("StoryName", presentationToLogic.userStoryService.getUserStory(USId).getName())
                         .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys());
             }
@@ -398,13 +399,10 @@ public class WebController {
     // TODO: Fix tlid
     @RequestMapping(value = "/saveTask", method = RequestMethod.POST)
     private ResponseEntity<HttpStatus> saveTask(@RequestHeader(value = "sessionID", required = true) String sessionID,
-                                  @RequestParam(value = "tID",required = true, defaultValue = "-1") int tid,
-                                  @RequestParam(value = "description", required = true) String desc,
-                                  @RequestParam(value = "USID", required = true) int USID,
-                                  @RequestParam(value ="priority", required = true) int prio){
+                                                @RequestBody(required = true) Task task){
         try{
             if (presentationToLogic.webSessionService.verify(sessionID)){
-                presentationToLogic.taskService.saveTask(tid,desc,prio, USID);
+                presentationToLogic.taskService.saveTask(task);
                 return new ResponseEntity<HttpStatus>(HttpStatus.OK);
             }
         } catch(Exception e){
@@ -422,7 +420,7 @@ public class WebController {
      */
     @RequestMapping(value = "/deleteTask", method = RequestMethod.POST)
     private ResponseEntity<HttpStatus> deleteTask(@RequestHeader(value = "sessionID", required = true) String sessionID,
-                                    @RequestParam(value = "tID", required = true, defaultValue = "-1") int tid){
+                                                  @RequestParam(value = "tID", required = true, defaultValue = "-1") int tid){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 presentationToLogic.taskService.deleteTask(tid);
