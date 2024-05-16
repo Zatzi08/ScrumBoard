@@ -41,11 +41,11 @@
                 <tbody id="userTaskTableBody">
                 <tr th:each="item : ${Tasks}">
                     <th>
-                        <label class="Btn">Story</label>
-                        <span class="Btn">/</span>
+                        <label class="userTaskTable-ContentStoryBoard">Story</label>
+                        <span class="userTaskTable-ContentStoryBoard">/</span>
                         <label class="userTaskTable-ContentStoryBoard">Board</label>
-                        <button class="userTaskTableBody-editBtn" title="Bearbeiten" th:USID="${item.userStoryID}"  th:description="${item.description}" th:Tid="${item.ID}" onclick="toggleEditBoxT('editBtn', this.getAttribute('Tid'), this.getAttribute('description'), this.getAttribute('USID'));"><i class="fa fa-edit"></i></button>
-                        <span class="closeUserStoryTaskBtn" th:Tid="${item.ID}" th:Sid="${SessionId}" onclick="deleteT(this.getAttribute('Tid'),this.getAttribute('Sid'))" title="Löschen">&times;</span>
+                        <button class="Btn" title="Bearbeiten" th:USID="${item.userStoryID}"  th:description="${item.description}" th:Tid="${item.ID}" onclick="toggleEditBoxT('editBtn', this.getAttribute('Tid'), this.getAttribute('description'), this.getAttribute('USID'));"><i class="fa fa-edit"></i></button>
+                        <span class="Btn" th:Tid="${item.ID}" th:Sid="${SessionId}" onclick="deleteT(this.getAttribute('Tid'),this.getAttribute('Sid'))" title="Löschen">&times;</span>
                         <!-- <label th:text = "${item.name}">Name</label> -->
                         <label>Rolle</label>
                         <label th:text = "${item.priority}">Priorität</label>

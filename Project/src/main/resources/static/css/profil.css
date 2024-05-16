@@ -23,8 +23,10 @@
 
 #profilName{
     display: inline-block;
-    color: white;
+    color: #f1b951;;
     width: 500px;
+    font-size: 40px;
+    font-family: "Lucida Console";
 
 }
 
@@ -44,18 +46,24 @@
 }
 
 #profilProjektBeschreibung{
-    margin-top: 20px;
+    margin-top: 15px;
     color: white;
+    font-family: Roboto;
+    font-size: 15px;
 }
 
 #profilPersoBeschreibung{
-    margin-top: 20px;
+    margin-top: 15px;
     color: white;
+    font-family: Roboto;
+    font-size: 15px;
 }
 
 #rolleProfil{
-    margin-top:100px;
     color: white;
+    font-size: 15px;
+    font-family: Roboto;
+    margin-top:15px;
 }
 
 #rolleProfil p{
@@ -132,6 +140,14 @@
     margin-left: 98%;
 
     color:white;
+}
+
+.profileText{
+    font-size: 18px;
+    font-family: "Lucida Console";
+    color: #a8a398;
+    margin-top:20px;
+
 }
 
 
