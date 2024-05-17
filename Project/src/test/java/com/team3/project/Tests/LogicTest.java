@@ -1,6 +1,5 @@
 package com.team3.project.Tests;
 
-import com.team3.project.Classes.Task;
 import com.team3.project.Classes.UserStory;
 import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOUser;
@@ -61,7 +60,7 @@ public class LogicTest {
             try{
                 usList.forEach(e -> {
                     try {
-                        usService.deleteUserStoryandLinkedTasks(e.getID());
+                        usService.deleteUserStoryAndLinkedTasks(e.getID());
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -168,20 +167,20 @@ public class LogicTest {
         int uid2 = DAOUserStoryService.getByName("UserStory2").getId();
 
         try{
-            usService.deleteUserStoryandLinkedTasks(uid1);
+            usService.deleteUserStoryAndLinkedTasks(uid1);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            usService.deleteUserStoryandLinkedTasks(uid2);
+            usService.deleteUserStoryAndLinkedTasks(uid2);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
             count_correct_exception_checks++;
-            usService.deleteUserStoryandLinkedTasks(-1);
+            usService.deleteUserStoryAndLinkedTasks(-1);
         }catch (Exception e){
             count_correct_exceptions++;
         }
@@ -229,13 +228,13 @@ public class LogicTest {
         int uid2 = DAOUserStoryService.getByName("UserStory2").getId();
 
         try{
-            usService.deleteUserStoryandLinkedTasks(uid1);
+            usService.deleteUserStoryAndLinkedTasks(uid1);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            usService.deleteUserStoryandLinkedTasks(uid2);
+            usService.deleteUserStoryAndLinkedTasks(uid2);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -458,13 +457,13 @@ public class LogicTest {
 
         try{
             count_correct_exception_checks++;
-            usService.deleteUserStoryandLinkedTasks(-1);
+            usService.deleteUserStoryAndLinkedTasks(-1);
         }catch (Exception e){
             count_correct_exceptions++;
         }
 
         try{
-            usService.deleteUserStoryandLinkedTasks(u1id);
+            usService.deleteUserStoryAndLinkedTasks(u1id);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -542,7 +541,7 @@ public class LogicTest {
             throw new AssertionError(e);
         }
         try {
-            uservice.deleteUserStoryandLinkedTasks(usid);
+            uservice.deleteUserStoryAndLinkedTasks(usid);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -628,7 +627,7 @@ public class LogicTest {
         }
 
         try{
-            uservice.deleteUserStoryandLinkedTasks(usid);
+            uservice.deleteUserStoryAndLinkedTasks(usid);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -692,7 +691,7 @@ public class LogicTest {
         }
 
         try {
-            uservice.deleteUserStoryandLinkedTasks(usid);
+            uservice.deleteUserStoryAndLinkedTasks(usid);
         } catch (Exception e) {
             e.printStackTrace();
         }

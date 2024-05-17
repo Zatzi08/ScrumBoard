@@ -58,13 +58,19 @@ function saveUS($this, sessionID) {
     let description = document.getElementById('inputDesc').value;
     let priority = document.getElementById('editPrio').value;
 
-    fetch('/saveStory?ID=' + id + '&name=' + name + '&description=' + description + '&priority=' + priority, {
+    fetch('/saveStory', {
         method: 'POST',
         cache: 'no-cache',
         headers: {
             'Content-Type': 'application/json',
             'sessionID': sessionID
-        }
+        },
+        body: JSON.stringify({
+            'ID': id,
+            'name': name,
+            'description': description,
+            'priority': priority
+        })
         }).then(r => {
         if (r.ok) {
             location.reload();

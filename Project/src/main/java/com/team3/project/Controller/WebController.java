@@ -2,6 +2,7 @@ package com.team3.project.Controller;
 
 import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.Task;
+import com.team3.project.Classes.UserStory;
 import com.team3.project.Facede.PresentationToLogic;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -146,14 +147,11 @@ public class WebController {
      */
     @RequestMapping(value = "/saveStory", method = RequestMethod.POST)
     public ResponseEntity<HttpStatus> saveStory(@RequestHeader(value = "sessionID", required = true) String sessionID,
-                                                @RequestParam(value = "name", required = true) String name,
-                                                @RequestParam(value = "description", required = true) String Desc,
-                                                @RequestParam(value = "priority", required = false) int prio,
-                                                @RequestParam(value = "ID", required = true, defaultValue = "-1") int id){
+                                                @RequestBody(required = true) UserStory userStory){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)) {
                 if (presentationToLogic.accountService.getAuthority(sessionID)  >= 2){
-                    presentationToLogic.userStoryService.saveUserStory(name, Desc, prio, id);
+                    presentationToLogic.userStoryService.saveUserStory(userStory);
                     return new ResponseEntity<HttpStatus>(HttpStatus.OK);
                 } else {
                     return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
@@ -445,7 +443,7 @@ public class WebController {
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 if (presentationToLogic.accountService.getAuthority(sessionID) >= 2){
-                    presentationToLogic.userStoryService.deleteUserStoryandLinkedTasks(id);
+                    presentationToLogic.userStoryService.deleteUserStoryAndLinkedTasks(id);
                     return new ResponseEntity<HttpStatus>(HttpStatus.OK);
                 } else return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
             }

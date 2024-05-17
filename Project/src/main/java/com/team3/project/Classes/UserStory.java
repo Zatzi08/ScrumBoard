@@ -12,7 +12,6 @@ public class UserStory extends abstraktDataClasses {
     private String name;
     private String description;
     private Priority priority;
-    private List<Task> Tasks = null;
 
     /* Author: Henry L. Freyschmidt
      * Revisited: /
@@ -26,5 +25,10 @@ public class UserStory extends abstraktDataClasses {
         this.name = name;
         this.description = description;
         this.priority = prior.IntToPriority(priority);
+    }
+
+    public int getPriorityAsInt() {
+        Enumerations prior = new Enumerations();
+        return prior.getInt(this.getPriority());
     }
 }
