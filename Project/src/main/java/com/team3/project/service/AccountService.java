@@ -99,23 +99,6 @@ public class AccountService {
         DAOUserService.createByEMail(email, password, name, null, null, null, null, null, true);
     }
 
-    public void deleteProfile(String sessionID) throws Exception{
-        /* user =  DAOUserService.getUserBySessionID(sessionID);
-        if(user.getDescription() == null){
-        throw new Exception("Profil existiert nicht");
-         }else{
-         DAOUserService.updatePublicData(user.getID(),null,null,null,null);
-         }
-        */
-    }
-
-    public void testDeleteProfile(int userID){
-        /*
-        * DAOUserService.updateUname(null,userID);
-        * DAOUserService.updateUserDescription(null, userID);
-        * DAOUserService.updateDescription(null, userID);
-        */
-    } // Für die Tests notwendig, da in Tests keine SessionID
 
     /**
      * gets all DAOUser-Object in Database
