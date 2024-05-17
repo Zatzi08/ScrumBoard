@@ -176,7 +176,7 @@ public class AccountService {
         if (email == null) throw new Exception("Null EMail");
         DAOUser user = DAOUserService.getById(DAOUserService.getIdByMail(email));
         if (user == null) throw new Exception("User not found");
-        return new Profile(user.getName(), user.getPrivatDescription(), user.getWorkDescription());
+        return new Profile(user.getName(), user.getPrivatDescription(), user.getWorkDescription(), null);
     }
 
     /* Author: Lucas Krüger
@@ -196,7 +196,7 @@ public class AccountService {
         DAOUser user = DAOUserService.getBySessionId(sessionId);
         if (user == null) throw new Exception("User not found");
 
-        return new Profile(user.getName(), user.getPrivatDescription(), user.getWorkDescription());
+        return new Profile(user.getName(), user.getPrivatDescription(), user.getWorkDescription(), null);
     }
 
     /* Author: Lucas Krüger

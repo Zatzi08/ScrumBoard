@@ -85,14 +85,22 @@ function saveProfile(sessionID) {
     let name = document.getElementById('inputName').value;
     let pdescription = document.getElementById('inputPDesc').value;
     let wdescription = document.getElementById('inputWDesc').value;
-    // rolle = document.getElementById('inputRolle').value;  + "&rolle=" + rolle
-    fetch('/saveUserData?SessionId=' + sessionID + '&uName=' + name + '&wDesc=' + wdescription + "&pDesc=" + pdescription ,{
+    // roles = getRoles();
+
+
+    fetch('/saveUserData' ,{
         method: 'Post',
         cache: 'no-cache',
         headers:{
             'Content-Type': 'application/json',
             'sessionID': sessionID
-        }
+        },
+        body: JSON.stringify({
+            'uname': name,
+            'privatDesc': pdescription,
+            'workDesc': wdescription,
+            'roles': null
+        })
     }).then(r => {
         if (r.ok) {
             location.reload();
@@ -131,4 +139,19 @@ function deleteT(Tid, sessionID){
             location.reload()
         }
     });
+}
+
+// Zusätzliche Funktionen
+function getRollen(){
+    var list = document
+        .getElementById('roleList')
+        .getElementsByClassName("li");
+    let a = new NodeList();
+
+    for (let l in list){
+        let toAdd = l.getAttribute("rID")
+        a.add(toAdd)
+    }
+    // TODO: integrate
+    return null
 }

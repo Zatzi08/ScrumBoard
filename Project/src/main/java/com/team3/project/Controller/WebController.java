@@ -394,14 +394,15 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: T3.D2, T4.D1
      */
-    // TODO: Fix tlid
     @RequestMapping(value = "/saveTask", method = RequestMethod.POST)
     private ResponseEntity<HttpStatus> saveTask(@RequestHeader(value = "sessionID", required = true) String sessionID,
-                                                @RequestBody(required = true) Task task){
+                                                @RequestBody() Task task){
         try{
-            if (presentationToLogic.webSessionService.verify(sessionID)){
-                presentationToLogic.taskService.saveTask(task);
-                return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+            if(task != null) {
+                if (presentationToLogic.webSessionService.verify(sessionID)) {
+                    presentationToLogic.taskService.saveTask(task);
+                    return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+                }
             }
         } catch(Exception e){
             e.printStackTrace();

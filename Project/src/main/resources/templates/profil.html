@@ -27,15 +27,15 @@
 
 <div id = "profilContainer">
     <div id = "profilInhalt">
-        <button class = "fa fa-edit" title = "Bearbeite das Profil"th:uname="${User.uname}" th:udesc="${User.userdesc}" th:projectdesc="${User.description}" onclick="toggleProfilMenü(this.getAttribute('uname'), this.getAttribute('udesc'), this.getAttribute('projectdesc'))"></button>
+        <button class = "fa fa-edit" title = "Bearbeite das Profil"th:uname="${User.uname}" th:udesc="${User.privatDesc}" th:projectdesc="${User.workDesc}" onclick="toggleProfilMenü(this.getAttribute('uname'), this.getAttribute('udesc'), this.getAttribute('projectdesc'))"></button>
 
         <label th:text = "${User.uname}" id = "profilName">Benutzername </label>
         <label class = "profileText" >Deine Aufgabe im Projekt</label>
-        <label th:text="${User.description}" id = "profilProjektBeschreibung"> Projekt Beschreibung </label>
+        <label th:text="${User.workDesc}" id = "profilProjektBeschreibung"> Projekt Beschreibung </label>
         <label class = "profileText" >Deine Rollen </label>
-        <label id = "rolleProfil"> Rolle <p>.</p> </label>
+        <label id = "rolleProfil"> Rolle <p>.</p> </label> <!-- Könnte das als Liste realisiert werden, danke LK -->
         <label class = "profileText" >Deine persönliche Beschreibung</label>
-        <label th:text = "${User.userdesc}" id = "profilPersoBeschreibung"> Persönliche Beschreibung </label>
+        <label th:text = "${User.privatDesc}" id = "profilPersoBeschreibung"> Persönliche Beschreibung </label>
     </div>
 </div>
 
