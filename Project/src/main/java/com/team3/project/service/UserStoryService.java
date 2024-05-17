@@ -3,6 +3,7 @@ package com.team3.project.service;
 import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.UserStory;
 import com.team3.project.DAO.DAOTask;
+import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.DAOService.DAOUserStoryService;
@@ -36,6 +37,11 @@ public class UserStoryService {
         return new UserStory(story.getName(), story.getDescription(), story.getPriority(), story.getId());
     }
 
+    public UserStory getUserStoryByName(String name){ //nur für Tests notwendig
+        DAOUserStory daoUserStory = DAOUserStoryService.getByName(name);
+        return new UserStory(daoUserStory.getName(), daoUserStory.getDescription(), daoUserStory.getPriority(),daoUserStory.getId());
+    }
+
     /* Author: Lucas Krüger
      * Revisited: /
      * Funktion: Erstellt neue oder updatet existente UserStory in DB
@@ -48,6 +54,7 @@ public class UserStoryService {
      * @throws Exception Null Params or Object not found
      */
     public void saveUserStory(UserStory userStory) throws Exception {
+        if(userStory == null) throw new Exception("Null User-Story");
         if (userStory.getName() == null) throw new Exception("Null Story-Name");
         if (userStory.getDescription() == null) throw new Exception("Null Story-Desc");
         if (userStory.getPriorityAsInt() <= -1) throw new Exception("Null Story-prio");
