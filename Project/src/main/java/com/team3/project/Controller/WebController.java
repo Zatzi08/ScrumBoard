@@ -281,7 +281,7 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: P1.B1
      */
-    @RequestMapping(value = "/getProfilePageByEmail", method = RequestMethod.POST)
+    @RequestMapping(value = "/getProfilePageByEmail")
     private ModelAndView getProfilePageByName(@RequestParam(value = "sessionID", required = true) String sessionID,
                                               @RequestParam(value = "email",required = true) String email){
         try{
@@ -318,6 +318,21 @@ public class WebController {
         return getProfilePage(sessionID);
     }
 
+    @RequestMapping("/UserList")
+    private ModelAndView userList(@RequestParam(value = "sessionID",required = true) String sessionID){
+        try {
+            if (presentationToLogic.webSessionService.verify(sessionID)){
+                return new ModelAndView("projectManager-Nutzer")
+                        .addObject("User", presentationToLogic.accountService.getAllUser())
+                        .addObject("sessionID", sessionID);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return error(e);
+        }
+        return index();
+    }
+
     /* Author: Lucas Krüger
      * Revisited: /
      * Funktion:
@@ -331,7 +346,7 @@ public class WebController {
                 return new ModelAndView("projectManager-Tasks")
                         .addObject("Tasks", presentationToLogic.taskService.getAllTask())
                         .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys())
-                        .addObject("SessionId", sessionID);
+                        .addObject("sessionID", sessionID);
             }
         } catch (Exception e){
             return error(e);
@@ -351,7 +366,7 @@ public class WebController {
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 return new ModelAndView("projectManager-Tasks")
-                        .addObject("SessionId",sessionID)
+                        .addObject("sessionID",sessionID)
                         .addObject("Tasks", presentationToLogic.taskService.getAllTask()); // TODO: getAllTaskByTLID
             }
         } catch (Exception e){
@@ -373,7 +388,7 @@ public class WebController {
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 return new ModelAndView("projectManager-TasksZuUserstory")
-                        .addObject("SessionId",sessionID)
+                        .addObject("sessionID",sessionID)
                         .addObject("Tasks", presentationToLogic.taskService.getTasksbyUSID(USId))
                         .addObject("StoryName", presentationToLogic.userStoryService.getUserStory(USId).getName())
                         .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys());
@@ -465,7 +480,7 @@ public class WebController {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 ModelAndView modelAndView = new ModelAndView("TaskBoard")
                         .addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoard(tbid))
-                        .addObject("SessionId", sessionID);
+                        .addObject("sessionID", sessionID);
             }
         } catch (Exception e){
             e.printStackTrace();

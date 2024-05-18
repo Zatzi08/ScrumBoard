@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projektmanager</title>
   <link rel="stylesheet" href="css/foundation.css">
-  <link rel="stylesheet" href="projectManager.css">
-  <link rel="stylesheet" href="setup.css">
+  <link rel="stylesheet" href="css/projectManager.css">
+  <link rel="stylesheet" href="css/setup.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
@@ -20,15 +20,15 @@
     -->
 <div class="Reiter">
   <button class="reiterBtn" onmouseover = "hover('reiterBtn')" onmouseleave="hoverLeave('reiterBtn')" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
-  <button type="button"  th:Sid="${SessionId}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
+  <button type="button"  th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
   <button class = "reiterBtn">Task-Board </button>
   <button class = "reiterBtn">Kalender </button>
 </div>
 
 <div id="outerProjectManagerContainer">
-  <button class="selectBtn" id="selectUserstory" th:Sid="${SessionId}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" onmouseover = "hover('selectUserstory')" onmouseleave="hoverLeave('selectUserstory')" title="Wechsel Ansicht zu Userstories">Userstories</button>
+  <button class="selectBtn" id="selectUserstory" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" onmouseover = "hover('selectUserstory')" onmouseleave="hoverLeave('selectUserstory')" title="Wechsel Ansicht zu Userstories">Userstories</button>
   <span class="userStoryTaskTrenner">|</span>
-  <button class="selectBtn" id="selectTasks" th:Sid="${SessionId}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
+  <button class="selectBtn" id="selectTasks" th:Sid="${sessionID}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
   <span class="userStoryTaskTrenner">|</span>
   <button class="selectBtn" id="selectUser" style= "border-bottom: 1px solid #ffffff" title = "Wechsel zur Nutzeransicht">Nutzer</button>
 
@@ -45,7 +45,7 @@
         </tr>
         </thead>
         <tbody id="userTaskTableBody">
-        <tr th:each="user : ${User}" th:USid="${user.ID}" th:Sid="${SessionId}"  ondblclick="SwitchToUserProfile(this.getAttribute('Sid'), this.getAttribute('USid'))">
+        <tr th:each="user : ${User}" th:USid="${user.ID}" th:Sid="${sessionID}"  ondblclick="SwitchToUserProfile(this.getAttribute('Sid'), this.getAttribute('USid'))">
           <th>
             <div id = userTextDiv>
             <label class = "userText">Nutzername</label>
@@ -58,3 +58,11 @@
     </div>
   </div>
 </div>
+<script src="js/vendor/jquery.js"></script>
+<script src="js/vendor/what-input.js"></script>
+<script src="js/vendor/foundation.js"></script>
+<script src="js/app.js"></script>
+<script src="js/communication.js"></script>
+<script type = "text/javascript" src="js/setup.js"></script>
+<script type = "text/javascript" src="js/projectManager.js"></script>
+</body>
