@@ -110,11 +110,17 @@ public class DAOTaskService {
      * @param userStoryId identifier DAOUserStory
      * @return            true if create was successfull
      */
-    public static boolean create(String description, /*int taskListId,*/ int userStoryId) {
-        /*DAOTaskList taskList = DAOService.getByID(taskListId, DAOTaskList.class);*/
+    public static boolean create(String description, int userStoryId) {
         DAOUserStory userStory = DAOService.getByID(userStoryId, DAOUserStory.class);
-        return create(description, /*taskList,*/ userStory);
+        return create(description, userStory);
     }
+
+    public static boolean create(String description, int priority, boolean done, @Nullable String dueDate, 
+                                 double processingTimeEstimatedInHours, double processingTimeRealInHours, 
+                                 @Nullable DAOTaskList taskList, @Nullable DAOUserStory userStory, @Nullable List<DAOUser> users) {
+        return DAOService.merge(new DAOTask(description, priority, done, dueDate, processingTimeEstimatedInHours, processingTimeRealInHours, taskList, userStory, users));
+    }
+
 
     //updates
     /* Author: Tom-Malte Seep
@@ -193,6 +199,12 @@ public class DAOTaskService {
         DAOTask task = DAOService.getByID(id, DAOTask.class);
         task.setPriority(priority);
         return DAOService.merge(task);
+    }
+
+    public static boolean updateDueDateById(int id, String dueDate) {
+        DAOTask daoTask = DAOService.getByID(id, DAOTask.class);
+        daoTask.setDueDate(dueDate);
+        return DAOService.merge(daoTask);
     }
 
     //deletes

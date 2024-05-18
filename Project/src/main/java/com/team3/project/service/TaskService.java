@@ -31,7 +31,7 @@ public class TaskService {
         DAOTask dt =  DAOTaskService.getById(ID);
         if (dt == null){ throw new Exception("Task not found");}
 
-        return new Task(dt.getId(),dt.getDescription(), dt.getPriority() , dt.getUserStory().getId(),dt.getDoDate(), (int)(dt.getProcessingTimeEstimatedInHours()), (int)(dt.getProcessingTimeRealInHours()));
+        return new Task(dt.getId(),dt.getDescription(), dt.getPriority() , dt.getUserStory().getId(),dt.getDueDate(), (int)(dt.getProcessingTimeEstimatedInHours()), (int)(dt.getProcessingTimeRealInHours()));
     }
 
     /* Author: Henry L. Freyschmidt
@@ -43,7 +43,7 @@ public class TaskService {
     public Task getTaskByDescription(String description) throws Exception{
         DAOTask dt =  DAOTaskService.getByDescription(description);
         if (dt == null) throw new Exception("Task not found");
-        return new Task(dt.getId(),dt.getDescription(), dt.getPriority(), dt.getUserStory().getId(), dt.getDoDate(), (int)(dt.getProcessingTimeEstimatedInHours()),(int)(dt.getProcessingTimeRealInHours()));
+        return new Task(dt.getId(),dt.getDescription(), dt.getPriority(), dt.getUserStory().getId(), dt.getDueDate(), (int)(dt.getProcessingTimeEstimatedInHours()),(int)(dt.getProcessingTimeRealInHours()));
     }
 
     /* Author: Henry L. Freyschmidt
@@ -110,7 +110,7 @@ public class TaskService {
                 List<Task> taskList = new LinkedList<>();
                 Enumerations prio = new Enumerations();
                 for (DAOTask task : tasks) {
-                    Task toAdd = new Task(task.getId(),task.getDescription(), task.getPriority(), task.getUserStory().getId(), task.getDoDate(), -1,-1);
+                    Task toAdd = new Task(task.getId(),task.getDescription(), task.getPriority(), task.getUserStory().getId(), task.getDueDate(), -1,-1);
                     taskList.add(toAdd);
                 }
                 return taskList;
@@ -139,7 +139,7 @@ public class TaskService {
         if (tasks.isEmpty()) return null;
         List<Task> List = new LinkedList<Task>();
         for (DAOTask task : tasks) {
-            Task toAdd = new Task(task.getId(),task.getDescription(), task.getPriority(), task.getUserStory().getId(), task.getDoDate(), (int)(task.getProcessingTimeEstimatedInHours()),(int)(task.getProcessingTimeRealInHours()));
+            Task toAdd = new Task(task.getId(),task.getDescription(), task.getPriority(), task.getUserStory().getId(), task.getDueDate(), (int)(task.getProcessingTimeEstimatedInHours()),(int)(task.getProcessingTimeRealInHours()));
             List.add(toAdd);
         }
         return List;
