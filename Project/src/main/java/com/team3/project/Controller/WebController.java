@@ -306,13 +306,10 @@ public class WebController {
      */
     @RequestMapping(value = "/saveUserData", method = RequestMethod.POST)
     private ModelAndView saveUserData(@RequestHeader(value = "sessionID", required = true) String sessionID,
-                                @RequestParam(value = "uName", required = true) String name,
-                                @RequestParam(value = "rolle",required = false, defaultValue = "-1") String rolle,
-                                @RequestParam(value = "wDesc",required = true) String wDesc,
-                                @RequestParam(value = "pDesc",required = true) String pDesc){
+                                      @RequestBody Profile profile){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
-                presentationToLogic.accountService.savePublicData(sessionID, name, rolle, wDesc, pDesc);
+                presentationToLogic.accountService.savePublicData(sessionID, profile);
             }
         } catch (Exception e){
             e.printStackTrace();
