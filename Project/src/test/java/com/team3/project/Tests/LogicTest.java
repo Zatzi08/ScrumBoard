@@ -4,18 +4,16 @@ import com.team3.project.Classes.*;
 import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.DAOService.DAOUserService;
-import com.team3.project.service.AccountService;
-import com.team3.project.service.TaskService;
-import com.team3.project.service.WebSessionService;
+import com.team3.project.service.*;
 import com.team3.project.DAOService.DAOUserStoryService;
 import com.team3.project.DAOService.DAOAccountService;
-import com.team3.project.service.UserStoryService;
 import org.junit.jupiter.api.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -51,11 +49,10 @@ public class LogicTest {
     @BeforeEach
     public void emptyDatabase(){
         UserStoryService usService = new UserStoryService();
-        TaskService taskService = new TaskService();
         AccountService accService = new AccountService();
 
         List<UserStory> usList = usService.getAllUserStorys();
-        if(!usList.isEmpty()){
+        if(usList != null){
             pw.append("UserStory: not empty Database\n");
             try{
                 usList.forEach(e -> {
@@ -71,19 +68,21 @@ public class LogicTest {
         }
 
         List<DAOUser> pList = DAOUserService.getAll();
-        if(!pList.isEmpty()){
-            pw.append("Profile: not empty Database\n");
-            pList.forEach(x -> {
-                try{
-                    if(x != null){
-                        if(x.getPrivatDescription() != null || x.getWorkDescription() != null){
-                            DAOUserService.updateById(x.getId(), x.getName(), null, null, null, x.getSessionId(), x.getSessionDate(), false);
+        if(pList != null){
+            if (!pList.isEmpty()) {
+                pw.append("Profile: not empty Database\n");
+                pList.forEach(x -> {
+                    try {
+                        if (x != null) {
+                            if (x.getPrivatDescription() != null || x.getWorkDescription() != null) {
+                                DAOUserService.updateById(x.getId(), x.getName(), null, null, null, x.getSessionId(), x.getSessionDate(), false);
+                            }
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            });
+                });
+            }
         }
     }
 
@@ -424,14 +423,16 @@ public class LogicTest {
             e.printStackTrace();
         }
 
+        int t1ID = -10;
+
         try{
-            t1 = tservice.getTaskByDescription(t1.getDescription());
+            t1ID = tservice.getTaskByDescription(t1.getDescription()).getID();
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-           Assertions.assertEquals(t1.getDueDateAsString(), tservice.getTaskByID(t1.getID()).getDueDateAsString());
+           Assertions.assertEquals(t1.getPriority(), tservice.getTaskByID(t1ID).getPriority());
         }catch(AssertionError | Exception  e  ){
             pw.append("Fail: created Task not found\n");
             pass = false;
@@ -482,22 +483,30 @@ public class LogicTest {
             e.printStackTrace();
         }
 
+        int t1ID = -10;
+
         try{
-            t1 = tservice.getTaskByDescription("Task1");
+            t1ID = tservice.getTaskByDescription(t1.getDescription()).getID();
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        t1.setDescription(newdescription);
+        Task tCopy = null;
 
         try{
-            tservice.saveTask(t1);
+            tCopy = new Task(t1ID, newdescription, t1.getPriorityAsInt(), t1.getUserStoryID(), t1.getDueDateAsString(), t1.getTimeNeededG(), t1.getTimeNeededA());
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            Assertions.assertEquals(newdescription,DAOTaskService.getById(t1.getID()).getDescription());
+            tservice.saveTask(tCopy);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertEquals(newdescription,DAOTaskService.getById(tCopy.getID()).getDescription());
         }catch (AssertionError e){
             pass = false;
             pw.append("Fail: Task was not updated\n");
@@ -774,7 +783,7 @@ public class LogicTest {
     @Test
     /*  Test ID: Logic.T11
      *  Author: Henry Lewis Freyschmidt
-     *  Zweck: reelle Rechte ... \TODO: ... auffüllen
+     *  Zweck: reelle Rechte Zuweisung (default)... \TODO: ... auffüllen
      */
     void authority(){
         pw.append("Logik-Test-authority\nTest ID: Logic.T11\n" + "Date: " + formatter.format(date)+ '\n');
@@ -806,8 +815,197 @@ public class LogicTest {
         pw.append(String.format("pass = %b",pass));
     }
 
+    @Test
+        /*  Test ID: Logic.T12
+         *  Author: Henry Lewis Freyschmidt
+         *  Zweck: reelle Rechte ändern R1.B2
+         */
+    void changeAuthority() {
+        pw.append("Logik-Test-changeAuthority\nTest ID: Logic.T12\n" + "Date: " + formatter.format(date) + '\n');
+        AccountService aservice = new AccountService();
+        WebSessionService wservice = new WebSessionService();
+        RoleService rservice = new RoleService();
+        int count_correct_exceptions = 0;
+        int count_correct_exception_checks = 0;
+        String sessionID = null;
+        int oldAuthority = -10;
 
-    //TODO: Datenstruktur zur Zuodrnung von Tsks zu Taskboards fehlt
+        try{
+            aservice.register("Dave", "dave@test.com", "123");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        int uID = DAOUserService.getIdByMail("dave@test.com");
+
+        try{
+            sessionID = wservice.getSessionID("dave@test.com");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            oldAuthority = aservice.getAuthority(sessionID);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            rservice.changeAuthority(uID, 1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertNotEquals(oldAuthority, aservice.getAuthority(sessionID));
+        }catch (Exception | AssertionError e){
+            pass = false;
+            pw.append("Fail: Authority was not changed\n");
+            throw new AssertionError(e);
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.changeAuthority(-10,1);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.changeAuthority(uID,-10);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+
+        if (count_correct_exceptions != count_correct_exception_checks) {
+            pass = false;
+            pw.append("Fail: wrong Exception-Handling\n");
+        }
+
+        DAOUserService.deleteById(uID);
+
+        pw.append(String.format("pass = %b\n", pass));
+    }
+
+    @Test
+        /*  Test ID: Logic.T13
+         *  Author: Henry Lewis Freyschmidt
+         *  Zweck: alle visuellen Rollen einer reellen Rolle wiedergeben R2.B1
+         */
+    void showAllVisualRole() {
+        pw.append("Logik-Test-showVisualRole\nTest ID: Logic.T13\n" + "Date: " + formatter.format(date) + '\n');
+        RoleService rservice = new RoleService();
+        LinkedList<Role> list = null;
+        int count_correct_exceptions = 0;
+        int count_correct_exception_checks = 0;
+
+        try{
+            rservice.createVisualRole("Entwickler1", Enumerations.Role.nutzer);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            list = rservice.getAllRolesByRole(Enumerations.Role.nutzer);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertNotEquals("Entwickler2", list.getLast());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: non-existent visual Role found\n");
+            throw new AssertionError(e);
+        }
+
+        try{
+            rservice.createVisualRole("Entwickler2", Enumerations.Role.nutzer);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            list = rservice.getAllRolesByRole(Enumerations.Role.nutzer);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertEquals("Entwickler2", list.getLast());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: existent visual Role not found\n");
+        }
+
+        try{
+            rservice.deleteVisualRole("Entwickler1", Enumerations.Role.nutzer);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            rservice.deleteVisualRole("Entwickler2", Enumerations.Role.nutzer);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.createVisualRole(null, Enumerations.Role.nutzer);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.createVisualRole("", Enumerations.Role.nutzer);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.createVisualRole("Failure", null);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        if (count_correct_exceptions != count_correct_exception_checks) {
+            pass = false;
+            pw.append("Fail: wrong Exception-Handling\n");
+        }
+
+        pw.append(String.format("pass = %b", pass));
+    }
+
+    @Test
+        /*  Test ID: Logic.T14
+         *  Author: Henry Lewis Freyschmidt
+         *  Zweck: visuelle Rolle erstellen R2.B2
+         */
+    void createVisualRole() {
+        pw.append("Logik-Test-createVisualRole\nTest ID: Logic.T14\n" + "Date: " + formatter.format(date) + '\n');
+        RoleService rservice = new RoleService();
+        int count_correct_exceptions = 0;
+        int count_correct_exception_checks = 0;
+
+        try{
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if (count_correct_exceptions != count_correct_exception_checks) {
+            pass = false;
+            pw.append("Fail: wrong Exception-Handling\n");
+        }
+        pw.append(String.format("pass = %b", pass));
+    }
+
+
     /*@Test
     void taskboardAttribute(){
         pw.append("Logik-Test-taskboardAttribute\nTest ID: Logic.T9\n" + "Date: " + formatter.format(date)+ '\n');
