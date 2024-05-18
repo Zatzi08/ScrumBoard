@@ -21,7 +21,7 @@ public class RoleService {
         List<DAORole> drs = DAORoleService.getAll();
         if (!drs.isEmpty()){
             for (DAORole dr : drs){
-                Role toAdd = new Role(dr.getRid(),dr.getName());
+                Role toAdd = new Role(dr.getId(),dr.getName());
                 roles.add(toAdd);
             }
         } else throw new NullPointerException("No Role found");
@@ -38,6 +38,6 @@ public class RoleService {
         if (id < 0) throw new Exception("Null id");
         DAORole dr = DAORoleService.getByID(id);
         if (dr == null) throw new NullPointerException("No Role found");
-        return new Role(dr.getRid(),dr.getName());
+        return new Role(dr.getId(),dr.getName());
     }
 }

@@ -110,7 +110,7 @@ public class AccountService {
         if(daoUserList != null){
             User toAdd;
             for(DAOUser daoUser : daoUserList){
-                toAdd = new User(daoUser.getName(),daoUser.getUid(),daoUser.getPrivatDescription(),daoUser.getWorkDescription(),null);
+                toAdd = new User(daoUser.getName(),daoUser.getId(),daoUser.getPrivatDescription(),daoUser.getWorkDescription(),null);
                 list.add(toAdd);
             }
         }
@@ -200,7 +200,7 @@ public class AccountService {
         else {
             DAOUser user = DAOUserService.getBySessionId(sessionId);
             if (user == null) throw new Exception("User not found");
-            return user.getAuthorization();
+            return user.getAuthorization().getAuthorization();
         }
     }
 }

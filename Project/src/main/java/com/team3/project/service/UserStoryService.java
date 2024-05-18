@@ -110,7 +110,7 @@ public class UserStoryService {
     public void deleteUserStoryAndLinkedTasks(int uid) throws Exception {
         if (uid <= -1) throw new Exception("Null usid");
         List <DAOTask> tasks = DAOTaskService.getListByUserStoryId(uid);
-        tasks.forEach(x -> DAOTaskService.deleteById(x.getTid()));
+        tasks.forEach(x -> DAOTaskService.deleteById(x.getId()));
         DAOUserStoryService.deleteById(uid);
     }
 }

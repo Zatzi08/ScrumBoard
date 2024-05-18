@@ -77,7 +77,7 @@ public class LogicTest {
                 try{
                     if(x != null){
                         if(x.getPrivatDescription() != null || x.getWorkDescription() != null){
-                            DAOUserService.updateById(x.getUid(), x.getName(), null, null, null, x.getSessionId(), x.getSessionDate(), false);
+                            DAOUserService.updateById(x.getId(), x.getName(), null, null, null, x.getSessionId(), x.getSessionDate(), false);
                         }
                     }
                 }catch (Exception e){
@@ -211,7 +211,7 @@ public class LogicTest {
         AccountService aservice = new AccountService();
         WebSessionService wservice = new WebSessionService();
         String sessionID = null;
-        Profile p1 = new Profile("Dave", "nett", "Manager");
+        Profile p1 = new Profile("Dave", "nett", "Manager", null);
         int count_correct_exceptions = 0;
         int count_correct_exception_checks = 0;
 
@@ -293,7 +293,7 @@ public class LogicTest {
         pw.append("Logik-Test-updateUserStory\nTest ID: Logic.T4\n" + "Date: " + formatter.format(date)+ '\n');
         AccountService aservice = new AccountService();
         WebSessionService wservice = new WebSessionService();
-        Profile p1 = new Profile("Dave", "netter Dave", "arbeitender Dave");
+        Profile p1 = new Profile("Dave", "netter Dave", "arbeitender Dave", null);
         String newdescription = "böse";
 
         try{
@@ -325,7 +325,7 @@ public class LogicTest {
         }
 
         try{
-            Assertions.assertEquals(aservice.getProfileByEmail("dave@gmx.de").getUserdesc(), newdescription);
+            Assertions.assertEquals(aservice.getProfileByEmail("dave@gmx.de").getPrivatDesc(), newdescription);
         }catch (AssertionError | Exception e){
             e.printStackTrace();
             pw.append("Fail: User-Profile-Description does not contain updated value\n");

@@ -34,10 +34,10 @@ public class WebSessionService {
             while (DAOUserService.checkSessionId(sessionID)){
                 sessionID = generatCode(0);
             }
-            DAOUserService.updateSessionIdById(user.getUid(),sessionID, dformat.format(currentDate));
+            DAOUserService.updateSessionIdById(user.getId(),sessionID, dformat.format(currentDate));
             return sessionID;
         } else {
-            DAOUserService.updateSessionIdById(user.getUid(),user.getSessionId(), dformat.format(currentDate));
+            DAOUserService.updateSessionIdById(user.getId(),user.getSessionId(), dformat.format(currentDate));
             return user.getSessionId();
         }
     }
@@ -51,7 +51,7 @@ public class WebSessionService {
         d.setTime(d.getTime() + sessionTimeOffset);
         Date currentDate = new Date();
         if (d.after(currentDate)){
-            DAOUserService.updateSessionIdById(user.getUid(),sessionID, dformat.format(currentDate));
+            DAOUserService.updateSessionIdById(user.getId(),sessionID, dformat.format(currentDate));
             return true;
         }
         return false;
