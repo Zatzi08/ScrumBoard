@@ -176,7 +176,7 @@ public class WebController {
             if (presentationToLogic.webSessionService.verify(sessionID)) {
                 ModelAndView modelAndView = new ModelAndView("projectManager");
                 modelAndView.addObject("Storys", presentationToLogic.userStoryService.getAllUserStorys())
-                        .addObject("SessionId", sessionID);
+                        .addObject("sessionID", sessionID);
                 return modelAndView;
             }
         } catch (Exception e){
@@ -266,7 +266,7 @@ public class WebController {
                 Profile user = presentationToLogic.accountService.getProfileByID(sessionID);
                 if (user != null) return new ModelAndView("profil")
                         .addObject("User" , user)
-                        .addObject("SessionId", sessionID);
+                        .addObject("sessionID", sessionID);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -289,7 +289,7 @@ public class WebController {
                 Profile user = presentationToLogic.accountService.getProfileByEmail(email);
                 if (user != null) return new ModelAndView("profil")
                         .addObject("User", user)
-                        .addObject("SessionId", sessionID);
+                        .addObject("sessionID", sessionID);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -478,7 +478,7 @@ public class WebController {
                                       @RequestParam(value = "TBID", required = true, defaultValue = "-1") int tbid){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
-                ModelAndView modelAndView = new ModelAndView("TaskBoard")
+                ModelAndView modelAndView = new ModelAndView("taskBoard")
                         .addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoard(tbid))
                         .addObject("sessionID", sessionID);
             }
