@@ -31,7 +31,7 @@
     <button class="selectBtn" id="selectTasks" th:Sid="${SessionId}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
     <span class="userStoryTaskTrenner">|</span>
     <button class="selectBtn" id="selectUser" title = "Wechsel zur Nutzeransicht">Nutzer</button>
-    <button class="addUserStoryBtn" title="Füge eine Userstory hinzu" onclick="toggleEditBox('addUserStoryBtn', -1)"><i class="fa fa-plus" style="margin-right: 10px"></i>Userstory erstellen</button>
+    <button class="addUserStoryBtn" title="Füge eine Userstory hinzu" style = "margin-left: 85%"onclick="toggleEditBox('addUserStoryBtn', -1)"><i class="fa fa-plus" style="margin-right: 10px"></i>Userstory erstellen</button>
     <div id="innerProjectManagerContainer">
         <div class="wrapper">
             <table class="userTaskTable">
@@ -44,7 +44,7 @@
                 <tbody id="userTaskTableBody">
                     <tr th:each="item : ${Storys}" th:USid="${item.ID}" th:Sid="${SessionId}"  ondblclick="SwitchToTasksbyUSID(this.getAttribute('Sid'), this.getAttribute('USid'))">
                         <th>
-                            <button class="Btn" title="Bearbeiten" th:sname="${item.name}" th:sdescription="${item.description}" th:sid="${item.ID}" onclick="toggleEditBox('editBtn', this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'));" ><i class="fa fa-edit"></i></button>
+                            <button class="Btn" style="margin-left: 95%"title="Bearbeiten" th:sname="${item.name}" th:sdescription="${item.description}" th:sid="${item.ID}" onclick="toggleEditBox('editBtn', this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'));" ><i class="fa fa-edit"></i></button>
                             <span class="Btn" th:USid="${item.ID}" th:Sid="${SessionId}" onclick="deleteUS(this.getAttribute('USid'),this.getAttribute('Sid'))" title="Löschen">&times;</span>
                             <label th:text = "${item.name}">Name</label>
                             <label>Rolle</label>

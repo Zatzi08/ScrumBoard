@@ -31,7 +31,7 @@
     <button class="selectBtn" id="selectTasks" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks" style= "border-bottom: 1px solid #ffffff">Tasks</button>
     <span class="userStoryTaskTrenner">|</span>
     <button class="selectBtn" id="selectUser"  title = "Wechsel zur Nutzeransicht">Nutzer</button>
-    <button class="addUserStoryBtn" title="Füge eine Task hinzu" onclick="toggleEditMenu('addUserStoryBtn')"><i class="fa fa-plus" style="margin-right: 10px"></i>Task erstellen</button>
+    <button class="addUserStoryBtn" title="Füge eine Task hinzu" style = "margin-left: 85%" onclick="toggleEditMenu('addUserStoryBtn')"><i class="fa fa-plus" style="margin-right: 10px"></i>Task erstellen</button>
     <div id="innerProjectManagerContainer">
         <div class="wrapper">
             <table class="userTaskTable">
@@ -46,7 +46,7 @@
                         <label class="userTaskTable-ContentStoryBoard" th:text="${item.getUserStory().getName()}" >Story</label>
                         <span class="userTaskTable-ContentStoryBoard">/</span>
                         <label class="userTaskTable-ContentStoryBoard">Board</label>
-                        <button class="Btn" title="Bearbeiten"  th:USID="${item.userStoryID}"  th:description="${item.description}" th:Tid="${item.ID}" onclick="toggleEditBoxT('editBtn', this.getAttribute('Tid'), this.getAttribute('description'), this.getAttribute('USID'));" ><i class="fa fa-edit"></i></button>
+                        <button class="Btn" title="Bearbeiten" style="margin-left: 90%" th:USID="${item.userStoryID}"  th:description="${item.description}" th:Tid="${item.ID}" onclick="toggleEditBoxT('editBtn', this.getAttribute('Tid'), this.getAttribute('description'), this.getAttribute('USID'));" ><i class="fa fa-edit"></i></button>
                         <span class="Btn" th:Tid="${item.ID}" th:Sid="${SessionId}" onclick="deleteT(this.getAttribute('Tid'),this.getAttribute('Sid'))" title="Löschen">&times;</span>
                         <!-- <label th:text = "${item.name}">Name</label> -->
                         <label>Rolle</label>
