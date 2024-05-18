@@ -24,22 +24,25 @@ public class DAOTask {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tID")
-    private int tid;
+    private int id;
 
     @Column(name = "description")
     private String description;
 
     @Column(name = "priority")
     private int priority;
-
+    
+    @Column(name = "done")
+    private boolean done = false;
+    
     @Column(name = "doDate")
     private String doDate;
 
-    @Column(name = "timeNeededG")
-    private String timeNeededG;
+    @Column(name = "processingTimeEstimatedInHours")
+    private double processingTimeEstimatedInHours;
 
-    @Column(name = "timeNeededA")
-    private String timeNeededA;
+    @Column(name = "processingTimeRealInHours")
+    private double processingTimeRealInHours;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "taskListId")
@@ -53,7 +56,7 @@ public class DAOTask {
     @JoinTable(
         name = "TasksXUsers", 
         joinColumns = @JoinColumn(name = "tid"), 
-        inverseJoinColumns = @JoinColumn(name = "uid")    
+        inverseJoinColumns = @JoinColumn(name = "uid")
     )
     private List<DAOUser> users;
 
@@ -63,35 +66,39 @@ public class DAOTask {
         /*this.taskList = taskList;*/
         this.userStory = userStory;
     }
-    public DAOTask(String description, int priority, String doDate, 
-                   String timeNeededG, String timeNeededA, DAOTaskList taskList, 
-                   DAOUserStory userStory, List<DAOUser> users) {
+    public DAOTask(String description, int priority, boolean done, String doDate,
+                   double processingTimeEstimatedInHours, double processingTimeRealInHours, 
+                   DAOTaskList taskList, DAOUserStory userStory, List<DAOUser> users) {
         this.description = description;
         this.priority = priority;
+        this.done = done;
         this.doDate = doDate;
-        this.timeNeededG = timeNeededG;
-        this.timeNeededA = timeNeededA;
+        this.processingTimeEstimatedInHours = processingTimeEstimatedInHours;
+        this.processingTimeRealInHours = processingTimeRealInHours;
         this.taskList = taskList;
         this.userStory = userStory;
         this.users = users;
     }
 
 
-    public void cloneTask(DAOTask task) {
+    public void cloneDAOTask(DAOTask task) {
         if (task.description != null) {
             this.description = task.description;
         }
         if (task.priority > 0) {
             this.priority = task.priority;
         }
+        if (!task.done) {
+            this.done = task.done;
+        }
         if (task.doDate != null) {
             this.doDate = task.doDate;
         }
-        if (task.timeNeededG != null) {
-            this.timeNeededG = task.timeNeededG;
+        if (task.processingTimeEstimatedInHours > 0) {
+            this.processingTimeEstimatedInHours = task.processingTimeEstimatedInHours;
         }
-        if (task.timeNeededA != null) {
-            this.timeNeededA = task.timeNeededA;
+        if (task.processingTimeRealInHours > 0) {
+            this.processingTimeRealInHours = task.processingTimeRealInHours;
         }
         if (task.taskList != null) {
             this.taskList = task.taskList;

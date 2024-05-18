@@ -23,7 +23,7 @@ public class DAOTaskList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tlID")
-    private int tlid;
+    private int id;
 
     @Column(name = "name")
     private String name;
@@ -31,11 +31,11 @@ public class DAOTaskList {
     @Column(name = "sequence")
     private int sequence;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "taskBoardID")
     private DAOTaskBoard taskBoard;
 
-    @OneToMany(mappedBy = "taskList")
+    @OneToMany(mappedBy = "taskList", cascade = CascadeType.REMOVE)
     private List<DAOTask> tasks;
 
     DAOTaskList() {}

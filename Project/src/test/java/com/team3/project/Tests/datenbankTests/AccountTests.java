@@ -13,8 +13,9 @@ import org.junit.jupiter.api.Test;
 
 import com.team3.project.DAO.DAOAccount;
 import com.team3.project.DAOService.DAOAccountService;
+import com.team3.project.Tests.BaseClassesForTests.BaseDBTest;
 
-public class AccountTests extends BaseTest {
+public class AccountTests extends BaseDBTest {
     @BeforeAll
     public static void BeforeAll() {
         setup();

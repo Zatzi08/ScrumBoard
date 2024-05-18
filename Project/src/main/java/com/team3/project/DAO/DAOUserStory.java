@@ -2,6 +2,7 @@ package com.team3.project.DAO;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +32,7 @@ public class DAOUserStory {
     @Column(name = "priority")
     private int priority;
 
-    @OneToMany(mappedBy = "userStory")
+    @OneToMany(mappedBy = "userStory", cascade = CascadeType.REMOVE)
     private List<DAOTask> tasks;
 
 

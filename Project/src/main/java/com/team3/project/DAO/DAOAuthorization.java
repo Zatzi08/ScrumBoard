@@ -11,48 +11,44 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 @Entity
-@Table(name="Roles")
-public class DAORole {
+@Table(name="Authorizations")
+public class DAOAuthorization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rID")
+    @Column(name = "aID")
     private int id;
 
     @Column(name="name")
     private String name;
 
-    @ManyToMany(cascade = CascadeType.REFRESH)
-    @JoinTable(
-        name = "UsersXRoles", 
-        joinColumns = @JoinColumn(name = "rid"),
-        inverseJoinColumns = @JoinColumn(name = "uid")
-    )
+    @Column(name="authorization")
+    private int authorization;
+
+    @OneToMany(mappedBy = "authorization")
     private List<DAOUser> users;
 
-    @ManyToMany()
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
         name = "AuthorizationsXRoles", 
-        joinColumns = @JoinColumn(name = "rid"),
-        inverseJoinColumns = @JoinColumn(name = "aid")
+        joinColumns = @JoinColumn(name = "aid"),
+        inverseJoinColumns = @JoinColumn(name = "rid")
     )
-    private List<DAOAuthorization> authorizations;
+    private List<DAORole> roles;
+  
     
-    
-    public DAORole() {}
-    /** LEGACY CODE
+    public DAOAuthorization() {}
+    /** DO NOT USE THIS
+     * @param name
+     * @param authorization
      */
-    public DAORole(String name) {
+    public DAOAuthorization(String name, int authorization) {
         this.name = name;
-    }
-    public DAORole(String name, List<DAOAuthorization> daoAuthorization) {
-        this.name = name;
-        this.authorizations = daoAuthorization;
+        this.authorization = authorization;
     }
 }

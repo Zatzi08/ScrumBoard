@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.team3.project.DAO.DAOAccount;
+import com.team3.project.DAO.DAOAuthorization;
 import com.team3.project.DAO.DAORole;
 import com.team3.project.DAO.DAOUser;
 
@@ -99,9 +100,13 @@ public class DAOUserService {
      * @return      identifier
      */
     public static int getIdByMail(String email) {
+        return getByMail(email).getId();
+    }
+
+    public static DAOUser getByMail(String email) {
         String parameterName = "email";
         DAOUser user = DAOService.getSingleByPara(DAOUser.class, email, parameterName);
-        return user.getUid();
+        return user;
     }
 
     //creates
@@ -126,9 +131,10 @@ public class DAOUserService {
         if (newSessionId) {
             String createdSessionId = (sessionId != null) ? sessionId : createSessionId();
             String createdSessionDate = (sessionDate != null) ? sessionDate : createSessionDate();
-            return DAOService.persist(new DAOUser(email, password, name, privatDescription, workDescription, roles, createdSessionId, createdSessionDate));
+            return DAOService.persist(new DAOUser(email, password, name, privatDescription, workDescription, roles, 
+                                                  createdSessionId, createdSessionDate, DAOAuthorizationService.getByAuthorization(1)));
         }
-        return DAOService.persist(new DAOUser(email, password, name, privatDescription, workDescription, roles));
+        return DAOService.persist(new DAOUser(email, password, name, privatDescription, workDescription, roles, DAOAuthorizationService.getByAuthorization(1)));
     }
 
     //updates
@@ -157,9 +163,9 @@ public class DAOUserService {
                 if (newSessionId) {
                     String createdSessionId = (sessionId != null) ? sessionId : createSessionId();
                     String createdSessionDate = (sessionDate != null) ? sessionDate : createSessionDate();
-                    user.cloneValues(new DAOUser(name, privatDescription, workDescription, roles, createdSessionId, createdSessionDate));
+                    user.cloneDAOUser(new DAOUser(name, privatDescription, workDescription, roles, createdSessionId, createdSessionDate));
                 } else {
-                    user.cloneValues(new DAOUser(name, privatDescription, workDescription, roles));
+                    user.cloneDAOUser(new DAOUser(name, privatDescription, workDescription, roles));
                 }
                 return DAOService.merge(user);
             }
@@ -274,6 +280,19 @@ public class DAOUserService {
      */
     public static boolean emptySessionIdById(int id) {
         return updateSessionIdById(id, null, null);
+    }
+
+    public static boolean updateAuthorizationById(int id, int authorization) {
+        DAOUser user = DAOService.getByID(id, DAOUser.class);
+        if (user != null) {
+            user.setAuthorization(DAOAuthorizationService.getByAuthorization(authorization));
+            return DAOService.merge(user);
+        }
+        return false;
+    }
+
+    public static boolean updateAuthorizationById(int id, DAOAuthorization authorization) {
+        return updateAuthorizationById(id, authorization.getAuthorization());
     }
 
     //deletes
