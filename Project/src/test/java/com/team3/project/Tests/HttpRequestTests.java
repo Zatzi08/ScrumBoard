@@ -1,18 +1,24 @@
 package com.team3.project.Tests;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.team3.project.Classes.Task;
 import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.DAOAccountService;
 import com.team3.project.DAOService.DAOUserStoryService;
+import net.minidev.json.JSONObject;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -231,7 +237,7 @@ public class HttpRequestTests {
         header.set("sessionID", masterID);
         message = new HttpEntity<>("", header);
 
-        try {
+        try { //TODO: JSON Object wenn Plan wie
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/saveStory?sessionID=" + masterID + "&name=" + name + "&description=" + desc + "&priority=" + prio1 + "&id=-1", HttpMethod.POST, message, String.class)
                     .getStatusCode()).isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
@@ -292,8 +298,8 @@ public class HttpRequestTests {
 
         try {
             try {
-                assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetCode?email=" + EMail1, HttpMethod.POST, message, String.class)
-                        .getBody().contains("code:")); //TODO: alle Codes starten mit "code:" PS.: kp ob contains überhaupt funktioniert
+                assertThat(Objects.requireNonNull(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetCode?email=" + EMail1, HttpMethod.POST, message, String.class)
+                        .getBody()).contains("code:"));
             } catch (AssertionError e) {
                 pw.append("Fail: Code nicht integriert");
                 throw new AssertionError(e);
@@ -316,8 +322,7 @@ public class HttpRequestTests {
         HttpEntity<String> message = new HttpEntity<>("", header);
         String EMail1 = "Test@Mail.com";
         String Passwort1 = "TestPasswort123";
-        String Code1 = "MasterCodeEAIFPH8746531§%$&%/%(&)7867451!%468756847Rqwef6844255614as7846f<ehtr86r4wefra784s6<"; //TODO: implement Mastercode für Tests oder
-        //TODO: alternativ bekomme code aus ResponseBody oder so... aber kp ob einfach möglich
+        String Code1 = "MasterCodeEAIFPH8746531§%$&%/%(&)7867451!%468756847Rqwef6844255614as7846f<ehtr86r4wefra784s6<";
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/RequestResetPasswort", HttpMethod.POST, message, String.class).getStatusCode())
                     .isEqualTo(HttpStatus.BAD_REQUEST);
@@ -478,7 +483,7 @@ public class HttpRequestTests {
         header.set("sessionID", masterID);
         message = new HttpEntity<>("", header);
 
-        try {
+        try { //TODO: JSON Object wenn Plan wie
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/saveUserData?sessionID=" + masterID + "&uName=" + UName + "&rolle=" + Rolle + "&wDesc=" + UDesc +"&pDesc=" + PDesc, HttpMethod.POST, message, String.class)
                     .getStatusCode()).isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
@@ -511,7 +516,7 @@ public class HttpRequestTests {
         }
 
         try {
-            assertTrue(Objects.requireNonNull(Responce.getBody()).contains("<title>Projektmanager</title>"));
+            assertTrue(Objects.requireNonNull(Responce.getBody()).contains("<title>Projektmanager-Tasks</title>"));
         } catch (AssertionError e){
             pw.append("Fail: Page nicht geladen");
             throw new AssertionError(e);
@@ -591,12 +596,12 @@ public class HttpRequestTests {
      */
     // TODO: Ergänze Test mit existenter US, TL und T
     @Test
-    void saveTask(){
-        pw.append("HTTP-Test-saveTaskTest\nTest ID: HTTP.T15\nDate: " + formatter.format(date)+ '\n');
+    void saveTask() {
+        pw.append("HTTP-Test-saveTaskTest\nTest ID: HTTP.T15\nDate: " + formatter.format(date) + '\n');
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
-        int TID = -1;
+        int tID = -1;
         int USID = 0;
         int TLID = 0;
         String description = "New Task To Describe";
@@ -605,18 +610,35 @@ public class HttpRequestTests {
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + "/saveTask", HttpMethod.POST, message, String.class).getStatusCode())
                     .isEqualTo(HttpStatus.BAD_REQUEST);
-        } catch (AssertionError e){
+        } catch (AssertionError e) {
             pw.append("Fail: Akzeptiert Bad_Request");
             throw new AssertionError(e);
         }
 
         header.set("sessionID", masterID);
-        message = new HttpEntity<>("", header);
-
+        Task t = null;
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/saveTask?tID="+TID + "&USID=" + USID + "&TLID=" + TLID + "&description=" + description + "&priority=" + priority, HttpMethod.POST, message, String.class).getStatusCode())
+            t = new Task(tID, description, priority, USID, "2024-10-05T12:39", -1, -1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        assert t != null;
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String body = null;
+        try{
+            body = ow.writeValueAsString(t);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        assert body != null;
+        System.out.println(body);
+        message = new HttpEntity<>(body, header);
+        try { //TODO: Json Object wenn Plan wie
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/saveTask", HttpMethod.POST, message, String.class).getStatusCode())
                     .isEqualTo(HttpStatus.OK);
-        } catch (AssertionError e){
+        } catch (AssertionError e) {
             pw.append("Fail: HTTP PostRequest nicht erfolgreich");
             throw new AssertionError(e);
         }
@@ -693,5 +715,7 @@ public class HttpRequestTests {
 
         pw.append(String.format("pass: %b", pass));
     }
+    //TODO: /UserList mit .contains("projectManager-Nutzer")
+
 
 }
