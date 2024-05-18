@@ -36,7 +36,7 @@ public class DAOTask {
     private boolean done = false;
     
     @Column(name = "doDate")
-    private String doDate;
+    private String dueDate;
 
     @Column(name = "processingTimeEstimatedInHours")
     private double processingTimeEstimatedInHours;
@@ -66,13 +66,13 @@ public class DAOTask {
         /*this.taskList = taskList;*/
         this.userStory = userStory;
     }
-    public DAOTask(String description, int priority, boolean done, String doDate,
+    public DAOTask(String description, int priority, boolean done, String dueDate,
                    double processingTimeEstimatedInHours, double processingTimeRealInHours, 
                    DAOTaskList taskList, DAOUserStory userStory, List<DAOUser> users) {
         this.description = description;
         this.priority = priority;
         this.done = done;
-        this.doDate = doDate;
+        this.dueDate = dueDate;
         this.processingTimeEstimatedInHours = processingTimeEstimatedInHours;
         this.processingTimeRealInHours = processingTimeRealInHours;
         this.taskList = taskList;
@@ -91,8 +91,8 @@ public class DAOTask {
         if (!task.done) {
             this.done = task.done;
         }
-        if (task.doDate != null) {
-            this.doDate = task.doDate;
+        if (task.dueDate != null) {
+            this.dueDate = task.dueDate;
         }
         if (task.processingTimeEstimatedInHours > 0) {
             this.processingTimeEstimatedInHours = task.processingTimeEstimatedInHours;
