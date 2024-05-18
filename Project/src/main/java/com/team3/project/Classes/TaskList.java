@@ -6,10 +6,4 @@ public class TaskList extends abstraktDataClasses {
     private String name;
     private List<Integer> taskIDs;
 
-    TaskList(int ID, String name, List<Integer> tasks){
-        super(ID);
-        this.name=name;
-        this.taskIDs=tasks;
-    }
-
 }

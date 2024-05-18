@@ -1,6 +1,8 @@
 package com.team3.project.Controller;
 
 import com.team3.project.Classes.Profile;
+import com.team3.project.Classes.Task;
+import com.team3.project.Classes.UserStory;
 import com.team3.project.Facede.PresentationToLogic;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -125,7 +127,7 @@ public class WebController {
      */
     @RequestMapping(value ="/Login", method = RequestMethod.POST)
     public ModelAndView login(@RequestParam(value = "EMail", required = true) String EMail,
-                        @RequestParam(value = "Passwort", required = true) String Passwort) {
+                              @RequestParam(value = "Passwort", required = true) String Passwort) {
         try{
             if( presentationToLogic.accountService.login(EMail, Passwort)) {
                 String id = presentationToLogic.webSessionService.getSessionID(EMail);
@@ -144,15 +146,12 @@ public class WebController {
      * UserStory/Task-ID:
      */
     @RequestMapping(value = "/saveStory", method = RequestMethod.POST)
-    public ResponseEntity<HttpStatus> saveStory(@RequestParam(value = "name", required = true) String name,
-                           @RequestParam(value = "description", required = true) String Desc,
-                           @RequestParam(value = "priority", required = false) int prio,
-                           @RequestParam(value = "ID", required = true, defaultValue = "-1") int id,
-                           @RequestParam(value = "SessionId", required = true) String SessionId){
+    public ResponseEntity<HttpStatus> saveStory(@RequestHeader(value = "sessionID", required = true) String sessionID,
+                                                @RequestBody(required = true) UserStory userStory){
         try {
-            if (presentationToLogic.webSessionService.verify(SessionId)) {
-                if (presentationToLogic.accountService.getAuthority(SessionId)  >= 2){
-                    presentationToLogic.userStoryService.saveUserStory(name, Desc, prio, id);
+            if (presentationToLogic.webSessionService.verify(sessionID)) {
+                if (presentationToLogic.accountService.getAuthority(sessionID)  >= 2){
+                    presentationToLogic.userStoryService.saveUserStory(userStory);
                     return new ResponseEntity<HttpStatus>(HttpStatus.OK);
                 } else {
                     return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
@@ -171,13 +170,13 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: U1.B1 (UserStory)
      */
-    @RequestMapping("/ProjectManager")
-    private ModelAndView ProjectManager(@RequestParam(value = "SessionId",required = true) String id){
+    @RequestMapping(value = "/ProjectManager")
+    private ModelAndView ProjectManager(@RequestParam(value = "sessionID", required = true) String sessionID){
         try {
-            if (presentationToLogic.webSessionService.verify(id)) {
+            if (presentationToLogic.webSessionService.verify(sessionID)) {
                 ModelAndView modelAndView = new ModelAndView("projectManager");
                 modelAndView.addObject("Storys", presentationToLogic.userStoryService.getAllUserStorys())
-                        .addObject("SessionId", id);
+                        .addObject("SessionId", sessionID);
                 return modelAndView;
             }
         } catch (Exception e){
@@ -240,12 +239,12 @@ public class WebController {
      * UserStory/Task-ID: A4.B3
      */
     @RequestMapping(value = "/SendMail", method = RequestMethod.POST)
-    private ResponseEntity SendMail(@RequestParam(value = "senderEmail",required = true) String from,
+    private ResponseEntity SendMail(@RequestHeader(value = "sessionID", required = true) String sessionID,
+                                    @RequestParam(value = "senderEmail",required = true) String from,
                                     @RequestParam(value = "recieverEmail",required = true)String to,
-                                    @RequestParam(value = "text",required = true) String text,
-                                    @RequestParam(value = "SessionId",required = true) String SessionId){
+                                    @RequestParam(value = "text",required = true) String text){
         try {
-            if (presentationToLogic.webSessionService.verify(SessionId)) {
+            if (presentationToLogic.webSessionService.verify(sessionID)) {
                 System.out.println("From:" + from + "\nTo:" + to + "\nText:\n" + text);
             }
         } catch (Exception e){
@@ -260,14 +259,14 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: P1.B1
      */
-    @RequestMapping(value = "/GetProfilePage")
-    private ModelAndView GetProfilePage(@RequestParam(value = "SessionId",required = true) String SessionId){
+    @RequestMapping(value = "/getProfilePage")
+    private ModelAndView getProfilePage(@RequestParam(value = "sessionID", required = true) String sessionID){
         try{
-            if (presentationToLogic.webSessionService.verify(SessionId)){
-                Profile user = presentationToLogic.accountService.getProfileByID(SessionId);
+            if (presentationToLogic.webSessionService.verify(sessionID)){
+                Profile user = presentationToLogic.accountService.getProfileByID(sessionID);
                 if (user != null) return new ModelAndView("profil")
                         .addObject("User" , user)
-                        .addObject("SessionId", SessionId);
+                        .addObject("SessionId", sessionID);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -282,15 +281,15 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: P1.B1
      */
-    @RequestMapping(value = "/GetProfilePageByEmail", method = RequestMethod.POST)
-    private ModelAndView GetProfilePageByName(@RequestParam(value = "email",required = true) String email,
-                                              @RequestParam(value = "SessionId",required = true) String SessionId){
+    @RequestMapping(value = "/getProfilePageByEmail", method = RequestMethod.POST)
+    private ModelAndView getProfilePageByName(@RequestParam(value = "sessionID", required = true) String sessionID,
+                                              @RequestParam(value = "email",required = true) String email){
         try{
-            if (presentationToLogic.webSessionService.verify(SessionId)){
+            if (presentationToLogic.webSessionService.verify(sessionID)){
                 Profile user = presentationToLogic.accountService.getProfileByEmail(email);
                 if (user != null) return new ModelAndView("profil")
                         .addObject("User", user)
-                        .addObject("SessionId", SessionId);
+                        .addObject("SessionId", sessionID);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -305,21 +304,21 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: P2.B1
      */
-    @RequestMapping(value = "/SaveUserData", method = RequestMethod.POST)
-    private ModelAndView SaveUserData(@RequestParam(value = "SessionId",required = true) String SessionId,
+    @RequestMapping(value = "/saveUserData", method = RequestMethod.POST)
+    private ModelAndView saveUserData(@RequestHeader(value = "sessionID", required = true) String sessionID,
                                 @RequestParam(value = "uName", required = true) String name,
                                 @RequestParam(value = "rolle",required = false, defaultValue = "-1") String rolle,
                                 @RequestParam(value = "wDesc",required = true) String wDesc,
                                 @RequestParam(value = "pDesc",required = true) String pDesc){
         try {
-            if (presentationToLogic.webSessionService.verify(SessionId)){
-                presentationToLogic.accountService.savePublicData(SessionId, name, rolle, wDesc, pDesc);
+            if (presentationToLogic.webSessionService.verify(sessionID)){
+                presentationToLogic.accountService.savePublicData(sessionID, name, rolle, wDesc, pDesc);
             }
         } catch (Exception e){
             e.printStackTrace();
             return error(e);
         }
-        return GetProfilePage(SessionId);
+        return getProfilePage(sessionID);
     }
 
     /* Author: Lucas Krüger
@@ -328,14 +327,14 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: T1.B1
      */
-    @RequestMapping(value = "/GetAllTask")
-    private ModelAndView AllTask(@RequestParam(value = "SessionId",required = true) String SessionId){
+    @RequestMapping(value = "/getAllTask")
+    private ModelAndView AllTask(@RequestParam(value = "sessionID", required = true) String sessionID){
         try {
-            if (presentationToLogic.webSessionService.verify(SessionId)){
+            if (presentationToLogic.webSessionService.verify(sessionID)){
                 return new ModelAndView("projectManager-Tasks")
                         .addObject("Tasks", presentationToLogic.taskService.getAllTask())
                         .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys())
-                        .addObject("SessionId", SessionId);
+                        .addObject("SessionId", sessionID);
             }
         } catch (Exception e){
             return error(e);
@@ -349,14 +348,14 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: T1.B1
      */
-    @RequestMapping(value = "/GetTaskByTLID", method = RequestMethod.POST)
-    private ModelAndView GetTaskByTLID(@RequestParam(value = "SessionId",required = true) String SessionId,
+    @RequestMapping(value = "/getTaskByTLID", method = RequestMethod.POST)
+    private ModelAndView getTaskByTLID(@RequestHeader(value = "sessionID", required = true) String sessionID,
                           @RequestParam(value = "TLID", required = true, defaultValue = "-1") int TLId){
         try {
-            if (presentationToLogic.webSessionService.verify(SessionId)){
+            if (presentationToLogic.webSessionService.verify(sessionID)){
                 return new ModelAndView("projectManager-Tasks")
-                        .addObject("SessionId",SessionId)
-                        .addObject("Tasks", presentationToLogic.taskService.getAllTask()); // TODO: GetAllTaskByTLID
+                        .addObject("SessionId",sessionID)
+                        .addObject("Tasks", presentationToLogic.taskService.getAllTask()); // TODO: getAllTaskByTLID
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -371,14 +370,14 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: T1.B1
      */
-    @RequestMapping(value = "/GetTaskByUSID")
-    private ModelAndView GetTaskByUSID(@RequestParam(value = "SessionId",required = true) String SessionId,
+    @RequestMapping(value = "/getTaskByUSID")
+    private ModelAndView getTaskByUSID(@RequestParam(value = "sessionID", required = true) String sessionID,
                                        @RequestParam(value = "USID", required = true, defaultValue = "-1") int USId){
         try {
-            if (presentationToLogic.webSessionService.verify(SessionId)){
+            if (presentationToLogic.webSessionService.verify(sessionID)){
                 return new ModelAndView("projectManager-TasksZuUserstory")
-                        .addObject("SessionId",SessionId)
-                        .addObject("Tasks", presentationToLogic.taskService.getTaskbyUSID(USId))
+                        .addObject("SessionId",sessionID)
+                        .addObject("Tasks", presentationToLogic.taskService.getTasksbyUSID(USId))
                         .addObject("StoryName", presentationToLogic.userStoryService.getUserStory(USId).getName())
                         .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys());
             }
@@ -395,17 +394,15 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: T3.D2, T4.D1
      */
-    // TODO: Fix tlid
-    @RequestMapping(value = "/SaveTask", method = RequestMethod.POST)
-    private ResponseEntity<HttpStatus> SaveTask(@RequestParam(value = "SessionId",required = true) String SessionId,
-                                  @RequestParam(value = "TID",required = true, defaultValue = "-1") int tid,
-                                  @RequestParam(value = "description", required = true) String desc,
-                                  @RequestParam(value = "USID", required = true) int USID,
-                                  @RequestParam(value ="priority", required = true) int prio){
+    @RequestMapping(value = "/saveTask", method = RequestMethod.POST)
+    private ResponseEntity<HttpStatus> saveTask(@RequestHeader(value = "sessionID", required = true) String sessionID,
+                                                @RequestBody() Task task){
         try{
-            if (presentationToLogic.webSessionService.verify(SessionId)){
-                presentationToLogic.taskService.saveTask(tid,desc,prio, USID);
-                return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+            if(task != null) {
+                if (presentationToLogic.webSessionService.verify(sessionID)) {
+                    presentationToLogic.taskService.saveTask(task);
+                    return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+                }
             }
         } catch(Exception e){
             e.printStackTrace();
@@ -421,10 +418,10 @@ public class WebController {
      * UserStory/Task-ID: T5.B1
      */
     @RequestMapping(value = "/deleteTask", method = RequestMethod.POST)
-    private ResponseEntity<HttpStatus> deleteTask(@RequestParam(value = "SessionId", required = true) String Sessionid,
-                                    @RequestParam(value = "TID", required = true, defaultValue = "-1") int tid){
+    private ResponseEntity<HttpStatus> deleteTask(@RequestHeader(value = "sessionID", required = true) String sessionID,
+                                                  @RequestParam(value = "tID", required = true, defaultValue = "-1") int tid){
         try {
-            if (presentationToLogic.webSessionService.verify(Sessionid)){
+            if (presentationToLogic.webSessionService.verify(sessionID)){
                 presentationToLogic.taskService.deleteTask(tid);
                 return new ResponseEntity<HttpStatus>(HttpStatus.OK);
             }
@@ -442,12 +439,12 @@ public class WebController {
      * UserStory/Task-ID: U6.B1
      */
     @RequestMapping(value = "/deleteUS", method = RequestMethod.POST)
-    private ResponseEntity<HttpStatus> deleteUS(@RequestParam(value = "SessionId", required = true) String SessionId,
+    private ResponseEntity<HttpStatus> deleteUS(@RequestHeader(value = "sessionID", required = true) String sessionID,
                                     @RequestParam(value = "ID", required = true, defaultValue = "-1") int id){
         try {
-            if (presentationToLogic.webSessionService.verify(SessionId)){
-                if (presentationToLogic.accountService.getAuthority(SessionId) >= 2){
-                    presentationToLogic.userStoryService.deleteUserStoryandLinkedTasks(id);
+            if (presentationToLogic.webSessionService.verify(sessionID)){
+                if (presentationToLogic.accountService.getAuthority(sessionID) >= 2){
+                    presentationToLogic.userStoryService.deleteUserStoryAndLinkedTasks(id);
                     return new ResponseEntity<HttpStatus>(HttpStatus.OK);
                 } else return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
             }
@@ -464,14 +461,14 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: // Todo: Place ID
      */
-    @RequestMapping(value = "/GetTaskBoard", method = RequestMethod.POST)
-    private ModelAndView getTaskBoard(@RequestParam(value = "SessionId", required = true) String Sessionid,
+    @RequestMapping(value = "/getTaskBoard", method = RequestMethod.POST)
+    private ModelAndView getTaskBoard(@RequestHeader(value = "sessionID", required = true) String sessionID,
                                       @RequestParam(value = "TBID", required = true, defaultValue = "-1") int tbid){
         try {
-            if (presentationToLogic.webSessionService.verify(Sessionid)){
+            if (presentationToLogic.webSessionService.verify(sessionID)){
                 ModelAndView modelAndView = new ModelAndView("TaskBoard")
                         .addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoard(tbid))
-                        .addObject("SessionId", Sessionid);
+                        .addObject("SessionId", sessionID);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -496,9 +493,7 @@ public class WebController {
     @RequestMapping("/test")
     private ModelAndView test() {
         try {
-            return new ModelAndView("profil")
-                    .addObject("User" , presentationToLogic.accountService.getProfileByEmail("Test@Mail.com"))
-                    .addObject("SessionId", MasterID);
+            return new ModelAndView("test");
         } catch (Exception e){
             e.printStackTrace();
             return error(e);

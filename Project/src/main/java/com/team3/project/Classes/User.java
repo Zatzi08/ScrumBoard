@@ -1,7 +1,5 @@
 package com.team3.project.Classes;
 
-import com.team3.project.Classes.Account;
-
 import lombok.Getter;
 import lombok.Setter;
 

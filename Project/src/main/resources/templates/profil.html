@@ -23,16 +23,19 @@
     <button class = "reiterBtn"onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Profil </button>
     <button class = "reiterBtn">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
-    <button class = "reiterBtn" id="einstellungBtn">Einstellungen </button>
 </div>
 
 <div id = "profilContainer">
     <div id = "profilInhalt">
-        <button class = "fa fa-edit" th:uname="${User.uname}" th:udesc="${User.userdesc}" th:projectdesc="${User.description}" onclick="toggleProfilMenü(this.getAttribute('uname'), this.getAttribute('udesc'), this.getAttribute('projectdesc'))"></button>
+        <button class = "fa fa-edit" title = "Bearbeite das Profil"th:uname="${User.uname}" th:udesc="${User.privatDesc}" th:projectdesc="${User.workDesc}" onclick="toggleProfilMenü(this.getAttribute('uname'), this.getAttribute('udesc'), this.getAttribute('projectdesc'))"></button>
+
         <label th:text = "${User.uname}" id = "profilName">Benutzername </label>
-        <label th:text="${User.description}" id = "profilProjektBeschreibung"> Projekt Beschreibung </label>
-        <label id = "rolleProfil"> Rolle <p>.</p> </label>
-        <label th:text = "${User.userdesc}" id = "profilPersoBeschreibung"> Persönliche Beschreibung </label>
+        <label class = "profileText" >Deine Aufgabe im Projekt</label>
+        <label th:text="${User.workDesc}" id = "profilProjektBeschreibung"> Projekt Beschreibung </label>
+        <label class = "profileText" >Deine Rollen </label>
+        <label id = "rolleProfil"> Rolle <p>.</p> </label> <!-- Könnte das als Liste realisiert werden, danke LK -->
+        <label class = "profileText" >Deine persönliche Beschreibung</label>
+        <label th:text = "${User.privatDesc}" id = "profilPersoBeschreibung"> Persönliche Beschreibung </label>
     </div>
 </div>
 
@@ -45,7 +48,7 @@
     <textarea id="inputWDesc" class = "profilInput" form = "profilForm" placeholder = "projektbezogene Beschreibung bearbeiten" name = projektBeschreibung></textarea>
     <label class = "labelProfil">persönliche Beschreibung:</label>
     <textarea id="inputPDesc" class = "profilInput" form = "profilForm" placeholder = "persönliche Beschreibung bearbeiten" name = persoBeschreibung></textarea>
-    <button type = "button" th:sessionID="${SessionId}" onclick="saveProfile(this.getAttribute('sessionID'))" id = "profilEditBtn">Speichern</button>
+    <button type = "button" title = "Speichern der Änderungen" th:sessionID="${SessionId}" onclick="saveProfile(this.getAttribute('sessionID'))" id = "profilEditBtn">Speichern</button>
 </form>
 </div>
 

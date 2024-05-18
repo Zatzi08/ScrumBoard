@@ -23,7 +23,6 @@
     <button type="button"  th:Sid="${SessionId}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
     <button class = "reiterBtn">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
-    <button class = "reiterBtn" id="einstellungBtn">Einstellungen </button>
 </div>
 
 <div id="outerProjectManagerContainer">
@@ -43,14 +42,14 @@
                 <tbody id="userTaskTableBody">
                     <tr th:each="item : ${Storys}" th:USid="${item.ID}" th:Sid="${SessionId}" ondblclick="SwitchToTasksbyUSID(this.getAttribute('Sid'), this.getAttribute('USid'))">
                         <th>
-                            <button class="userTaskTableBody-editBtn" title="Bearbeiten" th:sname="${item.name}" th:sdescription="${item.description}" th:sid="${item.ID}" onclick="toggleEditBox('editBtn', this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'));"><i class="fa fa-edit"></i></button>
-                            <span class="closeUserStoryTaskBtn" th:USid="${item.ID}" th:Sid="${SessionId}" onclick="deleteUS(this.getAttribute('USid'),this.getAttribute('Sid'))" title="Löschen">&times;</span>
+                            <button class="Btn" title="Bearbeiten" th:sname="${item.name}" th:sdescription="${item.description}" th:sid="${item.ID}" onclick="toggleEditBox('editBtn', this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'));" style = "margin-left:92%"><i class="fa fa-edit"></i></button>
+                            <span class="Btn" th:USid="${item.ID}" th:Sid="${SessionId}" onclick="deleteUS(this.getAttribute('USid'),this.getAttribute('Sid'))" title="Löschen">&times;</span>
                             <label th:text = "${item.name}">Name</label>
                             <label>Rolle</label>
                             <label th:text="${item.priority}">Priorität</label>
                             <hr>
                             <label style="display: inline-block;" th:text="${item.description}">Beschreibung</label>
-                            <label class = userTaskTableContentSubdate>Abgabedatum</label>
+                            <label class = "userTaskTableContentSubdate">Abgabedatum</label>
                         </th>
                     </tr>
                 </tbody>

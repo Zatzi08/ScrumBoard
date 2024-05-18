@@ -70,7 +70,7 @@ class DAOService {
     /** gets all entries with the joined Attributes
      * @param <Dao>               DAOObjects
      * @param daoClass            DaoObject.class
-     * @param joinOnAttributeName Attribute Name
+     * @param JoinOnAttributeName Attribute Name
      * @return                    List of returned Objects
      */
     static <Dao> List<Dao> getAllLeftJoin(Class<Dao> daoClass, List<String> JoinOnAttributeName) {
