@@ -20,6 +20,7 @@ public class Task extends abstraktDataClasses {
     private Date dueDate;
     private int timeNeededG;
     private int timeNeededA;
+    private boolean done;
 
     /* Author: Henry L. Freyschmidt
      * Revisited: /
@@ -43,6 +44,8 @@ public class Task extends abstraktDataClasses {
         }
         this.timeNeededG = timeNeededG;
         this.timeNeededA = timeNeededA;
+        this.done = false;
+
     }
 
     public int getPriorityAsInt(){

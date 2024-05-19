@@ -22,7 +22,7 @@ public class DAOAccountService {
                 DAOService.persist(new DAOAccount(email, password));
                 DAOUser user = DAOUserService.getByMail(email);
                 user.setAuthorization(DAOAuthorizationService.getByAuthorization(1));
-                DAOService.persist(user);
+                DAOService.merge(user);
             } catch (Exception e) {
                 return false;
             }

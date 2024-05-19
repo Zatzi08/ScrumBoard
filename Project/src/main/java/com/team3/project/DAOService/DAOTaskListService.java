@@ -2,6 +2,8 @@ package com.team3.project.DAOService;
 
 import java.util.List;
 
+import com.team3.project.DAO.DAOTask;
+import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAO.DAOTaskList;
 
 public class DAOTaskListService {
@@ -63,4 +65,20 @@ public class DAOTaskListService {
         String parameterName = "taskBoard";
         return DAOService.getListByPara(DAOTaskList.class, id, parameterName);
     }
+
+    public static boolean updateTasksById(int id, List<DAOTask> daoTasks) {
+        String joinOnAttributeName = "tasks";
+        DAOTaskList taskList = DAOService.getLeftJoinByID(id, DAOTaskList.class, joinOnAttributeName);
+        taskList.setTasks(daoTasks);
+        return DAOService.merge(taskList);
+    }
+
+    public static boolean addTaskById(int id, DAOTask daoTask) {
+        String joinOnAttributeName = "tasks";
+        DAOTaskList taskList = DAOService.getLeftJoinByID(id, DAOTaskList.class, joinOnAttributeName);
+        taskList.getTasks().add(daoTask);
+        return DAOService.merge(taskList);
+    }
+
+    
 }

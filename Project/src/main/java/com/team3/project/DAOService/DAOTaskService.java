@@ -207,6 +207,42 @@ public class DAOTaskService {
         return DAOService.merge(daoTask);
     }
 
+    public static boolean updateProcessingTimeEstimatedInHoursById(int id, double processingTimeEstimatedInHours) {
+        DAOTask daoTask = DAOService.getByID(id, DAOTask.class);
+        daoTask.setProcessingTimeEstimatedInHours(processingTimeEstimatedInHours);
+        return DAOService.merge(daoTask);
+    }
+
+    public static boolean updateProcessingTimeRealInHoursById(int id, double processingTimeRealInHours) {
+        DAOTask daoTask = DAOService.getByID(id, DAOTask.class);
+        daoTask.setProcessingTimeRealInHours(processingTimeRealInHours);
+        return DAOService.merge(daoTask);
+    }
+
+
+
+    static boolean updateDoneById(int id, boolean done) {
+        DAOTask daoTask = DAOService.getByID(id, DAOTask.class);
+        daoTask.setDone(done);
+        return DAOService.merge(daoTask);
+    }
+
+    public static boolean setDoneById(int id) {
+        return updateDoneById(id, true);
+    }
+
+    public static boolean setUnDoneById(int id) {
+        return updateDoneById(id, false);
+    }
+
+    public static boolean updateUsersById(int id, List<DAOUser> daoUsers) {
+        DAOTask daoTask = DAOService.getByID(id, DAOTask.class);
+        daoTask.setUsers(daoUsers);
+        return DAOService.merge(daoTask);
+    }
+
+
+
     //deletes
     /* Author: Tom-Malte Seep
      * Revisited: /
