@@ -19,6 +19,16 @@ function SwitchToTasksbyUSID(sessionID, USID) {
     document.location.assign(url)
 }
 
+function SwitchToUsers(sessionID){
+    let url = "/UserList?sessionID=" + sessionID
+    document.location.assign(url)
+}
+
+function SwitchToOtherProfile(sessionID, email){
+    let url = '/getProfilePageByEmail?sessionID=' + sessionID + '&email=' + email
+    document.location.assign(url)
+}
+
 // Post Requests
 function saveTask($this, sessionID) {
     let id = document.getElementById('editId').value;
@@ -29,14 +39,18 @@ function saveTask($this, sessionID) {
     let timeNeededG = -1;//TODO document.getElementById().value
     let timeNeededA = -1;//TODO document.getElementById().value
 
-    fetch('/saveTask', {
-        method: 'POST',
-        cache: 'no-cache',
-        headers: {
-            'Content-Type': 'application/json',
-            'sessionID': sessionID
-        },
-        body: JSON.stringify({
+    if (USID === "-1"){
+        alert("Invalid UserStory-ID")
+    } else {
+
+        fetch('/saveTask', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json',
+                'sessionID': sessionID
+            },
+            body: JSON.stringify({
                 'tID': id,
                 'description': description,
                 'priority': priority,
@@ -45,11 +59,12 @@ function saveTask($this, sessionID) {
                 'timeNeededG': timeNeededG,
                 'timeNeededA': timeNeededA
             })
-    }).then(r => {
-        if (r.ok) {
-            location.reload();
-        }
-    });
+        }).then(r => {
+            if (r.ok) {
+                location.reload();
+            }
+        });
+    }
 }
 
 function saveUS($this, sessionID) {
@@ -109,7 +124,7 @@ function saveProfile(sessionID) {
 }
 
 function deleteUS(usid, sessionID){
-    fetch('/deleteUS?ID=' + usid.toString() + '&SessionId=' + sessionID, {
+    fetch('/deleteUS?ID=' + usid.toString() + '&sessionID=' + sessionID, {
         method: 'POST',
         cache: 'no-cache',
         headers:{

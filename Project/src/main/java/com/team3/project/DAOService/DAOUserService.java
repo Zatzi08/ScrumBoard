@@ -131,10 +131,10 @@ public class DAOUserService {
         if (newSessionId) {
             String createdSessionId = (sessionId != null) ? sessionId : createSessionId();
             String createdSessionDate = (sessionDate != null) ? sessionDate : createSessionDate();
-            return DAOService.persist(new DAOUser(email, password, name, privatDescription, workDescription, roles, 
+            return DAOService.merge(new DAOUser(email, password, name, privatDescription, workDescription, roles, 
                                                   createdSessionId, createdSessionDate, DAOAuthorizationService.getByAuthorization(1)));
         }
-        return DAOService.persist(new DAOUser(email, password, name, privatDescription, workDescription, roles, DAOAuthorizationService.getByAuthorization(1)));
+        return DAOService.merge(new DAOUser(email, password, name, privatDescription, workDescription, roles, DAOAuthorizationService.getByAuthorization(1)));
     }
 
     //updates

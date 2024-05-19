@@ -8,12 +8,14 @@ import java.util.LinkedList;
 @Setter
 public class Profile {
     private String uname;
+    private String email;
     private String privatDesc;
     private String workDesc;
     private LinkedList<Role> roles;
 
-    public Profile(String name, String udesc, String wdesc, LinkedList<Role> roles){
+    public Profile(String name,String email, String udesc, String wdesc, LinkedList<Role> roles){
         this.uname = name;
+        this.email = email;
         this.privatDesc = udesc;
         this.workDesc = wdesc;
         this.roles = roles;

@@ -126,21 +126,17 @@ public class AccountService {
     /**
      * saves non credential User-Data
      * @param sessionId -
-     * @param name -
-     * @param rolle -
-     * @param wDesc workDescription = describes your job in the project
-     * @param pDesc privatDescription = describes
+     * @param profile -
      * @throws Exception Null Params or User not found
      */
-    public void savePublicData(String sessionId, String name, String rolle, String wDesc, String pDesc) throws Exception {
+    public void savePublicData(String sessionId, Profile profile) throws Exception {
         if (sessionId == null) throw new Exception("id outOfBound");
-        if (name == null) throw new Exception("Null Name");
-        if (rolle == null) throw new Exception("Null Rolle");
-        if (wDesc == null) throw new Exception("Null uDesc");
-        if (pDesc == null) throw new Exception("Null pDes");
+        if (profile.getUname() == null) throw new Exception("Null Name");
+        if (profile.getWorkDesc() == null) throw new Exception("Null uDesc");
+        if (profile.getPrivatDesc() == null) throw new Exception("Null pDes");
         DAOUser user = DAOUserService.getBySessionId(sessionId);
         if (user == null) throw new Exception("User not found");
-        DAOUserService.updateByEMail(user.getEmail(), name,pDesc, wDesc, user.getRoles());
+        DAOUserService.updateByEMail(user.getEmail(), profile.getUname(),profile.getPrivatDesc(), profile.getWorkDesc(), user.getRoles());
     }
 
     /* Author: Lucas Krüger
@@ -159,7 +155,7 @@ public class AccountService {
         if (email == null) throw new Exception("Null EMail");
         DAOUser user = DAOUserService.getById(DAOUserService.getIdByMail(email));
         if (user == null) throw new Exception("User not found");
-        return new Profile(user.getName(), user.getPrivatDescription(), user.getWorkDescription(), null);
+        return new Profile(user.getName(),user.getEmail(), user.getPrivatDescription(), user.getWorkDescription(), null);
     }
 
     /* Author: Lucas Krüger
@@ -179,7 +175,7 @@ public class AccountService {
         DAOUser user = DAOUserService.getBySessionId(sessionId);
         if (user == null) throw new Exception("User not found");
 
-        return new Profile(user.getName(), user.getPrivatDescription(), user.getWorkDescription(), null);
+        return new Profile(user.getName(),user.getEmail(), user.getPrivatDescription(), user.getWorkDescription(), null);
     }
 
     /* Author: Lucas Krüger
