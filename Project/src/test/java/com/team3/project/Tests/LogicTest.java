@@ -894,12 +894,10 @@ public class LogicTest {
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: alle visuellen Rollen einer reellen Rolle wiedergeben R2.B1
          */
-    void showAllVisualRole() {
+    void showAllVisualRole() {//Annahme: neu hinzugefügte Elemente werden am Ende der Liste von Rollen sein
         pw.append("Logik-Test-showVisualRole\nTest ID: Logic.T13\n" + "Date: " + formatter.format(date) + '\n');
         RoleService rservice = new RoleService();
         LinkedList<Role> list = null;
-        int count_correct_exceptions = 0;
-        int count_correct_exception_checks = 0;
 
         try{
             rservice.createVisualRole("Entwickler1", Enumerations.Role.nutzer);
@@ -952,6 +950,40 @@ public class LogicTest {
             e.printStackTrace();
         }
 
+        pw.append(String.format("pass = %b", pass));
+    }
+
+    @Test
+        /*  Test ID: Logic.T14
+         *  Author: Henry Lewis Freyschmidt
+         *  Zweck: visuelle Rolle erstellen R2.B2
+         */
+    void createVisualRole() { //Annahme: neu hinzugefügte Elemente werden am Ende der Liste von Rollen sein
+        pw.append("Logik-Test-createVisualRole\nTest ID: Logic.T14\n" + "Date: " + formatter.format(date) + '\n');
+        RoleService rservice = new RoleService();
+        int count_correct_exceptions = 0;
+        int count_correct_exception_checks = 0;
+
+        try{
+            rservice.createVisualRole("Entwickler", Enumerations.Role.nutzer);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertEquals("Entwickler", rservice.getAllRolesByRole(Enumerations.Role.nutzer).getLast());
+        }catch (AssertionError | Exception e){
+            pass = false;
+            pw.append("Fail: visual Role was not created\n");
+            throw new AssertionError(e);
+        }
+
+        try{
+            rservice.deleteVisualRole("Entwickler", Enumerations.Role.nutzer);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         try{
             count_correct_exception_checks++;
             rservice.createVisualRole(null, Enumerations.Role.nutzer);
@@ -977,25 +1009,151 @@ public class LogicTest {
             pass = false;
             pw.append("Fail: wrong Exception-Handling\n");
         }
-
         pw.append(String.format("pass = %b", pass));
     }
 
     @Test
-        /*  Test ID: Logic.T14
-         *  Author: Henry Lewis Freyschmidt
-         *  Zweck: visuelle Rolle erstellen R2.B2
-         */
-    void createVisualRole() {
-        pw.append("Logik-Test-createVisualRole\nTest ID: Logic.T14\n" + "Date: " + formatter.format(date) + '\n');
+    /*  Test ID: Logic.T15
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck: visuelle Rollennamen ändern R3.B1
+     */
+
+    void editVisualRoleName(){//Annahme: Rollen in der Liste im FIFO-Prinzip eingespeichert
+        pw.append("Logik-Test-changeVisualRoleName\nTest ID: Logic.T15\n" + "Date: " + formatter.format(date) + '\n');
         RoleService rservice = new RoleService();
         int count_correct_exceptions = 0;
         int count_correct_exception_checks = 0;
+        Role oldRole = null;
+        Enumerations.Role role = Enumerations.Role.nutzer;
 
         try{
-
+            rservice.createVisualRole("Developer", role);
         }catch (Exception e){
             e.printStackTrace();
+        }
+
+        try{
+            oldRole = rservice.getAllRolesByRole(role).getLast();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            rservice.changeVisualRoleName(oldRole.getName(),"newDeveloper",role);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertNotEquals(oldRole.getName(), rservice.getRoleById(oldRole.getID()).getName());
+        }catch (AssertionError | Exception e){
+            pass = false;
+            pw.append("Fail: visual Role Name was not changed\n");
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.changeVisualRoleName(null, "Failure", role);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.changeVisualRoleName("", "Failure", role);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.changeVisualRoleName("Failure", null, role);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.changeVisualRoleName("Failure", "", role);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.changeVisualRoleName("Failure", "newFailure", null);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+
+        if (count_correct_exceptions != count_correct_exception_checks) {
+            pass = false;
+            pw.append("Fail: wrong Exception-Handling\n");
+        }
+        pw.append(String.format("pass = %b", pass));
+
+    }
+
+    @Test
+    /*  Test ID: Logic.T16
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck: visuelle Rollennamen löschen R4.B1
+     */
+
+    void deleteVisualRole(){//Annahme: Ausgabe von getAllRoles ist im FIFO-Prinzip
+        pw.append("Logik-Test-deleteVisualRole\nTest ID: Logic.T16\n" + "Date: " + formatter.format(date) + '\n');
+        RoleService rservice = new RoleService();
+        int count_correct_exceptions = 0;
+        int count_correct_exception_checks = 0;
+        Enumerations.Role role = Enumerations.Role.nutzer;
+        Role visualRole = null;
+
+        try{
+            rservice.createVisualRole("TestRole", role);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            visualRole = rservice.getAllRolesByRole(role).getLast();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            rservice.deleteVisualRole(visualRole.getName(), role);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertNotEquals(visualRole, rservice.getAllRolesByRole(role).getLast());
+        }catch (AssertionError | Exception e){
+            pass = false;
+            pw.append("Fail: visual Role was not deleted \n");
+            throw new AssertionError(e);
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.deleteVisualRole(null, Enumerations.Role.nutzer);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.deleteVisualRole("", Enumerations.Role.nutzer);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.deleteVisualRole("Failure", null);
+        }catch (Exception e){
+            count_correct_exceptions++;
         }
 
         if (count_correct_exceptions != count_correct_exception_checks) {
@@ -1003,7 +1161,150 @@ public class LogicTest {
             pw.append("Fail: wrong Exception-Handling\n");
         }
         pw.append(String.format("pass = %b", pass));
+
     }
+
+    @Test
+    /*  Test ID: Logic.T17
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck: visuelle Rollennamen ändern R5.B2
+     */
+
+    void changeVisualRole(){
+        pw.append("Logik-Test-changeVisualRole\nTest ID: Logic.T17\n" + "Date: " + formatter.format(date) + '\n');
+        RoleService rservice = new RoleService();
+        AccountService aservice = new AccountService();
+        int count_correct_exceptions = 0;
+        int count_correct_exception_checks = 0;
+        Enumerations.Role role = Enumerations.Role.nutzer;
+        Role visualRole = null;
+
+        try{
+            aservice.register("daveT17", "daveT17@gmail.com", "T17");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        int uID = DAOUserService.getIdByMail("daveT17@gmail.com");
+        User user = new User("daveT17", uID, "nett", "Front-End-Entwickler", null);
+
+        try{
+            rservice.createVisualRole("Haupt-Entwickler", role);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            visualRole = rservice.getAllRolesByRole(role).getLast();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            rservice.saveVisualRole(visualRole, user, role);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertEquals(visualRole, aservice.getProfileByEmail("daveT17@gmail.com").getRoles().getLast());
+        }catch (Exception | AssertionError e){
+            pass = false;
+            pw.append("Fail: visual Role was not attributed to User\n");
+            throw new AssertionError(e);
+        }
+
+        DAOUserService.deleteById(uID);
+
+        try{
+            rservice.deleteVisualRole(visualRole.getName(), role);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.saveVisualRole(null, user,role);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.saveVisualRole(new Role(-10, "Fail"), user,role);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.saveVisualRole(visualRole, null,role);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+
+            rservice.saveVisualRole(null, new User("daveT17", -1, "nett", "Front-End-Entwickler", null),role);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            rservice.saveVisualRole(visualRole, user,null);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+
+        if (count_correct_exceptions != count_correct_exception_checks) {
+            pass = false;
+            pw.append("Fail: wrong Exception-Handling\n");
+        }
+
+        pw.append(String.format("pass = %b", pass));
+
+    }
+
+    @Test
+    /*  Test ID: Logic.T18
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck: alle Profile ausgeben P4.B1
+     */
+
+    void getAllProfiles(){
+        pw.append("Logik-Test-getAllProfiles\nTest ID: Logic.T18\n" + "Date: " + formatter.format(date) + '\n');
+        AccountService aservice = new AccountService();
+        int size = 0;
+
+        size = aservice.getAllUser().size();
+
+        try{
+            aservice.register("DaveT18", "daveT18@gmail.com", "T18");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertNotEquals(size, aservice.getAllUser().size());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: did not return all Users\n");
+            throw new AssertionError(e);
+        }
+
+        pw.append(String.format("pass = %b", pass));
+
+    }
+
+    @Test
+    /*  Test ID: Logic.T19
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck: alle Profile ausgeben P4.B1
+     */
+
 
 
     /*@Test
