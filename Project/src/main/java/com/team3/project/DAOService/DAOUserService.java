@@ -28,6 +28,10 @@ public class DAOUserService {
         return DAOService.getAll(DAOUser.class);
     }
 
+    public static List<String> getAllUserNames() {
+        return getAll().stream().map(DAOUser::getName).toList();
+    }
+
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: gets all entries
@@ -106,6 +110,12 @@ public class DAOUserService {
     public static DAOUser getByMail(String email) {
         String parameterName = "email";
         DAOUser user = DAOService.getSingleByPara(DAOUser.class, email, parameterName);
+        return user;
+    }
+
+    static DAOUser getWithAuthorizationById(int id) {
+        String parameterName = "authorization";
+        DAOUser user = DAOService.getLeftJoinByID(id, DAOUser.class, parameterName);
         return user;
     }
 
@@ -284,15 +294,16 @@ public class DAOUserService {
 
     public static boolean updateAuthorizationById(int id, int authorization) {
         DAOUser user = DAOService.getByID(id, DAOUser.class);
-        if (user != null) {
+        int maxAuthorization = 4;
+        if (user != null && authorization <= maxAuthorization) {
             user.setAuthorization(DAOAuthorizationService.getByAuthorization(authorization));
             return DAOService.merge(user);
         }
         return false;
     }
 
-    public static boolean updateAuthorizationById(int id, DAOAuthorization authorization) {
-        return updateAuthorizationById(id, authorization.getAuthorization());
+    public static boolean updateAuthorizationById(int id, DAOAuthorization daoAuthorization) {
+        return updateAuthorizationById(id, daoAuthorization.getAuthorization());
     }
 
     //deletes

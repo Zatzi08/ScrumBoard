@@ -74,7 +74,7 @@ public abstract class BaseTest {
         printWriter.append("\n\n\n");
     }
 
-    private static void changeHibernateCfg(boolean isTesting) {
+    public static void changeHibernateCfg(boolean isTesting) {
         Path path = Paths.get("src/main/resources/DB/hibernate.cfg.xml");
         Charset charset = StandardCharsets.UTF_8;
         try {

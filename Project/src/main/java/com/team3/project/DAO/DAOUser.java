@@ -55,7 +55,12 @@ public class DAOUser {
     )
     private List<DAORole> roles;
     
-    @ManyToMany(mappedBy = "users", cascade = CascadeType.REMOVE)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+        name = "TasksXUsers", 
+        joinColumns = @JoinColumn(name = "uid"), 
+        inverseJoinColumns = @JoinColumn(name = "tid")
+    )
     private List<DAOTask> tasks;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

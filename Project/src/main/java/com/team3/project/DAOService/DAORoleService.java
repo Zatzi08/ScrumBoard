@@ -59,10 +59,17 @@ public class DAORoleService {
     public static List<DAORole> getByAuthorization(int authorization) {
         String joinOnAttributeName = "authorization";
         List<DAORole> roles = DAOService.getAllLeftJoin(DAORole.class, joinOnAttributeName);
+        if (roles == null) {
+            return null;
+        }
         return roles.stream()
             .filter(role -> role.getAuthorizations().stream()
                 .filter(auth -> auth.getAuthorization() == authorization)
             .toList().size() > 0).toList();
+    }
+
+    public static List<DAORole> getByAuthorization(DAOAuthorization authorization) {
+        return getByAuthorization(authorization.getAuthorization());
     }
     
     public static boolean create(String name, DAOAuthorization daoAuthorization) {

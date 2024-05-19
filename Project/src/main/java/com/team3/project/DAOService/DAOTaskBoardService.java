@@ -1,8 +1,10 @@
 package com.team3.project.DAOService;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.team3.project.DAO.DAOTaskBoard;
+import com.team3.project.DAO.DAOUser;
 
 public class DAOTaskBoardService {
     //gets
@@ -46,5 +48,51 @@ public class DAOTaskBoardService {
     public static DAOTaskBoard getWithTaskListsById(int id) {
         String joinOnAttributeName = "taskLists";
         return DAOService.getLeftJoinByID(id, DAOTaskBoard.class, joinOnAttributeName);
+    }
+
+    public static DAOTaskBoard getWithTaskListsWithTasksById(int id) {
+        List<String> joinOnAtrributeNames = Arrays.asList("tasklists", "tasklists.tasks");
+        return null;
+    }
+
+    public static boolean updateNameById(int id, String name) {
+        DAOTaskBoard taskBoard = DAOService.getByID(id, DAOTaskBoard.class);
+        if (!checkNameExists(name)) {
+            taskBoard.setName(name);
+            return DAOService.merge(taskBoard);
+        }
+        return false;
+    }
+
+    public static boolean emptyTaskListsByTaskBoardId(int taskboardId) {
+        DAOTaskBoard taskBoard = DAOTaskBoardService.getWithTaskListsById(taskboardId);
+        taskBoard.setTaskLists(null);
+        return DAOService.merge(taskBoard);
+    }
+
+    public static boolean emptyTaskListsByTaskBoard(DAOTaskBoard daoTaskBoard) {
+        return emptyTaskListsByTaskBoardId(daoTaskBoard.getId());
+    }
+
+    public static boolean deleteById(int id) {
+        DAOTaskBoard taskBoard = DAOService.getByID(id, DAOTaskBoard.class);
+        if (taskBoard != null) {
+            try { 
+                DAOService.delete(taskBoard);
+            } catch (Exception e) {
+                System.out.println("Error occurred: " + e.toString());
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean checkNameExists(String name) {
+        String parameterName = "name";
+        DAOTaskBoard taskBoard = DAOService.getSingleByPara(DAOTaskBoard.class, name, parameterName);
+        if (taskBoard != null) {
+            return true;
+        }
+        return false;
     }
 }
