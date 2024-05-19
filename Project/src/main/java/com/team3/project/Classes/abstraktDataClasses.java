@@ -4,9 +4,10 @@ import lombok.*;
 
 @Getter
 @Setter
-@NoArgsConstructor(force = true)
-@AllArgsConstructor
 public abstract class abstraktDataClasses {
-    private final int ID;
+    private int ID;
 
+    public abstraktDataClasses(int ID) {
+        this.ID = ID;
+    }
 }

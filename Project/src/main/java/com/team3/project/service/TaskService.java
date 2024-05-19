@@ -3,7 +3,11 @@ package com.team3.project.service;
 import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.Task;
 import com.team3.project.DAO.DAOTask;
+import com.team3.project.DAO.DAOTaskList;
+import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOTaskService;
+import com.team3.project.DAOService.DAOUserService;
+import com.team3.project.DAOService.DAOUserStoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -55,14 +59,14 @@ public class TaskService {
     /**
      * save/create Task in Database
      * @param task Task Object
-     * @throws Exception Null Objects or Params
+     * @throws Exception Null Params or Object not found
      */
     public void saveTask(Task task) throws Exception{
         if (task == null) throw new Exception("Task not found");
         if (task.getDescription() == null ) throw new Exception("null description");
         if(task.getUserStoryID() == -1) throw new Exception("invalid UserStory-ID");
         if(task.getID() == -1){
-            DAOTaskService.create(task.getDescription(), task.getUserStoryID());
+            DAOTaskService.create(task.getDescription(), task.getPriorityAsInt(),false,task.getDueDateAsString(),task.getTimeNeededG(),task.getTimeNeededA(),null, DAOUserStoryService.getById(task.getUserStoryID()), null);
         }else{
             DAOTask dt = DAOTaskService.getById(task.getID());
             if (dt != null){

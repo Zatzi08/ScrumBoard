@@ -160,11 +160,11 @@
 .addUserStoryBtn{
     display: flex;
     position: absolute;
-    margin-top: -4px;
     margin-bottom: 1000px;
-    margin-left: 85%;
+    margin-right: 10px;
+    margin-left: 70%;
     width: 160px;
-    height: 25px;
+    height: 20px;
     border-radius: 5px;
     color: white;
     font-size: 14px;
@@ -172,7 +172,10 @@
 }
 
 .addUserStoryBtn:hover{
-    background-color: black;
+    background-color: rgb(0, 0, 0);
+}
+#roleBtn:hover{
+    background-color: #0a0a0a;
 }
 /*
 .userTaskTableBody-editBtn{
@@ -217,7 +220,7 @@
 
 .userTaskTable {
     position: relative;
-    width: 100%;
+    width: 99%;
     margin-left:5px;
     border-collapse: separate;
     table-layout: auto;
@@ -363,3 +366,38 @@ hr {
 
 
 }
+#tableHeader{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    text-align: center;
+    background-color: rgba(25,0,255,0.3);
+    color: white;
+}
+
+.userTaskTableContentSubdate{
+    margin-right:5px;
+}
+
+#selectUser:hover{
+   color: #ba55d3;
+}
+
+#userTextDiv{
+    display: flex;
+}
+
+#userText{
+        display:inline-block;
+        position: relative;
+        font-size: 22px;
+        margin-right: 5px;
+        flex:50%;
+
+}
+/*#pjDescription{
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width:30%
+}*/

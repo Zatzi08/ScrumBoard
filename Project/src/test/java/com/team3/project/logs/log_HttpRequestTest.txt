@@ -284,3 +284,18 @@ HTTP-Test-SaveUserDataTest
 Test ID: HTTP.T11
 Date: 04/05/24 15:40:15
 pass: true
+
+HTTP-Test-saveTaskTest
+Test ID: HTTP.T15
+Date: 19/05/24 00:50:12
+Fail: HTTP PostRequest nicht erfolgreich
+
+HTTP-Test-addUserStoryTest
+Test ID: HTTP.T5
+Date: 19/05/24 00:50:12
+Fail: HTTP PostRequest nicht erfolgreich
+
+HTTP-Test-saveUserDataTest
+Test ID: HTTP.T11
+Date: 19/05/24 00:50:12
+Fail: HTTP PostRequest nicht erfolgreich

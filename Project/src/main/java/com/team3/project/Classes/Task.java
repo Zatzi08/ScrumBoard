@@ -1,12 +1,9 @@
 package com.team3.project.Classes;
 
 import com.team3.project.Classes.Enumerations.Priority;
+import com.team3.project.service.UserStoryService;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
-import java.beans.ConstructorProperties;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,9 +33,11 @@ public class Task extends abstraktDataClasses {
         this.description = description;
         this.priority = prior.IntToPriority(priority);
         this.userStoryID = userStoryID;
-        DateFormat dformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        if (dueDate != null && !dueDate.equals("")) {
-            this.dueDate = dformat.parse(dueDate.replace('T', ' '));
+        if (dueDate != null) {
+            DateFormat dformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            if (dueDate != null && !dueDate.equals("")) {
+                this.dueDate = dformat.parse(dueDate.replace('T', ' '));
+            }
         } else {
             this.dueDate = null;
         }
@@ -46,16 +45,35 @@ public class Task extends abstraktDataClasses {
         this.timeNeededA = timeNeededA;
     }
 
-
-
-
     public int getPriorityAsInt(){
         Enumerations prior = new Enumerations();
         return prior.getInt(this.getPriority());
     }
 
     public String getDueDateAsString(){
-        DateFormat dformat = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
-        return dformat.format(this.dueDate);
+        DateFormat dformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        try{
+            return dformat.format(this.dueDate).replace(' ','T');
+        } catch (Exception e){
+            return "";
+        }
+    }
+
+    public String getDueDateAsPresentable(){
+        DateFormat dformat = new SimpleDateFormat("dd/MM/yy HH:mm");
+        try{
+            return dformat.format(this.dueDate);
+        } catch (Exception e){
+            return "";
+        }
+    }
+
+    public UserStory getUserStory(){
+        UserStoryService userStoryService = new UserStoryService();
+        try {
+            return userStoryService.getUserStory(this.getUserStoryID());
+        } catch (Exception e){
+            return null;
+        }
     }
 }
