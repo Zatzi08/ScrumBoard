@@ -318,7 +318,7 @@ public class WebController {
         return getProfilePage(sessionID);
     }
 
-    @RequestMapping("/UserList")
+    @RequestMapping("/getUserList")
     private ModelAndView userList(@RequestParam(value = "sessionID",required = true) String sessionID){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
@@ -471,7 +471,7 @@ public class WebController {
      * Revisited: /
      * Funktion:
      * Grund: /
-     * UserStory/Task-ID: // Todo: Place ID
+     * UserStory/Task-ID: TB2.B1
      */
     @RequestMapping(value = "/getTaskBoard", method = RequestMethod.POST)
     private ModelAndView getTaskBoard(@RequestHeader(value = "sessionID", required = true) String sessionID,

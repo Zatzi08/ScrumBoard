@@ -20,7 +20,7 @@ function SwitchToTasksbyUSID(sessionID, USID) {
 }
 
 function SwitchToUsers(sessionID){
-    let url = "/UserList?sessionID=" + sessionID
+    let url = "/getUserList?sessionID=" + sessionID
     document.location.assign(url)
 }
 
