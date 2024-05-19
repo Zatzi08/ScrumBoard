@@ -285,17 +285,31 @@ Test ID: HTTP.T11
 Date: 04/05/24 15:40:15
 pass: true
 
+-------------------------------------------------Sprint 3-----------------------------------------------
+
 HTTP-Test-saveTaskTest
 Test ID: HTTP.T15
 Date: 19/05/24 00:50:12
-Fail: HTTP PostRequest nicht erfolgreich
+Fail: HTTP PostRequest nicht erfolgreich - revisited
 
 HTTP-Test-addUserStoryTest
 Test ID: HTTP.T5
 Date: 19/05/24 00:50:12
-Fail: HTTP PostRequest nicht erfolgreich
+Fail: HTTP PostRequest nicht erfolgreich - revisited
 
 HTTP-Test-saveUserDataTest
 Test ID: HTTP.T11
 Date: 19/05/24 00:50:12
+Fail: HTTP PostRequest nicht erfolgreich - revisited
+
+HTTP-Test-getUserListTest
+Test ID: HTTP.T18
+Date: 19/05/24 20:43:18
+Fail: initial Test
+
+HTTP-Test-saveTaskTest
+Test ID: HTTP.T15
+Date: 19/05/24 21:24:12
 Fail: HTTP PostRequest nicht erfolgreich
+
+

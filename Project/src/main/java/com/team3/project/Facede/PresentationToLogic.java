@@ -4,25 +4,18 @@ import com.team3.project.service.*;
 
 
 public class PresentationToLogic {
-    public final AccountService accountService;
-    public final TaskService taskService;
-    public final UserStoryService userStoryService;
-    public final WebSessionService webSessionService;
-    public TaskBoardService taskBoardService;
-    private static PresentationToLogic instance;
+    public final AccountService accountService = new AccountService();
+    public final TaskService taskService = new TaskService();
+    public final UserStoryService userStoryService = new UserStoryService();
+    public final WebSessionService webSessionService = new WebSessionService();
+    public final TaskBoardService taskBoardService = new TaskBoardService();
+    private static PresentationToLogic instance = new PresentationToLogic();
 
 
-    private PresentationToLogic(){
-        this.accountService = new AccountService();
-        this.userStoryService = new UserStoryService();
-        this.taskService = new TaskService();
-        this.webSessionService = new WebSessionService();
-        this.taskBoardService = new TaskBoardService();
-    }
+    private PresentationToLogic(){}
 
     public static PresentationToLogic getInstance(){
         if(PresentationToLogic.instance == null) PresentationToLogic.instance = new PresentationToLogic();
         return PresentationToLogic.instance;
     }
-
 }

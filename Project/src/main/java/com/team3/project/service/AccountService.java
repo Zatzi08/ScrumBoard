@@ -1,7 +1,9 @@
 package com.team3.project.service;
 
+import com.team3.project.Classes.Account;
 import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.User;
+import com.team3.project.DAO.DAOAccount;
 import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOAccountService;
 import com.team3.project.DAOService.DAOUserService;
