@@ -39,14 +39,18 @@ function saveTask($this, sessionID) {
     let timeNeededG = -1;//TODO document.getElementById().value
     let timeNeededA = -1;//TODO document.getElementById().value
 
-    fetch('/saveTask', {
-        method: 'POST',
-        cache: 'no-cache',
-        headers: {
-            'Content-Type': 'application/json',
-            'sessionID': sessionID
-        },
-        body: JSON.stringify({
+    if (USID === "-1"){
+        alert("Invalid UserStory-ID")
+    } else {
+
+        fetch('/saveTask', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json',
+                'sessionID': sessionID
+            },
+            body: JSON.stringify({
                 'tID': id,
                 'description': description,
                 'priority': priority,
@@ -55,11 +59,12 @@ function saveTask($this, sessionID) {
                 'timeNeededG': timeNeededG,
                 'timeNeededA': timeNeededA
             })
-    }).then(r => {
-        if (r.ok) {
-            location.reload();
-        }
-    });
+        }).then(r => {
+            if (r.ok) {
+                location.reload();
+            }
+        });
+    }
 }
 
 function saveUS($this, sessionID) {

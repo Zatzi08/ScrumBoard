@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 // Interagiert mit Repository, also create, delete, get, set
 @Service
@@ -76,6 +77,16 @@ public class TaskService {
                     DAOTaskService.updateUserStoryById(task.getID(),task.getUserStoryID());
                 if (dt.getPriority() != task.getPriorityAsInt())
                     DAOTaskService.updatePriorityById(task.getID(), task.getPriorityAsInt());
+                if(!Objects.equals(dt.getDueDate(), task.getDueDateAsString())); //TODO: DAOTaskService.updateDueDateByID Argumententyp von Int zu String; oder dueDate-Converter
+                    //DAOTaskService.updateDueDateById(task.getDueDateAsString());
+                /*
+                if(dt.getProcessingTimeEstimatedInHours() != task.getTimeNeededG())
+                    DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), task.getTimeNeededG());
+                if(dt.getProcessingTimeRealInHours() != task.getTimeNeededA())
+                    DAOTaskService.updateProcessingTimeRealInHoursById(task.getID(), task.getTimeNeededA());
+                if(dt.getDone() != task.getDone())
+                    DAOTaskService.updateDoneById(task.getID(), task.getDone());
+                 */
             } else throw new Exception("DB Task not found");
         }
     }
