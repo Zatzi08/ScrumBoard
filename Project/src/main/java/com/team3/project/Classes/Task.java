@@ -18,8 +18,8 @@ public class Task extends abstraktDataClasses {
     private Priority priority;
     private int userStoryID;
     private Date dueDate;
-    private int timeNeededG;
-    private int timeNeededA;
+    private double timeNeededG;
+    private double timeNeededA;
     private boolean done;
 
     /* Author: Henry L. Freyschmidt
@@ -28,7 +28,7 @@ public class Task extends abstraktDataClasses {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public Task(int tID, String description, int priority, int userStoryID, String dueDate, int timeNeededG, int timeNeededA) throws ParseException {
+    public Task(int tID, String description, int priority, int userStoryID, String dueDate, double timeNeededG, double timeNeededA) throws ParseException {
         super(tID);
         Enumerations prior = new Enumerations();
         this.description = description;

@@ -44,11 +44,11 @@
           <th id = "tableHeader">Nutzer</th>
         </tr>
         </thead>
-        <tbody id="userTaskTableBody">
-        <tr th:each="user : ${User}" th:USid="${user.ID}" th:Sid="${sessionID}" th:email="{}" th:role="{user.authorization}"  ondblclick="SwitchToOtherProfile(Sid, email)">
+        <tbody id="userTaskTableBody"> <!-- th:role="${user.getRoles()}" ist ne Liste kp wie wir das machen-->
+        <tr th:each="user : ${User}" th:Sid="${sessionID}" th:email="${user.getEmail()}"   ondblclick="SwitchToOtherProfile( this.getAttribute(Sid), this.getAttribute(email))">
           <th>
             <div id = userTextDiv>
-            <label class = "userText">Nutzername</label>
+            <label class = "userText" th:text="${user.getUname()}">Nutzername</label>
             <label class = "userText" style = "margin-left: 85%">rechtliche Rolle</label>
             </div>
           </th>
