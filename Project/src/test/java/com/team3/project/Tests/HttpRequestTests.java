@@ -35,22 +35,16 @@ public class HttpRequestTests extends BaseHTTPTest {
 
     @BeforeAll
     public static void BeforeAll(){
-        setup();
+        boolean b = true;
+        do{
+            setup(b);
+            b = false;
+        } while (accounts.isEmpty());
     }
 
     @BeforeEach
     public void beforeEach() {
-        try{
-            wait(1000);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
         before();
-        try{
-            wait(1000);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     @AfterEach
@@ -560,7 +554,7 @@ public class HttpRequestTests extends BaseHTTPTest {
         }
 
         try {
-            assertTrue(this.restTemplate.exchange("https://localhost:8080/getAllTask?sessionID=" + ID, HttpMethod.POST, message, String.class).getBody().contains("<title>Login</title>"));
+            assertTrue(this.restTemplate.exchange("https://localhost:8080/getAllTask?sessionID=" + ID, HttpMethod.GET, message, String.class).getBody().contains("<title>Login</title>"));
         } catch (AssertionError e){
             printWriterAddFailure("Accepted invalid session");
             throw new AssertionError(e);

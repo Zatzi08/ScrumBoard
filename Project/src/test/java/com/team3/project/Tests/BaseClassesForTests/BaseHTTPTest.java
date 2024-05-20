@@ -22,15 +22,16 @@ public class BaseHTTPTest extends BaseTest {
 
     public static final PresentationToLogic presentationToLogic = PresentationToLogic.getInstance();
 
-    protected static void setup() {
-        BaseTest.setup(logName, mainTestName);
+    protected static void setup(boolean b) {
+        if (b) BaseTest.setup(logName, mainTestName);
+        if (accounts.isEmpty())TestDBUser();
+        if (storys.isEmpty())TestDBUserStory();
+        if (tasks.isEmpty())TestDBTask();
+        if (boards.isEmpty()) TestDBTaskBoard();
     }
     protected static void before() {
         BaseTest.before();
-        TestDBUser();
-        TestDBUserStory();
-        TestDBTask();
-        TestDBTaskBoard();
+
     }
 
     protected static void after() {
