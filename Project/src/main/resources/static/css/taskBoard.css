@@ -1,41 +1,266 @@
-/*
-  Author: Paula Krasnovska
-  Revisited: /
-  Funktion: Task im TaskBoard
-  Grund: Benutzerfreundlichkeit
-  User-ID/Task-ID: U1.F1
-*/
-/*Todo: User ID raussuchen für Task*/
-/*Todo: taskCard für das Task Board entsprechend umschreiben, damit die Größe und Attribute angemessen sind.*/
-.taskCard{
-    position:relative;
-    width: 300px;
-    height:200px;
-    background-color: #87939f;
-    color:#3b3b3b;
-    border-top-left-radius:15px;
-    border-top-right-radius:15px;
-    margin-top:30px;
-    margin-left:10px;
-    transition: all 0.5s ease;
-    list-style-type: none;
+#outerContainer-Header{
+    position: absolute;
+    width: 1200px;
+    height: 50px;
+    background-color: #0c3d5d;
+    margin-left: 2%;
+    margin-top: 2.5%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
-.taskCard:hover{
+.outerContainer-HeaderBtn{
+    margin-bottom: 1000px;
+    width: 160px;
+    height: 25px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 1px;
+    background-color: #252f50;
+}
+
+#outerContainer-HeaderBtnAdd{
+    margin-bottom: 1000px;
+    width: 30px;
+    height: 25px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 1px;
+    background-color: #888585;
+}
+
+#outerContainer{
+    height: 550px;
+    width: 1200px;
+    background-color: #0c3d5d;
+    border-bottom: 10px;
+    position: absolute;
+    margin-top: 5%;
+    margin-left: 2%;
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+}
+
+.innerContainer{
+    background-color: rgba(35, 73, 101, 0.8);
+    height: 550px;
+    width: 236px;
+    border-radius: 10px;
+    overflow: auto;
+}
+
+.wrapper {
+    height: 500px;
+    overflow: auto;
+    top: -4px;
+    cursor: default;
+}
+
+.columnLabels{
+    color: white;
+    text-align: center;
+}
+
+.columnTable {
+    position: relative;
+    width: 98%;
+    border-collapse: separate;
+    table-layout: auto;
+    font-size: 10pt;
+    border-spacing: 0 20px;
+    cursor: default;
+}
+
+.columnTableHead {
+    position: sticky;
+    top: 0;
+    background-color: #000000;
+    cursor: default;
+}
+
+.columnTable th,
+.columnTable td {
+    padding: 10px;
+    text-align: left;
+    width: 20%;
+    border: 0 solid #adadad;
+    border-radius: 10px;
+    cursor: default;
+    overflow-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.columnTable th {
+    background-color: rgba(255, 255, 255, 0.66);
+    color: black;
+    white-space: nowrap;
+}
+
+.columnTable tbody tr {
+    transition: background-color 0.3s;
+}
+
+.columnTable tbody tr:hover{
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
     0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    color: black;
+    white-space: nowrap;
 }
 
-
-#taskCardBeschreibung{
-    margin-top: 25px;
-    right: 0;
-    width:280px;
-    height:130px;
+hr {
+    border: 1px solid #bebebe;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
-/*Packen wir alle Infos auf das Kärtchen, oder lösen wir das auch mit einem Popup, dass dann da alle Infos angezeigt werden?*/
-#taskCardUS{}
-#taskCardPrio{}
-#taskCardDueDate{}
-#taskCardRole{}
+.tableContentLabel{
+    font-size: 12px;
+}
+
+#tableContent-LeftTime{
+    display: inline-block;
+    float: left;
+    color: #b6b6b6;
+}
+
+#tableContent-Role{
+    display: inline-block;
+    float: right;
+    color: #b6b6b6;
+}
+
+#tableContent-UsId{
+    text-align: right;
+    color: #b6b6b6;
+}
+
+#tableContent-Beschreibung{
+    padding: 10px;
+    text-align: left;
+    width: 60%;
+    border: 0 solid #adadad;
+    border-radius: 10px;
+    cursor: default;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#zoomedTaskCard{
+    position: fixed;
+    margin-top: 70px;
+    margin-left: 400px;
+    width: 500px;
+    height: 350px;
+    background-color: rgba(36, 56, 98, 0.9);
+    border-radius: 10px;
+    padding: 15px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.zoomedTaskCard-content{
+    color: #d1d1d1;
+}
+
+#zoomedTaskCard-US{
+    display: inline-flex;
+    font-size: 12px;
+}
+
+#zoomedTaskCard-seperator{
+    font-size: 12px;
+}
+
+#zoomedTaskCard-taskBoard{
+    display: inline-flex;
+    font-size: 12px;
+}
+
+#zoomedTaskCard-description {
+    position: relative;
+    width: 470px;
+    max-height: 200px;
+    border-radius: 5px;
+    background-color: #d1d1d1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    white-space: normal;
+    overflow-wrap: break-word;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: black;
+    cursor: pointer;
+    scrollbar-color: #084d6a;
+}
+
+#zoomedTaskCard-estimatedTime{
+    display: inline-flex;
+    font-size: 12px;
+}
+
+#zoomedTaskCard-priority{
+    display: inline-flex;
+    float: right;
+    font-size: 12px;
+}
+
+#zoomedTaskCard-workedTime{
+    display: inline-flex;
+    font-size: 12px;
+}
+
+#zoomedTaskCard-role{
+    display: inline-flex;
+    float: right;
+    font-size: 12px;
+}
+
+#zoomedTaskCard-deadline{
+    font-size: 12px;
+    display: block;
+    position: sticky;
+    margin-top: 2%;
+    text-align: right;
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+}
+::-webkit-scrollbar-track {background-color: transparent;}
+::-webkit-scrollbar-thumb {
+    background-color: #627378;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {background-color: #a8bbbf;}
+
+::-webkit-scrollbar-corner {
+    background: rgba(0,0,0,0);
+}
+
+.dragging {
+    opacity: 0.5;
+}
+
+.placeholder {
+    background-color: #f0f0f0;
+    border: 2px dashed #ccc;
+}
+
+.closeToggleEdit {
+    font-size: 20px;
+    cursor: pointer;
+    float: right;
+    margin-top: -8px;
+}

@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.team3.project.DAO.DAOTaskBoard;
-import com.team3.project.DAO.DAOUser;
 
 public class DAOTaskBoardService {
     //gets
@@ -35,6 +34,11 @@ public class DAOTaskBoardService {
         return DAOService.getByID(id, DAOTaskBoard.class);
     }
 
+    static DAOTaskBoard getByName(String name) {
+        String parameterName = "name";
+        return DAOService.getSingleByPara(null, name, parameterName);
+    }
+
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: gets entry by ID
@@ -50,9 +54,20 @@ public class DAOTaskBoardService {
         return DAOService.getLeftJoinByID(id, DAOTaskBoard.class, joinOnAttributeName);
     }
 
-    public static DAOTaskBoard getWithTaskListsWithTasksById(int id) {
+    static DAOTaskBoard getWithTaskListsWithTasksById(int id) {
         List<String> joinOnAtrributeNames = Arrays.asList("tasklists", "tasklists.tasks");
         return null;
+    }
+
+    public static boolean createWithDefaultTaskLists(String name) {
+        DAOTaskBoard daoTaskBoard = new DAOTaskBoard(name, null);
+        try {
+            DAOService.persist(daoTaskBoard);
+            DAOTaskListService.createDefaultsForTaskBoardByTaskBoardName(name);
+            return true;
+        } catch (Exception e) {
+        }
+        return false;
     }
 
     public static boolean updateNameById(int id, String name) {

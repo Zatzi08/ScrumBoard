@@ -313,3 +313,70 @@ Date: 19/05/24 21:24:12
 Fail: HTTP PostRequest nicht erfolgreich
 
 
+Hyper-Text-Transport-Protocol-Tests:
+
+Hyper-Text-Transport-Protocol-Test-getTaskBoard
+Test ID: HTTP.T17
+Date: 20/05/24 16:27:42
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-getTaskByTLID
+Test ID: HTTP.T14
+Date: 20/05/24 16:27:42
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-getUserList
+Test ID: HTTP.T17
+Date: 20/05/24 16:27:42
+fail: Wrong Page loaded
+pass: false
+
+
+Hyper-Text-Transport-Protocol-Tests:
+
+Hyper-Text-Transport-Protocol-Test-saveTask
+Test ID: HTTP.T15
+Date: 20/05/24 16:27:55
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-saveUserData
+Test ID: HTTP.T11
+Date: 20/05/24 16:27:55
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-addUserStory
+Test ID: HTTP.T5
+Date: 20/05/24 16:27:55
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Tests:
+
+Hyper-Text-Transport-Protocol-Test-saveTaskBoard
+Test ID: HTTP.T19
+Date: 20/05/24 17:23:18
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-getTaskBoard
+Test ID: HTTP.T18
+Date: 20/05/24 17:23:18
+fail: Wrong Page loaded - Frontend wie DB nicht existent
+
+
+Hyper-Text-Transport-Protocol-Test-getTaskByTLID
+Test ID: HTTP.T14
+Date: 20/05/24 17:23:18
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-getUserList
+Test ID: HTTP.T17
+Date: 20/05/24 17:23:18
+pass: true
+
+

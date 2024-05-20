@@ -13,11 +13,11 @@ public class Profile {
     private String workDesc;
     private LinkedList<Role> roles;
 
-    public Profile(String name,String email, String udesc, String wdesc, LinkedList<Role> roles){
-        this.uname = name;
+    public Profile(String uname,String email, String privatDesc, String workDesc, LinkedList<Role> roles){
+        this.uname = uname;
         this.email = email;
-        this.privatDesc = udesc;
-        this.workDesc = wdesc;
+        this.privatDesc = privatDesc;
+        this.workDesc = workDesc;
         this.roles = roles;
     }
 }
