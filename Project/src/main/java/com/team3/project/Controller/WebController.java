@@ -379,7 +379,7 @@ public class WebController {
 
     /* Author: Lucas Krüger
      * Revisited: /
-     * Funktion:
+     * Funktion: /
      * Grund: /
      * UserStory/Task-ID: T1.B1
      */

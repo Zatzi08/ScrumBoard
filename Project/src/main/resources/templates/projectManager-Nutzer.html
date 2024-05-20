@@ -48,7 +48,7 @@
         <tr th:each="user : ${User}" th:Sid="${sessionID}" th:email="${user.getEmail()}"   ondblclick="SwitchToOtherProfile( this.getAttribute(Sid), this.getAttribute(email))">
           <th>
             <div id = userTextDiv>
-            <label class = "userText">Nutzername</label>
+            <label class = "userText" th:text="${user.getUname()}">Nutzername</label>
             <label class = "userText" style = "margin-left: 85%">rechtliche Rolle</label>
             </div>
           </th>
