@@ -17,7 +17,7 @@ public class DAOAccount {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "uID")
-    private int uid;
+    private int id;
 
     @Column(name = "mail")
     private String email;

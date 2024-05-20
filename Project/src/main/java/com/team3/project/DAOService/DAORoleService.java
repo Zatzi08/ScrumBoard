@@ -1,8 +1,12 @@
 package com.team3.project.DAOService;
 
+import java.util.Arrays;
 import java.util.List;
 
+import com.team3.project.DAO.DAOAccount;
+import com.team3.project.DAO.DAOAuthorization;
 import com.team3.project.DAO.DAORole;
+import com.team3.project.DAO.DAOUser;
 
 public class DAORoleService {
     //gets
@@ -50,5 +54,51 @@ public class DAORoleService {
         String parameterName = "name";
         DAORole role = DAOService.getSingleByPara(DAORole.class, name, parameterName);
         return role;
+    }
+
+    public static List<DAORole> getByAuthorization(int authorization) {
+        String joinOnAttributeName = "authorization";
+        List<DAORole> roles = DAOService.getAllLeftJoin(DAORole.class, joinOnAttributeName);
+        if (roles == null) {
+            return null;
+        }
+        return roles.stream()
+            .filter(role -> role.getAuthorizations().stream()
+                .filter(auth -> auth.getAuthorization() == authorization)
+            .toList().size() > 0).toList();
+    }
+
+    public static List<DAORole> getByAuthorization(DAOAuthorization authorization) {
+        return getByAuthorization(authorization.getAuthorization());
+    }
+    
+    public static boolean create(String name, DAOAuthorization daoAuthorization) {
+        try {
+            DAOService.persist(new DAORole(name, Arrays.asList(daoAuthorization)));
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+    
+    public static boolean create(String name, int authorization) {
+        return create(name, DAOAuthorizationService.getByAuthorization(authorization));
+    }
+    
+    public static boolean updateNameById(int id, String name) {
+        DAORole role = getByID(id);
+        if (role != null) {
+            role.setName(name);
+            return DAOService.merge(role);
+        }
+        return false;
+    }
+
+    static boolean deleteById(int id) {
+        DAORole role = DAOService.getByID(id, DAORole.class);
+        if (role != null) {
+            return DAOService.delete(role);
+        }
+        return true;
     }
 }

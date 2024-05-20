@@ -3,11 +3,16 @@ package com.team3.project.service;
 import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.Task;
 import com.team3.project.DAO.DAOTask;
+import com.team3.project.DAO.DAOTaskList;
+import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOTaskService;
+import com.team3.project.DAOService.DAOUserService;
+import com.team3.project.DAOService.DAOUserStoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 // Interagiert mit Repository, also create, delete, get, set
 @Service
@@ -21,11 +26,17 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-
-    public Task getTaskByID(int id) throws Exception{
-        DAOTask dt =  DAOTaskService.getById(id);
+    /**
+     *
+     * @param ID Identifier
+     * @return Task-Object
+     * @throws Exception Null Object
+     */
+    public Task getTaskByID(int ID) throws Exception{
+        DAOTask dt =  DAOTaskService.getById(ID);
         if (dt == null){ throw new Exception("Task not found");}
-        return new Task(dt.getTid(),dt.getDescription(), dt.getPriority() , dt.getUserStory().getId());
+
+        return new Task(dt.getId(),dt.getDescription(), dt.getPriority() , dt.getUserStory().getId(),dt.getDueDate(), (int)(dt.getProcessingTimeEstimatedInHours()), (int)(dt.getProcessingTimeRealInHours()));
     }
 
     /* Author: Henry L. Freyschmidt
@@ -34,31 +45,49 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: /
      */
-
     public Task getTaskByDescription(String description) throws Exception{
         DAOTask dt =  DAOTaskService.getByDescription(description);
         if (dt == null) throw new Exception("Task not found");
-        return new Task(dt.getTid(),dt.getDescription(), dt.getPriority(), dt.getUserStory().getId());
+        return new Task(dt.getId(),dt.getDescription(), dt.getPriority(), dt.getUserStory().getId(), dt.getDueDate(), (int)(dt.getProcessingTimeEstimatedInHours()),(int)(dt.getProcessingTimeRealInHours()));
     }
 
     /* Author: Henry L. Freyschmidt
-     * Revisited: /
+     * Revisited: Lucas Krüger
      * Funktion: /
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public void saveTask(int taskID, String description, int priority, int USID ) throws Exception{
-        if (description == null ) throw new Exception("null description");
-        if (priority < 0 || priority > 4) throw new Exception("wrong priority");
-        if(USID == -1) throw new Exception("invalid UserStory-ID");
-        if(taskID == -1){
-            DAOTaskService.create(description,USID);
+    /**
+     * save/create Task in Database
+     * @param task Task Object
+     * @throws Exception Null Params or Object not found
+     */
+    public void saveTask(Task task) throws Exception{
+        if (task == null) throw new Exception("Task not found");
+        if (task.getDescription() == null ) throw new Exception("null description");
+        if(task.getUserStoryID() == -1) throw new Exception("invalid UserStory-ID");
+        if(task.getID() == -1){
+            DAOTaskService.create(task.getDescription(), task.getPriorityAsInt(),false,task.getDueDateAsString(),task.getTimeNeededG(),task.getTimeNeededA(),null, DAOUserStoryService.getById(task.getUserStoryID()), null);
         }else{
-            DAOTask task = DAOTaskService.getById(taskID);
-            if (task != null){
-                DAOTaskService.updateDescriptonById(taskID,description);
-                DAOTaskService.updateUserStoryById(taskID,USID);
-            }
+            DAOTask dt = DAOTaskService.getById(task.getID());
+            if (dt != null){
+                if (!dt.getDescription().equals(task.getDescription()))
+                    DAOTaskService.updateDescriptonById(task.getID(),task.getDescription());
+                if (dt.getUserStory().getId() != task.getUserStoryID())
+                    DAOTaskService.updateUserStoryById(task.getID(),task.getUserStoryID());
+                if (dt.getPriority() != task.getPriorityAsInt())
+                    DAOTaskService.updatePriorityById(task.getID(), task.getPriorityAsInt());
+                if(!Objects.equals(dt.getDueDate(), task.getDueDateAsString())); //TODO: DAOTaskService.updateDueDateByID Argumententyp von Int zu String; oder dueDate-Converter
+                    //DAOTaskService.updateDueDateById(task.getDueDateAsString());
+                /*
+                if(dt.getProcessingTimeEstimatedInHours() != task.getTimeNeededG())
+                    DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), task.getTimeNeededG());
+                if(dt.getProcessingTimeRealInHours() != task.getTimeNeededA())
+                    DAOTaskService.updateProcessingTimeRealInHoursById(task.getID(), task.getTimeNeededA());
+                if(dt.getDone() != task.getDone())
+                    DAOTaskService.updateDoneById(task.getID(), task.getDone());
+                 */
+            } else throw new Exception("DB Task not found");
         }
     }
 
@@ -67,6 +96,11 @@ public class TaskService {
      * Funktion: /
      * Grund: /
      * UserStory/Task-ID: /
+     */
+    /**
+     * Delete Task in Database
+     * @param taskID Identifier
+     * @throws Exception Invalid taskID
      */
     public void deleteTask(int taskID) throws Exception{
         if(taskID == -1) throw new Exception("not valid TaskID");
@@ -80,31 +114,49 @@ public class TaskService {
      * Grund: /
      * UserStory/Task-ID: T1.B1
      */
+    /**
+     * returns all Task in Database
+     * @return null or LinkedList<Task>
+     */
     public List<Task> getAllTask(){
-        List<DAOTask> tasks = DAOTaskService.getAll();
-        if (!tasks.isEmpty()) {
-            List<Task> taskList = new LinkedList<>();
-            Enumerations prio = new Enumerations();
-            for (DAOTask task : tasks) {
-                Task toAdd = new Task(task.getTid(),task.getDescription(), task.getPriority(), task.getUserStory().getId());
-                taskList.add(toAdd);
+        try {
+            List<DAOTask> tasks = DAOTaskService.getAll();
+            if (!tasks.isEmpty()) {
+                List<Task> taskList = new LinkedList<>();
+                Enumerations prio = new Enumerations();
+                for (DAOTask task : tasks) {
+                    Task toAdd = new Task(task.getId(),task.getDescription(), task.getPriority(), task.getUserStory().getId(), task.getDueDate(), -1,-1);
+                    taskList.add(toAdd);
+                }
+                return taskList;
             }
-            return taskList;
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return null;
     }
 
-    public List<Task> getTaskbyUSID(int usId) throws Exception {
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: Erfragt alle Tasks unter einer UserStory aus der Datenbank
+     * Grund: /
+     * UserStory/Task-ID:
+     */
+    /**
+     * returns all Tasks under a UserStoryID
+     * @param usId Identifier
+     * @return null or LinkedList<Task>
+     * @throws Exception Null Params
+     */
+    public List<Task> getTasksbyUSID(int usId) throws Exception {
         if (usId == -1) throw new Exception("Null USID");
         List<DAOTask> tasks = DAOTaskService.getListByUserStoryId(usId);
         if (tasks.isEmpty()) return null;
         List<Task> List = new LinkedList<Task>();
         for (DAOTask task : tasks) {
-            Task toAdd = new Task(task.getTid(),task.getDescription(), task.getPriority(), usId);
+            Task toAdd = new Task(task.getId(),task.getDescription(), task.getPriority(), task.getUserStory().getId(), task.getDueDate(), (int)(task.getProcessingTimeEstimatedInHours()),(int)(task.getProcessingTimeRealInHours()));
             List.add(toAdd);
         }
         return List;
     }
-
-
 }

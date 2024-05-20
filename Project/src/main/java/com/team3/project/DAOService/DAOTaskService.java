@@ -110,11 +110,17 @@ public class DAOTaskService {
      * @param userStoryId identifier DAOUserStory
      * @return            true if create was successfull
      */
-    public static boolean create(String description, /*int taskListId,*/ int userStoryId) {
-        /*DAOTaskList taskList = DAOService.getByID(taskListId, DAOTaskList.class);*/
+    public static boolean create(String description, int userStoryId) {
         DAOUserStory userStory = DAOService.getByID(userStoryId, DAOUserStory.class);
-        return create(description, /*taskList,*/ userStory);
+        return create(description, userStory);
     }
+
+    public static boolean create(String description, int priority, boolean done, @Nullable String dueDate, 
+                                 double processingTimeEstimatedInHours, double processingTimeRealInHours, 
+                                 @Nullable DAOTaskList taskList, @Nullable DAOUserStory userStory, @Nullable List<DAOUser> users) {
+        return DAOService.merge(new DAOTask(description, priority, done, dueDate, processingTimeEstimatedInHours, processingTimeRealInHours, taskList, userStory, users));
+    }
+
 
     //updates
     /* Author: Tom-Malte Seep
@@ -135,39 +141,13 @@ public class DAOTaskService {
      * @param users       List of DAOUsers
      * @return            true if update is successfull
      */
-    public static boolean updateById(int id, @Nullable String description, int priority, @Nullable String doDate, 
-                                     @Nullable String timeNeededG, @Nullable String timeNeededA, @Nullable DAOTaskList taskList, 
+    public static boolean updateById(int id, @Nullable String description, int priority, boolean done, @Nullable String doDate, 
+                                     double processingTimeEstimatedInHours, double processingTimeRealInHours, @Nullable DAOTaskList taskList, 
                                      @Nullable DAOUserStory userStory, @Nullable List<DAOUser> users) {
         DAOTask task = DAOService.getByID(id, DAOTask.class);
-        task.cloneTask(new DAOTask(description, priority, doDate, timeNeededG, timeNeededA, taskList, userStory, users));
+        task.cloneDAOTask(new DAOTask(description, priority, done, doDate, processingTimeEstimatedInHours, processingTimeRealInHours, taskList, userStory, users));
         return DAOService.merge(task);
     }
-
-    /* Author: Tom-Malte Seep
-     * Revisited: /
-     * Function: updates an entry
-     * Reason:
-     * UserStory/Task-ID:
-     */
-    /** updates a DAOTask
-     * @param id          identifier
-     * @param description description
-     * @param doDate      doDate
-     * @param timeNeededG timeNeededG
-     * @param timeNeededA timeNeededA
-     * @param taskList    DAOTaskList
-     * @param userStory   DAOUserStory
-     * @param users       List of DAOUsers
-     * @return            true if update is successfull
-     */
-    public static boolean updateById(int id, @Nullable String description, @Nullable String doDate, 
-                                     @Nullable String timeNeededG, @Nullable String timeNeededA, @Nullable DAOTaskList taskList, 
-                                     @Nullable DAOUserStory userStory, @Nullable List<DAOUser> users) {
-        DAOTask task = DAOService.getByID(id, DAOTask.class);
-        task.cloneTask(new DAOTask(description, id, doDate, timeNeededG, timeNeededA, taskList, userStory, users));
-        return DAOService.merge(task);
-    }
-
 
     /* Author: Tom-Malte Seep
      * Revisited: /
@@ -220,6 +200,48 @@ public class DAOTaskService {
         task.setPriority(priority);
         return DAOService.merge(task);
     }
+
+    public static boolean updateDueDateById(int id, String dueDate) {
+        DAOTask daoTask = DAOService.getByID(id, DAOTask.class);
+        daoTask.setDueDate(dueDate);
+        return DAOService.merge(daoTask);
+    }
+
+    public static boolean updateProcessingTimeEstimatedInHoursById(int id, double processingTimeEstimatedInHours) {
+        DAOTask daoTask = DAOService.getByID(id, DAOTask.class);
+        daoTask.setProcessingTimeEstimatedInHours(processingTimeEstimatedInHours);
+        return DAOService.merge(daoTask);
+    }
+
+    public static boolean updateProcessingTimeRealInHoursById(int id, double processingTimeRealInHours) {
+        DAOTask daoTask = DAOService.getByID(id, DAOTask.class);
+        daoTask.setProcessingTimeRealInHours(processingTimeRealInHours);
+        return DAOService.merge(daoTask);
+    }
+
+
+
+    static boolean updateDoneById(int id, boolean done) {
+        DAOTask daoTask = DAOService.getByID(id, DAOTask.class);
+        daoTask.setDone(done);
+        return DAOService.merge(daoTask);
+    }
+
+    public static boolean setDoneById(int id) {
+        return updateDoneById(id, true);
+    }
+
+    public static boolean setUnDoneById(int id) {
+        return updateDoneById(id, false);
+    }
+
+    public static boolean updateUsersById(int id, List<DAOUser> daoUsers) {
+        DAOTask daoTask = DAOService.getByID(id, DAOTask.class);
+        daoTask.setUsers(daoUsers);
+        return DAOService.merge(daoTask);
+    }
+
+
 
     //deletes
     /* Author: Tom-Malte Seep

@@ -1,7 +1,5 @@
 package com.team3.project.Classes;
 
-import com.team3.project.Classes.Account;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +23,7 @@ public class User extends abstraktDataClasses {
      */
 
     //Frage von Henry: soll beim Konstruktor von User die Profil-Sachen dabei sein?
+    //Antwort: Muss eigentlich nicht... erinnere micht gerade aber auch nicht, ob das nicht doch irgendwo relevant war
     public User(String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles){
         super(userID);
         this.name = name;

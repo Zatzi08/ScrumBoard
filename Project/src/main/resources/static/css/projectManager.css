@@ -133,7 +133,7 @@
     margin-right:20px;
     border: none;
     border-radius: 15px;
-    width: 95%;
+    width: 98%;
     margin-top: 30px;
     margin-left: 30px;
     font-size: 16px;
@@ -158,12 +158,13 @@
 }
 
 .addUserStoryBtn{
+    display: flex;
     position: absolute;
-    margin-top: -4px;
     margin-bottom: 1000px;
-    margin-left: 83.5%;
+    margin-right: 10px;
+    margin-left: 70%;
     width: 160px;
-    height: 25px;
+    height: 20px;
     border-radius: 5px;
     color: white;
     font-size: 14px;
@@ -171,25 +172,37 @@
 }
 
 .addUserStoryBtn:hover{
-    background-color: black;
+    background-color: rgb(0, 0, 0);
 }
-
+#roleBtn:hover{
+    background-color: #0a0a0a;
+}
+/*
 .userTaskTableBody-editBtn{
     position:relative;
-    display: inline;
+    display: inline-block;
     margin-left: 90%;
     cursor: pointer;
 }
 
 .closeUserStoryTaskBtn{
     position: relative;
-    display: inline;
+    display: inline-block;
     position: absolute;
     font-size: 22px;
     cursor: pointer;
     margin-left: 5px;
     margin-top: -0.6%;
 }
+*/
+ .Btn{
+     display:inline-block;
+     position: relative;
+     font-size: 22px;
+     cursor: pointer;
+     margin-right: 5px;
+     right:0;
+ }
 
 #userTaskTableHead {
     position: sticky;
@@ -207,12 +220,14 @@
 
 .userTaskTable {
     position: relative;
-    width: 98%;
+    width: 99%;
+    margin-left:5px;
     border-collapse: separate;
     table-layout: auto;
     font-size: 10pt;
     border-spacing: 0 20px;
     cursor: default;
+
 }
 
 .userTaskTable th,
@@ -255,9 +270,11 @@
 }
 
 .userTaskTableContentSubdate{
+    position: relative;
+    margin-right: 5px;
     color: #919297;
     font-size: 12px;
-    margin-left: 93%;
+    margin-left: 90%;
 }
 
 .userTaskTable-ContentStoryBoard{
@@ -349,3 +366,38 @@ hr {
 
 
 }
+#tableHeader{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    text-align: center;
+    background-color: rgba(25,0,255,0.3);
+    color: white;
+}
+
+.userTaskTableContentSubdate{
+    margin-right:5px;
+}
+
+#selectUser:hover{
+   color: #ba55d3;
+}
+
+#userTextDiv{
+    display: flex;
+}
+
+#userText{
+        display:inline-block;
+        position: relative;
+        font-size: 22px;
+        margin-right: 5px;
+        flex:50%;
+
+}
+/*#pjDescription{
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width:30%
+}*/

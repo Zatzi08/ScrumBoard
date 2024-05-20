@@ -13,9 +13,10 @@ import org.junit.jupiter.api.Test;
 
 import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.DAOService.DAOUserStoryService;
+import com.team3.project.Tests.BaseClassesForTests.BaseDBTest;
 import com.team3.project.DAO.DAOTask;
 
-public class TaskTest extends BaseTest{
+public class TaskTest extends BaseDBTest {
     @BeforeAll
     public static void BeforeAll() {
         setup();
@@ -59,13 +60,13 @@ public class TaskTest extends BaseTest{
             throw new AssertionError(e);
         }
         try {
-            assertTrue(DAOTaskService.updateDescriptonById(DAOTaskService.getByDescription(TaskDes1).getTid(), TaskDes2));
+            assertTrue(DAOTaskService.updateDescriptonById(DAOTaskService.getByDescription(TaskDes1).getId(), TaskDes2));
         } catch (Exception e) {
             printWriterAddFailure("Task was not updated");
             throw new AssertionError(e);
         }        
         try {
-            assertTrue(DAOTaskService.deleteById(DAOTaskService.getByDescription(TaskDes2).getTid()));
+            assertTrue(DAOTaskService.deleteById(DAOTaskService.getByDescription(TaskDes2).getId()));
         } catch (Exception e) {
             printWriterAddFailure("Task was not deleated");
             throw new AssertionError(e);
@@ -94,13 +95,13 @@ public class TaskTest extends BaseTest{
             throw new AssertionError(e);
         }
         try {
-            assertTrue(DAOTaskService.deleteById(DAOTaskService.getByDescription(TaskDes1).getTid()));
+            assertTrue(DAOTaskService.deleteById(DAOTaskService.getByDescription(TaskDes1).getId()));
         } catch (Exception e) {
             printWriterAddFailure("Task was not deleted");
             throw new AssertionError(e);
         }
         try {
-            assertTrue(DAOTaskService.deleteById(DAOTaskService.getByDescription(TaskDes2).getTid()));
+            assertTrue(DAOTaskService.deleteById(DAOTaskService.getByDescription(TaskDes2).getId()));
         } catch (Exception e) {
             printWriterAddFailure("Task was not deleted");
             throw new AssertionError(e);

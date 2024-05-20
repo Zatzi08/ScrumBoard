@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,8 @@ import lombok.Setter;
 public class DAOUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int uid;
+    @Column(name="uID")
+    private int id;
 
     @Column(name="name")
     private String name;
@@ -39,9 +41,6 @@ public class DAOUser {
     @Column(name = "workDescription")
     private String workDescription;
 
-    @Column(name = "authorization")
-    private int authorization;
-
     @Column(name = "sessionID")
     private String sessionId;
 
@@ -51,14 +50,23 @@ public class DAOUser {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
         name = "UsersXRoles", 
-        joinColumns = @JoinColumn(name = "uid"), 
-        inverseJoinColumns = @JoinColumn(name = "rid")    
+        joinColumns = @JoinColumn(name = "uid"),
+        inverseJoinColumns = @JoinColumn(name = "rid")
     )
     private List<DAORole> roles;
     
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+        name = "TasksXUsers", 
+        joinColumns = @JoinColumn(name = "uid"), 
+        inverseJoinColumns = @JoinColumn(name = "tid")
+    )
     private List<DAOTask> tasks;
 
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "authorization_id")
+    private DAOAuthorization authorization;
+    
     
     public DAOUser() {}
     /** DO NOT USE
@@ -90,16 +98,18 @@ public class DAOUser {
         this.sessionId = sessionId;
         this.sessionDate = sessionDate;
     }
-    public DAOUser(String email, String password, String name, String privatDescription, String workDescription, List<DAORole> roles) {
+    public DAOUser(String email, String password, String name, String privatDescription, String workDescription, List<DAORole> roles,
+                   DAOAuthorization daoAuthorization) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.privatDescription = privatDescription;
         this.workDescription = workDescription;
         this.roles = roles;
+        this.authorization = daoAuthorization;
     }
     public DAOUser(String email, String password, String name, String privatDescription, String workDescription, List<DAORole> roles,
-                   String sessionId, String sessionDate) {
+                   String sessionId, String sessionDate, DAOAuthorization daoAuthorization) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -108,6 +118,7 @@ public class DAOUser {
         this.roles = roles;
         this.sessionId = sessionId;
         this.sessionDate = sessionDate;
+        this.authorization = daoAuthorization;
     }
     /*
     public DAOUser(String name, String privatDescription, String workDescription, int authorization, String sessionId) {
@@ -119,7 +130,7 @@ public class DAOUser {
     }
     */
 
-    public void cloneValues(DAOUser user) {
+    public void cloneDAOUser(DAOUser user) {
         if (user.getName() != null) {
             this.setName(user.getName());
         }
@@ -135,7 +146,7 @@ public class DAOUser {
         if (user.getWorkDescription() != null) {
             this.setWorkDescription(user.getWorkDescription());
         }
-        if (user.getAuthorization() != 0) {
+        if (user.getAuthorization() != null) {
             this.setAuthorization(user.getAuthorization());
         }
         if (user.getSessionId() != null) {

@@ -14,10 +14,10 @@ import org.junit.jupiter.api.Test;
 
 import com.team3.project.DAOService.DAOStartService;
 import com.team3.project.DAOService.DAOUserService;
+import com.team3.project.Tests.BaseClassesForTests.BaseDBTest;
 import com.team3.project.DAO.DAORole;
 
-
-public class UserTests extends BaseTest {
+public class UserTests extends BaseDBTest {
     @BeforeAll
     public static void BeforeAll() {
         setup();
