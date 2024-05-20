@@ -8,6 +8,7 @@ import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.DAOService.DAOUserStoryService;
 import com.team3.project.Tests.BaseClassesForTests.BaseHTTPTest;
 import com.team3.project.service.AccountService;
+import org.hibernate.AssertionFailure;
 import org.junit.jupiter.api.*;
 import org.junit.platform.suite.api.Suite;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -763,49 +764,6 @@ public class HttpRequestTests extends BaseHTTPTest {
 
     /*  Test ID: HTTP.T17
      *  Author: Lucas Krüger
-     *  Zweck: Testen des Post Requests zum Anzeigen eines Task Board by ID
-     */
-    @Test
-    @Tag("new")
-    void getTaskBoardByID(){
-        printWriterAddTest("getTaskBoard","T17");
-        HttpHeaders header = new HttpHeaders();
-        header.setContentType(MediaType.TEXT_PLAIN);
-        HttpEntity<String> message = new HttpEntity<>("", header);
-        int TBID = 0;
-
-        try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/getTaskBoard", HttpMethod.POST, message, String.class).getStatusCode())
-                    .isEqualTo(HttpStatus.BAD_REQUEST);
-        } catch (AssertionError e){
-            printWriterAddFailure("Akzeptiert Bad_Request");
-            throw new AssertionError(e);
-        }
-
-        header.set("sessionID", masterID);
-        message = new HttpEntity<>("", header);
-
-        try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/getTaskBoard?sessionID=" + masterID+"&TBID="+TBID, HttpMethod.POST, message, String.class).getStatusCode())
-                    .isEqualTo(HttpStatus.OK);
-        } catch (AssertionError e){
-            printWriterAddFailure("HTTP PostRequest nicht erfolgreich - neues Taskboard");
-            throw new AssertionError(e);
-        }
-
-        try { // TODO: existentes Taskboard
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/getTaskBoard?sessionID=" + masterID+"&TBID="+TBID, HttpMethod.POST, message, String.class).getStatusCode())
-                    .isEqualTo(HttpStatus.OK);
-        } catch (AssertionError e){
-            printWriterAddFailure("HTTP PostRequest nicht erfolgreich - existentes Taskboard");
-            throw new AssertionError(e);
-        }
-
-        printWriterAddPass();
-    }
-
-    /*  Test ID: HTTP.T17
-     *  Author: Lucas Krüger
      *  Zweck: Testen des Post Requests zum Anzeigen aller User
      */
     @Test
@@ -837,11 +795,108 @@ public class HttpRequestTests extends BaseHTTPTest {
         }
 
         try {
-            assertTrue(Objects.requireNonNull(responce.getBody()).contains("projectManager-Nutzer"));
+            assertTrue(Objects.requireNonNull(responce.getBody()).contains("<title>Projektmanager-Nutzer</title>"));
         } catch (AssertionError e){
             printWriterAddFailure("Wrong Page loaded");
+            throw new AssertionError(e);
         }
 
+        printWriterAddPass();
+    }
+
+    /*  Test ID: HTTP.T18
+     *  Author: Lucas Krüger
+     *  Zweck: Testen des Post Requests zum Anzeigen eines Task Board by ID
+     */
+    @Test
+    @Tag("new")
+    void getTaskBoard(){
+        printWriterAddTest("getTaskBoard", "T18");
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.TEXT_PLAIN);
+        HttpEntity<String> message = new HttpEntity<>("", header);
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/getTaskBoard", HttpMethod.GET, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.BAD_REQUEST);
+        } catch (AssertionError e){
+            printWriterAddFailure("Akzeptiert Bad_Request");
+            throw new AssertionError(e);
+        }
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/getTaskBoard?sessionID=" + masterID+"&TBID="+-1, HttpMethod.GET, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.OK);
+        } catch (AssertionError e){
+            printWriterAddFailure("HTTP PostRequest nicht erfolgreich - neues Taskboard");
+            throw new AssertionError(e);
+        }
+
+        // TODO: existentes TaskBoard
+        ResponseEntity<String> responce = this.restTemplate.exchange("http://localhost:" + port + "/getTaskBoard?sessionID=" + sessions.get(0)  + "&TBID=" + 0, HttpMethod.GET, message, String.class);
+        try {
+            assertThat(responce.getStatusCode())
+                    .isEqualTo(HttpStatus.OK);
+        } catch (AssertionError e){
+            printWriterAddFailure("HTTP GetRequest nicht erfolgreich - existentes Taskboard");
+            throw new AssertionError(e);
+        }
+
+        try { // TODO: check auf TBName
+            assertTrue(Objects.requireNonNull(responce.getBody()).contains("TBName"));
+        } catch (AssertionError e){
+            printWriterAddFailure("Wrong Page loaded");
+            throw new AssertionError(e);
+        }
+
+        printWriterAddPass();
+    }
+
+    @Test
+    @Tag("new")
+    void saveTaskBoard(){
+        printWriterAddTest("saveTaskBoard", "T19");
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> message = new HttpEntity<>("", header);
+        int TBID = -1;
+        String TBName = "To Delete";
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/saveTask", HttpMethod.POST, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.BAD_REQUEST);
+        } catch (AssertionError e) {
+            printWriterAddFailure("Akzeptiert Bad_Request");
+            throw new AssertionError(e);
+        }
+
+        header.set("sessionID", masterID);
+        String body = "{\"tbID\": \""+TBID+"\", \"name\": \""+TBName+"\"}";
+        message = new HttpEntity<>(body, header);
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/saveTaskBoard", HttpMethod.POST, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.OK);
+        } catch (AssertionError e) {
+            printWriterAddFailure("HTTP PostRequest nicht erfolgreich - neue TaskBoard");
+            throw new AssertionError(e);
+        }
+/*
+        header.set("sessionID", masterID); // TODO: existierendes TaskBoard
+        body = "{\"description\":\""+ tasks.get(0).getDescription() +"\",\"userStoryID\":"+ tasks.get(0).getUserStoryID() +",\"timeNeededG\":"+ tasks.get(0).getTimeNeededG() +",\"timeNeededA\":"+ tasks.get(0).getTimeNeededA() +",\"dueDate\":\""+ tasks.get(0).getDueDateAsString() +"\",\"priority\":"+ tasks.get(0).getPriorityAsInt() +",\"tID\":"+ tasks.get(0).getID() +"}";
+        message = new HttpEntity<>(body, header);
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/saveTaskBoard", HttpMethod.POST, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.OK);
+        } catch (AssertionError e) {
+            printWriterAddFailure("HTTP PostRequest nicht erfolgreich - existente TaskBoard");
+            throw new AssertionError(e);
+        }
+
+        List<DAOTask> dt = DAOTaskService.getAll();
+        DAOTaskService.deleteById(dt.get(dt.size()-1).getId());
+*/
         printWriterAddPass();
     }
 }

@@ -29,6 +29,11 @@ function SwitchToOtherProfile(sessionID, email){
     document.location.assign(url)
 }
 
+function SwitchToTaskBoard(sessionID, TBID){
+    let url = "/getTaskBoard?sessionID=" + sessionID + "&TBID=" + TBID;
+    document.location.assign(url)
+}
+
 // Post Requests
 function saveTask($this, sessionID) {
     let id = document.getElementById('editId').value;
@@ -155,6 +160,24 @@ function deleteT(Tid, sessionID){
             location.reload()
         }
     });
+}
+
+function saveTaskBoard(sessionID){
+    let TBName = "Temp"//document.getElementById('').value;
+    let TBID = -1;
+
+    fetch('saveTaskBoard',{
+        method: 'POST',
+        cache: 'no-cache',
+        headers:{
+            'Content-Type': 'application/json',
+            'sessionID': sessionID
+        },
+        body: JSON.stringify({
+            'tbID': TBID,
+            'name': TBName,
+        })
+    })
 }
 
 // Zusätzliche Funktionen

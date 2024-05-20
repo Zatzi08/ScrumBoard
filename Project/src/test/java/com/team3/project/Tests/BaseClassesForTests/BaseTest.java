@@ -65,7 +65,7 @@ public abstract class BaseTest {
     }
 
     protected void printWriterAddFailure(String failureMessage) {
-        printWriter.append(String.format("fail: " + failureMessage + '\n'));
+        printWriter.append(String.format("fail: " + failureMessage + "\n\n\n"));
         pass = false;
     }
 

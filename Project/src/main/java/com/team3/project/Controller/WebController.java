@@ -2,6 +2,7 @@ package com.team3.project.Controller;
 
 import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.Task;
+import com.team3.project.Classes.TaskBoard;
 import com.team3.project.Classes.UserStory;
 import com.team3.project.Facede.PresentationToLogic;
 import org.springframework.http.HttpStatus;
@@ -469,12 +470,12 @@ public class WebController {
 
     /* Author: Lucas Krüger
      * Revisited: /
-     * Funktion:
+     * Funktion: /
      * Grund: /
      * UserStory/Task-ID: TB2.B1
      */
-    @RequestMapping(value = "/getTaskBoard", method = RequestMethod.POST)
-    private ModelAndView getTaskBoard(@RequestHeader(value = "sessionID", required = true) String sessionID,
+    @RequestMapping(value = "/getTaskBoard")
+    private ModelAndView getTaskBoard(@RequestParam(value = "sessionID", required = true) String sessionID,
                                       @RequestParam(value = "TBID", required = true, defaultValue = "-1") int tbid){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
@@ -487,6 +488,27 @@ public class WebController {
             return error(e);
         }
         return index();
+    }
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: TB9.B1
+     */
+    @RequestMapping("/saveTaskBoard")
+    private ResponseEntity<HttpStatus> saveTaskBoard(@RequestHeader(value = "sessionID", required = true) String sessionID,
+                                                     @RequestBody() TaskBoard taskBoard){
+        try {
+            if (presentationToLogic.webSessionService.verify(sessionID)){
+                presentationToLogic.taskBoardService.createTaskBoard(taskBoard.getName());
+                return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity(HttpStatus.FORBIDDEN);
     }
 
     /* Author: Lucas Krüger
