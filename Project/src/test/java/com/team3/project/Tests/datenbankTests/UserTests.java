@@ -30,8 +30,8 @@ public class UserTests extends BaseDBTest {
 
     @AfterEach
     public void afterEach() {
-    DAOStartService.clearDB("User");
-    DAOStartService.clearDB("Role");
+    DAOStartService.clearDBTable("User");
+    DAOStartService.clearDBTable("Role");
     }
 
     @AfterAll

@@ -40,8 +40,10 @@ public abstract class BaseTest {
 
     }
 
-    static void after() {
-
+    static void after(boolean clean) {
+        if (clean) {
+            DAOStartService.wipeDb();
+        }
     }
 
     static void tearDown() {
