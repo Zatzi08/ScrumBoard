@@ -37,19 +37,80 @@ function toggleEditBox(storyId, name, description){
 * Grund: Benutzerfreundlichkeit
 * User-ID/Task-ID: /
 */
-function highlightPriorityButton(buttonId) {
-    const priorityButtons = document.querySelectorAll('.inputEditPrio');
-    switch (buttonId){
-        case 'inputPrioUrgent' : document.getElementById('editPrio').value = 4; break;
-        case 'inputPrioHigh' : document.getElementById('editPrio').value = 3; break;
-        case 'inputPrioNormal' : document.getElementById('editPrio').value = 2; break;
-        default : document.getElementById('editPrio').value = 1;
+document.addEventListener('DOMContentLoaded', function() {
+    const draggableRows = document.querySelectorAll('tbody tr[draggable="true"]');
+    const innerContainers = document.querySelectorAll('.innerContainer');
+
+    draggableRows.forEach(row => {
+        row.addEventListener('dragstart', handleDragStart);
+        row.addEventListener('dragend', handleDragEnd);
+    });
+
+    innerContainers.forEach(container => {
+        container.addEventListener('dragover', handleDragOver);
+        container.addEventListener('drop', handleDrop);
+    });
+
+    let draggedElement = null;
+    let placeholder = document.createElement('tr');
+    placeholder.className = 'placeholder';
+
+    function handleDragStart(e) {
+        draggedElement = e.target;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', e.target.id);
+        e.target.classList.add('dragging');
     }
-    priorityButtons.forEach(button => {
-        if (button.id === buttonId) {
-            button.classList.add('selected');
-        } else {
-            button.classList.remove('selected');
+
+    function handleDragEnd(e) {
+        e.target.classList.remove('dragging');
+        placeholder.remove();
+        draggedElement = null;
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+
+        const targetContainer = e.currentTarget;
+        const targetBody = targetContainer.querySelector('tbody');
+        const targetRow = e.target.closest('tr');
+
+        if (targetBody && draggedElement && e.target !== draggedElement) {
+            if (targetRow) {
+                const rect = targetRow.getBoundingClientRect();
+                const mouseY = e.clientY - rect.top;
+                if (mouseY > rect.height / 2) {
+                    if (!targetRow.nextElementSibling || targetRow.nextElementSibling === placeholder) {
+                        targetBody.appendChild(placeholder);
+                    } else {
+                        targetBody.insertBefore(placeholder, targetRow.nextElementSibling);
+                    }
+                } else {
+                    targetBody.insertBefore(placeholder, targetRow);
+                }
+            } else {
+                targetBody.appendChild(placeholder);
+            }
+        }
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        const targetContainer = e.currentTarget;
+        const targetBody = targetContainer.querySelector('tbody');
+
+        if (targetBody && draggedElement) {
+            targetBody.insertBefore(draggedElement, placeholder);
+            placeholder.remove();
+        }
+    }
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.innerContainer')) {
+            innerContainers.forEach(container => {
+                container.classList.remove('zoomed');
+            });
         }
     });
-}
+});
