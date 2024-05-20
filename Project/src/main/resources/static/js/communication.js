@@ -100,8 +100,8 @@ function saveProfile(sessionID) {
     let name = document.getElementById('inputName').value;
     let pdescription = document.getElementById('inputPDesc').value;
     let wdescription = document.getElementById('inputWDesc').value;
+    let email = "";
     // roles = getRoles();
-
 
     fetch('/saveUserData' ,{
         method: 'Post',
@@ -112,6 +112,7 @@ function saveProfile(sessionID) {
         },
         body: JSON.stringify({
             'uname': name,
+            'email': email,
             'privatDesc': pdescription,
             'workDesc': wdescription,
             'roles': null

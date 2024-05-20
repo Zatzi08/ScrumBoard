@@ -201,4 +201,17 @@ public class AccountService {
             return user.getAuthorization().getAuthorization();
         }
     }
+
+    public List<Profile> getAllProfils() {
+        List <Profile> list = new LinkedList<>();
+        List <DAOUser> daoUserList = DAOUserService.getAllPlusRoles();
+        if(daoUserList != null){
+            Profile toAdd;
+            for(DAOUser daoUser : daoUserList){
+                toAdd = new Profile(daoUser.getName(),daoUser.getEmail(),daoUser.getPrivatDescription(),daoUser.getWorkDescription(),null);
+                list.add(toAdd);
+            }
+        }
+        return list;
+    }
 }

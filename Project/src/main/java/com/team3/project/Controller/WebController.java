@@ -323,7 +323,7 @@ public class WebController {
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 return new ModelAndView("projectManager-Nutzer")
-                        .addObject("User", presentationToLogic.accountService.getAllUser())
+                        .addObject("User", presentationToLogic.accountService.getAllProfils())
                         .addObject("sessionID", sessionID);
             }
         } catch (Exception e){
@@ -479,7 +479,7 @@ public class WebController {
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 ModelAndView modelAndView = new ModelAndView("taskBoard")
-                        .addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoard(tbid))
+                        .addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoardByID(tbid))
                         .addObject("sessionID", sessionID);
             }
         } catch (Exception e){
