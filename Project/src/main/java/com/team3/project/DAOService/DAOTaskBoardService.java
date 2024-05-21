@@ -36,7 +36,7 @@ public class DAOTaskBoardService {
 
     static DAOTaskBoard getByName(String name) {
         String parameterName = "name";
-        return DAOService.getSingleByPara(null, name, parameterName);
+        return DAOService.getSingleByPara(DAOTaskBoard.class, name, parameterName);
     }
 
     /* Author: Tom-Malte Seep
@@ -54,17 +54,20 @@ public class DAOTaskBoardService {
         return DAOService.getLeftJoinByID(id, DAOTaskBoard.class, joinOnAttributeName);
     }
 
-    static DAOTaskBoard getWithTaskListsWithTasksById(int id) {
+    public static DAOTaskBoard getWithTaskListsWithTasksById(int id) {
         List<String> joinOnAtrributeNames = Arrays.asList("tasklists", "tasklists.tasks");
-        return null;
+        return DAOService.getSingleLeftJoinsById(id, DAOTaskBoard.class, joinOnAtrributeNames);
     }
 
     public static boolean createWithDefaultTaskLists(String name) {
         DAOTaskBoard daoTaskBoard = new DAOTaskBoard(name, null);
         try {
             DAOService.persist(daoTaskBoard);
-            DAOTaskListService.createDefaultsForTaskBoardByTaskBoardName(name);
-            return true;
+            boolean isCreateWithDefaultTaskLists = DAOTaskListService.createDefaultsForTaskBoardByTaskBoardName(name);
+            if (!isCreateWithDefaultTaskLists) {
+                DAOService.delete(getByName(name));
+            }
+            return isCreateWithDefaultTaskLists;
         } catch (Exception e) {
         }
         return false;

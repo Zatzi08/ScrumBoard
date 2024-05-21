@@ -1,8 +1,10 @@
 package com.team3.project.DAOService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.team3.project.DAO.DAOTask;
+import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAO.DAOTaskList;
 import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAO.DAOUserStory;
@@ -241,7 +243,27 @@ public class DAOTaskService {
         return DAOService.merge(daoTask);
     }
 
-
+    public static boolean updateTaskBoardById(int id, DAOTaskBoard taskBoard) {
+        return updateTaskBoardIdById(id, taskBoard.getId());
+    }
+    
+    public static boolean updateTaskBoardIdById(int id, int taskBoardId) {
+        //check if "freie Tasks" exists
+        String joinOnAttributeName = "taskList";
+        DAOTask daoTask = DAOService.getLeftJoinByID(id, DAOTask.class, joinOnAttributeName);
+        String daoTaskListName = "freie Tasks";
+        try {
+            DAOTaskBoard daoTaskBoard = DAOTaskBoardService.getWithTaskListsById(taskBoardId);
+            List<DAOTaskList> daoTaskListsOfDaoTaskBoard = daoTaskBoard.getTaskLists();
+            if (daoTaskListsOfDaoTaskBoard.stream().map(DAOTaskList::getName).collect(Collectors.toList()).contains(daoTaskListName)) {
+                DAOTaskList daoTaskList = daoTaskListsOfDaoTaskBoard.stream().filter(sDaoTaskList -> sDaoTaskList.getName().equals(daoTaskListName)).min((sDaoTaskList1, sDaoTaskList2) -> Integer.compare(sDaoTaskList1.getSequence(), sDaoTaskList2.getSequence())).get();
+                daoTask.setTaskList(daoTaskList);
+                return DAOService.merge(daoTask);
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
 
     //deletes
     /* Author: Tom-Malte Seep

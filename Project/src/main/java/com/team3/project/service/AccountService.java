@@ -70,7 +70,7 @@ public class AccountService {
         if( email == null) throw new Exception("Null Email");
         if( passwort == null) throw new Exception("Null Passwort");
         if( username == null) throw new Exception("Null Username");
-        return DAOUserService.createByEMail(email,passwort, username,null,null,null, null, null, false);
+        return DAOUserService.createByEMail(email,passwort, username,null,null,null,null, null, null, false);
     }
 
 
@@ -98,7 +98,7 @@ public class AccountService {
         test.sendEmail("henryfreyschmidt2226@gmail.com");
     }*/
     public void createUser(String email, String password, String name) throws Exception{
-        DAOUserService.createByEMail(email, password, name, null, null, null, null, null, true);
+        DAOUserService.createByEMail(email, password, name, null, null, null, null, null, null, true);
     }
 
 

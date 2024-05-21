@@ -75,7 +75,7 @@ public class LogicTest {
                     try {
                         if (x != null) {
                             if (x.getPrivatDescription() != null || x.getWorkDescription() != null) {
-                                DAOUserService.updateById(x.getId(), x.getName(), null, null, null, x.getSessionId(), x.getSessionDate(), false);
+                                DAOUserService.updateById(x.getId(), x.getName(), null, null, null, null, x.getSessionId(), x.getSessionDate(), false);
                             }
                         }
                     } catch (Exception e) {
