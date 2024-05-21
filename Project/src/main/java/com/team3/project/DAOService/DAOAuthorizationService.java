@@ -21,7 +21,7 @@ public class DAOAuthorizationService {
 
     public static boolean checkAuthorizations() {
         List<DAOAuthorization> daoAuthorizations = DAOService.getAll(DAOAuthorization.class);
-        if (daoAuthorizations != null && daoAuthorizations.size() != 4) {
+        if (daoAuthorizations == null || daoAuthorizations.size() != 4) {
             return createDefaultAuthorizations(daoAuthorizations);
         }
         return false;
