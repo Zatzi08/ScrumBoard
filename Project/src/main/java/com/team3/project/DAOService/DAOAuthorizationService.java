@@ -24,7 +24,7 @@ public class DAOAuthorizationService {
         if (daoAuthorizations == null || daoAuthorizations.size() != 4) {
             return createDefaultAuthorizations(daoAuthorizations);
         }
-        return false;
+        return true;
     }
 
     private static boolean createDefaultAuthorizations(List<DAOAuthorization> daoAuthorizations) {
