@@ -146,6 +146,28 @@ class DAOService {
         return retrieve;
     }
 
+    
+    static <Dao> Dao getSingleLeftJoinsById(int id, Class<Dao> daoClass, List<String> joinOnAttributeNames) {
+        EntityManager entityManager = DAOSession.getNewEntityManager();
+        entityManager.getTransaction().begin();
+        String query = "SELECT item FROM " + daoClass.getName() + " AS item";
+        for (String joinOnAttributeName : joinOnAttributeNames) {
+            query += " LEFT JOIN FETCH item." + joinOnAttributeName;
+        }        
+        query += " WHERE item.id = ?1";
+        Dao retrieve;
+        try {
+            retrieve = entityManager.createQuery(query, daoClass)
+                .setParameter(1, id)
+                .getSingleResult();
+        } catch (Exception e) {
+            retrieve = null;
+        } finally {
+            DAOSession.closeEntityManager(entityManager);
+        }
+        return retrieve;
+    }
+
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: gets a single entry with a specific parameter
@@ -326,6 +348,7 @@ class DAOService {
         }
         return retrieve;
     }
+
 
     //creates
     /* Author: Tom-Malte Seep
