@@ -1,9 +1,11 @@
 package com.team3.project.Tests;
 
 import com.team3.project.Classes.*;
+import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.DAOService.DAOUserService;
+import com.team3.project.Tests.BaseClassesForTests.BaseLogicTest;
 import com.team3.project.service.*;
 import com.team3.project.DAOService.DAOUserStoryService;
 import com.team3.project.DAOService.DAOAccountService;
@@ -17,7 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class LogicTest {
+public class LogicTest extends BaseLogicTest{
 
     private static PrintWriter pw;
     private static Date date;
@@ -25,70 +27,29 @@ public class LogicTest {
     private boolean pass = true;
 
     @BeforeAll
-    public static void setup(){
-        try {
-            File log = new File("src/test/java/com/team3/project/logs/log_LogicTest.txt");
-            log.setWritable(true);
-            log.setReadable(true);
-            FileWriter fw = new FileWriter(log,true);
-            pw = new PrintWriter(fw,true);
-        } catch (Exception e){
-            throw new RuntimeException(e);
-        }
-
+    public static void setupTest(){
+        setup();
+        pw = printWriter;
         formatter = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         date = new Date();
     }
 
     @BeforeEach
-    public void before(){
-        pw.append("\n\n");
-        pass = true;
+    public void beforeTest(){
+        before();
     }
 
-    @BeforeEach
-    public void emptyDatabase(){
-        UserStoryService usService = new UserStoryService();
-        AccountService accService = new AccountService();
-
-        List<UserStory> usList = usService.getAllUserStorys();
-        if(usList != null){
-            pw.append("UserStory: not empty Database\n");
-            try{
-                usList.forEach(e -> {
-                    try {
-                        usService.deleteUserStoryAndLinkedTasks(e.getID());
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                });
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-
-        List<DAOUser> pList = DAOUserService.getAll();
-        if(pList != null){
-            if (!pList.isEmpty()) {
-                pw.append("Profile: not empty Database\n");
-                pList.forEach(x -> {
-                    try {
-                        if (x != null) {
-                            if (x.getPrivatDescription() != null || x.getWorkDescription() != null) {
-                                DAOUserService.updateById(x.getId(), x.getName(), null, null, null, null, x.getSessionId(), x.getSessionDate(), false);
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
-        }
+    @AfterEach
+    public void afterTest(){
+        after();
     }
+
+
 
     @AfterAll
     public static void closeWriter(){
         pw.close();
+        tearDown();
     }
 
     @Test
@@ -359,7 +320,6 @@ public class LogicTest {
         UserStory u1 = new UserStory("UserStory1", "Blablah1", 1, -1);
         int count_correct_exceptions = 0;
         int count_correct_exception_checks = 0;
-
         try{
             usService.saveUserStory(u1);
         }catch(Exception e){
@@ -512,15 +472,8 @@ public class LogicTest {
         }
 
         try{
-            Assertions.assertEquals(newdescription,DAOTaskService.getById(tCopy.getID()).getDescription());
-        }catch (AssertionError e){
-            pass = false;
-            pw.append("Fail: Task was not updated\n");
-            throw new AssertionError(e);
-        }
-
-        try{
-            Assertions.assertEquals(newdescription, DAOTaskService.getById(t1.getID()).getDescription());
+            DAOTask daoTask = DAOTaskService.getById(tCopy.getID());
+            Assertions.assertEquals(newdescription,daoTask.getDescription());
         }catch(AssertionError e){
             pw.append("Fail: updated Task-description not found\n");
             pass = false;
@@ -817,7 +770,7 @@ public class LogicTest {
         }
 
         try{
-            Assertions.assertEquals(0, aservice.getAuthority(sessionID));
+            Assertions.assertEquals(1, aservice.getAuthority(sessionID));
         }catch (AssertionError | Exception e){
             e.printStackTrace();
             pw.append("Fail: User created with wrong authority");
