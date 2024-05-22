@@ -1,5 +1,6 @@
 package com.team3.project.service;
 
+import com.team3.project.Classes.Task;
 import com.team3.project.Classes.TaskList;
 import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskList;
@@ -8,6 +9,7 @@ import com.team3.project.DAOService.DAOTaskListService;
 import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.DAOService.DAOUserStoryService;
 
+import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -60,4 +62,14 @@ public class TaskListService {
         return  taskLists;
     }
 
+    public static TaskList toTaskList(DAOTaskList daotaskList) throws ParseException {
+        TaskList taskList = new TaskList(daotaskList.getId(), daotaskList.getName());
+        List<Task> tasks = new LinkedList<Task>();
+        for (DAOTask daoTask : daotaskList.getTasks()) {
+            Task toAdd = new Task(daoTask.getId(), daoTask.getDescription(), daoTask.getPriority(), daoTask.getUserStory().getId(), daoTask.getDueDate(), -1, -1);
+            tasks.add(toAdd);
+        }
+        taskList.setTasks(tasks);
+        return taskList;
+    }
 }

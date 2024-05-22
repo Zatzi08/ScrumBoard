@@ -38,7 +38,7 @@ public class HttpRequestTests extends BaseHTTPTest {
     private Email email;
 
     @BeforeAll
-    public static void BeforeAll(){
+    public static void BeforeAll() throws Exception {
         changeHibernateCfg(true);
         setup(true);
         if (accounts.isEmpty()) throw new RuntimeException("Fuck IT");
@@ -806,18 +806,18 @@ public class HttpRequestTests extends BaseHTTPTest {
 
     /*  Test ID: HTTP.T18
      *  Author: Lucas Krüger
-     *  Zweck: Testen des Post Requests zum Anzeigen eines Task Board by ID
+     *  Zweck: Testen des Post Requests zum Anzeigen eines TaskBoard by ID
      */
     @Test
     @Tag("new")
-    void getTaskBoard(){
-        printWriterAddTest("getTaskBoard", "T18");
+    void getTaskBoardByID(){
+        printWriterAddTest("getTaskBoardByID", "T18");
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.TEXT_PLAIN);
         HttpEntity<String> message = new HttpEntity<>("", header);
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/getTaskBoard", HttpMethod.GET, message, String.class).getStatusCode())
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/getTaskBoardByID", HttpMethod.GET, message, String.class).getStatusCode())
                     .isEqualTo(HttpStatus.BAD_REQUEST);
         } catch (AssertionError e){
             printWriterAddFailure("Akzeptiert Bad_Request");
@@ -825,7 +825,7 @@ public class HttpRequestTests extends BaseHTTPTest {
         }
 
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/getTaskBoard?sessionID=" + masterID+"&TBID="+-1, HttpMethod.GET, message, String.class).getStatusCode())
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/getTaskBoardByID?sessionID=" + masterID+"&TBID="+-1, HttpMethod.GET, message, String.class).getStatusCode())
                     .isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
             printWriterAddFailure("HTTP PostRequest nicht erfolgreich - neues Taskboard");
@@ -833,7 +833,7 @@ public class HttpRequestTests extends BaseHTTPTest {
         }
 
         // TODO: existentes TaskBoard
-        ResponseEntity<String> responce = this.restTemplate.exchange("http://localhost:" + port + "/getTaskBoard?sessionID=" + sessions.get(0)  + "&TBID=" + 0, HttpMethod.GET, message, String.class);
+        ResponseEntity<String> responce = this.restTemplate.exchange("http://localhost:" + port + "/getTaskBoardByID?sessionID=" + sessions.get(0)  + "&TBID=" + 0, HttpMethod.GET, message, String.class);
         try {
             assertThat(responce.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
@@ -899,4 +899,45 @@ public class HttpRequestTests extends BaseHTTPTest {
 */
         printWriterAddPass();
     }
+
+    /*  Test ID: HTTP.T20
+     *  Author: Lucas Krüger
+     *  Zweck: Testen des Post Requests zum Anzeigen eines TaskBoard
+     */
+    @Test
+    @Tag("new")
+    void getTaskBoard(){
+        printWriterAddTest("getTaskBoard", "T20");
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.TEXT_PLAIN);
+        HttpEntity<String> message = new HttpEntity<>("", header);
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/getTaskBoard", HttpMethod.GET, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.BAD_REQUEST);
+        } catch (AssertionError e){
+            printWriterAddFailure("Akzeptiert Bad_Request");
+            throw new AssertionError(e);
+        }
+
+        ResponseEntity<String> response = this.restTemplate.exchange("http://localhost:" + port + "/getTaskBoard?sessionID=" + sessions.get(0), HttpMethod.GET, message, String.class);
+
+        try {
+            assertThat(response.getStatusCode().isSameCodeAs(HttpStatus.OK));
+        } catch (AssertionError e){
+            printWriterAddFailure("HTTP PostRequest nicht erfolgreich");
+            throw new AssertionError(e);
+        }
+
+        try {
+            assertTrue(Objects.requireNonNull(response.getBody()).contains("<title>Task Board</title>"));
+        } catch (AssertionError e){
+            printWriterAddFailure("Wrong Page loaded");
+            throw new AssertionError(e);
+        }
+
+        printWriterAddPass();
+    }
+
+
 }

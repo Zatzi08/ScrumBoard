@@ -362,7 +362,7 @@ Date: 20/05/24 17:23:18
 pass: true
 
 
-Hyper-Text-Transport-Protocol-Test-getTaskBoard
+Hyper-Text-Transport-Protocol-Test-getTaskBoardByID
 Test ID: HTTP.T18
 Date: 20/05/24 17:23:18
 fail: Wrong Page loaded - Frontend wie DB nicht existent
@@ -379,4 +379,9 @@ Test ID: HTTP.T17
 Date: 20/05/24 17:23:18
 pass: true
 
+Hyper-Text-Transport-Protocol-Tests:
 
+Hyper-Text-Transport-Protocol-Test-getTaskBoard
+Test ID: HTTP.T20
+Date: 22/05/24 23:10:39
+fail: Wrong Page loaded - initial Fail

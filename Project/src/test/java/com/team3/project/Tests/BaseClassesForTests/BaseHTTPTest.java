@@ -22,7 +22,7 @@ public class BaseHTTPTest extends BaseTest {
 
     public static final PresentationToLogic presentationToLogic = PresentationToLogic.getInstance();
 
-    protected static void setup(boolean b) {
+    protected static void setup(boolean b) throws Exception {
         if (b) BaseTest.setup(logName, mainTestName);
         if (accounts.isEmpty())TestDBUser();
         if (storys.isEmpty())TestDBUserStory();
@@ -131,16 +131,8 @@ public class BaseHTTPTest extends BaseTest {
         }
     }
 
-    protected static void TestDBTaskBoard(){
-        List<TaskBoard> dbo = null;//presentationToLogic.taskBoardService.getAll();
-        int[] ids = {1,2,3};
-        if (dbo == null || dbo.isEmpty()) {
-            ids = new int[]{-1, -1, -1};
-        }
-        try{
-            System.out.println("Implement TaskBoard");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+    protected static void TestDBTaskBoard() throws Exception {
+        TaskBoard dbo = presentationToLogic.taskBoardService.getTaskBoard();
+        boards.add(dbo);
     }
 }

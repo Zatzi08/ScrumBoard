@@ -30,7 +30,12 @@ function SwitchToOtherProfile(sessionID, email){
 }
 
 function SwitchToTaskBoard(sessionID, TBID){
-    let url = "/getTaskBoard?sessionID=" + sessionID + "&TBID=" + TBID;
+    let url = "/getTaskBoardbByID?sessionID=" + sessionID + "&TBID=" + TBID;
+    document.location.assign(url)
+}
+
+function SwitchToTaskBoard(sessionID){
+    let url = "/getTaskBoard?sessionID=" + sessionID;
     document.location.assign(url)
 }
 

@@ -29,7 +29,7 @@ public class DAOTaskBoard {
     @OneToMany(mappedBy = "taskBoard", cascade = CascadeType.REMOVE)
     private List<DAOTaskList> taskLists;
     
-    DAOTaskBoard() {}
+    public DAOTaskBoard() {}
     public DAOTaskBoard(String name, List<DAOTaskList> daoTaskLists) {
         this.name = name;
         this.taskLists = daoTaskLists;

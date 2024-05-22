@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 public class WebController {
     public WebController() {
@@ -474,13 +476,41 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: TB2.B1
      */
-    @RequestMapping(value = "/getTaskBoard")
+    @RequestMapping(value = "/getTaskBoardByID")
     private ModelAndView getTaskBoard(@RequestParam(value = "sessionID", required = true) String sessionID,
                                       @RequestParam(value = "TBID", required = true, defaultValue = "-1") int tbid){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
+                List<Integer> IDs = presentationToLogic.taskBoardService.getTaskBoardIDs();
+                if (IDs.isEmpty()) return ProjectManager(sessionID);
                 ModelAndView modelAndView = new ModelAndView("taskBoard")
                         //.addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoardByID(tbid))
+                        .addObject("TBIDs", IDs)
+                        .addObject("sessionID", sessionID);
+                return modelAndView;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return error(e);
+        }
+        return index();
+    }
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: TB2.B1
+     */
+    @RequestMapping(value = "/getTaskBoard")
+    private ModelAndView getTaskBoard(@RequestParam(value = "sessionID", required = true) String sessionID){
+        try {
+            if (presentationToLogic.webSessionService.verify(sessionID)){
+                List<Integer> IDs = presentationToLogic.taskBoardService.getTaskBoardIDs();
+                if (IDs.isEmpty()) return ProjectManager(sessionID);
+                ModelAndView modelAndView = new ModelAndView("taskBoard")
+                        .addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoard())
+                        .addObject("TBIDs", IDs)
                         .addObject("sessionID", sessionID);
                 return modelAndView;
             }
