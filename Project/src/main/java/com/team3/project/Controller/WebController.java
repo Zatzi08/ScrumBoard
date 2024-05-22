@@ -480,8 +480,9 @@ public class WebController {
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 ModelAndView modelAndView = new ModelAndView("taskBoard")
-                        .addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoardByID(tbid))
+                        //.addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoardByID(tbid))
                         .addObject("sessionID", sessionID);
+                return modelAndView;
             }
         } catch (Exception e){
             e.printStackTrace();
