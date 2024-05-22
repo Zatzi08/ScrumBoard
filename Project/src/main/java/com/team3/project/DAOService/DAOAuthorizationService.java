@@ -2,8 +2,10 @@ package com.team3.project.DAOService;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.team3.project.DAO.DAOAuthorization;
+import com.team3.project.DAO.DAORole;
 
 public class DAOAuthorizationService {
     public static List<DAOAuthorization> getAll() {
@@ -19,7 +21,7 @@ public class DAOAuthorizationService {
 
     public static boolean checkAuthorizations() {
         List<DAOAuthorization> daoAuthorizations = DAOService.getAll(DAOAuthorization.class);
-        if (daoAuthorizations.size() != 4) {
+        if (daoAuthorizations == null || daoAuthorizations.size() != 4) {
             return createDefaultAuthorizations(daoAuthorizations);
         }
         return true;
@@ -37,5 +39,14 @@ public class DAOAuthorizationService {
                 .filter(defaultAuthorization -> !authorizations.contains(defaultAuthorization.getAuthorization()))
                 .toList();
         return DAOService.persistList(persistList);
+    }
+
+    static List<DAORole> filterRolesByAuthorization(DAOAuthorization authorization, List<DAORole> roles) {
+        String joinOnAttributeName = "roles";
+        DAOAuthorization daoAuthorization = DAOService.getLeftJoinByID(authorization.getId(), DAOAuthorization.class, joinOnAttributeName);
+        if (daoAuthorization != null) {
+            return daoAuthorization.getRoles().stream().filter(sDaoRole -> roles.stream().map(DAORole::getName).collect(Collectors.toList()).contains(sDaoRole.getName())).toList();
+        }
+        return null;
     }
 }

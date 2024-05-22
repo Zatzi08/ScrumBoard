@@ -2,11 +2,10 @@ package com.team3.project.DAOService;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import com.team3.project.DAO.DAOAccount;
 import com.team3.project.DAO.DAOAuthorization;
 import com.team3.project.DAO.DAORole;
-import com.team3.project.DAO.DAOUser;
 
 public class DAORoleService {
     //gets
@@ -100,5 +99,19 @@ public class DAORoleService {
             return DAOService.delete(role);
         }
         return true;
+    }
+
+    static boolean checkAuthorizationById(int id, DAOAuthorization authorization) {
+        return checkAuthorizationIdById(id, authorization.getId());
+    }
+
+    static boolean checkAuthorizationIdById(int id, int authorizationId) {
+        String joinOnAttributeName = "authorizations";
+        DAORole daoRole = DAOService.getLeftJoinByID(id, DAORole.class, joinOnAttributeName);
+        DAOAuthorization daoAuthorization = DAOService.getByID(authorizationId, DAOAuthorization.class);
+        if (daoRole != null && daoRole.getAuthorizations() != null && daoAuthorization != null) {
+            return daoRole.getAuthorizations().stream().map(DAOAuthorization::getAuthorization).collect(Collectors.toList()).contains(daoAuthorization.getAuthorization());
+        }
+        return false;
     }
 }

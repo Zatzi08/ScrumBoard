@@ -39,4 +39,10 @@ public class DAOTaskList {
     private List<DAOTask> tasks;
 
     DAOTaskList() {}
+    public DAOTaskList(String name, int sequence, DAOTaskBoard taskBoard, List<DAOTask> tasks) {
+        this.name = name;
+        this.sequence = sequence;
+        this.taskBoard = taskBoard;
+        this.tasks = tasks;
+    }
 }

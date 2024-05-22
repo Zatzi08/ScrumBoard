@@ -30,8 +30,8 @@ public class UserTests extends BaseDBTest {
 
     @AfterEach
     public void afterEach() {
-    DAOStartService.clearDB("User");
-    DAOStartService.clearDB("Role");
+    DAOStartService.clearDBTable("User");
+    DAOStartService.clearDBTable("Role");
     }
 
     @AfterAll
@@ -59,7 +59,7 @@ public class UserTests extends BaseDBTest {
         printWriterAddTest("CreateUserTest", "U.T1");
         TestRoles.add(TestRole);
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestPasword, TestName, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, false));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestPasword, TestName, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, null, false));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
@@ -94,7 +94,7 @@ public class UserTests extends BaseDBTest {
         printWriterAddTest("GetByIDTest", "U.T2");
         TestRoles.add(TestRole);
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestPasword, TestName, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, false));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestPasword, TestName, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, null, false));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
@@ -130,15 +130,15 @@ public class UserTests extends BaseDBTest {
         printWriterAddTest("UpdateUserTest", "U.T3");
         TestRoles.add(TestRole);
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, false));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, null, false));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
         }
         TestRoles.add(TestRole2);
         try {
-            assertTrue(DAOUserService.updateById(DAOUserService.getIdByMail(TestEmail), TestName2, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, false));
-            assertTrue(DAOUserService.updateById(DAOUserService.getIdByMail(TestEmail), TestName2, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, false));
+            assertTrue(DAOUserService.updateById(DAOUserService.getIdByMail(TestEmail), TestName2, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, null, false));
+            assertTrue(DAOUserService.updateById(DAOUserService.getIdByMail(TestEmail), TestName2, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, null, false));
         } catch (Exception e) {
             printWriterAddFailure("did not update");
             throw new AssertionError(e);
@@ -175,7 +175,7 @@ public class UserTests extends BaseDBTest {
         String sessionID = "5";
         String sessionDate = "5";
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, false));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, null, false));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
@@ -219,7 +219,7 @@ public class UserTests extends BaseDBTest {
         String sessionID = "5";
         String sessionDate = "5";
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, false));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, null, false));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
@@ -262,7 +262,7 @@ public class UserTests extends BaseDBTest {
         String sessionID = "5";
         String sessionDate = "5";
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, false));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, null, false));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
