@@ -328,7 +328,7 @@ public class WebController {
                 return new ModelAndView("projectManager-Nutzer")
                         .addObject("User", presentationToLogic.accountService.getAllProfils())
                         .addObject("sessionID", sessionID)
-                        .addObject("authem",presentationToLogic.accountService.getAuthority(sessionID));
+                        .addObject("auth",presentationToLogic.accountService.getAuthority(sessionID));
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -538,9 +538,9 @@ public class WebController {
             }
         } catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
+        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
     }
 
     /* Author: Lucas Krüger
