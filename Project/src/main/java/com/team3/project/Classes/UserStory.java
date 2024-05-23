@@ -4,8 +4,6 @@ import com.team3.project.Classes.Enumerations.Priority;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 public class UserStory extends abstraktDataClasses {

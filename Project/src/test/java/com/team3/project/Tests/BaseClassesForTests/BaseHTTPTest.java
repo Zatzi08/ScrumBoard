@@ -105,10 +105,10 @@ public class BaseHTTPTest extends BaseTest {
         if (dbo == null || dbo.isEmpty()) {
             ids = new int[]{-1, -1, -1};
         }
-        try{
-            presentationToLogic.taskService.saveTask(new Task( ids[0], "TT1", 1, 1, "2024-05-19T14:45", -1, -1));
-            presentationToLogic.taskService.saveTask(new Task(ids[1], "TT2", 1, 2, "2024-05-19T14:45", -1, -1));
-            presentationToLogic.taskService.saveTask(new Task(ids[2], "TT3", 1, 3, "2024-05-19T14:45", -1, -1));
+        try{// TODO: TBID
+            presentationToLogic.taskService.saveTask(new Task( ids[0], "TT1", 1, 1, "2024-05-19T14:45", -1, -1,-1));
+            presentationToLogic.taskService.saveTask(new Task(ids[1], "TT2", 1, 2, "2024-05-19T14:45", -1, -1, -1));
+            presentationToLogic.taskService.saveTask(new Task(ids[2], "TT3", 1, 3, "2024-05-19T14:45", -1, -1, -1));
             tasks = presentationToLogic.taskService.getAllTask();
         } catch (Exception e){
             e.printStackTrace();

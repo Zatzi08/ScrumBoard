@@ -46,8 +46,8 @@ function saveTask($this, sessionID) {
     let priority = document.getElementById('editPrio').value;
     let USID = document.getElementById('USDropdown').value;
     let dueDate = document.getElementById('inputDate').value;
-    let TBID = -1;//document.getElementById("inputTBID").value;
-    let timeNeededG = -1;//TODO document.getElementById().value
+    let TBID = document.getElementById("TBDropdown").value;
+    let timeNeededG = document.getElementById("inputTimeNeeded").value;
     let timeNeededA = -1;//TODO document.getElementById().value
 
     if (USID === "-1"){
