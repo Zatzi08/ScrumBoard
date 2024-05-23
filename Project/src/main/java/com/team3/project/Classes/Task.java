@@ -21,6 +21,7 @@ public class Task extends abstraktDataClasses {
     private double timeNeededG;
     private double timeNeededA;
     private boolean done;
+    private int tbID;
 
     /* Author: Henry L. Freyschmidt
      * Revisited: /
@@ -28,7 +29,7 @@ public class Task extends abstraktDataClasses {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public Task(int tID, String description, int priority, int userStoryID, String dueDate, double timeNeededG, double timeNeededA) throws ParseException {
+    public Task(int tID, String description, int priority, int userStoryID, String dueDate, double timeNeededG, double timeNeededA, int tbID) throws ParseException {
         super(tID);
         Enumerations prior = new Enumerations();
         this.description = description;
@@ -45,6 +46,7 @@ public class Task extends abstraktDataClasses {
         this.timeNeededG = timeNeededG;
         this.timeNeededA = timeNeededA;
         this.done = false;
+        this.tbID = tbID;
 
     }
 
