@@ -29,7 +29,7 @@ function SwitchToOtherProfile(sessionID, email){
     document.location.assign(url)
 }
 
-function SwitchToTaskBoard(sessionID, TBID){
+function SwitchToTaskBoardByID(sessionID, TBID){
     let url = "/getTaskBoardbByID?sessionID=" + sessionID + "&TBID=" + TBID;
     document.location.assign(url)
 }
