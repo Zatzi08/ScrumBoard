@@ -21,7 +21,7 @@
 <div class="Reiter">
     <button class="reiterBtn" onmouseover = "hover('reiterBtn')" onmouseleave="hoverLeave('reiterBtn')" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
-    <button class = "reiterBtn">Task-Board </button>
+    <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
 </div>
 
@@ -30,7 +30,7 @@
     <span class="userStoryTaskTrenner">|</span>
     <button class="selectBtn" id="selectTasks" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks" style= "border-bottom: 1px solid #ffffff">Tasks</button>
     <span class="userStoryTaskTrenner">|</span>
-    <button class="selectBtn" id="selectUser" th:Sid="${sessionID}" onclick="SwitchToUsers(this.getAttribute('Sid'))" title = "Wechsel zur Nutzeransicht">Nutzer</button>
+    <button class="selectBtn" id="selectUser"  title = "Wechsel zur Nutzeransicht">Nutzer</button>
     <button class="addUserStoryBtn" title="Füge eine Task hinzu" style = "margin-left: 85%" onclick="toggleEditMenu('addUserStoryBtn')"><i class="fa fa-plus" style="margin-right: 10px"></i>Task erstellen</button>
     <div id="innerProjectManagerContainer">
         <div class="wrapper">
@@ -41,7 +41,7 @@
                 </tr>
                 </thead>
                 <tbody id="userTaskTableBody">
-                <tr th:each="item : ${Tasks}" >
+                <tr th:each="item : ${Tasks}">
                     <th>
                         <label class="userTaskTable-ContentStoryBoard" th:text="${item.getUserStory().getName()}" >Story</label>
                         <span class="userTaskTable-ContentStoryBoard">/</span>
@@ -82,16 +82,10 @@
             <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: lightgreen" name="low" form="editForm">Low</button>
             <label style="margin-top: 15px">Abgabefrist</label>
             <input type="datetime-local" id="inputDate" class="inputEdit" placeholder="Abgabefrist">
-            <label style="margin-top: 15px">Geschätzte Zeit</label>
-            <input type = "time" id = "inputTimeNeeded" class="inputEdit" placeholder="Geschätzte Zeit">
             <input type="hidden" id = "editId" name="id" value="-1">
             <input type="hidden" id = "editPrio" name="priority" value="1">
-            <select class="dropdownTask" id="USDropdown">
+            <select class="form-control" id="USDropdown">
                 <option value="-1" selected = "selected">Wähle zugehörige User-Story</option>
-                <option th:each="US : ${UserStory}" th:id="@{USDropdown:{id}(id=${US.ID})}" th:value="${US.ID}" th:text="${US.name}"></option>
-            </select>
-            <select class="dropdownTask" id="TBDropdown">
-                <option value="-1" selected = "selected">Wähle zugehöriges Task-Board</option>
                 <option th:each="US : ${UserStory}" th:id="@{USDropdown:{id}(id=${US.ID})}" th:value="${US.ID}" th:text="${US.name}"></option>
             </select>
             <button type="button" th:sessionID="${sessionID}" onclick="saveTask(this,this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>

@@ -21,7 +21,7 @@
 <div class="Reiter">
     <button class="reiterBtn" onmouseover = "hover('reiterBtn')" onmouseleave="hoverLeave('reiterBtn')" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
     <button type="button"  th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
-    <button class = "reiterBtn" >Task-Board </button>
+    <button class = "reiterBtn">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
 </div>
 
@@ -47,9 +47,11 @@
                             <button class="Btn" style="margin-left: 95%"title="Bearbeiten" th:sname="${item.name}" th:sdescription="${item.description}" th:sid="${item.ID}" onclick="toggleEditBox('editBtn', this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'));" ><i class="fa fa-edit"></i></button>
                             <span class="Btn" th:USid="${item.ID}" th:Sid="${sessionID}" onclick="deleteUS(this.getAttribute('USid'),this.getAttribute('Sid'))" title="Löschen">&times;</span>
                             <label th:text = "${item.name}">Name</label>
+                            <label>Rolle</label>
                             <label th:text="${item.priority}">Priorität</label>
                             <hr>
                             <label style="display: inline-block;" th:text="${item.description}">Beschreibung</label>
+                            <label class = "userTaskTableContentSubdate">Abgabedatum</label>
                         </th>
                     </tr>
                 </tbody>
@@ -77,6 +79,8 @@
             <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: lightcoral" name="high" form="editForm">High</button>
             <button type="button" class="inputEditPrio" id="inputPrioNormal" onclick="highlightPriorityButton('inputPrioNormal')" style="background-color: lightblue" name="normal" form="editForm">Normal</button>
             <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: lightgreen" name="low" form="editForm">Low</button>
+            <label style="margin-top: 15px">Abgabefrist</label>
+            <input type="datetime-local" id="inputDate" class="inputEdit" placeholder="Abgabefrist">
             <input type="hidden" id = "editId" name="id" value="-1">
             <input type="hidden" id = "editPrio" name="priority" value="1">
             <button type="button" th:sessionID="${sessionID}" onclick="saveUS(this,this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
