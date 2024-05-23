@@ -66,7 +66,7 @@ public class DAOTaskListService {
      * @return   List of DAOTaskLists to the taskBoard
      */
     public static List<DAOTaskList> getByTaskBoardId(int id) {
-        String parameterName = "taskBoard";
+        String parameterName = "taskBoard.id";
         return DAOService.getListByPara(DAOTaskList.class, id, parameterName);
     }
 

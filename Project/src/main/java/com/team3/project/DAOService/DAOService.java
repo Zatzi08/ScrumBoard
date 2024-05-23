@@ -536,7 +536,7 @@ class DAOService {
     /** deletes a given object from the database
      * @param daoObject
      */
-    static void deleting(Object daoObject) {
+    private static void deleting(Object daoObject) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
         try {
