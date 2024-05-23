@@ -83,8 +83,9 @@
 .inputEditPrio:focus-visible {box-shadow: none;}
 .inputEditPrio.selected {border: 2px solid #ba55d3;}
 
-#inputDate {font-size: 12px; height: 30px}
-#inputDate{border-radius: 5px;}
+#inputDate {font-size: 12px; height: 30px; border-radius: 5px;}
+#inputTimeNeeded {font-size: 12px; height: 30px; border-radius: 5px;}
+
 .editMenu-content form label{color: white;}
 
 .closeToggleEdit {
@@ -133,7 +134,7 @@
     margin-right:20px;
     border: none;
     border-radius: 15px;
-    width: 98%;
+    width: 97%;
     margin-top: 30px;
     margin-left: 30px;
     font-size: 16px;
@@ -359,17 +360,23 @@ hr {
 
 .show {display:block;}
 
-#USDropdown{
+.dropdownTask{
     background-color: #283d48;
     color: #afafaf;
     border: 2px solid #6e7f91;
     border-radius: 8px;
+    font-size: 12px;
+
 }
-#USDropdown option:hover{
+
+.dropdownTask option:hover{
     background-color: #3a5865;
-
-
 }
+
+.dropdownTask:focus{
+    background-color: transparent;
+}
+
 #tableHeader{
     border-top-left-radius: 0;
     border-top-right-radius: 0;

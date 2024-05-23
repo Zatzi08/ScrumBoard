@@ -153,7 +153,7 @@ public class WebController {
                                                 @RequestBody(required = true) UserStory userStory){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)) {
-                if (presentationToLogic.accountService.getAuthority(sessionID)  >= 2){
+                if (presentationToLogic.accountService.getAuthority(sessionID)  >= 3){
                     presentationToLogic.userStoryService.saveUserStory(userStory);
                     return new ResponseEntity<HttpStatus>(HttpStatus.OK);
                 } else {
@@ -458,7 +458,7 @@ public class WebController {
                                     @RequestParam(value = "ID", required = true, defaultValue = "-1") int id){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
-                if (presentationToLogic.accountService.getAuthority(sessionID) >= 2){
+                if (presentationToLogic.accountService.getAuthority(sessionID) >= 3){
                     presentationToLogic.userStoryService.deleteUserStoryAndLinkedTasks(id);
                     return new ResponseEntity<HttpStatus>(HttpStatus.OK);
                 } else return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
@@ -509,7 +509,7 @@ public class WebController {
                 List<Integer> IDs = presentationToLogic.taskBoardService.getTaskBoardIDs();
                 if (IDs.isEmpty()) return ProjectManager(sessionID);
                 ModelAndView modelAndView = new ModelAndView("taskBoard")
-                        .addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoard())
+                        //.addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoard())
                         .addObject("TBIDs", IDs)
                         .addObject("sessionID", sessionID);
                 return modelAndView;

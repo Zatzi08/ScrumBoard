@@ -4,11 +4,7 @@ import com.team3.project.Classes.TaskList;
 import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAO.DAOTaskList;
 import com.team3.project.DAOService.DAOTaskBoardService;
-import com.team3.project.DAOService.DAOTaskListService;
-import com.team3.project.service.TaskListService;
 
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,17 +29,13 @@ public class TaskBoardService {
 
     public TaskBoard getTaskBoard() throws Exception {
         List<DAOTaskBoard> taskBoardList = DAOTaskBoardService.getAll();
-        return taskBoardList.isEmpty()? null : toTaskBoard(taskBoardList.get(0));
+        DAOTaskBoard a = DAOTaskBoardService.getWithTaskListsWithTasksById(taskBoardList.get(0).getId());
+        return taskBoardList.isEmpty()? null : toTaskBoard(a);
     }
 
     private TaskBoard toTaskBoard(DAOTaskBoard daoTaskBoard) throws Exception {
         TaskBoard taskBoard = new TaskBoard(daoTaskBoard.getId(), daoTaskBoard.getName());
-        List<DAOTaskList> taskLists = DAOTaskListService.getByTaskBoardId(daoTaskBoard.getId());
-        List<TaskList> taskListsInTaskBoard = new LinkedList<TaskList>();
-        for (DAOTaskList taskList : taskLists) {
-            TaskList toAdd = toTaskList(taskList);
-            taskListsInTaskBoard.add(toAdd);
-        }
+        List<DAOTaskList> taskLists = daoTaskBoard.getTaskLists();
         taskBoard.setTaskListsInTaskBoard(taskLists);
         return taskBoard;
     }

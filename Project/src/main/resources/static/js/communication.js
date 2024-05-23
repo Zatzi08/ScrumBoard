@@ -29,7 +29,7 @@ function SwitchToOtherProfile(sessionID, email){
     document.location.assign(url)
 }
 
-function SwitchToTaskBoard(sessionID, TBID){
+function SwitchToTaskBoardByID(sessionID, TBID){
     let url = "/getTaskBoardbByID?sessionID=" + sessionID + "&TBID=" + TBID;
     document.location.assign(url)
 }
@@ -46,6 +46,7 @@ function saveTask($this, sessionID) {
     let priority = document.getElementById('editPrio').value;
     let USID = document.getElementById('USDropdown').value;
     let dueDate = document.getElementById('inputDate').value;
+    let TBID = -1;//document.getElementById("inputTBID").value;
     let timeNeededG = -1;//TODO document.getElementById().value
     let timeNeededA = -1;//TODO document.getElementById().value
 
@@ -66,6 +67,7 @@ function saveTask($this, sessionID) {
                 'priority': priority,
                 'userStoryID': USID,
                 'dueDate': dueDate,
+                'tbID': TBID,
                 'timeNeededG': timeNeededG,
                 'timeNeededA': timeNeededA
             })
