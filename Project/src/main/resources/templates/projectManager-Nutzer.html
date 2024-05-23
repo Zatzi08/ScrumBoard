@@ -20,7 +20,7 @@
     -->
 <div class="Reiter">
   <button class="reiterBtn" onmouseover = "hover('reiterBtn')" onmouseleave="hoverLeave('reiterBtn')" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
-  <button type="button"  th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
+  <button type="button" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
   <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
   <button class = "reiterBtn">Kalender </button>
 </div>
@@ -44,17 +44,17 @@
         </tr>
         </thead>
         <tbody id="userTaskTableBody"> <!-- th:role="${user.getRoles()}" ist ne Liste kp wie wir das machen-->
-        <tr th:each="user : ${User}" th:Sid="${sessionID}" th:email="${user.getEmail()}"   ondblclick="SwitchToOtherProfile( this.getAttribute(Sid), this.getAttribute(email))">
+        <tr th:each="user : ${User}" th:Sid="${sessionID}" th:email="${user.getEmail()}" ondblclick="SwitchToOtherProfile( this.getAttribute('sid'), this.getAttribute('email'))">
           <th>
             <div id = userTextDiv>
             <label class = "userText" th:text="${user.getUname()}" >Nutzername</label>
-              <div th:each=" user : ${User}" id = "userRights">
-                <input th:if = "${auth>=2}" list = "rightsDropdown">
-                <datalist class="dropdownTask" id="rightsDropdown" >
-                <option id="USDropDown:-1" value="-1" selected = "selected"></option>
-                <option th:each="US : ${UserStory}" th:id="@{USDropdown:{id}(id=${US.ID})}" th:value="${US.ID}" th:text="${US.name}"></option>
-              </datalist></input></div>
-              <label th:unless = "${auth<2}" >HI</label>
+              <div id = "userRights">
+                <select th:if = "${auth>=2}" class="dropdownTask" id="TBDropdown">
+                  <option id="TBDropDown:-1" value="-1" selected = "selected">Wähle zugehöriges Task-Board</option>
+                  <option th:each="US : ${UserStory}" th:id="@{TBDropdown:{id}(id=${US.ID})}" th:value="${US.ID}" th:text="${US.name}"></option>
+                </select>
+                <label th:unless = "${auth>=2}" ></label>
+              </div>
             </div>
           </th>
         </tr>
