@@ -66,7 +66,7 @@ public class TaskListService {
         TaskList taskList = new TaskList(daotaskList.getId(), daotaskList.getName());
         List<Task> tasks = new LinkedList<Task>();
         for (DAOTask daoTask : daotaskList.getTasks()) {
-            Task toAdd = new Task(daoTask.getId(), daoTask.getDescription(), daoTask.getPriority(), daoTask.getUserStory().getId(), daoTask.getDueDate(), -1, -1);
+            Task toAdd = new Task(daoTask.getId(), daoTask.getDescription(), daoTask.getPriority(), daoTask.getUserStory().getId(), daoTask.getDueDate(), daoTask.getProcessingTimeEstimatedInHours(), daoTask.getProcessingTimeRealInHours(), -1);
             tasks.add(toAdd);
         }
         taskList.setTasks(tasks);

@@ -25,7 +25,7 @@ public class TaskList extends abstraktDataClasses {
         List <Task> taskList = new LinkedList<Task>();
         daoTaskList.forEach(x->{
             try{
-                taskList.add(new Task(x.getId(), x.getDescription(), x.getPriority(), x.getUserStory().getId(), x.getDueDate(), x.getProcessingTimeEstimatedInHours(), x.getProcessingTimeRealInHours()));
+                taskList.add(new Task(x.getId(), x.getDescription(), x.getPriority(), x.getUserStory().getId(), x.getDueDate(), x.getProcessingTimeEstimatedInHours(), x.getProcessingTimeRealInHours(),-1));
             }catch (Exception e){
                 e.printStackTrace();
             }
