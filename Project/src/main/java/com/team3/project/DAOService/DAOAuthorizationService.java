@@ -19,14 +19,6 @@ public class DAOAuthorizationService {
         return DAOService.getSingleByPara(DAOAuthorization.class, authorization, parameterName);
     }
 
-    public static boolean checkAuthorizations() {
-        List<DAOAuthorization> daoAuthorizations = DAOService.getAll(DAOAuthorization.class);
-        if (daoAuthorizations == null || daoAuthorizations.size() != 4) {
-            return createDefaultAuthorizations(daoAuthorizations);
-        }
-        return true;
-    }
-
     private static boolean createDefaultAuthorizations(List<DAOAuthorization> daoAuthorizations) {
         List<Integer> authorizations = daoAuthorizations.stream().map(DAOAuthorization::getAuthorization).toList();
         List<DAOAuthorization> defaultDAOAuthorizations = Arrays.asList(
@@ -36,9 +28,17 @@ public class DAOAuthorizationService {
             new DAOAuthorization("Admin", 4)
         );
         List<DAOAuthorization> persistList = defaultDAOAuthorizations.stream()
-                .filter(defaultAuthorization -> !authorizations.contains(defaultAuthorization.getAuthorization()))
-                .toList();
+                    .filter(defaultAuthorization -> !authorizations.contains(defaultAuthorization.getAuthorization()))
+                    .toList();
         return DAOService.persistList(persistList);
+    }
+    
+    static boolean checkAuthorizations() {
+        List<DAOAuthorization> daoAuthorizations = DAOService.getAll(DAOAuthorization.class);
+        if (daoAuthorizations == null || daoAuthorizations.size() != 4) {
+            return createDefaultAuthorizations(daoAuthorizations);
+        }
+        return true;
     }
 
     static List<DAORole> filterRolesByAuthorization(DAOAuthorization authorization, List<DAORole> roles) {

@@ -12,7 +12,7 @@ public class BaseDBTest extends BaseTest {
         BaseTest.before();
     }
 
-    static void after() {
+    protected static void after() {
         BaseTest.after(true);
     }
     protected static void tearDown() {

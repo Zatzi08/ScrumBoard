@@ -105,7 +105,7 @@ public class DAOTaskBoardService {
         return true;
     }
 
-    public static boolean checkNameExists(String name) {
+    static boolean checkNameExists(String name) {
         String parameterName = "name";
         DAOTaskBoard taskBoard = DAOService.getSingleByPara(DAOTaskBoard.class, name, parameterName);
         if (taskBoard != null) {
