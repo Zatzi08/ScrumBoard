@@ -327,7 +327,8 @@ public class WebController {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 return new ModelAndView("projectManager-Nutzer")
                         .addObject("User", presentationToLogic.accountService.getAllProfils())
-                        .addObject("sessionID", sessionID);
+                        .addObject("sessionID", sessionID)
+                        .addObject("authem",presentationToLogic.accountService.getAuthority(sessionID));
             }
         } catch (Exception e){
             e.printStackTrace();
