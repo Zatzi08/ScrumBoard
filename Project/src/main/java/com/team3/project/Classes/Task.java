@@ -1,6 +1,7 @@
 package com.team3.project.Classes;
 
 import com.team3.project.Classes.Enumerations.Priority;
+import com.team3.project.DAOService.DAOTaskBoardService;
 import com.team3.project.service.UserStoryService;
 import lombok.*;
 
@@ -80,5 +81,10 @@ public class Task extends abstraktDataClasses {
         } catch (Exception e){
             return null;
         }
+    }
+
+    public String getTaskBoardNameOfTask(){
+        if (this.getTbID() == -1) return "";
+        return DAOTaskBoardService.getById(this.getTbID()).getName();
     }
 }

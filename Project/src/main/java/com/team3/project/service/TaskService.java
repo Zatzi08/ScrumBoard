@@ -78,6 +78,20 @@ public class TaskService {
         }else{
             DAOTask dt = DAOTaskService.getById(task.getID());
             if (dt != null){
+                if(task.getTbID() > 0 && (dt.getTaskList() == null
+                        || task.getTbID() != dt.getTaskList().getTaskBoard().getId())){
+                    List<DAOTaskList> daoTaskLists = DAOTaskListService.getByTaskBoardId(task.getTbID());
+                    if(daoTaskLists == null) throw new Exception("No TaskLists in TaskBoard");
+                    DAOTaskList daoTaskList = daoTaskLists.get(0);
+                    while(daoTaskList.getSequence() != 1){
+                        daoTaskLists.remove(0);
+                        daoTaskList = daoTaskLists.get(0);
+                    }
+                    //DAOTaskListService.addTaskById(daoTaskList.getId(), new DAOTask(task.getDescription(), task.getPriorityAsInt(), task.isDone(), task.getDueDateAsString(),
+                    //        task.getTimeNeededG(), task.getTimeNeededA(),daoTaskList, DAOUserStoryService.getById(task.getUserStoryID()), null));
+                } else if (task.getTbID() == -1 && dt.getTaskList() != null){
+                    DAOTaskService.updateById(dt.getId(),dt.getDescription(),dt.getPriority(),dt.isDone(),dt.getDueDate(),dt.getProcessingTimeEstimatedInHours(),dt.getProcessingTimeRealInHours(),null,dt.getUserStory(),dt.getUsers());
+                }
                 if (!dt.getDescription().equals(task.getDescription()))
                     DAOTaskService.updateDescriptonById(task.getID(),task.getDescription());
                 if (dt.getUserStory().getId() != task.getUserStoryID())
@@ -94,17 +108,6 @@ public class TaskService {
                 if(dt.getDone() != task.getDone())
                     DAOTaskService.updateDoneById(task.getID(), task.getDone());
                  */
-                if(task.getTbID() > 0 && task.getTbID() != dt.getTaskList().getTaskBoard().getId()){
-                    List<DAOTaskList> daoTaskLists = DAOTaskListService.getByTaskBoardId(task.getTbID());
-                    if(daoTaskLists == null) throw new Exception("No TaskLists in TaskBoard");
-                    DAOTaskList daoTaskList = daoTaskLists.get(0);
-                    while(daoTaskList.getSequence() != 1){
-                        daoTaskLists.remove(0);
-                        daoTaskList = daoTaskLists.get(0);
-                    }
-                    DAOTaskListService.addTaskById(daoTaskList.getId(), new DAOTask(task.getDescription(), task.getPriorityAsInt(), task.isDone(), task.getDueDateAsString(),
-                    task.getTimeNeededG(), task.getTimeNeededA(),daoTaskList, DAOUserStoryService.getById(task.getUserStoryID()), null));
-                }
 
             } else throw new Exception("DB Task not found");
         }
@@ -143,8 +146,8 @@ public class TaskService {
             if (!tasks.isEmpty()) {
                 List<Task> taskList = new LinkedList<>();
                 for (DAOTask task : tasks) {
-                    DAOTaskList daoTaskList = DAOTaskListService.getWithTasksById(task.getId());
-                    Task toAdd = new Task(task.getId(),task.getDescription(), task.getPriority(), task.getUserStory().getId(), task.getDueDate(), task.getProcessingTimeEstimatedInHours(),task.getProcessingTimeRealInHours(), daoTaskList.getTaskBoard().getId());
+                    int tbID = task.getTaskList() == null ? -1 : DAOTaskListService.getWithTasksById(task.getId()).getTaskBoard().getId();
+                    Task toAdd = new Task(task.getId(),task.getDescription(), task.getPriority(), task.getUserStory().getId(), task.getDueDate(), task.getProcessingTimeEstimatedInHours(),task.getProcessingTimeRealInHours(),  tbID );
                     taskList.add(toAdd);
                 }
                 return taskList;
@@ -173,8 +176,8 @@ public class TaskService {
         if (tasks.isEmpty()) return null;
         List<Task> list = new LinkedList<Task>();
         for (DAOTask task : tasks) {
-            DAOTaskList daoTaskList = DAOTaskListService.getWithTasksById(task.getId());
-            Task toAdd = new Task(task.getId(),task.getDescription(), task.getPriority(), task.getUserStory().getId(), task.getDueDate(), task.getProcessingTimeEstimatedInHours(), task.getProcessingTimeRealInHours(), daoTaskList.getTaskBoard().getId());
+            int tbID = task.getTaskList() == null ? -1 : DAOTaskListService.getWithTasksById(task.getId()).getTaskBoard().getId();
+            Task toAdd = new Task(task.getId(),task.getDescription(), task.getPriority(), task.getUserStory().getId(), task.getDueDate(), task.getProcessingTimeEstimatedInHours(), task.getProcessingTimeRealInHours(), tbID);
             list.add(toAdd);
         }
         return list;

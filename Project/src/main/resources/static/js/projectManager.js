@@ -163,7 +163,7 @@ function toggleEditBoxT(id, TId, description, usID, dueDate, timeG, tbID, prio){
     } else {
         document.getElementById('inputTimeNeeded').value = 0;
     }
-    if (usID !== undefined){
+    if (tbID !== undefined && tbID !== "-1"){
         EID = 'TBDropdown:'+tbID;
         document.getElementById('TBDropdown').value = document.getElementById(EID).value;
     } else {

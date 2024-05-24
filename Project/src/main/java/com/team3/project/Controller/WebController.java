@@ -487,7 +487,7 @@ public class WebController {
                 List<Integer> IDs = presentationToLogic.taskBoardService.getTaskBoardIDs();
                 if (IDs.isEmpty()) return ProjectManager(sessionID);
                 ModelAndView modelAndView = new ModelAndView("taskBoard")
-                        //.addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoardByID(tbid))
+                        .addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoardByID(tbid))
                         .addObject("TBIDs", IDs)
                         .addObject("sessionID", sessionID);
                 return modelAndView;
@@ -512,7 +512,7 @@ public class WebController {
                 List<Integer> IDs = presentationToLogic.taskBoardService.getTaskBoardIDs();
                 if (IDs.isEmpty()) return ProjectManager(sessionID);
                 ModelAndView modelAndView = new ModelAndView("taskBoard")
-                        //.addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoard())
+                        .addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoard())
                         .addObject("TBIDs", IDs)
                         .addObject("sessionID", sessionID);
                 return modelAndView;
