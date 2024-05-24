@@ -385,3 +385,18 @@ Hyper-Text-Transport-Protocol-Test-getTaskBoard
 Test ID: HTTP.T20
 Date: 22/05/24 23:10:39
 fail: Wrong Page loaded - initial Fail
+
+Hyper-Text-Transport-Protocol-Tests:
+
+Hyper-Text-Transport-Protocol-Test-setAuthority
+Test ID: HTTP.T20
+Date: 24/05/24 11:57:40
+fail: Initial Fail
+
+Hyper-Text-Transport-Protocol-Tests:
+
+Hyper-Text-Transport-Protocol-Test-setAuthority
+Test ID: HTTP.T20
+Date: 24/05/24 11:59:55
+pass: true
+

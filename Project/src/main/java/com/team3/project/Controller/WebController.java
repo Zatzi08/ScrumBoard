@@ -544,6 +544,31 @@ public class WebController {
     }
 
     /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: T16.B1
+     */
+    @RequestMapping("setAuthority")
+    private ResponseEntity<HttpStatus> setAuthority(@RequestHeader(value = "sessionID", required = true) String sessionID,
+                                               @RequestParam(value = "USID", required = true, defaultValue = "-1") int usID,
+                                               @RequestParam(value = "Auth", required = true, defaultValue = "-1") int auth){
+        try {
+            if (presentationToLogic.webSessionService.verify(sessionID)){
+                if (presentationToLogic.accountService.getAuthority(sessionID) >= 2){
+                    presentationToLogic.accountService.setAuthority(usID,auth);
+                    return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+    }
+
+
+    /* Author: Lucas Krüger
      * Revisited:
      * Funktion: Beispiel für Websocket Integration
      * Grund: Erkannte Änderungen in DB an Seite Weiterleiten

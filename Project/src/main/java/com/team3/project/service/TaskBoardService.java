@@ -4,6 +4,7 @@ import com.team3.project.Classes.TaskList;
 import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAO.DAOTaskList;
 import com.team3.project.DAOService.DAOTaskBoardService;
+import com.team3.project.DAOService.DAOTaskListService;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -29,13 +30,12 @@ public class TaskBoardService {
 
     public TaskBoard getTaskBoard() throws Exception {
         List<DAOTaskBoard> taskBoardList = DAOTaskBoardService.getAll();
-        DAOTaskBoard a = DAOTaskBoardService.getWithTaskListsWithTasksById(taskBoardList.get(0).getId());
-        return taskBoardList.isEmpty()? null : toTaskBoard(a);
+        return taskBoardList.isEmpty()? null : toTaskBoard(DAOTaskBoardService.getWithTaskListsWithTasksById(taskBoardList.get(0).getId()));
     }
 
-    private TaskBoard toTaskBoard(DAOTaskBoard daoTaskBoard) throws Exception {
+    public TaskBoard toTaskBoard(DAOTaskBoard daoTaskBoard) throws Exception {
         TaskBoard taskBoard = new TaskBoard(daoTaskBoard.getId(), daoTaskBoard.getName());
-        List<DAOTaskList> taskLists = daoTaskBoard.getTaskLists();
+        List<DAOTaskList> taskLists = DAOTaskListService.getByTaskBoardId(daoTaskBoard.getId());
         taskBoard.setTaskListsInTaskBoard(taskLists);
         return taskBoard;
     }

@@ -212,4 +212,12 @@ public class AccountService {
         }
         return list;
     }
+
+    public void setAuthority(int usID, int auth) throws Exception {
+        if (usID < 0) throw new Exception("Null USID");
+        if (auth <= 0 || auth > 4) throw new Exception("Invalid Auth");
+        DAOUser du = DAOUserService.getById(usID);
+        if (du == null) throw new Exception("User not Found");
+        DAOUserService.updateAuthorizationById(du.getId(),auth);
+    }
 }

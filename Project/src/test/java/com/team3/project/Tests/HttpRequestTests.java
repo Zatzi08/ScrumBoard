@@ -5,6 +5,7 @@ import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.DAOAccountService;
 import com.team3.project.DAOService.DAOTaskService;
+import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.DAOService.DAOUserStoryService;
 import com.team3.project.Tests.BaseClassesForTests.BaseHTTPTest;
 import com.team3.project.service.AccountService;
@@ -16,6 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.yaml.snakeyaml.events.Event;
 
 import java.util.List;
@@ -939,5 +942,46 @@ public class HttpRequestTests extends BaseHTTPTest {
         printWriterAddPass();
     }
 
+    /*  Test ID: HTTP.T21
+     *  Author: Lucas Krüger
+     *  Zweck: Testen des Get Requests zum Updaten der Authorität eines Nutzers
+     */
+    @Test
+    @Tag("new")
+    void setAuthorityTest(){
+        printWriterAddTest("setAuthority", "T20");
+        String url = "/setAuthority";
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.TEXT_PLAIN);
+        HttpEntity<String> message = new HttpEntity<>("", header);
 
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + url, HttpMethod.GET, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.BAD_REQUEST);
+        } catch (AssertionError e){
+            printWriterAddFailure("Akzeptiert Bad_Request");
+            throw new AssertionError(e);
+        }
+
+        header.set("sessionID", sessions.get(0));
+        message = new HttpEntity<>("", header);
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + url + "?USID="+users.get(0).getID() + "&Auth=" +3, HttpMethod.GET, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.BAD_REQUEST);
+        } catch (AssertionError e){
+            printWriterAddFailure("Akzeptiert Request von low Auth");
+            throw new AssertionError(e);
+        }
+
+        header.set("sessionID", sessions.get(2));
+        message = new HttpEntity<>("", header);
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + url + "?USID="+users.get(0).getID() + "&Auth=" +3, HttpMethod.GET, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.OK);
+        } catch (AssertionError e){
+            printWriterAddFailure("Akzeptiert Request nicht - Valid Params");
+            throw new AssertionError(e);
+        }
+        printWriterAddPass();
+    }
 }
