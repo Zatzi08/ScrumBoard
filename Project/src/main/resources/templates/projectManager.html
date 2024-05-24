@@ -42,12 +42,12 @@
                 </thead>
                 <tbody id="userTaskTableBody">
                     <tr th:each="item : ${Storys}" th:USid="${item.ID}" th:Sid="${sessionID}"  ondblclick="SwitchToTasksbyUSID(this.getAttribute('Sid'), this.getAttribute('USid'))">
-                        <th>
+                        <th th:style = "${(item.getPriorityAsInt() == 1) ? 'background-color: lightgreen' : (item.getPriorityAsInt() == 2) ? 'background-color: lightblue' : (item.getPriorityAsInt() == 3) ? 'background-color: lightsalmon' : (item.getPriorityAsInt() == 4) ? 'background-color: indianred' : 'background-color: rgba(255, 255, 255, 0.66)'}">
                             <button class="Btn" style="margin-left: 95%"title="Bearbeiten" th:sname="${item.name}" th:sdescription="${item.description}" th:sid="${item.ID}" th:prio="${item.getPriorityAsInt()}"
                                     onclick="toggleEditBox('editBtn', this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'), this.getAttribute('prio'));" ><i class="fa fa-edit"></i></button>
                             <span class="Btn" th:USid="${item.ID}" th:Sid="${sessionID}" onclick="deleteUS(this.getAttribute('USid'),this.getAttribute('Sid'))" title="Löschen">&times;</span>
                             <label th:text = "${item.name}">Name</label>
-                            <label th:text="${item.priority}">Priorität</label>
+                            <label th:text = "${item.priority}">Priorität</label>
                             <hr>
                             <label style="display: inline-block;" th:text="${item.description}">Beschreibung</label>
                         </th>
@@ -74,7 +74,7 @@
             <textarea id="inputDesc" class="inputEdit" required placeholder="Eine passende Beschreibung eingeben" name="description" form="editForm"></textarea>
             <label>Priorität</label>
             <button type="button" class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: indianred" name="urgent" form="editForm">Urgent</button>
-            <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: lightcoral" name="high" form="editForm">High</button>
+            <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: lightsalmon" name="high" form="editForm">High</button>
             <button type="button" class="inputEditPrio" id="inputPrioNormal" onclick="highlightPriorityButton('inputPrioNormal')" style="background-color: lightblue" name="normal" form="editForm">Normal</button>
             <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: lightgreen" name="low" form="editForm">Low</button>
             <label style="margin-top: 15px"> </label>
