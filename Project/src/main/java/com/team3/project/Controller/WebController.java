@@ -350,7 +350,8 @@ public class WebController {
                 return new ModelAndView("projectManager-Tasks")
                         .addObject("Tasks", presentationToLogic.taskService.getAllTask())
                         .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys())
-                        .addObject("sessionID", sessionID);
+                        .addObject("sessionID", sessionID)
+                        .addObject("TaskBoard", presentationToLogic.taskBoardService.getAllTaskBoards());
             }
         } catch (Exception e){
             return error(e);
@@ -395,7 +396,8 @@ public class WebController {
                         .addObject("sessionID",sessionID)
                         .addObject("Tasks", presentationToLogic.taskService.getTasksbyUSID(USId))
                         .addObject("StoryName", presentationToLogic.userStoryService.getUserStory(USId).getName())
-                        .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys());
+                        .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys())
+                        .addObject("TaskBoard", presentationToLogic.taskBoardService.getAllTaskBoards());
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -547,7 +549,7 @@ public class WebController {
      * Revisited: /
      * Funktion: /
      * Grund: /
-     * UserStory/Task-ID: T16.B1
+     * UserStory/Task-ID: R1.B2
      */
     @RequestMapping("setAuthority")
     private ResponseEntity<HttpStatus> setAuthority(@RequestHeader(value = "sessionID", required = true) String sessionID,
