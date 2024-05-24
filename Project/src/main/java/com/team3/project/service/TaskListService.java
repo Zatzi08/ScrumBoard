@@ -37,7 +37,7 @@ public class TaskListService {
         if(tlID < 0) throw new Exception("Invalid TaskListID");
         DAOTaskList daoTaskList = DAOTaskListService.getById(tlID);
         if(daoTaskList == null) throw new Exception("TaskList not found");
-        TaskList taskList = new TaskList(tlID,daoTaskList.getName() );
+        TaskList taskList = new TaskList(tlID,daoTaskList.getName());
         try{
         taskList.setTasksInTaskList(daoTaskList.getTasks());
         }catch (Exception e){
@@ -50,15 +50,15 @@ public class TaskListService {
         List<DAOTaskList> daoTaskLists= DAOTaskListService.getAll();
         if(daoTaskLists == null) throw new Exception("No TaskList existent");
         List<TaskList> taskLists = new LinkedList<TaskList>();
-        daoTaskLists.forEach(x->{
-            TaskList taskList = new TaskList(x.getId(),x.getName());
+        for(DAOTaskList daoTaskList : daoTaskLists){
+            TaskList taskList = new TaskList(daoTaskList.getId(),daoTaskList.getName());
             try{
-                taskList.setTasksInTaskList(x.getTasks());
+                taskList.setTasksInTaskList(daoTaskList.getTasks());
             }catch (Exception e){
                 e.printStackTrace();
             }
             taskLists.add(taskList);
-        });
+        }
         return  taskLists;
     }
 

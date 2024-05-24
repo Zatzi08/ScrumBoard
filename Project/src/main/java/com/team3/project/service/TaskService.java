@@ -89,12 +89,12 @@ public class TaskService {
                     DAOTaskService.updateDoneById(task.getID(), task.getDone());
                  */
                 if(task.getTbID() > 0 && task.getTbID() != dt.getTaskList().getTaskBoard().getId()){
-                    List<DAOTaskList> taskLists = DAOTaskListService.getByTaskBoardId(task.getTbID());
-                    DAOTaskList daoTaskList = taskLists.get(0);
-                    while(!taskLists.isEmpty()){
-                        if(daoTaskList.getSequence() == 1) break;
-                        taskLists.remove(0);
-                        daoTaskList = taskLists.get(0);
+                    List<DAOTaskList> daoTaskLists = DAOTaskListService.getByTaskBoardId(task.getTbID());
+                    if(daoTaskLists == null) throw new Exception("No TaskLists in TaskBoard");
+                    DAOTaskList daoTaskList = daoTaskLists.get(0);
+                    while(daoTaskList.getSequence() != 1){
+                        daoTaskLists.remove(0);
+                        daoTaskList = daoTaskLists.get(0);
                     }
                     DAOTaskListService.addTaskById(daoTaskList.getId(), new DAOTask(task.getDescription(), task.getPriorityAsInt(), task.isDone(), task.getDueDateAsString(),
                     task.getTimeNeededG(), task.getTimeNeededA(),daoTaskList, DAOUserStoryService.getById(task.getUserStoryID()), null));

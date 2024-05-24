@@ -25,15 +25,15 @@ public class TaskBoard extends abstraktDataClasses {
         if(daoTaskLists == null) throw new Exception("Null List");
         if(daoTaskLists.isEmpty()) throw new Exception("Empty List");
         List <TaskList> taskLists = new LinkedList<TaskList>();
-        daoTaskLists.forEach(x->{
+        for(DAOTaskList daoTaskList: daoTaskLists){
             try{
-                TaskList taskList = new TaskList(x.getId(), x.getName());
-                taskList.setTasksInTaskList(x.getTasks());
+                TaskList taskList = new TaskList(daoTaskList.getId(), daoTaskList.getName());
+                taskList.setTasksInTaskList(daoTaskList.getTasks());
                 taskLists.add(taskList);
             }catch (Exception e){
                 e.printStackTrace();
             }
-        });
+        }
         this.taskListList = taskLists;
     }
 
