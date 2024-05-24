@@ -63,12 +63,18 @@ public class TaskService {
      * @param task Task Object
      * @throws Exception Null Params or Object not found
      */
+    //TODO: integriere die verknüpften Nutzer
     public void saveTask(Task task) throws Exception{
         if (task == null) throw new Exception("Task not found");
         if (task.getDescription() == null ) throw new Exception("null description");
         if(task.getUserStoryID() == -1) throw new Exception("invalid UserStory-ID");
         if(task.getID() == -1){
-            DAOTaskService.create(task.getDescription(), task.getPriorityAsInt(),false,task.getDueDateAsString(),task.getTimeNeededG(),task.getTimeNeededA(),null, DAOUserStoryService.getById(task.getUserStoryID()), null);
+            if(task.getTbID() < 0){
+                DAOTaskService.create(task.getDescription(), task.getPriorityAsInt(),false,task.getDueDateAsString(),task.getTimeNeededG(),task.getTimeNeededA(),null, DAOUserStoryService.getById(task.getUserStoryID()), null);
+            }else{
+
+                DAOTaskService.create(task.getDescription(), task.getPriorityAsInt(),false,task.getDueDateAsString(),task.getTimeNeededG(),task.getTimeNeededA(),DAOTaskListService.getByTaskBoardId(task.getTbID()).get(0), DAOUserStoryService.getById(task.getUserStoryID()), null);
+            }
         }else{
             DAOTask dt = DAOTaskService.getById(task.getID());
             if (dt != null){

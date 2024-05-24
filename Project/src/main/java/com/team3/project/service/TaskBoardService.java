@@ -15,8 +15,7 @@ public class TaskBoardService {
         if (tbid < 0) throw new Exception("Null ID");
         DAOTaskBoard daoTaskBoard = DAOTaskBoardService.getById(tbid);
         if(daoTaskBoard == null) throw new Exception("TaskBoard not existent");
-        TaskBoard taskBoard = new TaskBoard(daoTaskBoard.getId(), daoTaskBoard.getName());
-        taskBoard.setTaskListsInTaskBoard(daoTaskBoard.getTaskLists());
+        TaskBoard taskBoard = toTaskBoard(daoTaskBoard);
         return taskBoard;
     }
 

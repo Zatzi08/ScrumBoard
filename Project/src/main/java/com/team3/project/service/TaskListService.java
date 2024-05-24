@@ -16,29 +16,26 @@ public class TaskListService {
     //TODO: fix in daoTasks.add: baue verknüpfte Nutzer mit ein (momentan auf null)
     //TODO: DB-Funktion zum erstellen einer TaskListe fehlt
     public void saveTaskList(TaskList taskList)throws Exception{
-        if(taskList.getID() < -1) throw new Exception("Invalid TaskListID");
-        if(taskList.getID() == -1){
-            //DAOTaskListService.createTaskList(taskList.getName());
-        }else{
-            if(taskList.getTasks() == null) throw new Exception("Empty TaskList");
-            if(taskList.getName() == null) throw new Exception("Null Name");
-            if(taskList.getName().isEmpty()) throw new Exception("Empty Name");
-            List<DAOTask> daoTasks = null;
-            taskList.getTasks().forEach(x->{
-                daoTasks.add(new DAOTask(x.getDescription(),x.getPriorityAsInt(),x.isDone(), x.getDueDateAsString(), x.getTimeNeededG(), x.getTimeNeededA(), DAOTaskListService.getWithTasksById(x.getID()), DAOUserStoryService.getById(x.getID()), null));
-            });
-            DAOTaskListService.updateTasksById(taskList.getID(), daoTasks);
+        if(taskList.getID() < 0) throw new Exception("Invalid TaskListID");
+        if(taskList.getTasks() == null) throw new Exception("Empty TaskList");
+        if(taskList.getName() == null) throw new Exception("Null Name");
+        if(taskList.getName().isEmpty()) throw new Exception("Empty Name");
+        List<DAOTask> daoTasks = null;
+        for(Task task : taskList.getTasks()){
+            daoTasks.add(new DAOTask(task.getDescription(),task.getPriorityAsInt(),task.isDone(), task.getDueDateAsString(), task.getTimeNeededG(), task.getTimeNeededA(), DAOTaskListService.getWithTasksById(task.getID()), DAOUserStoryService.getById(task.getID()), null));
         }
+        DAOTaskListService.updateTasksById(taskList.getID(), daoTasks);
+
     }
 
     public TaskList getTaskListByID(int tlID) throws Exception{
         if(tlID < 0) throw new Exception("Invalid TaskListID");
         DAOTaskList daoTaskList = DAOTaskListService.getById(tlID);
         if(daoTaskList == null) throw new Exception("TaskList not found");
-        TaskList taskList = new TaskList(tlID,daoTaskList.getName());
+        TaskList taskList = null;
         try{
-        taskList.setTasksInTaskList(daoTaskList.getTasks());
-        }catch (Exception e){
+            taskList = toTaskList(daoTaskList);
+        }catch (ParseException e){
             e.printStackTrace();
         }
         return taskList;
@@ -49,10 +46,10 @@ public class TaskListService {
         if(daoTaskLists == null) throw new Exception("No TaskList existent");
         List<TaskList> taskLists = new LinkedList<TaskList>();
         for(DAOTaskList daoTaskList : daoTaskLists){
-            TaskList taskList = new TaskList(daoTaskList.getId(),daoTaskList.getName());
+            TaskList taskList = null;
             try{
-                taskList.setTasksInTaskList(daoTaskList.getTasks());
-            }catch (Exception e){
+                taskList = toTaskList(daoTaskList);
+            }catch (ParseException e) {
                 e.printStackTrace();
             }
             taskLists.add(taskList);
