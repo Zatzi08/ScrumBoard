@@ -1,6 +1,5 @@
 package com.team3.project.service;
 import com.team3.project.Classes.TaskBoard;
-import com.team3.project.Classes.TaskList;
 import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAO.DAOTaskList;
 import com.team3.project.DAOService.DAOTaskBoardService;
@@ -8,8 +7,6 @@ import com.team3.project.DAOService.DAOTaskListService;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import static com.team3.project.service.TaskListService.toTaskList;
 
 public class TaskBoardService {
     public TaskBoard getTaskBoardByID(int tbid) throws Exception {
@@ -30,7 +27,7 @@ public class TaskBoardService {
 
     public TaskBoard getTaskBoard() throws Exception {
         List<DAOTaskBoard> taskBoardList = DAOTaskBoardService.getAll();
-        return taskBoardList.isEmpty()? null : toTaskBoard(DAOTaskBoardService.getWithTaskListsWithTasksById(taskBoardList.get(0).getId()));
+        return taskBoardList.isEmpty()? null : toTaskBoard(taskBoardList.get(0));
     }
 
     public TaskBoard toTaskBoard(DAOTaskBoard daoTaskBoard) throws Exception {
@@ -48,5 +45,21 @@ public class TaskBoardService {
             IDs.add(toAdd);
         }
         return IDs;
+    }
+
+    public List<TaskBoard> getAllTaskBoards() {
+        List<DAOTaskBoard> dtbs = DAOTaskBoardService.getAll();
+        if (dtbs.isEmpty()) return null;
+        try {
+            List<TaskBoard> tbs = new LinkedList<TaskBoard>();
+            for (DAOTaskBoard dtb : dtbs) {
+                TaskBoard toAdd = toTaskBoard(dtb);
+                tbs.add(toAdd);
+            }
+            return tbs;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
