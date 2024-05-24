@@ -49,11 +49,13 @@
             <div id = userTextDiv>
             <label class = "userText" th:text="${user.getUname()}" >Nutzername</label>
               <div id = "userRights">
-                <select th:if = "${auth>=2}" class="dropdownTask" id="TBDropdown">
-                  <option id="TBDropDown:-1" value="-1" selected = "selected">Wähle zugehöriges Task-Board</option>
-                  <option th:each="US : ${UserStory}" th:id="@{TBDropdown:{id}(id=${US.ID})}" th:value="${US.ID}" th:text="${US.name}"></option>
+                <select th:if = "${auth>=2}" th:Sid="${sessionID}" onchange="changeAuth(this.getAttribute('Sid'),this.getAttribute('id'), this.getAttribute('usID'))" class="dropdownTask" th:id="@{RoleDropdown:{id}(id=${user.getID()})}"  th:usID="${user.getID()}">
+                  <option id="Role:1" value="1" th:selected="${user.getAuthorization() == 1} ? 'selected'">Nutzer</option>
+                  <option id="Role:2" value="2" th:selected="${user.getAuthorization() == 2} ? 'selected'" >Manager</option>
+                  <option id="Role:3" value="3" th:selected="${user.getAuthorization() == 3} ? 'selected'" >Project Owner</option>
+                  <option id="Role:4" value="4" th:selected="${user.getAuthorization() == 4} ? 'selected'" >Admin</option>
                 </select>
-                <label th:unless = "${auth>=2}" ></label>
+                <label th:unless = "${auth>=2}" th:text="${user.getAuthorizationAsEnum()}"></label>
               </div>
             </div>
           </th>

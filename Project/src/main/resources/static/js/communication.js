@@ -187,6 +187,25 @@ function saveTaskBoard(sessionID){
     })
 }
 
+function changeAuth(sessionID, selectID, usID){
+    let selected = document.getElementById(selectID);
+    let auth = selected.value;
+    let url = 'setAuthority?USID=' + usID + '&Auth=' + auth;
+
+    fetch(url,{
+        method: 'Get',
+        cache: 'no-cache',
+        headers:{
+            'Content-Type': 'application/json',
+            'sessionID': sessionID
+        }
+    }).then(r => {
+        if (!r.ok){
+            document.location.reload()
+        }
+    })
+}
+
 // Zusätzliche Funktionen
 function getRollen(){
     var list = document

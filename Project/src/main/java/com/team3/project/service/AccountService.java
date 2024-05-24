@@ -110,7 +110,7 @@ public class AccountService {
         if(daoUserList != null){
             User toAdd;
             for(DAOUser daoUser : daoUserList){
-                toAdd = new User(daoUser.getName(),daoUser.getId(),daoUser.getPrivatDescription(),daoUser.getWorkDescription(),null);
+                toAdd = new User(daoUser.getName(),daoUser.getId(),daoUser.getPrivatDescription(),daoUser.getWorkDescription(),null, daoUser.getAuthorization().getAuthorization());
                 list.add(toAdd);
             }
         }
@@ -155,7 +155,7 @@ public class AccountService {
         if (email == null) throw new Exception("Null EMail");
         DAOUser user = DAOUserService.getById(DAOUserService.getIdByMail(email));
         if (user == null) throw new Exception("User not found");
-        return new Profile(user.getName(),user.getEmail(), user.getPrivatDescription(), user.getWorkDescription(), null);
+        return new Profile(user.getId(),user.getName(),user.getEmail(), user.getPrivatDescription(), user.getWorkDescription(), null, user.getAuthorization().getAuthorization());
     }
 
     /* Author: Lucas Krüger
@@ -175,7 +175,7 @@ public class AccountService {
         DAOUser user = DAOUserService.getBySessionId(sessionId);
         if (user == null) throw new Exception("User not found");
 
-        return new Profile(user.getName(),user.getEmail(), user.getPrivatDescription(), user.getWorkDescription(), null);
+        return new Profile(user.getId(), user.getName(),user.getEmail(), user.getPrivatDescription(), user.getWorkDescription(), null, user.getAuthorization().getAuthorization());
     }
 
     /* Author: Lucas Krüger
@@ -206,7 +206,7 @@ public class AccountService {
         if(daoUserList != null){
             Profile toAdd;
             for(DAOUser daoUser : daoUserList){
-                toAdd = new Profile(daoUser.getName(),daoUser.getEmail(),daoUser.getPrivatDescription(),daoUser.getWorkDescription(),null);
+                toAdd = new Profile(daoUser.getId(),daoUser.getName(),daoUser.getEmail(),daoUser.getPrivatDescription(),daoUser.getWorkDescription(),null, daoUser.getAuthorization().getAuthorization());
                 list.add(toAdd);
             }
         }
