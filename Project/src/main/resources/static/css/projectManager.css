@@ -460,15 +460,28 @@ ul{list-style-type: none;}
 
 #userRights{
     float:right;
-    margin-left: 80%;
     overflow: hidden;
+    width:auto;
+    margin-left: auto;
+    margin-right: 0;
 }
 
-#rightsDropdown{
-    width:10%;
+.rightsDropdown{
+    width:auto;
     height:30px;
     border-radius: 10px;
+    right:0;
+    background-color: #87939f;
+    color: black;
 }
+
+.rightsDropdown option:hover{
+    background-color: #b2bbc4;
+    height: 30px;
+}
+
+.rightsDropdown:focus{background-color: #87939f;}
+
 
 
 

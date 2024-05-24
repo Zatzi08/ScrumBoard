@@ -42,7 +42,7 @@
                 </thead>
                 <tbody id="userTaskTableBody">
                 <tr th:each="item : ${Tasks}">
-                    <th>
+                    <th th:style = "${(item.getPriorityAsInt() == 1) ? 'background-color: lightgreen' : (item.getPriorityAsInt() == 2) ? 'background-color: lightblue' : (item.getPriorityAsInt() == 3) ? 'background-color: lightsalmon' : (item.getPriorityAsInt() == 4) ? 'background-color: indianred' : 'background-color: rgba(255, 255, 255, 0.66)'}">>
                         <label class="userTaskTable-ContentStoryBoard" th:text="${item.getUserStory().getName()}" >Story</label>
                         <span class="userTaskTable-ContentStoryBoard">/</span>
                         <label class="userTaskTable-ContentStoryBoard" th:text="${item.getTaskBoardNameOfTask()}">Board</label>
@@ -78,17 +78,19 @@
             <textarea id="inputDesc" class="inputEdit" required placeholder="Eine passende Beschreibung eingeben" name="description" form="editForm"></textarea>
             <label>Priorität</label>
             <button type="button" class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: indianred" name="urgent" form="editForm">Urgent</button>
-            <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: lightcoral" name="high" form="editForm">High</button>
+            <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: lightsalmon" name="high" form="editForm">High</button>
             <button type="button" class="inputEditPrio" id="inputPrioNormal" onclick="highlightPriorityButton('inputPrioNormal')" style="background-color: lightblue" name="normal" form="editForm">Normal</button>
             <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: lightgreen" name="low" form="editForm">Low</button>
             <label style="margin-top: 15px">Abgabefrist</label>
             <input type="datetime-local" id="inputDate" class="inputEdit" placeholder="Abgabefrist">
-            <label style="margin-top: 15px">Geschätzte Zeit</label>
+            <label style="margin-top: 15px">Geschätzte Zeit in Stunden</label>
             <input type = "number" min="0" max="1000" step="0.5" id = "inputTimeNeeded" class="inputEdit" placeholder="Geschätzte Zeit">
+            <label style="margin-top: 15px">Task zu einer User-Story zuweisen</label>
             <select class="dropdownTask" id="USDropdown">
                 <option id="USDropDown:-1" value="-1" selected = "selected">Wähle zugehörige User-Story</option>
                 <option th:each="US : ${UserStory}" th:id="@{USDropdown:{id}(id=${US.ID})}" th:value="${US.ID}" th:text="${US.name}"></option>
             </select>
+            <label>Task zu einem Task-Board zuweisen</label>
             <select class="dropdownTask" id="TBDropdown">
                 <option id="TBDropDown:-1" value="-1" selected = "selected">Wähle zugehöriges Task-Board</option>
                 <option th:each="TB : ${TaskBoard}" th:id="@{TBDropdown:{id}(id=${TB.getID()})}" th:value="${TB.getID()}" th:text="${TB.getName()}"></option>
