@@ -5,11 +5,9 @@ import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.DAOAccountService;
 import com.team3.project.DAOService.DAOTaskService;
-import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.DAOService.DAOUserStoryService;
 import com.team3.project.Tests.BaseClassesForTests.BaseHTTPTest;
 import com.team3.project.service.AccountService;
-import org.hibernate.AssertionFailure;
 import org.junit.jupiter.api.*;
 import org.junit.platform.suite.api.Suite;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.yaml.snakeyaml.events.Event;
 
 import java.util.List;
 import java.util.Objects;
@@ -693,7 +688,7 @@ public class HttpRequestTests extends BaseHTTPTest {
         }
 
         header.set("sessionID", masterID);
-        String body = "{\"description\":\"New Task To Describe\",\"userStoryID\":1,\"timeNeededG\":-1,\"timeNeededA\":-1,\"dueDate\":\"2024-10-05T12:39\",\"priority\":1,\"tID\":-1}";
+        String body = "{\"description\":\"New Task To Describe\",\"userStoryID\":1,\"timeNeededG\":-1,\"timeNeededA\":-1,\"dueDate\":\"2024-10-05T12:39\",\"priority\":1,\"tID\":-1,\"tbID\":-1}";
         message = new HttpEntity<>(body, header);
 
         try {
@@ -705,7 +700,7 @@ public class HttpRequestTests extends BaseHTTPTest {
         }
 
         header.set("sessionID", masterID);
-        body = "{\"description\":\""+ tasks.get(0).getDescription() +"\",\"userStoryID\":"+ tasks.get(0).getUserStoryID() +",\"timeNeededG\":"+ tasks.get(0).getTimeNeededG() +",\"timeNeededA\":"+ tasks.get(0).getTimeNeededA() +",\"dueDate\":\""+ tasks.get(0).getDueDateAsString() +"\",\"priority\":"+ tasks.get(0).getPriorityAsInt() +",\"tID\":"+ tasks.get(0).getID() +"}";
+        body = "{\"description\":\""+ tasks.get(0).getDescription() +"\",\"userStoryID\":"+ tasks.get(0).getUserStoryID() +",\"timeNeededG\":"+ tasks.get(0).getTimeNeededG() +",\"timeNeededA\":"+ tasks.get(0).getTimeNeededA() +",\"dueDate\":\""+ tasks.get(0).getDueDateAsString() +"\",\"priority\":"+ tasks.get(0).getPriorityAsInt() +",\"tID\":"+ tasks.get(0).getID() + ",\"tbID\":"+ tasks.get(0).getTbID() + "}";
         message = new HttpEntity<>(body, header);
 
         try {
@@ -963,6 +958,12 @@ public class HttpRequestTests extends BaseHTTPTest {
             throw new AssertionError(e);
         }
 
+        try{
+            presentationToLogic.accountService.setAuthority(users.get(0).getID(), 1);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         header.set("sessionID", sessions.get(0));
         message = new HttpEntity<>("", header);
         try {
@@ -981,6 +982,11 @@ public class HttpRequestTests extends BaseHTTPTest {
         } catch (AssertionError e){
             printWriterAddFailure("Akzeptiert Request nicht - Valid Params");
             throw new AssertionError(e);
+        }
+        try{
+            presentationToLogic.accountService.setAuthority(users.get(0).getID(), 1);
+        } catch (Exception e){
+            e.printStackTrace();
         }
         printWriterAddPass();
     }
