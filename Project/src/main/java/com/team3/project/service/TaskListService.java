@@ -4,9 +4,7 @@ import com.team3.project.Classes.Task;
 import com.team3.project.Classes.TaskList;
 import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskList;
-import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOTaskListService;
-import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.DAOService.DAOUserStoryService;
 
 import java.text.ParseException;
@@ -62,10 +60,12 @@ public class TaskListService {
         return  taskLists;
     }
 
-    public static TaskList toTaskList(DAOTaskList daotaskList) throws ParseException {
-        TaskList taskList = new TaskList(daotaskList.getId(), daotaskList.getName());
+    public static TaskList toTaskList(DAOTaskList daoTaskList) throws Exception {
+        TaskList taskList = new TaskList(daoTaskList.getId(), daoTaskList.getName());
+        daoTaskList = DAOTaskListService.getWithTasksById(daoTaskList.getId());
+        if (daoTaskList == null) throw new Exception("Invalid TaskList");
         List<Task> tasks = new LinkedList<Task>();
-        for (DAOTask daoTask : daotaskList.getTasks()) {
+        for (DAOTask daoTask : daoTaskList.getTasks()) {
             Task toAdd = new Task(daoTask.getId(), daoTask.getDescription(), daoTask.getPriority(), daoTask.getUserStory().getId(), daoTask.getDueDate(), daoTask.getProcessingTimeEstimatedInHours(), daoTask.getProcessingTimeRealInHours(), -1);
             tasks.add(toAdd);
         }

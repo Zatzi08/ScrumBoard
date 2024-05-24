@@ -1,5 +1,6 @@
 package com.team3.project.service;
 import com.team3.project.Classes.TaskBoard;
+import com.team3.project.Classes.TaskList;
 import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAO.DAOTaskList;
 import com.team3.project.DAOService.DAOTaskBoardService;
@@ -9,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class TaskBoardService {
+    // TODO: FIX Konstruktor
     public TaskBoard getTaskBoardByID(int tbid) throws Exception {
         if (tbid < 0) throw new Exception("Null ID");
         DAOTaskBoard daoTaskBoard = DAOTaskBoardService.getById(tbid);
@@ -17,6 +19,7 @@ public class TaskBoardService {
         taskBoard.setTaskListsInTaskBoard(daoTaskBoard.getTaskLists());
         return taskBoard;
     }
+
     //TODO: DB-Funktion zum erstellen von TaskBoards fehlt
     public void createTaskBoard(String taskBoardName) throws Exception{
         if(taskBoardName == null) throw new Exception("Null Name");
@@ -33,7 +36,13 @@ public class TaskBoardService {
     public TaskBoard toTaskBoard(DAOTaskBoard daoTaskBoard) throws Exception {
         TaskBoard taskBoard = new TaskBoard(daoTaskBoard.getId(), daoTaskBoard.getName());
         List<DAOTaskList> taskLists = DAOTaskListService.getByTaskBoardId(daoTaskBoard.getId());
-        taskBoard.setTaskListsInTaskBoard(taskLists);
+        if (taskLists.isEmpty()) throw new Exception("Invalid TaskList");
+        List<TaskList> taskListList = new LinkedList<TaskList>();
+        for (DAOTaskList dtl : taskLists){
+            TaskList toAdd = TaskListService.toTaskList(dtl);
+            taskListList.add(toAdd);
+        }
+        taskBoard.setTaskListList(taskListList);
         return taskBoard;
     }
 
