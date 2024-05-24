@@ -12,11 +12,13 @@ import java.util.List;
 public class TaskList extends abstraktDataClasses {
     private String name;
     private List<Task> tasks;
+    private int sequence;
 
-    public TaskList(int ID, String name) {
+    public TaskList(int ID, String name, int sequence) {
         super(ID);
         this.name = name;
         this.tasks = new LinkedList<Task>();
+        this.sequence = sequence;
     }
 
     public void setTasksInTaskList(List <DAOTask> daoTaskList)throws  Exception{
@@ -25,7 +27,7 @@ public class TaskList extends abstraktDataClasses {
         List <Task> taskList = new LinkedList<Task>();
         daoTaskList.forEach(x->{
             try{
-                taskList.add(new Task(x.getId(), x.getDescription(), x.getPriority(), x.getUserStory().getId(), x.getDueDate(), x.getProcessingTimeEstimatedInHours(), x.getProcessingTimeRealInHours(),-1));
+                taskList.add(new Task(x.getId(), x.getDescription(), x.getPriority(), x.getUserStory().getId(), x.getDueDate(), x.getProcessingTimeEstimatedInHours(), x.getProcessingTimeRealInHours(),x.getTaskList().getTaskBoard().getId()));
             }catch (Exception e){
                 e.printStackTrace();
             }
