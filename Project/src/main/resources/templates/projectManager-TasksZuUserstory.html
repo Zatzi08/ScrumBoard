@@ -42,7 +42,7 @@
                 </thead>
                 <tbody id="userTaskTableBody">
                 <tr th:each="item : ${Tasks}">
-                    <th th:style = "${(item.getPriorityAsInt() == 1) ? 'background-color: lightgreen' : (item.getPriorityAsInt() == 2) ? 'background-color: lightblue' : (item.getPriorityAsInt() == 3) ? 'background-color: lightsalmon' : (item.getPriorityAsInt() == 4) ? 'background-color: indianred' : 'background-color: rgba(255, 255, 255, 0.66)'}">>
+                    <th>
                         <label class="userTaskTable-ContentStoryBoard" th:text="${item.getUserStory().getName()}" >Story</label>
                         <span class="userTaskTable-ContentStoryBoard">/</span>
                         <label class="userTaskTable-ContentStoryBoard" th:text="${item.getTaskBoardNameOfTask()}">Board</label>

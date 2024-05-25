@@ -46,7 +46,7 @@
             </thead>
             <tbody class="columnTableBody">
             <tr th:each="task : ${TaskList.getTasks()}" th:id="${task.getID()}" draggable="true">
-                <td>
+                <td th:style = "${(task.getPriorityAsInt() == 1) ? 'background-color: lightgreen' : (task.getPriorityAsInt() == 2) ? 'background-color: lightblue' : (task.getPriorityAsInt() == 3) ? 'background-color: lightsalmon' : (task.getPriorityAsInt() == 4) ? 'background-color: indianred' : 'background-color: rgba(255, 255, 255, 0.66)'}">
                     <label class="tableContentLabel" id="tableContent-UsId" th:text="${task.getUserStory().getName()}">US-ID</label>
                     <label class="tableContentLabel" id="tableContent-Beschreibung" th:text="${task.getDescription()}">XDD</label>
                     <label class="tableContentLabel" id="tableContent-LeftTime" th:text="${task.getDueDateAsPresentable()}" >Left Time</label>
