@@ -1,9 +1,13 @@
 package com.team3.project.DAOService;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskBoard;
+import com.team3.project.DAO.DAOTaskList;
+import com.team3.project.DAO.DAOUserStory;
 
 public class DAOTaskBoardService {
     //gets
@@ -55,19 +59,49 @@ public class DAOTaskBoardService {
     }
 
     public static DAOTaskBoard getWithTaskListsWithTasksById(int id) {
-        List<String> joinOnAtrributeNames = Arrays.asList("tasklists", "tasklists.tasks");
-        return DAOService.getSingleLeftJoinsById(id, DAOTaskBoard.class, joinOnAtrributeNames);
+        List<String> joinOnAtrributeNames = Arrays.asList("taskLists", "taskLists.tasks");
+        DAOTaskBoard daoTaskBoard = DAOService.getLeftJoinByID(id, DAOTaskBoard.class, joinOnAtrributeNames.get(0));
+        List<DAOTaskList> daoTaskLists = new ArrayList<>();
+        daoTaskBoard.getTaskLists().forEach(taskList -> {
+            daoTaskLists.add(DAOTaskListService.getWithTasksById(taskList.getId()));
+        });
+        daoTaskBoard.setTaskLists(daoTaskLists);
+        return daoTaskBoard;
     }
 
-    public static boolean createWithDefaultTaskLists(String name) {
+    public static boolean create(String name, List<DAOTaskList> daoTaskLists) {
+        if (!existsName(name)) {
+            if (daoTaskLists == null) {
+                return createWithDefaultTaskLists(name);
+            } 
+            return createWithoutDefaultTaskLists(name, daoTaskLists);
+        }
+        return false;
+    }
+
+    static boolean createWithoutDefaultTaskLists(String name, List<DAOTaskList> daoTaskLists) {
+        DAOTaskBoard taskBoard = new DAOTaskBoard(name, daoTaskLists);
+            try {
+                DAOService.persist(taskBoard);
+                DAOTaskBoard daoTaskBoard = DAOTaskBoardService.getByName(name);
+                daoTaskLists.forEach(daoTaskList -> {
+                    daoTaskList.setTaskBoard(daoTaskBoard);
+                });
+                DAOService.mergeList(daoTaskLists);
+            } catch (Exception e) {
+                return false;
+            }
+            return true;
+    }
+    static boolean createWithDefaultTaskLists(String name) {
         DAOTaskBoard daoTaskBoard = new DAOTaskBoard(name, null);
         try {
             DAOService.persist(daoTaskBoard);
-            boolean isCreateWithDefaultTaskLists = DAOTaskListService.createDefaultsForTaskBoardByTaskBoardName(name);
-            if (!isCreateWithDefaultTaskLists) {
+            boolean isCreatedWithDefaultTaskLists = DAOTaskListService.createDefaultsForTaskBoardByTaskBoardName(name);
+            if (!isCreatedWithDefaultTaskLists) {
                 DAOService.delete(getByName(name));
             }
-            return isCreateWithDefaultTaskLists;
+            return isCreatedWithDefaultTaskLists;
         } catch (Exception e) {
         }
         return false;
@@ -75,7 +109,7 @@ public class DAOTaskBoardService {
 
     public static boolean updateNameById(int id, String name) {
         DAOTaskBoard taskBoard = DAOService.getByID(id, DAOTaskBoard.class);
-        if (!checkNameExists(name)) {
+        if (!existsName(name)) {
             taskBoard.setName(name);
             return DAOService.merge(taskBoard);
         }
@@ -105,7 +139,7 @@ public class DAOTaskBoardService {
         return true;
     }
 
-    static boolean checkNameExists(String name) {
+    static boolean existsName(String name) {
         String parameterName = "name";
         DAOTaskBoard taskBoard = DAOService.getSingleByPara(DAOTaskBoard.class, name, parameterName);
         if (taskBoard != null) {

@@ -23,7 +23,7 @@ public class TaskBoardService {
     public void createTaskBoard(String taskBoardName) throws Exception{
         if(taskBoardName == null) throw new Exception("Null Name");
         if (taskBoardName.isEmpty()) throw new Exception("Empty Name");
-        DAOTaskBoardService.createWithDefaultTaskLists(taskBoardName);
+        DAOTaskBoardService.create(taskBoardName, null);
     }
 
 

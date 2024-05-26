@@ -70,6 +70,11 @@ public class DAOTaskService {
         return DAOService.getLeftJoinByID(id, DAOTask.class, joinOnAttributeName);
     }
 
+    static DAOTask getWithTaskListById(int id) {
+        String joinOnAtrributeName = "taskList";
+        return DAOService.getLeftJoinByID(id, DAOTask.class, joinOnAtrributeName);
+    }
+
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: get entries of tasks by userStoryid
@@ -263,6 +268,12 @@ public class DAOTaskService {
         } catch (Exception e) {
         }
         return false;
+    }
+
+    static boolean updateTaskListById(int id, DAOTaskList taskList) {
+        DAOTask daoTask = getWithTaskListById(id);
+        daoTask.setTaskList(taskList);
+        return DAOService.merge(daoTask);
     }
 
     //deletes

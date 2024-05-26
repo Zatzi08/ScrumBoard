@@ -1,21 +1,12 @@
 package com.team3.project.DAOService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Function;
 
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import com.team3.project.Classes.UserStory;
-import com.team3.project.DAO.DAOAuthorization;
-import com.team3.project.DAO.DAORole;
-import com.team3.project.DAO.DAOTask;
-import com.team3.project.DAO.DAOUser;
-import com.team3.project.DAO.DAOUserStory;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -25,8 +16,7 @@ class DAO {
     public static void main(String[] args) {
         try {
         setUp();
-        //  String TestEmail = "TestEmail";
-        DAORoleService.deleteById(1);
+        
 
 
         //Usertest();   
