@@ -206,6 +206,24 @@ function changeAuth(sessionID, selectID, usID){
     })
 }
 
+function setTaskList(sessionID, tID, tlID){
+    let url = 'setTaskListOfTask?TID=' + tID + '&TLID=' + tlID;
+
+    fetch(url,{
+        method: 'Get',
+        cache: 'no-cache',
+        headers:{
+            'Content-Type': 'application/json',
+            'sessionID': sessionID
+        }
+    }).then(r => {
+        if (!r.ok){
+            alert("Invalid Request")
+            document.location.reload()
+        }
+    })
+}
+
 // Zusätzliche Funktionen
 function getRollen(){
     var list = document

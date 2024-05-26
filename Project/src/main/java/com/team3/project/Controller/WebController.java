@@ -571,6 +571,21 @@ public class WebController {
         return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
     }
 
+    @RequestMapping(value = "setTaskListToTask", method = RequestMethod.GET)
+    private ResponseEntity<HttpStatus> setTaskListToTask(@RequestHeader(value = "sessionID") String sessionID,
+                                                         @RequestParam(value = "TID", defaultValue = "-1") int tID,
+                                                         @RequestParam(value = "TLID", defaultValue = "-1") int tlID){
+        try {
+            if (presentationToLogic.webSessionService.verify(sessionID)){
+                presentationToLogic.taskService.setTaskList(tID,tlID);
+                return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+    }
 
     /* Author: Lucas Krüger
      * Revisited:

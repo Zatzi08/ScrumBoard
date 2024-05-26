@@ -389,14 +389,14 @@ fail: Wrong Page loaded - initial Fail
 Hyper-Text-Transport-Protocol-Tests:
 
 Hyper-Text-Transport-Protocol-Test-setAuthority
-Test ID: HTTP.T20
+Test ID: HTTP.T21
 Date: 24/05/24 11:57:40
 fail: Initial Fail
 
 Hyper-Text-Transport-Protocol-Tests:
 
 Hyper-Text-Transport-Protocol-Test-setAuthority
-Test ID: HTTP.T20
+Test ID: HTTP.T21
 Date: 24/05/24 11:59:55
 pass: true
 
@@ -435,7 +435,7 @@ fail: Wrong Page loaded
 
 
 Hyper-Text-Transport-Protocol-Test-setAuthority
-Test ID: HTTP.T20
+Test ID: HTTP.T21
 Date: 24/05/24 22:43:00
 pass: true
 
@@ -455,6 +455,19 @@ pass: true
 Hyper-Text-Transport-Protocol-Test-getUserList
 Test ID: HTTP.T17
 Date: 24/05/24 22:43:00
+pass: true
+
+Hyper-Text-Transport-Protocol-Tests:
+
+Hyper-Text-Transport-Protocol-Test-setTaskListOfTask
+Test ID: HTTP.T22
+Date: 26/05/24 11:46:16
+fail: Initial Fail
+Hyper-Text-Transport-Protocol-Tests:
+
+Hyper-Text-Transport-Protocol-Test-setTaskListOfTask
+Test ID: HTTP.T22
+Date: 26/05/24 11:49:15
 pass: true
 
 

@@ -2,10 +2,8 @@ package com.team3.project.service;
 
 import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.Task;
-import com.team3.project.Classes.TaskList;
 import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskList;
-import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOTaskListService;
 import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.DAOService.DAOUserStoryService;
@@ -181,5 +179,18 @@ public class TaskService {
             list.add(toAdd);
         }
         return list;
+    }
+
+    public void setTaskList(int tID, int tlID) throws Exception {
+        if (tID <= 0) throw new Exception("Null TID");
+        if (tlID <= -1) throw new Exception("Null tlID");
+        DAOTask dt = DAOTaskService.getById(tID);
+        if (dt == null) throw new Exception("Task not Found");
+        DAOTaskList list = null;
+        if (tlID != 0) {
+            list = DAOTaskListService.getById(tlID);
+            if (list == null) throw new Exception("TaskList not Found");
+        }
+        DAOTaskService.updateById(dt.getId(),dt.getDescription(),dt.getPriority(),dt.isDone(),dt.getDueDate(),dt.getProcessingTimeEstimatedInHours(),dt.getProcessingTimeRealInHours(), list, dt.getUserStory(),dt.getUsers());
     }
 }
