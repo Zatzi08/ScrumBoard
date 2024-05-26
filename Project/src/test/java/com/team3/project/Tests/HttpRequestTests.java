@@ -1041,7 +1041,15 @@ public class HttpRequestTests extends BaseHTTPTest {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + url + "?TID="+ tasks.get(0).getID() + "&TLID=" + boards.get(0).getTaskListList().get(1).getID(), HttpMethod.GET, message, String.class).getStatusCode())
                     .isEqualTo(HttpStatus.OK);
         } catch (AssertionError e){
-            printWriterAddFailure("Akzeptiert Request nicht - Valid Params");
+            printWriterAddFailure("Akzeptiert Request nicht - Valid Params - Valid TaskList");
+            throw new AssertionError(e);
+        }
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + url + "?TID="+ tasks.get(0).getID() + "&TLID=" + 0, HttpMethod.GET, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.OK);
+        } catch (AssertionError e){
+            printWriterAddFailure("Akzeptiert Request nicht - Valid Params - null TaskList");
             throw new AssertionError(e);
         }
 
