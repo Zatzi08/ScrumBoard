@@ -83,8 +83,9 @@
 .inputEditPrio:focus-visible {box-shadow: none;}
 .inputEditPrio.selected {border: 2px solid #ba55d3;}
 
-#inputDate {font-size: 12px; height: 30px}
-#inputDate{border-radius: 5px;}
+#inputDate {font-size: 12px; height: 30px; border-radius: 5px;}
+#inputTimeNeeded {font-size: 12px; height: 30px; border-radius: 5px;}
+
 .editMenu-content form label{color: white;}
 
 .closeToggleEdit {
@@ -133,11 +134,11 @@
     margin-right:20px;
     border: none;
     border-radius: 15px;
-    width: 98%;
+    width: 97%;
     margin-top: 30px;
     margin-left: 30px;
     font-size: 16px;
-    height: 600px;
+    height: 80vh;
 }
 
 #innerProjectManagerContainer{
@@ -153,7 +154,7 @@
     margin-top: 30px;
     margin-left: -150px;
     font-size: 16px;
-    height: 510px;
+    height: 95%;
     border-radius: 10px;
 }
 
@@ -359,17 +360,23 @@ hr {
 
 .show {display:block;}
 
-#USDropdown{
+.dropdownTask{
     background-color: #283d48;
     color: #afafaf;
     border: 2px solid #6e7f91;
     border-radius: 8px;
+    font-size: 12px;
+
 }
-#USDropdown option:hover{
+
+.dropdownTask option:hover{
     background-color: #3a5865;
-
-
 }
+
+.dropdownTask:focus{
+    background-color: transparent;
+}
+
 #tableHeader{
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -398,10 +405,86 @@ hr {
         flex:50%;
 
 }
-/*#pjDescription{
-    position: relative;
-    white-space: nowrap;
+
+.editRoles-content{
+    display: inline-block;
     overflow: hidden;
-    text-overflow: ellipsis;
-    width:30%
-}*/
+    width:100%;
+    height:auto;
+}
+
+#editRolesBtn{
+    display: inline-block;
+    height: auto;
+    width: auto;
+    border-radius: 15px;
+    position: page;
+    bottom: 30px;
+    font-size: 15px;
+    left: 30px;
+    margin-left: 90%;
+    color: #da9a27;
+    margin-bottom: 5px;
+}
+
+#editRolesBtn:hover{
+    color: #cb7e14;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+#visualRole{
+    display: block;
+    background-color: #0d1525;
+    border-radius: 10px;
+    max-width:90%;
+    width:90%;
+    max-height: 25px;
+    font-size: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    color: white;
+}
+ul{list-style-type: none;}
+
+#editRoleBtn, #deleteRoleBtn{
+    position: relative;
+    margin-right: 2%;
+}
+#deleteRoleBtn:hover{
+    color: grey;
+}
+#editRoleBtn:hover {
+    color: grey;
+}
+
+#userRights{
+    float:right;
+    overflow: hidden;
+    width:auto;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.rightsDropdown{
+    width:auto;
+    height:30px;
+    border-radius: 10px;
+    right:0;
+    background-color: #bbcde0;
+    color: black;
+    font-family: Roboto;
+    border: 1px solid black;
+
+}
+
+.rightsDropdown hover{
+    background-color: #b2bbc4;
+    height: 30px;
+}
+
+.rightsDropdown:focus{background-color: #87939f;}
+
+
+
+

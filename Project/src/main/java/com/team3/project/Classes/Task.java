@@ -1,6 +1,7 @@
 package com.team3.project.Classes;
 
 import com.team3.project.Classes.Enumerations.Priority;
+import com.team3.project.DAOService.DAOTaskBoardService;
 import com.team3.project.service.UserStoryService;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class Task extends abstraktDataClasses {
     private double timeNeededG;
     private double timeNeededA;
     private boolean done;
+    private int tbID;
 
     /* Author: Henry L. Freyschmidt
      * Revisited: /
@@ -28,7 +30,7 @@ public class Task extends abstraktDataClasses {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public Task(int tID, String description, int priority, int userStoryID, String dueDate, double timeNeededG, double timeNeededA) throws ParseException {
+    public Task(int tID, String description, int priority, int userStoryID, String dueDate, double timeNeededG, double timeNeededA, int tbID) throws ParseException {
         super(tID);
         Enumerations prior = new Enumerations();
         this.description = description;
@@ -45,6 +47,7 @@ public class Task extends abstraktDataClasses {
         this.timeNeededG = timeNeededG;
         this.timeNeededA = timeNeededA;
         this.done = false;
+        this.tbID = tbID;
 
     }
 
@@ -78,5 +81,10 @@ public class Task extends abstraktDataClasses {
         } catch (Exception e){
             return null;
         }
+    }
+
+    public String getTaskBoardNameOfTask(){
+        if (this.getTbID() == -1) return "";
+        return DAOTaskBoardService.getById(this.getTbID()).getName();
     }
 }

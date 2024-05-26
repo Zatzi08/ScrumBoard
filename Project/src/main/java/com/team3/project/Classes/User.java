@@ -23,12 +23,13 @@ public class User extends abstraktDataClasses {
 
     //Frage von Henry: soll beim Konstruktor von User die Profil-Sachen dabei sein?
     //Antwort: Muss eigentlich nicht
-    public User(String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles){
+    public User(String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles, int authorization){
         super(userID);
         this.name = name;
         this.privatDescription = privatDescription;
         this.workDescription = workDescription;
         this.roles = roles;
+        this.authorization = authorization;
     }
 
 }

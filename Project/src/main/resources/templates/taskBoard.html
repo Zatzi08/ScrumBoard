@@ -19,8 +19,8 @@
        User-ID/Task-ID: /
     -->
 <div class="Reiter">
-    <button class="reiterBtn" >Projekt Manager</button>
-    <button class = "reiterBtn">Profil </button>
+    <button class="reiterBtn" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" >Projekt Manager</button>
+    <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
     <button class = "reiterBtn"onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
     <button class = "reiterBtn" id="einstellungBtn">Einstellungen </button>
@@ -32,27 +32,24 @@
 
 
 <div id="outerContainer-Header">
-    <button class="outerContainer-HeaderBtn">Sprint 1 <span class="closeToggleEdit">&times;</span></button>
-    <button class="outerContainer-HeaderBtn">Sprint 2 <span class="closeToggleEdit">&times;</span></button>
-    <button class="outerContainer-HeaderBtn">Sprint 3 <span class="closeToggleEdit">&times;</span></button>
-    <button class="outerContainer-HeaderBtn">Sprint 4 <span class="closeToggleEdit">&times;</span></button>
+    <button th:each="Taskboard : ${TaskBoards}" class="outerContainer-HeaderBtn" th:text="${Taskboard.getName()}" th:tbID="${Taskboard.getID()}">Sprint 1 <span class="closeToggleEdit">&times;</span></button>
     <button id="outerContainer-HeaderBtnAdd"><b>+</b></button>
 </div>
 
 <div id="outerContainer">
-    <div class="innerContainer" style="margin-left: 10px">
+    <div th:each="TaskList : ${Board.getTaskListList()}" th:id="${TaskList.getID()}" class="innerContainer" style="margin-left: 10px">
         <table class="columnTable">
             <thead class="columnTableHead">
             <tr>
-                <th style="border-top-left-radius: 0; border-top-right-radius: 0; text-align: center; background-color: rgba(25,0,255,0.3); color: white">Todo</th>
+                <th style="border-top-left-radius: 0; border-top-right-radius: 0; text-align: center; background-color: rgba(25,0,255,0.3); color: white" th:text="${TaskList.getName()}">Todo</th>
             </tr>
             </thead>
             <tbody class="columnTableBody">
-            <tr draggable="true">
-                <td>
-                    <label class="tableContentLabel" id="tableContent-UsId">US-ID</label>
-                    <label class="tableContentLabel" id="tableContent-Beschreibung">XDD</label>
-                    <label class="tableContentLabel" id="tableContent-LeftTime">Left Time</label>
+            <tr th:each="task : ${TaskList.getTasks()}" th:id="${task.getID()}" draggable="true">
+                <td th:style = "${(task.getPriorityAsInt() == 1) ? 'background-color: lightgreen' : (task.getPriorityAsInt() == 2) ? 'background-color: lightblue' : (task.getPriorityAsInt() == 3) ? 'background-color: lightsalmon' : (task.getPriorityAsInt() == 4) ? 'background-color: indianred' : 'background-color: rgba(255, 255, 255, 0.66)'}">
+                    <label class="tableContentLabel" id="tableContent-UsId" th:text="${task.getUserStory().getName()}">US-ID</label>
+                    <label class="tableContentLabel" id="tableContent-Beschreibung" th:text="${task.getDescription()}">XDD</label>
+                    <label class="tableContentLabel" id="tableContent-LeftTime" th:text="${task.getDueDateAsPresentable()}" >Left Time</label>
                     <label class="tableContentLabel" id="tableContent-Role">Rolle</label>
                 </td>
             </tr>
@@ -60,87 +57,8 @@
         </table>
     </div>
 
-    <div class="innerContainer" style="margin-left: 10px">
-        <table class="columnTable">
-            <thead class="columnTableHead">
-            <tr>
-                <th style="border-top-left-radius: 0; border-top-right-radius: 0; text-align: center; background-color: rgba(25,0,255,0.3); color: white">In Bearbeitung</th>
-            </tr>
-            </thead>
-            <tbody class="columnTableBody">
-            <tr draggable="true">
-                <td>
-                    <label class="tableContentLabel" id="tableContent-UsId">US-ID</label>
-                    <label class="tableContentLabel" id="tableContent-Beschreibung">Beschreibung</label>
-                    <label class="tableContentLabel" id="tableContent-LeftTime">Left Time</label>
-                    <label class="tableContentLabel" id="tableContent-Role">Rolle</label>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
 
-    <div class="innerContainer" style="margin-left: 10px">
-        <table class="columnTable">
-            <thead class="columnTableHead">
-            <tr>
-                <th style="border-top-left-radius: 0; border-top-right-radius: 0; text-align: center; background-color: rgba(25,0,255,0.3); color: white">In Review</th>
-            </tr>
-            </thead>
-            <tbody class="columnTableBody">
-            <tr draggable="true">
-                <td>
-                    <label class="tableContentLabel" id="tableContent-UsId">US-ID</label>
-                    <label class="tableContentLabel" id="tableContent-Beschreibung">Beschreibung</label>
-                    <label class="tableContentLabel" id="tableContent-LeftTime">Left Time</label>
-                    <label class="tableContentLabel" id="tableContent-Role">Rolle</label>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="innerContainer" style="margin-left: 10px">
-        <table class="columnTable">
-            <thead class="columnTableHead">
-            <tr>
-                <th style="border-top-left-radius: 0; border-top-right-radius: 0; text-align: center; background-color: rgba(25,0,255,0.3); color: white">Testing</th>
-            </tr>
-            </thead>
-            <tbody class="columnTableBody">
-            <tr draggable="true">
-                <td>
-                    <label class="tableContentLabel" id="tableContent-UsId">US-ID</label>
-                    <label class="tableContentLabel" id="tableContent-Beschreibung">Beschreibung</label>
-                    <label class="tableContentLabel" id="tableContent-LeftTime">Left Time</label>
-                    <label class="tableContentLabel" id="tableContent-Role">Rolle</label>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
 <!--Todo: Handling Beschreibung bei zu langem String (wie bei zoomedTaskContainer)-->
-    <div class="innerContainer" style="margin-left: 10px">
-        <table class="columnTable">
-            <thead class="columnTableHead">
-            <tr>
-                <th style="border-top-left-radius: 0; border-top-right-radius: 0; text-align: center; background-color: rgba(25,0,255,0.3); color: white">Abgeschlossen</th>
-            </tr>
-            </thead>
-            <tbody class="columnTableBody">
-            <tr draggable="true">
-                <td>
-                    <label class="tableContentLabel" id="tableContent-UsId">US-ID</label>
-                    <label class="tableContentLabel" id="tableContent-Beschreibung">Beschreibung</label>
-                    <label class="tableContentLabel" id="tableContent-LeftTime">Left Time</label>
-                    <label class="tableContentLabel" id="tableContent-Role">Rolle</label>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
 <!--Todo: Ganze Logik hinter dem Zoomen, darum auskommentiert -->
 <!--
 <div id="zoomedTaskCard">

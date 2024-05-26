@@ -1,7 +1,9 @@
 package com.team3.project.Tests.BaseClassesForTests;
 
 import com.team3.project.Classes.*;
+import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAOService.DAOStartService;
+import com.team3.project.DAOService.DAOTaskBoardService;
 import com.team3.project.Facede.*;
 
 import java.util.LinkedList;
@@ -24,10 +26,10 @@ public class BaseHTTPTest extends BaseTest {
 
     protected static void setup(boolean b) throws Exception {
         if (b) BaseTest.setup(logName, mainTestName);
+        if (boards.isEmpty()) TestDBTaskBoard();
         if (accounts.isEmpty())TestDBUser();
         if (storys.isEmpty())TestDBUserStory();
         if (tasks.isEmpty())TestDBTask();
-        if (boards.isEmpty()) TestDBTaskBoard();
     }
     protected static void before() {
         BaseTest.before();
@@ -35,7 +37,7 @@ public class BaseHTTPTest extends BaseTest {
     }
 
     protected static void after() {
-        BaseTest.after(true);
+        BaseTest.after(false);
     }
     protected static void tearDown() {
         BaseTest.tearDown();
@@ -76,19 +78,20 @@ public class BaseHTTPTest extends BaseTest {
             String SessionID = null;
             if (reg) presentationToLogic.accountService.register("TU1", "T1@M.com", "TPW1");
             SessionID = presentationToLogic.webSessionService.getSessionID("T1@M.com");
-            presentationToLogic.accountService.savePublicData(SessionID, new Profile("TU1", "T1@M.com", "pDesc1", "wDesc1",null));
+            presentationToLogic.accountService.savePublicData(SessionID, new Profile(0,"TU1", "T1@M.com", "pDesc1", "wDesc1",null,1));
             accounts.add(new Account("T1@M.com", "TPW1"));
             sessions.add(SessionID);
             if (reg) presentationToLogic.accountService.register("TU2", "T2@M.com", "TPW2");
             SessionID = presentationToLogic.webSessionService.getSessionID("T2@M.com");
-            presentationToLogic.accountService.savePublicData(SessionID, new Profile("TU2", "T2@M.com", "pDesc2", "wDesc2",null));
+            presentationToLogic.accountService.savePublicData(SessionID, new Profile(0,"TU2", "T2@M.com", "pDesc2", "wDesc2",null,1));
             accounts.add(new Account("T2@M.com", "TPW2"));
             sessions.add(SessionID);
             if (reg) presentationToLogic.accountService.register("TU3", "T3@M.com", "TPW1");
             SessionID = presentationToLogic.webSessionService.getSessionID("T3@M.com");
-            presentationToLogic.accountService.savePublicData(SessionID, new Profile("TU3", "T3@M.com", "pDesc3", "wDesc3",null));
+            presentationToLogic.accountService.savePublicData(SessionID, new Profile(0,"TU3", "T3@M.com", "pDesc3", "wDesc3",null, 1));
             accounts.add(new Account("T3@M.com", "TPW3"));
             sessions.add(SessionID);
+            presentationToLogic.accountService.setAuthority(3,4);
             users = presentationToLogic.accountService.getAllUser();
             profils = new LinkedList<Profile>();
             for (int i = 0; i<= 2; i++){
@@ -105,10 +108,10 @@ public class BaseHTTPTest extends BaseTest {
         if (dbo == null || dbo.isEmpty()) {
             ids = new int[]{-1, -1, -1};
         }
-        try{
-            presentationToLogic.taskService.saveTask(new Task( ids[0], "TT1", 1, 1, "2024-05-19T14:45", -1, -1));
-            presentationToLogic.taskService.saveTask(new Task(ids[1], "TT2", 1, 2, "2024-05-19T14:45", -1, -1));
-            presentationToLogic.taskService.saveTask(new Task(ids[2], "TT3", 1, 3, "2024-05-19T14:45", -1, -1));
+        try{// TODO: TBID
+            presentationToLogic.taskService.saveTask(new Task(ids[0], "TT1", 1, 1, "2024-05-19T14:45", -1, -1,boards.get(0).getID()));
+            presentationToLogic.taskService.saveTask(new Task(ids[1], "TT2", 1, 2, "2024-05-19T14:45", -1, -1, boards.get(0).getID()));
+            presentationToLogic.taskService.saveTask(new Task(ids[2], "TT3", 1, 3, "2024-05-19T14:45", -1, -1, boards.get(0).getID()));
             tasks = presentationToLogic.taskService.getAllTask();
         } catch (Exception e){
             e.printStackTrace();
@@ -132,7 +135,11 @@ public class BaseHTTPTest extends BaseTest {
     }
 
     protected static void TestDBTaskBoard() throws Exception {
-        TaskBoard dbo = presentationToLogic.taskBoardService.getTaskBoard();
-        boards.add(dbo);
+        List<DAOTaskBoard> dtb = DAOTaskBoardService.getAll();
+        if (dtb.isEmpty()) {
+            presentationToLogic.taskBoardService.createTaskBoard("Test");
+            dtb = DAOTaskBoardService.getAll();
+        }
+        boards.add(presentationToLogic.taskBoardService.toTaskBoard(dtb.get(0)));
     }
 }

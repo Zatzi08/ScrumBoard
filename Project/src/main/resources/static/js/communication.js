@@ -29,7 +29,7 @@ function SwitchToOtherProfile(sessionID, email){
     document.location.assign(url)
 }
 
-function SwitchToTaskBoard(sessionID, TBID){
+function SwitchToTaskBoardByID(sessionID, TBID){
     let url = "/getTaskBoardbByID?sessionID=" + sessionID + "&TBID=" + TBID;
     document.location.assign(url)
 }
@@ -46,7 +46,8 @@ function saveTask($this, sessionID) {
     let priority = document.getElementById('editPrio').value;
     let USID = document.getElementById('USDropdown').value;
     let dueDate = document.getElementById('inputDate').value;
-    let timeNeededG = -1;//TODO document.getElementById().value
+    let TBID = document.getElementById("TBDropdown").value;
+    let timeNeededG = document.getElementById("inputTimeNeeded").value;
     let timeNeededA = -1;//TODO document.getElementById().value
 
     if (USID === "-1"){
@@ -66,6 +67,7 @@ function saveTask($this, sessionID) {
                 'priority': priority,
                 'userStoryID': USID,
                 'dueDate': dueDate,
+                'tbID': TBID,
                 'timeNeededG': timeNeededG,
                 'timeNeededA': timeNeededA
             })
@@ -182,6 +184,43 @@ function saveTaskBoard(sessionID){
             'tbID': TBID,
             'name': TBName,
         })
+    })
+}
+
+function changeAuth(sessionID, selectID, usID){
+    let selected = document.getElementById(selectID);
+    let auth = selected.value;
+    let url = 'setAuthority?USID=' + usID + '&Auth=' + auth;
+
+    fetch(url,{
+        method: 'Get',
+        cache: 'no-cache',
+        headers:{
+            'Content-Type': 'application/json',
+            'sessionID': sessionID
+        }
+    }).then(r => {
+        if (!r.ok){
+            document.location.reload()
+        }
+    })
+}
+
+function setTaskList(sessionID, tID, tlID){
+    let url = 'setTaskListOfTask?TID=' + tID + '&TLID=' + tlID;
+
+    fetch(url,{
+        method: 'Get',
+        cache: 'no-cache',
+        headers:{
+            'Content-Type': 'application/json',
+            'sessionID': sessionID
+        }
+    }).then(r => {
+        if (!r.ok){
+            alert("Invalid Request")
+            document.location.reload()
+        }
     })
 }
 

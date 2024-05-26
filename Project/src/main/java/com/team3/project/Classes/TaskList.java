@@ -1,6 +1,7 @@
 package com.team3.project.Classes;
 
 import com.team3.project.DAO.DAOTask;
+import com.team3.project.DAO.DAOTaskList;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,13 +24,13 @@ public class TaskList extends abstraktDataClasses {
         if(daoTaskList == null) throw new Exception("Null List");
         if(daoTaskList.isEmpty()) throw new Exception("Empty List");
         List <Task> taskList = new LinkedList<Task>();
-        daoTaskList.forEach(x->{
+        for(DAOTask daoTask : daoTaskList){
             try{
-                taskList.add(new Task(x.getId(), x.getDescription(), x.getPriority(), x.getUserStory().getId(), x.getDueDate(), x.getProcessingTimeEstimatedInHours(), x.getProcessingTimeRealInHours()));
+                taskList.add(new Task(daoTask.getId(), daoTask.getDescription(), daoTask.getPriority(), daoTask.getUserStory().getId(), daoTask.getDueDate(), daoTask.getProcessingTimeEstimatedInHours(), daoTask.getProcessingTimeRealInHours(),daoTask.getTaskList().getTaskBoard().getId()));
             }catch (Exception e){
                 e.printStackTrace();
             }
-        });
+        }
         this.tasks = taskList;
     }
 }

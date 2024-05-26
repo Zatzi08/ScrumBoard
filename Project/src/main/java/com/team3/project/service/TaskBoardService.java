@@ -5,24 +5,20 @@ import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAO.DAOTaskList;
 import com.team3.project.DAOService.DAOTaskBoardService;
 import com.team3.project.DAOService.DAOTaskListService;
-import com.team3.project.service.TaskListService;
 
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.team3.project.service.TaskListService.toTaskList;
-
 public class TaskBoardService {
+    // TODO: FIX Konstruktor
     public TaskBoard getTaskBoardByID(int tbid) throws Exception {
         if (tbid < 0) throw new Exception("Null ID");
         DAOTaskBoard daoTaskBoard = DAOTaskBoardService.getById(tbid);
         if(daoTaskBoard == null) throw new Exception("TaskBoard not existent");
-        TaskBoard taskBoard = new TaskBoard(daoTaskBoard.getId(), daoTaskBoard.getName());
-        taskBoard.setTaskListsInTaskBoard(daoTaskBoard.getTaskLists());
+        TaskBoard taskBoard = toTaskBoard(daoTaskBoard);
         return taskBoard;
     }
+
     //TODO: DB-Funktion zum erstellen von TaskBoards fehlt
     public void createTaskBoard(String taskBoardName) throws Exception{
         if(taskBoardName == null) throw new Exception("Null Name");
@@ -36,15 +32,16 @@ public class TaskBoardService {
         return taskBoardList.isEmpty()? null : toTaskBoard(taskBoardList.get(0));
     }
 
-    private TaskBoard toTaskBoard(DAOTaskBoard daoTaskBoard) throws Exception {
+    public TaskBoard toTaskBoard(DAOTaskBoard daoTaskBoard) throws Exception {
         TaskBoard taskBoard = new TaskBoard(daoTaskBoard.getId(), daoTaskBoard.getName());
         List<DAOTaskList> taskLists = DAOTaskListService.getByTaskBoardId(daoTaskBoard.getId());
-        List<TaskList> taskListsInTaskBoard = new LinkedList<TaskList>();
-        for (DAOTaskList taskList : taskLists) {
-            TaskList toAdd = toTaskList(taskList);
-            taskListsInTaskBoard.add(toAdd);
+        if (taskLists.isEmpty()) throw new Exception("Invalid TaskList");
+        List<TaskList> taskListList = new LinkedList<TaskList>();
+        for (DAOTaskList dtl : taskLists){
+            TaskList toAdd = TaskListService.toTaskList(dtl);
+            taskListList.add(toAdd);
         }
-        taskBoard.setTaskListsInTaskBoard(taskLists);
+        taskBoard.setTaskListList(taskListList);
         return taskBoard;
     }
 
@@ -56,5 +53,21 @@ public class TaskBoardService {
             IDs.add(toAdd);
         }
         return IDs;
+    }
+
+    public List<TaskBoard> getAllTaskBoards() {
+        List<DAOTaskBoard> dtbs = DAOTaskBoardService.getAll();
+        if (dtbs.isEmpty()) return null;
+        try {
+            List<TaskBoard> tbs = new LinkedList<TaskBoard>();
+            for (DAOTaskBoard dtb : dtbs) {
+                TaskBoard toAdd = toTaskBoard(dtb);
+                tbs.add(toAdd);
+            }
+            return tbs;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

@@ -42,12 +42,6 @@ function toggleEditMenu(id) {
     }
 }
 
-function toggleEditBox(id,storyId, name, description){
-    toggleEditMenu(id);
-    document.getElementById("inputName").textContent = name;
-    document.getElementById("inputDesc").textContent = description;
-    document.getElementById("editId").value = storyId;
-}
 /*
 * Author: Zana Salih Hama
 * Revisited: /
@@ -149,10 +143,74 @@ function deleteTableRow() {
     }
 }
 
-function toggleEditBoxT(id, TId, description, USID){
+function toggleEditBoxT(id, TId, description, usID, dueDate, timeG, tbID, prio){
     toggleEditMenu(id);
     document.getElementById("inputDesc").textContent = description;
-    document.getElementById("editId").value = TId;
-    let EID = 'USDropdown:'+USID
-    document.getElementById('USDropdown').value = document.getElementById(EID).value;
+    if (TId !== undefined){
+        document.getElementById("editId").value = TId;
+    } else {
+        document.getElementById("editId").value = -1;
+    }
+    let EID = ""
+    if (usID !== undefined){
+        EID = 'USDropdown:'+usID;
+        document.getElementById('USDropdown').value = document.getElementById(EID).value;
+    } else {
+        document.getElementById('USDropdown').value = -1;
+    }
+    if (timeG !== undefined){
+        document.getElementById('inputTimeNeeded').value = timeG;
+    } else {
+        document.getElementById('inputTimeNeeded').value = 0;
+    }
+    if (tbID !== undefined && tbID !== "-1"){
+        EID = 'TBDropdown:'+tbID;
+        document.getElementById('TBDropdown').value = document.getElementById(EID).value;
+    } else {
+        document.getElementById('TBDropdown').value = document.getElementById('TBDropDown:-1').value;
+    }
+    switch (prio){
+        case "2":
+            highlightPriorityButton('inputPrioNormal')
+            break;
+        case "3":
+            highlightPriorityButton('inputPrioHigh')
+            break;
+        case "4":
+            highlightPriorityButton('inputPrioUrgent')
+            break;
+        default:
+            highlightPriorityButton('inputPrioLow')
+            break;
+    }
+    if (dueDate !== undefined){
+        document.getElementById('inputDate').value = dueDate;
+    } else{
+        document.getElementById('inputDate').value = "";
+    }
+}
+
+function toggleEditBox(id,storyId, name, description, prio){
+    toggleEditMenu(id);
+    document.getElementById("inputName").textContent = name;
+    document.getElementById("inputDesc").textContent = description;
+    if (storyId !== undefined){
+        document.getElementById("editId").value = storyId;
+    } else {
+        document.getElementById("editId").value = -1;
+    }
+    switch (prio){
+        case "2":
+            highlightPriorityButton('inputPrioNormal')
+            break;
+        case "3":
+            highlightPriorityButton('inputPrioHigh')
+            break;
+        case "4":
+            highlightPriorityButton('inputPrioUrgent')
+            break;
+        default:
+            highlightPriorityButton('inputPrioLow')
+            break;
+    }
 }

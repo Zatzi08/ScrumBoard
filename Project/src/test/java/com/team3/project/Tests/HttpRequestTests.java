@@ -8,7 +8,6 @@ import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.DAOService.DAOUserStoryService;
 import com.team3.project.Tests.BaseClassesForTests.BaseHTTPTest;
 import com.team3.project.service.AccountService;
-import org.hibernate.AssertionFailure;
 import org.junit.jupiter.api.*;
 import org.junit.platform.suite.api.Suite;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
-import org.yaml.snakeyaml.events.Event;
 
 import java.util.List;
 import java.util.Objects;
@@ -690,7 +688,7 @@ public class HttpRequestTests extends BaseHTTPTest {
         }
 
         header.set("sessionID", masterID);
-        String body = "{\"description\":\"New Task To Describe\",\"userStoryID\":1,\"timeNeededG\":-1,\"timeNeededA\":-1,\"dueDate\":\"2024-10-05T12:39\",\"priority\":1,\"tID\":-1}";
+        String body = "{\"description\":\"New Task To Describe\",\"userStoryID\":1,\"timeNeededG\":-1,\"timeNeededA\":-1,\"dueDate\":\"2024-10-05T12:39\",\"priority\":1,\"tID\":-1,\"tbID\":-1}";
         message = new HttpEntity<>(body, header);
 
         try {
@@ -702,7 +700,7 @@ public class HttpRequestTests extends BaseHTTPTest {
         }
 
         header.set("sessionID", masterID);
-        body = "{\"description\":\""+ tasks.get(0).getDescription() +"\",\"userStoryID\":"+ tasks.get(0).getUserStoryID() +",\"timeNeededG\":"+ tasks.get(0).getTimeNeededG() +",\"timeNeededA\":"+ tasks.get(0).getTimeNeededA() +",\"dueDate\":\""+ tasks.get(0).getDueDateAsString() +"\",\"priority\":"+ tasks.get(0).getPriorityAsInt() +",\"tID\":"+ tasks.get(0).getID() +"}";
+        body = "{\"description\":\""+ tasks.get(0).getDescription() +"\",\"userStoryID\":"+ tasks.get(0).getUserStoryID() +",\"timeNeededG\":"+ tasks.get(0).getTimeNeededG() +",\"timeNeededA\":"+ tasks.get(0).getTimeNeededA() +",\"dueDate\":\""+ tasks.get(0).getDueDateAsString() +"\",\"priority\":"+ tasks.get(0).getPriorityAsInt() +",\"tID\":"+ tasks.get(0).getID() + ",\"tbID\":"+ tasks.get(0).getTbID() + "}";
         message = new HttpEntity<>(body, header);
 
         try {
@@ -939,5 +937,122 @@ public class HttpRequestTests extends BaseHTTPTest {
         printWriterAddPass();
     }
 
+    /*  Test ID: HTTP.T21
+     *  Author: Lucas Krüger
+     *  Zweck: Testen des Get Requests zum Updaten der Authorität eines Nutzers
+     */
+    @Test
+    @Tag("new")
+    void setAuthorityTest(){
+        printWriterAddTest("setAuthority", "T21");
+        String url = "/setAuthority";
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.TEXT_PLAIN);
+        HttpEntity<String> message = new HttpEntity<>("", header);
 
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + url, HttpMethod.GET, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.BAD_REQUEST);
+        } catch (AssertionError e){
+            printWriterAddFailure("Akzeptiert Bad_Request");
+            throw new AssertionError(e);
+        }
+
+        try{
+            presentationToLogic.accountService.setAuthority(users.get(0).getID(), 1);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        header.set("sessionID", sessions.get(0));
+        message = new HttpEntity<>("", header);
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + url + "?USID="+users.get(0).getID() + "&Auth=" +3, HttpMethod.GET, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.BAD_REQUEST);
+        } catch (AssertionError e){
+            printWriterAddFailure("Akzeptiert Request von low Auth");
+            throw new AssertionError(e);
+        }
+
+        header.set("sessionID", sessions.get(2));
+        message = new HttpEntity<>("", header);
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + url + "?USID="+users.get(0).getID() + "&Auth=" +3, HttpMethod.GET, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.OK);
+        } catch (AssertionError e){
+            printWriterAddFailure("Akzeptiert Request nicht - Valid Params");
+            throw new AssertionError(e);
+        }
+        try{
+            presentationToLogic.accountService.setAuthority(users.get(0).getID(), 1);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        printWriterAddPass();
+    }
+
+    @Test
+    @Tag("new")
+    /*  Test ID: HTTP.T22
+     *  Author: Lucas Krüger
+     *  Zweck: Testen des Get Requests zum Updaten der Authorität eines Nutzers
+     */
+    void setTaskListOfTask(){
+        printWriterAddTest("setTaskListOfTask", "T22");
+        String url = "/setTaskListToTask";
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.TEXT_PLAIN);
+        HttpEntity<String> message = new HttpEntity<>("", header);
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + url, HttpMethod.GET, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.BAD_REQUEST);
+        } catch (AssertionError e){
+            printWriterAddFailure("Akzeptiert Bad_Request");
+            throw new AssertionError(e);
+        }
+
+        try{
+            presentationToLogic.taskService.setTaskList(tasks.get(0).getID(), boards.get(0).getTaskListList().get(0).getID());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        header.set("sessionID", sessions.get(0));
+        message = new HttpEntity<>("", header);
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + url + "?TID="+ tasks.get(0).getID() + "&TLID=" + 9999999, HttpMethod.GET, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.CONFLICT);
+        } catch (AssertionError e){
+            printWriterAddFailure("Akzeptiert Invalid TLID");
+            throw new AssertionError(e);
+        }
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + url + "?TID="+ 9999999 + "&TLID=" + 9999999, HttpMethod.GET, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.CONFLICT);
+        } catch (AssertionError e){
+            printWriterAddFailure("Akzeptiert Invalid TID");
+            throw new AssertionError(e);
+        }
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + url + "?TID="+ tasks.get(0).getID() + "&TLID=" + boards.get(0).getTaskListList().get(1).getID(), HttpMethod.GET, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.OK);
+        } catch (AssertionError e){
+            printWriterAddFailure("Akzeptiert Request nicht - Valid Params - Valid TaskList");
+            throw new AssertionError(e);
+        }
+
+        try {
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + url + "?TID="+ tasks.get(0).getID() + "&TLID=" + 0, HttpMethod.GET, message, String.class).getStatusCode())
+                    .isEqualTo(HttpStatus.OK);
+        } catch (AssertionError e){
+            printWriterAddFailure("Akzeptiert Request nicht - Valid Params - null TaskList");
+            throw new AssertionError(e);
+        }
+
+        printWriterAddPass();
+    }
 }

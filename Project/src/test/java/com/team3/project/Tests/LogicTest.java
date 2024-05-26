@@ -2,16 +2,12 @@ package com.team3.project.Tests;
 
 import com.team3.project.Classes.*;
 import com.team3.project.DAO.DAOTask;
-import com.team3.project.DAO.DAOUser;
-import com.team3.project.DAOService.DAOTaskService;
-import com.team3.project.DAOService.DAOUserService;
+import com.team3.project.DAO.DAOTaskList;
+import com.team3.project.DAOService.*;
 import com.team3.project.Tests.BaseClassesForTests.BaseLogicTest;
 import com.team3.project.service.*;
-import com.team3.project.DAOService.DAOUserStoryService;
-import com.team3.project.DAOService.DAOAccountService;
 import org.junit.jupiter.api.*;
-import java.io.File;
-import java.io.FileWriter;
+
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -170,7 +166,7 @@ public class LogicTest extends BaseLogicTest{
         AccountService aservice = new AccountService();
         WebSessionService wservice = new WebSessionService();
         String sessionID = null;
-        Profile profile = new Profile("Dave", "dave@gmail.com", "Manager","slow thinker" ,null);
+        Profile profile = new Profile(0,"Dave", "dave@gmail.com", "Manager","slow thinker" ,null, 1);
         int count_correct_exceptions = 0;
         int count_correct_exception_checks = 0;
 
@@ -262,7 +258,7 @@ public class LogicTest extends BaseLogicTest{
         pw.append("Logik-Test-updateUserStory\nTest ID: Logic.T4\n" + "Date: " + formatter.format(date)+ '\n');
         AccountService aservice = new AccountService();
         WebSessionService wservice = new WebSessionService();
-        Profile profile = new Profile("Dave", "dave@gmx.de","netter Dave", "arbeitender Dave", null);
+        Profile profile = new Profile(0,"Dave", "dave@gmx.de","netter Dave", "arbeitender Dave", null, 1);
         String newdescription = "böse";
 
         try{
@@ -378,7 +374,7 @@ public class LogicTest extends BaseLogicTest{
         u1 = uservice.getUserStoryByName(u1.getName());
 
         try{
-            t1 = new Task(-1, "Task1", 0, u1.getID(), "2030-10-10 10:10", 10, 50 );
+            t1 = new Task(-1, "Task1", 0, u1.getID(), "2030-10-10 10:10", 10, 50 , -1);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -438,7 +434,7 @@ public class LogicTest extends BaseLogicTest{
         Task t1 = null;
 
         try{
-            t1 = new Task(-1,"Task1", 0, u1.getID(),"2030-10-10 10:10", 10, 20);
+            t1 = new Task(-1,"Task1", 0, u1.getID(),"2030-10-10 10:10", 10, 20,-1);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -460,7 +456,7 @@ public class LogicTest extends BaseLogicTest{
         Task tCopy = null;
 
         try{
-            tCopy = new Task(t1ID, newdescription, t1.getPriorityAsInt(), t1.getUserStoryID(), t1.getDueDateAsString(), t1.getTimeNeededG(), t1.getTimeNeededA());
+            tCopy = new Task(t1ID, newdescription, t1.getPriorityAsInt(), t1.getUserStoryID(), t1.getDueDateAsString(), t1.getTimeNeededG(), t1.getTimeNeededA(),t1.getTbID());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -490,7 +486,7 @@ public class LogicTest extends BaseLogicTest{
         }
 
         try{
-            tfailure = new Task(1023426785, "Failure", 1, u1.getID(),"2024-05-20 10:10", 10, 20);
+            tfailure = new Task(1023426785, "Failure", 1, u1.getID(),"2024-05-20 10:10", 10, 20, -1);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -587,7 +583,7 @@ public class LogicTest extends BaseLogicTest{
         Task t1 = null;
 
         try{
-            t1 = new Task(-1,"TaskDescription",0,u1.getID(), "2030-10-10 10:10", 20, 50);
+            t1 = new Task(-1,"TaskDescription",0,u1.getID(), "2030-10-10 10:10", 20, 50,-1);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -647,7 +643,7 @@ public class LogicTest extends BaseLogicTest{
     void register(){
         pw.append("Logik-Test-register\nTest ID: Logic.T9\n" + "Date: " + formatter.format(date)+ '\n');
         AccountService aservice = new AccountService();
-        User u = new User("Dave", -1, "BlahBlah", "workBlahBlah", Enumerations.Role.nutzer);
+        User u = new User("Dave", -1, "BlahBlah", "workBlahBlah", Enumerations.Role.Nutzer,1);
         int count_correct_exceptions = 0;
         int count_correct_exception_checks = 0;
 
@@ -706,7 +702,7 @@ public class LogicTest extends BaseLogicTest{
     void login(){
         pw.append("Logik-Test-login\nTest ID: Logic.T10\n" + "Date: " + formatter.format(date)+ '\n');
         AccountService aservice = new AccountService();
-        User u = new User("Dave", -1, "BlahBlah", "workBlahBlah", Enumerations.Role.nutzer);
+        User u = new User("Dave", -1, "BlahBlah", "workBlahBlah", Enumerations.Role.Nutzer, 1);
         int count_correct_exceptions = 0;
         int count_correct_exception_checks = 0;
 
@@ -866,13 +862,13 @@ public class LogicTest extends BaseLogicTest{
         LinkedList<Role> list = null;
 
         try{
-            rservice.createVisualRole("Entwickler1", Enumerations.Role.nutzer);
+            rservice.createVisualRole("Entwickler1", Enumerations.Role.Nutzer);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            list = rservice.getAllRolesByRole(Enumerations.Role.nutzer);
+            list = rservice.getAllRolesByRole(Enumerations.Role.Nutzer);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -886,13 +882,13 @@ public class LogicTest extends BaseLogicTest{
         }
 
         try{
-            rservice.createVisualRole("Entwickler2", Enumerations.Role.nutzer);
+            rservice.createVisualRole("Entwickler2", Enumerations.Role.Nutzer);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            list = rservice.getAllRolesByRole(Enumerations.Role.nutzer);
+            list = rservice.getAllRolesByRole(Enumerations.Role.Nutzer);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -905,13 +901,13 @@ public class LogicTest extends BaseLogicTest{
         }
 
         try{
-            rservice.deleteVisualRole("Entwickler1", Enumerations.Role.nutzer);
+            rservice.deleteVisualRole("Entwickler1", Enumerations.Role.Nutzer);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            rservice.deleteVisualRole("Entwickler2", Enumerations.Role.nutzer);
+            rservice.deleteVisualRole("Entwickler2", Enumerations.Role.Nutzer);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -931,13 +927,13 @@ public class LogicTest extends BaseLogicTest{
         int count_correct_exception_checks = 0;
 
         try{
-            rservice.createVisualRole("Entwickler", Enumerations.Role.nutzer);
+            rservice.createVisualRole("Entwickler", Enumerations.Role.Nutzer);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            Assertions.assertEquals("Entwickler", rservice.getAllRolesByRole(Enumerations.Role.nutzer).getLast());
+            Assertions.assertEquals("Entwickler", rservice.getAllRolesByRole(Enumerations.Role.Nutzer).getLast());
         }catch (AssertionError | Exception e){
             pass = false;
             pw.append("Fail: visual Role was not created\n");
@@ -945,21 +941,21 @@ public class LogicTest extends BaseLogicTest{
         }
 
         try{
-            rservice.deleteVisualRole("Entwickler", Enumerations.Role.nutzer);
+            rservice.deleteVisualRole("Entwickler", Enumerations.Role.Nutzer);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
             count_correct_exception_checks++;
-            rservice.createVisualRole(null, Enumerations.Role.nutzer);
+            rservice.createVisualRole(null, Enumerations.Role.Nutzer);
         }catch (Exception e){
             count_correct_exceptions++;
         }
 
         try{
             count_correct_exception_checks++;
-            rservice.createVisualRole("", Enumerations.Role.nutzer);
+            rservice.createVisualRole("", Enumerations.Role.Nutzer);
         }catch (Exception e){
             count_correct_exceptions++;
         }
@@ -989,7 +985,7 @@ public class LogicTest extends BaseLogicTest{
         int count_correct_exceptions = 0;
         int count_correct_exception_checks = 0;
         Role oldRole = null;
-        Enumerations.Role role = Enumerations.Role.nutzer;
+        Enumerations.Role role = Enumerations.Role.Nutzer;
 
         try{
             rservice.createVisualRole("Developer", role);
@@ -1070,7 +1066,7 @@ public class LogicTest extends BaseLogicTest{
         RoleService rservice = new RoleService();
         int count_correct_exceptions = 0;
         int count_correct_exception_checks = 0;
-        Enumerations.Role role = Enumerations.Role.nutzer;
+        Enumerations.Role role = Enumerations.Role.Nutzer;
         Role visualRole = null;
 
         try{
@@ -1101,14 +1097,14 @@ public class LogicTest extends BaseLogicTest{
 
         try{
             count_correct_exception_checks++;
-            rservice.deleteVisualRole(null, Enumerations.Role.nutzer);
+            rservice.deleteVisualRole(null, Enumerations.Role.Nutzer);
         }catch (Exception e){
             count_correct_exceptions++;
         }
 
         try{
             count_correct_exception_checks++;
-            rservice.deleteVisualRole("", Enumerations.Role.nutzer);
+            rservice.deleteVisualRole("", Enumerations.Role.Nutzer);
         }catch (Exception e){
             count_correct_exceptions++;
         }
@@ -1139,7 +1135,7 @@ public class LogicTest extends BaseLogicTest{
         AccountService aservice = new AccountService();
         int count_correct_exceptions = 0;
         int count_correct_exception_checks = 0;
-        Enumerations.Role role = Enumerations.Role.nutzer;
+        Enumerations.Role role = Enumerations.Role.Nutzer;
         Role visualRole = null;
 
         try{
@@ -1149,7 +1145,7 @@ public class LogicTest extends BaseLogicTest{
         }
 
         int uID = DAOUserService.getIdByMail("daveT17@gmail.com");
-        User user = new User("daveT17", uID, "nett", "Front-End-Entwickler", null);
+        User user = new User("daveT17", uID, "nett", "Front-End-Entwickler", null, 1);
 
         try{
             rservice.createVisualRole("Haupt-Entwickler", role);
@@ -1209,7 +1205,7 @@ public class LogicTest extends BaseLogicTest{
         try{
             count_correct_exception_checks++;
 
-            rservice.saveVisualRole(null, new User("daveT17", -1, "nett", "Front-End-Entwickler", null),role);
+            rservice.saveVisualRole(null, new User("daveT17", -1, "nett", "Front-End-Entwickler", null, 1),role);
         }catch (Exception e){
             count_correct_exceptions++;
         }
@@ -1274,26 +1270,116 @@ public class LogicTest extends BaseLogicTest{
     }
 
 
-    /*@Test
-    void taskboardAttribute(){
-        pw.append("Logik-Test-taskboardAttribute\nTest ID: Logic.T9\n" + "Date: " + formatter.format(date)+ '\n');
-        TaskService tservice = new TaskService();
-        UserStoryService uservice = new UserStoryService();
+    @Test
+        /*  Test ID: Logic.T20
+         *  Author: Henry Lewis Freyschmidt
+         *  Zweck: bearbeiten einer Task erweitern um TaskBoardID T16.B2
+         */
+    void editTaskBoardIDInTask(){
+        pw.append("Logik-Test-editTaskBoardIDInTask\nTest ID: Logic.T20\n" + "Date: " + formatter.format(date) + '\n');
+        TaskBoardService taskBoardService = new TaskBoardService();
+        TaskService taskService = new TaskService();
+        UserStoryService userStoryService = new UserStoryService();
+        UserStory userStory = new UserStory("UserStoryT16B2", "T16B2", 1, -1);
+        int count_correct_exceptions = 0;
+        int count_correct_exception_checks = 0;
 
         try{
-            uservice.saveUserStory("UserStoryT16B1", "T16.B1",2, -1);
+            userStoryService.saveUserStory(userStory);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        userStory.setID(userStoryService.getUserStoryByName(userStory.getName()).getID());
+
+        try{
+            taskBoardService.createTaskBoard("TaskBoard1T16B2");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        int tb1ID = DAOTaskBoardService.getAll().get(0).getId();
+        Task task = null;
+
+        try{
+            task = new Task(-1, "TaskT16B2", 1, userStory.getID(), "10-10-2030 10:10", 10, 20, tb1ID);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            tservice.saveTask(-1, "TaskT16B1",0,DAOUserStoryService.getByName("UserStoryT16B1").getId());
+            taskService.saveTask(task);
         }catch (Exception e){
             e.printStackTrace();
         }
-        //TODO: TaskBoard erstellen; Task zuordnen; DB-Abfrage + Vergleich
-        pw.append(String.format("pass = %b\n", pass));
-    }*/
+
+        task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
+
+        try{
+            taskBoardService.createTaskBoard("TaskBoard2T16B2");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        int tb2ID = DAOTaskBoardService.getAll().get(1).getId();
+        task.setTbID(tb2ID);
+
+        try{
+            taskService.saveTask(task);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        DAOTaskBoardService.getById(tb2ID);
+        List <DAOTaskList> taskLists = DAOTaskListService.getByTaskBoardId(tb2ID);
+        DAOTaskList taskList = null;
+        for(int i = 0; i < taskLists.size(); i++){
+            taskList = taskLists.get(i);
+            if(taskList.getSequence() == 1) break;
+        }
+
+        try{
+            Assertions.assertEquals(task.getID(), taskList.getTasks().get(0).getId());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: Task did not switch TaskBoards\n");
+            throw new AssertionError(e);
+        }
+
+        try{
+            count_correct_exception_checks++;
+            task.setTbID(103782342);
+            taskService.saveTask(task);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        if(count_correct_exceptions != count_correct_exception_checks){
+            pw.append("Fail: wrong Exception-Hanlding\n");
+        }
+
+        pw.append(String.format("pass = %b", pass));
+    }
+
+    @Test
+        /*  Test ID: Logic.T21
+         *  Author: Henry Lewis Freyschmidt
+         *  Zweck: erstellen einer Task erweitern um TaskBoardID + Verknüpfung an TaskList T16.B3
+         */
+    void createTaskWithTaskBoardID(){
+        pw.append("Logik-Test-createTaskWithTaskBoardID\nTest ID: Logic.T21\n" + "Date: " + formatter.format(date) + '\n');
+
+
+        pw.append(String.format("pass = %b", pass));
+    }
+
+
+
+
+
+
+
+
 }
 
 /* erster Draft: Erfüllungsbedingungen für die User-Storys vom Sprint 2

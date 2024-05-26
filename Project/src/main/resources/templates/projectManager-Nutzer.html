@@ -20,8 +20,8 @@
     -->
 <div class="Reiter">
   <button class="reiterBtn" onmouseover = "hover('reiterBtn')" onmouseleave="hoverLeave('reiterBtn')" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
-  <button type="button"  th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
-  <button class = "reiterBtn">Task-Board </button>
+  <button type="button" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
+  <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
   <button class = "reiterBtn">Kalender </button>
 </div>
 
@@ -30,11 +30,10 @@
   <span class="userStoryTaskTrenner">|</span>
   <button class="selectBtn" id="selectTasks" th:Sid="${sessionID}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
   <span class="userStoryTaskTrenner">|</span>
-  <button class="selectBtn" id="selectUser" style= "border-bottom: 1px solid #ffffff" onclick="SwitchToUsers(this.getAttribute('Sid'))"title = "Wechsel zur Nutzeransicht">Nutzer</button>
+  <button class="selectBtn" id="selectUser" style= "border-bottom: 1px solid #ffffff" title = "Wechsel zur Nutzeransicht">Nutzer</button>
 
   <div id = "roleBtn" >
-  <button class="addUserStoryBtn" title="Ändere die Rechte der Nutzer" onclick="toggleEditBox('addUserStoryBtn', -1)" ><i class="fa fa-lock" style = "margin-right: 5px"></i>Nutzerrechte ändern</button>
-  <button class="addUserStoryBtn" title="Erstelle und bearbeite die Rollen" onclick="toggleEditBox('addUserStoryBtn', -1)"  style="margin-top:25px"><i class="fa fa-user-o" style = "margin-right: 5px"></i>Rollen bearbeiten</button>
+  <button class="addUserStoryBtn" title="Erstelle und bearbeite die Rollen" onclick="toggleRolesEditMenu()"  ><i class="fa fa-user-o" style = "margin-right: 5px"></i>Rollen bearbeiten</button>
   </div>
     <div id="innerProjectManagerContainer">
     <div class="wrapper">
@@ -45,11 +44,19 @@
         </tr>
         </thead>
         <tbody id="userTaskTableBody"> <!-- th:role="${user.getRoles()}" ist ne Liste kp wie wir das machen-->
-        <tr th:each="user : ${User}" th:Sid="${sessionID}" th:email="${user.getEmail()}"   ondblclick="SwitchToOtherProfile( this.getAttribute(Sid), this.getAttribute(email))">
+        <tr th:each="user : ${User}" th:Sid="${sessionID}" th:email="${user.getEmail()}" ondblclick="SwitchToOtherProfile( this.getAttribute('sid'), this.getAttribute('email'))">
           <th>
             <div id = userTextDiv>
-            <label class = "userText" th:text="${user.getUname()}">Nutzername</label>
-            <label class = "userText"  style = "margin-left: 85%">rechtliche Rolle</label>
+            <label class = "userText" th:text="${user.getUname()}" >Nutzername</label>
+              <div id = "userRights">
+                <select class = "rightsDropdown" th:if = "${auth>=2}" th:Sid="${sessionID}" onchange="changeAuth(this.getAttribute('Sid'),this.getAttribute('id'), this.getAttribute('usID'))" th:id="@{RoleDropdown:{id}(id=${user.getID()})}"  th:usID="${user.getID()}">
+                  <option id="Role:1" value="1" th:selected="${user.getAuthorization() == 1} ? 'selected'">Nutzer</option>
+                  <option id="Role:2" value="2" th:selected="${user.getAuthorization() == 2} ? 'selected'" >Manager</option>
+                  <option id="Role:3" value="3" th:selected="${user.getAuthorization() == 3} ? 'selected'" >Project Owner</option>
+                  <option id="Role:4" value="4" th:selected="${user.getAuthorization() == 4} ? 'selected'" >Admin</option>
+                </select>
+                <label th:unless = "${auth>=2}" ></label>
+              </div>
             </div>
           </th>
         </tr>
@@ -58,11 +65,25 @@
     </div>
   </div>
 </div>
+
+<!--<div class = "editMenu" style = "display: block">
+  <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Rollen bearbeiten und erstellen</label>
+  <span id="closeToggleEdit" class="closeToggleEdit" onclick="toggleRolesEditMenu()">&times;</span>
+  <div class="editRoles-content">
+    <form class="form"  method="post" id="editForm" autocomplete="off" name="formRoles">
+      <button id = "editRolesBtn"><i class="fa fa-plus-circle" style = "font-size: 25px"></i></button>
+      <ul>
+        <li id = "visualRole" maxlength = "9">Rolle 1 <i class="fa fa-edit"  id = "editRoleBtn" style = "margin-left: 85%"></i><span id = "deleteRoleBtn" contenteditable="false">&times;</span></li>
+      </ul>
+    </form>
+  </div>
+</div> -->
+
 <script src="js/vendor/jquery.js"></script>
 <script src="js/vendor/what-input.js"></script>
 <script src="js/vendor/foundation.js"></script>
 <script src="js/app.js"></script>
 <script src="js/communication.js"></script>
-<script type = "text/javascript" src="js/setup.js"></script>
-<script type = "text/javascript" src="js/projectManager.js"></script>
+<script type = "text/javascript" src="setup.js"></script>
+<script type = "text/javascript" src="projectManager.js"></script>
 </body>

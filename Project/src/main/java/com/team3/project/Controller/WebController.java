@@ -153,7 +153,7 @@ public class WebController {
                                                 @RequestBody(required = true) UserStory userStory){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)) {
-                if (presentationToLogic.accountService.getAuthority(sessionID)  >= 2){
+                if (presentationToLogic.accountService.getAuthority(sessionID)  >= 3){
                     presentationToLogic.userStoryService.saveUserStory(userStory);
                     return new ResponseEntity<HttpStatus>(HttpStatus.OK);
                 } else {
@@ -327,7 +327,8 @@ public class WebController {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 return new ModelAndView("projectManager-Nutzer")
                         .addObject("User", presentationToLogic.accountService.getAllProfils())
-                        .addObject("sessionID", sessionID);
+                        .addObject("sessionID", sessionID)
+                        .addObject("auth",presentationToLogic.accountService.getAuthority(sessionID));
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -349,7 +350,8 @@ public class WebController {
                 return new ModelAndView("projectManager-Tasks")
                         .addObject("Tasks", presentationToLogic.taskService.getAllTask())
                         .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys())
-                        .addObject("sessionID", sessionID);
+                        .addObject("sessionID", sessionID)
+                        .addObject("TaskBoard", presentationToLogic.taskBoardService.getAllTaskBoards());
             }
         } catch (Exception e){
             return error(e);
@@ -394,7 +396,8 @@ public class WebController {
                         .addObject("sessionID",sessionID)
                         .addObject("Tasks", presentationToLogic.taskService.getTasksbyUSID(USId))
                         .addObject("StoryName", presentationToLogic.userStoryService.getUserStory(USId).getName())
-                        .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys());
+                        .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys())
+                        .addObject("TaskBoard", presentationToLogic.taskBoardService.getAllTaskBoards());
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -458,7 +461,7 @@ public class WebController {
                                     @RequestParam(value = "ID", required = true, defaultValue = "-1") int id){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
-                if (presentationToLogic.accountService.getAuthority(sessionID) >= 2){
+                if (presentationToLogic.accountService.getAuthority(sessionID) >= 3){
                     presentationToLogic.userStoryService.deleteUserStoryAndLinkedTasks(id);
                     return new ResponseEntity<HttpStatus>(HttpStatus.OK);
                 } else return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
@@ -484,9 +487,10 @@ public class WebController {
                 List<Integer> IDs = presentationToLogic.taskBoardService.getTaskBoardIDs();
                 if (IDs.isEmpty()) return ProjectManager(sessionID);
                 ModelAndView modelAndView = new ModelAndView("taskBoard")
-                        //.addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoardByID(tbid))
+                        .addObject("Board",presentationToLogic.taskBoardService.getTaskBoardByID(tbid))
                         .addObject("TBIDs", IDs)
-                        .addObject("sessionID", sessionID);
+                        .addObject("sessionID", sessionID)
+                        .addObject("TaskBoards", presentationToLogic.taskBoardService.getAllTaskBoards());
                 return modelAndView;
             }
         } catch (Exception e){
@@ -509,9 +513,10 @@ public class WebController {
                 List<Integer> IDs = presentationToLogic.taskBoardService.getTaskBoardIDs();
                 if (IDs.isEmpty()) return ProjectManager(sessionID);
                 ModelAndView modelAndView = new ModelAndView("taskBoard")
-                        .addObject("TaskBoard",presentationToLogic.taskBoardService.getTaskBoard())
+                        .addObject("Board",presentationToLogic.taskBoardService.getTaskBoard())
                         .addObject("TBIDs", IDs)
-                        .addObject("sessionID", sessionID);
+                        .addObject("sessionID", sessionID)
+                        .addObject("TaskBoards", presentationToLogic.taskBoardService.getAllTaskBoards());
                 return modelAndView;
             }
         } catch (Exception e){
@@ -537,9 +542,49 @@ public class WebController {
             }
         } catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity(HttpStatus.FORBIDDEN);
+        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
+    }
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: R1.B2
+     */
+    @RequestMapping("setAuthority")
+    private ResponseEntity<HttpStatus> setAuthority(@RequestHeader(value = "sessionID", required = true) String sessionID,
+                                               @RequestParam(value = "USID", required = true, defaultValue = "-1") int usID,
+                                               @RequestParam(value = "Auth", required = true, defaultValue = "-1") int auth){
+        try {
+            if (presentationToLogic.webSessionService.verify(sessionID)){
+                if (presentationToLogic.accountService.getAuthority(sessionID) >= 2){
+                    presentationToLogic.accountService.setAuthority(usID,auth);
+                    return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "setTaskListToTask", method = RequestMethod.GET)
+    private ResponseEntity<HttpStatus> setTaskListToTask(@RequestHeader(value = "sessionID") String sessionID,
+                                                         @RequestParam(value = "TID", defaultValue = "-1") int tID,
+                                                         @RequestParam(value = "TLID", defaultValue = "-1") int tlID){
+        try {
+            if (presentationToLogic.webSessionService.verify(sessionID)){
+                presentationToLogic.taskService.setTaskList(tID,tlID);
+                return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
     }
 
     /* Author: Lucas Krüger
