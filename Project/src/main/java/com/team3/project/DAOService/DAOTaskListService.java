@@ -81,6 +81,8 @@ public class DAOTaskListService {
         return false;
     }
 
+    
+
     static boolean createDefaultsForTaskBoardByTaskBoardName(String name) {
         List<String> defaultTaskLists = Arrays.asList("freie Tasks", "Tasks in Bearbeitung", "Tasks unter Review", "Tasks unter Test", "fertiggestellte Tasks");
         String joinOnAttributeName = "taskLists";
@@ -107,10 +109,7 @@ public class DAOTaskListService {
     }
 
     public static boolean addTaskById(int id, DAOTask daoTask) {
-        String joinOnAttributeName = "tasks";
-        DAOTaskList taskList = DAOService.getLeftJoinByID(id, DAOTaskList.class, joinOnAttributeName);
-        taskList.getTasks().add(daoTask);
-        return DAOService.merge(taskList);
+        return DAOTaskService.updateTaskListById(daoTask.getId(), getById(id));
     }
 
     
