@@ -471,11 +471,14 @@ ul{list-style-type: none;}
     height:30px;
     border-radius: 10px;
     right:0;
-    background-color: #87939f;
+    background-color: #bbcde0;
     color: black;
+    font-family: Roboto;
+    border: 1px solid black;
+
 }
 
-.rightsDropdown option:hover{
+.rightsDropdown hover{
     background-color: #b2bbc4;
     height: 30px;
 }

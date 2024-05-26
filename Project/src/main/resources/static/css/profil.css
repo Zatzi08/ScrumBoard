@@ -114,14 +114,18 @@
 }
 
 .labelProfil{
-    margin-top: 15px;
+    margin-top: 20px;
     color: white;
+    font-family: "Arial";
+    font-size: 20px;
 }
 
 #profilEditBtn{
     position: relative;
-    height:30px;
-    margin-top: 15px;
+    height:35px;
+    width:auto;
+    margin-top: 20px;
+    margin-left: 45%;
     background-color: #4b6294;
     border-radius: 10px;
     color:white;

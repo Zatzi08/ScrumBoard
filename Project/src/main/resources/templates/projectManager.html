@@ -42,7 +42,7 @@
                 </thead>
                 <tbody id="userTaskTableBody">
                     <tr th:each="item : ${Storys}" th:USid="${item.ID}" th:Sid="${sessionID}"  ondblclick="SwitchToTasksbyUSID(this.getAttribute('Sid'), this.getAttribute('USid'))">
-                        <th th:style = "${(item.getPriorityAsInt() == 1) ? 'background-color: lightgreen' : (item.getPriorityAsInt() == 2) ? 'background-color: lightblue' : (item.getPriorityAsInt() == 3) ? 'background-color: lightsalmon' : (item.getPriorityAsInt() == 4) ? 'background-color: indianred' : 'background-color: rgba(255, 255, 255, 0.66)'}">
+                        <th>
                             <button class="Btn" style="margin-left: 95%"title="Bearbeiten" th:sname="${item.name}" th:sdescription="${item.description}" th:sid="${item.ID}" th:prio="${item.getPriorityAsInt()}"
                                     onclick="toggleEditBox('editBtn', this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'), this.getAttribute('prio'));" ><i class="fa fa-edit"></i></button>
                             <span class="Btn" th:USid="${item.ID}" th:Sid="${sessionID}" onclick="deleteUS(this.getAttribute('USid'),this.getAttribute('Sid'))" title="Löschen">&times;</span>
