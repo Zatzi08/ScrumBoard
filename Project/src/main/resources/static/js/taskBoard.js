@@ -103,6 +103,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (targetBody && draggedElement) {
             targetBody.insertBefore(draggedElement, placeholder);
             placeholder.remove();
+
+            // Gibt dir die ID raus
+            const draggedElementId = e.dataTransfer.getData('text/plain');
+            console.log('TID:', draggedElementId);
+            console.log('TLID:', targetContainer.id);
         }
     }
 
