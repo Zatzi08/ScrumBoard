@@ -1,4 +1,22 @@
 /*
+* Author: Zana Salih Hama
+* Revisited: /
+* Funktion: Toggeln des Bearbeitungsmenü'
+* Grund: /
+* User-Story/Task-ID: U3.F1, U4.F1
+*/
+function EditBox() {
+    const toggleEditBox = document.querySelector('.editMenu');
+    toggleEditBox.classList.toggle('visible');
+
+    if (toggleEditBox.classList.contains('visible')) {
+        toggleEditBox.style.right = '0'
+    }
+    else {
+        toggleEditBox.style.right = '-350px';
+    }
+}
+/*
 * Author: Paula Krasnovska
 * Revisited: /
 * Funktion: Toggeln des Bearbeitungsmenü, Zuweisung von Attributen für Thymeleaf
@@ -12,31 +30,13 @@ function toggleEditBox(storyId, name, description){
     document.getElementById("editId").value = storyId;
 }
 
-function toggleZoomedTaskCard(id) {
-    var editMenu = document.querySelector('#zoomedTaskCard');
-    var overlay = document.querySelector('.overlay');
-
-    if (editMenu) {
-        if (editMenu.style.display === "block") {
-            editMenu.style.display = "none";
-            if (overlay) {
-                overlay.remove();
-                overlay.removeEventListener('click', toggleZoomedTaskCard);
-            }
-        } else {
-            editMenu.style.display = "block";
-            if (!overlay) {
-                overlay = document.createElement('div');
-                overlay.classList.add('overlay');
-                document.body.appendChild(overlay);
-                overlay.addEventListener('click', toggleZoomedTaskCard);
-            }
-        }
-    } else {
-        console.error("Das Element mit der Klasse 'editMenu' wurde nicht gefunden.");
-    }
-}
-
+/*
+* Author: Zana Salih Hama
+* Revisited: /
+* Funktion: Highlighten der Prioritätsbuttons im Bearbeitungsfenster bei Auswahl
+* Grund: Benutzerfreundlichkeit
+* User-ID/Task-ID: /
+*/
 document.addEventListener('DOMContentLoaded', function() {
     const draggableRows = document.querySelectorAll('tbody tr[draggable="true"]');
     const innerContainers = document.querySelectorAll('.innerContainer');
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleDragStart(e) {
         draggedElement = e.target;
         e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/plain', e.target.id); // Store the ID of the dragged element
+        e.dataTransfer.setData('text/plain', e.target.id);
         e.target.classList.add('dragging');
     }
 
@@ -103,11 +103,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (targetBody && draggedElement) {
             targetBody.insertBefore(draggedElement, placeholder);
             placeholder.remove();
-
-            // Retrieve the ID of the dragged element
-            const draggedElementId = e.dataTransfer.getData('text/plain');
-            console.log('Dropped element ID:', draggedElementId);
         }
     }
-});
 
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.innerContainer')) {
+            innerContainers.forEach(container => {
+                container.classList.remove('zoomed');
+            });
+        }
+    });
+});
