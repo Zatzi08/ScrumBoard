@@ -1,7 +1,7 @@
 #outerContainer-Header{
     position: absolute;
     width: 1200px;
-    height: 50px;
+    height: 550px;
     background-color: #0c3d5d;
     margin-left: 2%;
     margin-top: 2.5%;
@@ -12,7 +12,6 @@
 }
 
 .outerContainer-HeaderBtn{
-    margin-bottom: 1000px;
     width: 160px;
     height: 25px;
     border-radius: 5px;
@@ -23,7 +22,6 @@
 }
 
 #outerContainer-HeaderBtnAdd{
-    margin-bottom: 1000px;
     width: 30px;
     height: 25px;
     border-radius: 5px;
@@ -38,9 +36,8 @@
     width: 1200px;
     background-color: #0c3d5d;
     border-bottom: 10px;
-    position: absolute;
-    margin-top: 5%;
-    margin-left: 2%;
+    position: relative;
+    margin-top: 1%;
     display: flex;
     flex-direction: row;
     border-radius: 20px;
@@ -155,6 +152,7 @@ hr {
 
 #zoomedTaskCard{
     position: fixed;
+    display: none;
     margin-top: 70px;
     margin-left: 400px;
     width: 500px;
@@ -164,6 +162,18 @@ hr {
     padding: 15px;
     overflow-x: auto;
     overflow-y: hidden;
+    z-index: 1000;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    overflow-y: scroll;
 }
 
 .zoomedTaskCard-content{
