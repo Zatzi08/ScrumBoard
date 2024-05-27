@@ -55,6 +55,7 @@ public class HttpRequestTests extends BaseHTTPTest {
     @AfterAll
     public static void afterAll() {
         tearDown();
+        after();
         changeHibernateCfg(true);
     }
 

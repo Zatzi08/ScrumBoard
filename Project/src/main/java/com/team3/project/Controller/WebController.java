@@ -559,7 +559,7 @@ public class WebController {
                                                @RequestParam(value = "Auth", required = true, defaultValue = "-1") int auth){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
-                if (presentationToLogic.accountService.getAuthority(sessionID) >= 2){
+                if (presentationToLogic.accountService.getAuthority(sessionID) >= 3){
                     presentationToLogic.accountService.setAuthority(usID,auth);
                     return new ResponseEntity<HttpStatus>(HttpStatus.OK);
                 }
