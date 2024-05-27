@@ -270,7 +270,7 @@ public class DAOTaskService {
         return false;
     }
 
-    static boolean updateTaskListById(int id, DAOTaskList taskList) {
+    public static boolean updateTaskListById(int id, DAOTaskList taskList) {
         DAOTask daoTask = getWithTaskListById(id);
         daoTask.setTaskList(taskList);
         return DAOService.merge(daoTask);
