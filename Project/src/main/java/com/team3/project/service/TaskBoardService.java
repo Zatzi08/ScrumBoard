@@ -35,7 +35,7 @@ public class TaskBoardService {
     public TaskBoard toTaskBoard(DAOTaskBoard daoTaskBoard) throws Exception {
         TaskBoard taskBoard = new TaskBoard(daoTaskBoard.getId(), daoTaskBoard.getName());
         List<DAOTaskList> taskLists = DAOTaskListService.getByTaskBoardId(daoTaskBoard.getId());
-        if (taskLists.isEmpty()) throw new Exception("Invalid TaskList");
+        if (taskLists.isEmpty()) throw new Exception("Invalid TaskBoard");
         List<TaskList> taskListList = new LinkedList<TaskList>();
         for (DAOTaskList dtl : taskLists){
             TaskList toAdd = TaskListService.toTaskList(dtl);
