@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="css/taskBoard.css">
     <link rel="stylesheet" href="css/setup.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <meta id="sessionID" th:sessionID="${sessionID}">
 </head>
 <body>
 <!--
@@ -57,7 +56,7 @@
             </tbody>
         </table>
     </div>
-
+</div>
 
 <!--Todo: Handling Beschreibung bei zu langem String (wie bei zoomedTaskContainer)-->
 <!--Todo: Ganze Logik hinter dem Zoomen, darum auskommentiert -->
@@ -82,5 +81,6 @@
     <script src="js/communication.js"></script>
     <script type = "text/javascript" src="js/setup.js"></script>
     <script type = "text/javascript" src="js/taskBoard.js"></script>
+    <input type="hidden" id="sessionID" th:value="${sessionID}">
 </body>
 </html>

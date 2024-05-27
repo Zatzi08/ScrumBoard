@@ -108,7 +108,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const draggedElementId = e.dataTransfer.getData('text/plain');
             console.log('TID:', draggedElementId);
             console.log('TLID:', targetContainer.id);
-            setTaskList(document.getElementById("sessionID").sessionID,draggedElementId, targetContainer.id)
+            let sessionID = document.getElementById("sessionID").value
+            setTaskList(sessionID,draggedElementId, targetContainer.id)
         }
     }
 
