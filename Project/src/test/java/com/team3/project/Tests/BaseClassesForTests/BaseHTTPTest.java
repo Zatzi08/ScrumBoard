@@ -2,10 +2,8 @@ package com.team3.project.Tests.BaseClassesForTests;
 
 import com.team3.project.Classes.*;
 import com.team3.project.DAO.DAOTaskBoard;
-import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOStartService;
 import com.team3.project.DAOService.DAOTaskBoardService;
-import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.Facede.*;
 
 import java.util.LinkedList;
@@ -28,7 +26,6 @@ public class BaseHTTPTest extends BaseTest {
 
     protected static void setup(boolean b) throws Exception {
         if (b) BaseTest.setup(logName, mainTestName);
-        if (DAOUserService.checkByEmail("T@M.com")) throw new Exception("Fuck IT");
         if (boards.isEmpty()) TestDBTaskBoard();
         if (accounts.isEmpty())TestDBUser();
         if (storys.isEmpty())TestDBUserStory();

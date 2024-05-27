@@ -207,7 +207,7 @@ function changeAuth(sessionID, selectID, usID){
 }
 
 function setTaskList(sessionID, tID, tlID){
-    let url = 'setTaskListToTask?TID=' + tID + '&TLID=' + tlID;
+    let url = 'setTaskListOfTask?TID=' + tID + '&TLID=' + tlID;
 
     fetch(url,{
         method: 'Get',
