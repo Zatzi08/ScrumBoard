@@ -830,8 +830,7 @@ public class HttpRequestTests extends BaseHTTPTest {
             throw new AssertionError(e);
         }
 
-        // TODO: existentes TaskBoard
-        ResponseEntity<String> responce = this.restTemplate.exchange("http://localhost:" + port + "/getTaskBoardByID?sessionID=" + sessions.get(0)  + "&TBID=" + 0, HttpMethod.GET, message, String.class);
+        ResponseEntity<String> responce = this.restTemplate.exchange("http://localhost:" + port + "/getTaskBoardByID?sessionID=" + sessions.get(0)  + "&TBID=" + boards.get(0).getID(), HttpMethod.GET, message, String.class);
         try {
             assertThat(responce.getStatusCode())
                     .isEqualTo(HttpStatus.OK);
@@ -840,8 +839,8 @@ public class HttpRequestTests extends BaseHTTPTest {
             throw new AssertionError(e);
         }
 
-        try { // TODO: check auf TBName
-            assertTrue(Objects.requireNonNull(responce.getBody()).contains("TBName"));
+        try {
+            assertTrue(Objects.requireNonNull(responce.getBody()).contains(boards.get(0).getName()));
         } catch (AssertionError e){
             printWriterAddFailure("Wrong Page loaded");
             throw new AssertionError(e);

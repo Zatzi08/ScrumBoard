@@ -472,3 +472,47 @@ Date: 26/05/24 11:49:15
 pass: true
 
 
+Hyper-Text-Transport-Protocol-Tests:
+
+Hyper-Text-Transport-Protocol-Test-saveTaskBoard
+Test ID: HTTP.T19
+Date: 27/05/24 14:17:28
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-setTaskListOfTask
+Test ID: HTTP.T22
+Date: 27/05/24 14:17:28
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-getTaskBoardByID
+Test ID: HTTP.T18
+Date: 27/05/24 14:17:28
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-setAuthority
+Test ID: HTTP.T21
+Date: 27/05/24 14:17:28
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-getTaskBoard
+Test ID: HTTP.T20
+Date: 27/05/24 14:17:28
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-getTaskByTLID
+Test ID: HTTP.T14
+Date: 27/05/24 14:17:28
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-getUserList
+Test ID: HTTP.T17
+Date: 27/05/24 14:17:28
+pass: true
+
+
