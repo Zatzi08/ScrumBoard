@@ -1,79 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Board</title>
-    <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/taskBoard.css">
-    <link rel="stylesheet" href="css/setup.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<body>
-<!--
-       Author: Zana Salih Hama
-       Revisited: /
-       Funktion: Reiter zur Übersicht aller Seiten[-optionen]
-       Grund: Übersichtlichkeit
-       User-ID/Task-ID: /
-    -->
-<div class="Reiter">
-    <button class="reiterBtn" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" >Projekt Manager</button>
-    <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
-    <button class = "reiterBtn"onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Task-Board </button>
-    <button class = "reiterBtn">Kalender </button>
-    <button class = "reiterBtn" id="einstellungBtn">Einstellungen </button>
-</div>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Task Board</title>
+        <link rel="stylesheet" href="css/foundation.css">
+        <link rel="stylesheet" href="css/taskBoard.css">
+        <link rel="stylesheet" href="css/setup.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+    <!--
+           Author: Zana Salih Hama
+           Revisited: /
+           Funktion: Reiter zur Übersicht aller Seiten[-optionen]
+           Grund: Übersichtlichkeit
+           User-ID/Task-ID: /
+        -->
+    <div class="Reiter">
+        <button class="reiterBtn" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" >Projekt Manager</button>
+        <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
+        <button class = "reiterBtn"onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Task-Board </button>
+        <button class = "reiterBtn">Kalender </button>
+        <button class = "reiterBtn" id="einstellungBtn">Einstellungen </button>
+    </div>
 
-<div id="outerContainer-Header">
-    <button th:each="Taskboard : ${TaskBoards}" class="outerContainer-HeaderBtn" th:text="${Taskboard.getName()}" th:tbID="${Taskboard.getID()}">Sprint 1 <span class="closeToggleEdit">&times;</span></button>
-    <button id="outerContainer-HeaderBtnAdd"><b>+</b></button>
+    <div id="outerContainer-Header">
+        <button th:each="Taskboard : ${TaskBoards}" class="outerContainer-HeaderBtn" th:text="${Taskboard.getName()}" th:tbID="${Taskboard.getID()}">Sprint 1 <span class="closeToggleEdit">&times;</span></button>
+        <button id="outerContainer-HeaderBtnAdd"><b>+</b></button>
 
-    <div id="outerContainer">
-        <div th:each="TaskList : ${Board.getTaskListList()}" th:id="${TaskList.getID()}" class="innerContainer" style="margin-left: 10px">
-            <table class="columnTable">
-                <thead class="columnTableHead">
-                <tr>
-                    <th style="border-top-left-radius: 0; border-top-right-radius: 0; text-align: center; background-color: rgba(25,0,255,0.3); color: white" th:text="${TaskList.getName()}">Todo</th>
-                </tr>
-                </thead>
-                <tbody class="columnTableBody">
-                <tr th:each="task : ${TaskList.getTasks()}" th:id="${task.getID()}" draggable="true" ondblclick="toggleZoomedTaskCard()">
-                    <td th:style = "${(task.getPriorityAsInt() == 1) ? 'background-color: lightgreen' : (task.getPriorityAsInt() == 2) ? 'background-color: lightblue' : (task.getPriorityAsInt() == 3) ? 'background-color: lightsalmon' : (task.getPriorityAsInt() == 4) ? 'background-color: indianred' : 'background-color: rgba(255, 255, 255, 0.66)'}">
-                        <label class="tableContentLabel" id="tableContent-UsId" th:text="${task.getUserStory().getName()}">US-ID</label>
-                        <label class="tableContentLabel" id="tableContent-Beschreibung" th:text="${task.getDescription()}">XDD</label>
-                        <label class="tableContentLabel" id="tableContent-LeftTime" th:text="${task.getDueDateAsPresentable()}" >Left Time</label>
-                        <label class="tableContentLabel" id="tableContent-Role">Rolle</label>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        <div id="outerContainer">
+            <div th:each="TaskList : ${Board.getTaskListList()}" th:id="${TaskList.getID()}" class="innerContainer" style="margin-left: 10px">
+                <table class="columnTable">
+                    <thead class="columnTableHead">
+                    <tr>
+                        <th style="border-top-left-radius: 0; border-top-right-radius: 0; text-align: center; background-color: rgba(25,0,255,0.3); color: white" th:text="${TaskList.getName()}">Todo</th>
+                    </tr>
+                    </thead>
+                    <tbody class="columnTableBody">
+                    <tr th:each="task : ${TaskList.getTasks()}" th:id="${task.getID()}" draggable="true" ondblclick="toggleZoomedTaskCard()">
+                        <td th:style = "${(task.getPriorityAsInt() == 1) ? 'background-color: lightgreen' : (task.getPriorityAsInt() == 2) ? 'background-color: lightblue' : (task.getPriorityAsInt() == 3) ? 'background-color: lightsalmon' : (task.getPriorityAsInt() == 4) ? 'background-color: indianred' : 'background-color: rgba(255, 255, 255, 0.66)'}">
+                            <label class="tableContentLabel" id="tableContent-UsId" th:text="${task.getUserStory().getName()}">US-ID</label>
+                            <label class="tableContentLabel" id="tableContent-Beschreibung" th:text="${task.getDescription()}">XDD</label>
+                            <label class="tableContentLabel" id="tableContent-LeftTime" th:text="${task.getDueDateAsPresentable()}" >Left Time</label>
+                            <label class="tableContentLabel" id="tableContent-Role">Rolle</label>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
 
 
-<div id="zoomedTaskCard">
-    <label class="zoomedTaskCard-content" id="zoomedTaskCard-US">US</label>
-    <span class="zoomedTaskCard-content" id="zoomedTaskCard-seperator">/</span>
-    <label class="zoomedTaskCard-content" id="zoomedTaskCard-taskBoard">Task-Board</label>
-    <label class="zoomedTaskCard-content" id="zoomedTaskCard-description">Lacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velitLacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velit</label>
-    <label class="zoomedTaskCard-content" id="zoomedTaskCard-estimatedTime"><i class="fa fa-clock-o" style="margin-right: 5px; margin-top: 5px"></i>Geschätzte Zeit</label>
-    <label class="zoomedTaskCard-content" id="zoomedTaskCard-priority">Priorität</label>
-    <br>
-    <label class="zoomedTaskCard-content" id="zoomedTaskCard-workedTime">Bearbeitungszeit</label>
-    <label class="zoomedTaskCard-content" id="zoomedTaskCard-role"><i class="fa fa-briefcase" style="margin-right: 5px; margin-top: 5px"></i>Rolle</label>
-    <label class="zoomedTaskCard-content" id="zoomedTaskCard-deadline">Abgabefrist</label>
-</div>
-
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/vendor/what-input.js"></script>
-    <script src="js/vendor/foundation.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/communication.js"></script>
-    <script type = "text/javascript" src="js/setup.js"></script>
-    <script type = "text/javascript" src="js/taskBoard.js"></script>
-</body>
+    <div id="zoomedTaskCard">
+        <label class="zoomedTaskCard-content" id="zoomedTaskCard-US">US</label>
+        <span class="zoomedTaskCard-content" id="zoomedTaskCard-seperator">/</span>
+        <label class="zoomedTaskCard-content" id="zoomedTaskCard-taskBoard">Task-Board</label>
+        <label class="zoomedTaskCard-content" id="zoomedTaskCard-description">Lacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velitLacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velit</label>
+        <label class="zoomedTaskCard-content" id="zoomedTaskCard-estimatedTime"><i class="fa fa-clock-o" style="margin-right: 5px; margin-top: 5px"></i>Geschätzte Zeit</label>
+        <label class="zoomedTaskCard-content" id="zoomedTaskCard-priority">Priorität</label>
+        <br>
+        <label class="zoomedTaskCard-content" id="zoomedTaskCard-workedTime">Bearbeitungszeit</label>
+        <label class="zoomedTaskCard-content" id="zoomedTaskCard-role"><i class="fa fa-briefcase" style="margin-right: 5px; margin-top: 5px"></i>Rolle</label>
+        <label class="zoomedTaskCard-content" id="zoomedTaskCard-deadline">Abgabefrist</label>
+    </div>
+<input type="hidden" id="sessionID" th:value="${sessionID}">
+        <script src="js/vendor/jquery.js"></script>
+        <script src="js/vendor/what-input.js"></script>
+        <script src="js/vendor/foundation.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/communication.js"></script>
+        <script type = "text/javascript" src="js/setup.js"></script>
+        <script type = "text/javascript" src="js/taskBoard.js"></script>
+    </body>
 </html>

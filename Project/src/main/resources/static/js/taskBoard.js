@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Retrieve the ID of the dragged element
             const draggedElementId = e.dataTransfer.getData('text/plain');
-            console.log('Dropped element ID:', draggedElementId);
+            setTaskList(document.getElementById('sessionID').value ,draggedElementId, targetContainer.id)
         }
     }
 });
