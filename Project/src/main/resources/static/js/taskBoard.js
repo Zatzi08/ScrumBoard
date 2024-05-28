@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let draggedElement = null;
     let placeholder = document.createElement('tr');
     placeholder.className = 'placeholder';
+    placeholder.innerHTML = '<td colspan="4">&nbsp;</td>';
 
     function handleDragStart(e) {
         draggedElement = e.target;
@@ -77,17 +78,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const targetRow = e.target.closest('tr');
 
         if (targetBody && draggedElement && e.target !== draggedElement) {
-            if (targetRow) {
+            const rows = Array.from(targetBody.querySelectorAll('tr'));
+            const index = rows.indexOf(targetRow);
+
+            if (index > -1) {
                 const rect = targetRow.getBoundingClientRect();
                 const mouseY = e.clientY - rect.top;
+
                 if (mouseY > rect.height / 2) {
-                    if (!targetRow.nextElementSibling || targetRow.nextElementSibling === placeholder) {
-                        targetBody.appendChild(placeholder);
-                    } else {
+                    if (targetRow.nextElementSibling !== placeholder) {
                         targetBody.insertBefore(placeholder, targetRow.nextElementSibling);
                     }
                 } else {
-                    targetBody.insertBefore(placeholder, targetRow);
+                    if (targetRow.previousElementSibling !== placeholder) {
+                        targetBody.insertBefore(placeholder, targetRow);
+                    }
                 }
             } else {
                 targetBody.appendChild(placeholder);
@@ -103,11 +108,53 @@ document.addEventListener('DOMContentLoaded', function() {
         if (targetBody && draggedElement) {
             targetBody.insertBefore(draggedElement, placeholder);
             placeholder.remove();
+            draggedElement.classList.remove('dragging');
 
             // Retrieve the ID of the dragged element
             const draggedElementId = e.dataTransfer.getData('text/plain');
-            setTaskList(document.getElementById('sessionID').value ,draggedElementId, targetContainer.id)
+            setTaskList(document.getElementById('sessionID').value, draggedElementId, targetContainer.id);
         }
     }
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    function enableButtonEdit() {
+        const headerButtons = document.querySelectorAll('.outerContainer-HeaderBtn');
+
+        headerButtons.forEach(button => {
+            button.addEventListener('dblclick', function(event) {
+                const currentText = button.textContent.trim();
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentText;
+                input.style.width = button.offsetWidth + 'px';
+                input.style.height = button.offsetHeight + 'px';
+                input.style.fontFamily = window.getComputedStyle(button).fontFamily;
+                input.style.fontSize = window.getComputedStyle(button).fontSize;
+                input.style.padding = '2px';
+                input.style.margin = '0';
+                input.style.border = '1px solid #ccc';
+                input.style.borderRadius = '3px';
+                input.style.boxSizing = 'border-box';
+                input.style.display = 'inline';
+
+                input.addEventListener('keyup', function(e) {
+                    if (e.key === 'Enter') {
+                        button.textContent = input.value.trim();
+                        input.replaceWith(button);
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    button.textContent = input.value.trim();
+                    input.replaceWith(button);
+                });
+
+                button.replaceWith(input);
+                input.focus();
+            });
+        });
+    }
+
+    enableButtonEdit();
+});

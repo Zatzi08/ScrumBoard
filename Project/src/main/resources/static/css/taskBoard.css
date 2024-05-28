@@ -12,13 +12,14 @@
 }
 
 .outerContainer-HeaderBtn{
-    width: 160px;
+    width: fit-content;
     height: 25px;
     border-radius: 5px;
     color: #ffffff;
     font-size: 12px;
-    padding: 1px;
+    padding: 5px;
     background-color: #252f50;
+    display: inline;
 }
 
 #outerContainer-HeaderBtnAdd{
@@ -29,6 +30,7 @@
     font-size: 12px;
     padding: 1px;
     background-color: #888585;
+    display: inline;
 }
 
 #outerContainer{
@@ -139,7 +141,8 @@ hr {
 #tableContent-Beschreibung{
     padding: 10px;
     text-align: left;
-    width: 60%;
+    width: 95%;
+    max-width: 200px;
     border: 0 solid #adadad;
     border-radius: 10px;
     cursor: default;
@@ -151,8 +154,9 @@ hr {
 #zoomedTaskCard{
     position: fixed;
     display: none;
-    margin-top: 70px;
-    margin-left: 400px;
+    top: 50vh;
+    left: 110vh;
+    transform: translate(-50%, -50%);
     width: 500px;
     height: 350px;
     background-color: rgba(36, 56, 98, 0.9);
@@ -258,7 +262,8 @@ hr {
 }
 
 .dragging {
-    opacity: 0.5;
+    opacity: .25;
+
 }
 
 .placeholder {
