@@ -117,6 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+/*
 document.addEventListener('DOMContentLoaded', function() {
     function enableButtonEdit() {
         const headerButtons = document.querySelectorAll('.outerContainer-HeaderBtn');
@@ -158,3 +159,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
     enableButtonEdit();
 });
+ */
+
+function addHeaderButton() {
+
+    var newButton = document.createElement('button');
+    newButton.className = 'outerContainer-HeaderBtn';
+    newButton.style.position = 'relative';
+    newButton.ondblclick = function() {
+        this.contentEditable = true;
+    };
+    newButton.style.marginRight = '5px';
+
+
+    var buttonText = document.createElement('span');
+    buttonText.innerText = 'New Sprint';
+
+
+    var deleteBtn = document.createElement('span');
+    deleteBtn.className = 'delete-btn';
+    deleteBtn.innerHTML = '&times;';
+    deleteBtn.onclick = function() {
+        deleteButton(newButton);
+    };
+    deleteBtn.setAttribute('contenteditable', 'false');
+
+
+    newButton.appendChild(buttonText);
+    newButton.appendChild(deleteBtn);
+
+    var addButton = document.getElementById('outerContainer-HeaderBtnAdd');
+    addButton.parentNode.insertBefore(newButton, addButton);
+}
+
+function deleteButton(button) {
+    button.parentNode.removeChild(button);
+}

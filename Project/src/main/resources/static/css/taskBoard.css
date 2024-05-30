@@ -20,6 +20,17 @@
     padding: 5px;
     background-color: #252f50;
     display: inline;
+    padding-right: 20px;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: red;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px;
 }
 
 #outerContainer-HeaderBtnAdd{
@@ -151,14 +162,14 @@ hr {
     text-overflow: ellipsis;
 }
 
-#zoomedTaskCard{
+#zoomedTaskCard {
     position: fixed;
     display: none;
-    top: 50vh;
-    left: 110vh;
+    top: calc(80% - 175px);
+    left: calc(70% - 250px);
     transform: translate(-50%, -50%);
     width: 500px;
-    height: 350px;
+    height: auto;
     background-color: rgba(36, 56, 98, 0.9);
     border-radius: 10px;
     padding: 15px;

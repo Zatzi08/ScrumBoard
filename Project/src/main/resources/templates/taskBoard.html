@@ -26,8 +26,8 @@
     </div>
 
     <div id="outerContainer-Header">
-        <button th:each="Taskboard : ${TaskBoards}" class="outerContainer-HeaderBtn" th:text="${Taskboard.getName()}" th:tbID="${Taskboard.getID()}">Sprint 1 <span class="closeToggleEdit">&times;</span></button>
-        <button id="outerContainer-HeaderBtnAdd"><b>+</b></button>
+        <button th:each="Taskboard : ${TaskBoards}" class="outerContainer-HeaderBtn" th:text="${Taskboard.getName()}" th:tbID="${Taskboard.getID()}" ondblclick="this.contentEditable=true">Sprint 1 <span class="closeToggleEdit">&times;</span></button>
+        <button id="outerContainer-HeaderBtnAdd" onclick="addHeaderButton()"><b>+</b></button>
 
         <div id="outerContainer">
             <div th:each="TaskList : ${Board.getTaskListList()}" th:id="${TaskList.getID()}" class="innerContainer" style="margin-left: 10px">
