@@ -281,10 +281,3 @@ hr {
     background-color: #f0f0f0;
     border: 2px dashed #ccc;
 }
-
-.closeToggleEdit {
-    font-size: 20px;
-    cursor: pointer;
-    float: right;
-    margin-top: -8px;
-}
