@@ -537,7 +537,7 @@ public class WebController {
                                                      @RequestBody() TaskBoard taskBoard){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
-                presentationToLogic.taskBoardService.createTaskBoard(taskBoard.getName());
+                presentationToLogic.taskBoardService.saveTaskBoard(taskBoard);
                 return new ResponseEntity<HttpStatus>(HttpStatus.OK);
             }
         } catch (Exception e){
@@ -578,6 +578,27 @@ public class WebController {
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 presentationToLogic.taskService.setTaskList(tID,tlID);
+                return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+    }
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: TB11.B1
+     */
+    @RequestMapping(value = "/deleteTaskBoard", method = RequestMethod.POST)
+    private ResponseEntity<HttpStatus> deleteTaskBoard(@RequestHeader(value = "sessionID") String sessionID,
+                                                       @RequestParam(value = "TBID") int tbID){
+        try {
+            if (presentationToLogic.webSessionService.verify(sessionID)){
+                presentationToLogic.taskBoardService.deleteTaskBoard(tbID);
                 return new ResponseEntity<HttpStatus>(HttpStatus.OK);
             }
         } catch (Exception e){

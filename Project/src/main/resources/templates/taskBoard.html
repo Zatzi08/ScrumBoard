@@ -21,12 +21,15 @@
     <div class="Reiter">
         <button class="reiterBtn" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" >Projekt Manager</button>
         <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
-        <button class = "reiterBtn"onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Task-Board </button>
+        <button class = "reiterBtn" onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Task-Board </button>
         <button class = "reiterBtn">Kalender </button>
     </div>
 
     <div id="outerContainer-Header">
-        <button th:each="Taskboard : ${TaskBoards}" class="outerContainer-HeaderBtn" th:text="${Taskboard.getName()}" th:tbID="${Taskboard.getID()}" ondblclick="this.contentEditable=true">Sprint 1</button>
+        <button style="position: relative; margin-right: 5px;" th:each="Taskboard : ${TaskBoards}" class="outerContainer-HeaderBtn" th:tbID="${Taskboard.getID()}" ondblclick="this.contentEditable=true">
+            <span th:text="${Taskboard.getName()}">  </span>
+            <span class='delete-btn' contenteditable='false' onclick="console.log('delete')">×</span></button>
+        <!-- TODO: if TBID != 1 <span> tbName </span> <span class="delete-btn" contenteditable="false">×</span>-->
         <button id="outerContainer-HeaderBtnAdd" onclick="addHeaderButton()"><b>+</b></button>
 
         <div id="outerContainer">
