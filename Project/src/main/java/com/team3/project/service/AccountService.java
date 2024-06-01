@@ -109,7 +109,7 @@ public class AccountService {
      */
     public List<User> getAllUser(){
         List <User> list = new LinkedList<>();
-        List <DAOUser> daoUserList = DAOUserService.getAll();
+        List <DAOUser> daoUserList = DAOUserService.getAllPlusRoles();
         if(daoUserList != null){
             User toAdd;
             for(DAOUser daoUser : daoUserList){

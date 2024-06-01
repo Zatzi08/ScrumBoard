@@ -1,6 +1,8 @@
 package com.team3.project.Tests;
 
+import com.team3.project.Classes.Account;
 import com.team3.project.Classes.Email;
+import com.team3.project.Classes.User;
 import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.DAOAccountService;
@@ -30,10 +32,7 @@ public class HttpRequestTests extends BaseHTTPTest {
     private final String masterID = "EAIFPH8746531";
     @Autowired
     public TestRestTemplate restTemplate;
-    @Autowired
-    private AccountService accountService;
-    @Autowired
-    private Email email;
+
 
     @BeforeAll
     public static void BeforeAll() throws Exception {
@@ -49,7 +48,7 @@ public class HttpRequestTests extends BaseHTTPTest {
 
     @AfterEach
     public void afterEach() {
-        after();
+
     }
 
     @AfterAll
@@ -120,9 +119,10 @@ public class HttpRequestTests extends BaseHTTPTest {
             printWriterAddFailure("Akzeptiert Bad_Request");
             throw new AssertionError(e);
         }
-
+        Account account = accounts.get(0);
+        User user = users.get(0);
         try {
-            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/Register" + "?EMail=" + accounts.get(0).getMail() + "&Passwort=" + accounts.get(0).getPassword() + "&Username=" + users.get(0).getName(), HttpMethod.POST, message, String.class)
+            assertThat(this.restTemplate.exchange("http://localhost:" + port + "/Register" + "?EMail=" + account.getMail() + "&Passwort=" + account.getPassword() + "&Username=" + user.getName(), HttpMethod.POST, message, String.class)
                     .getStatusCode()).isEqualTo(HttpStatus.OK);
         }  catch (AssertionError e){
             printWriterAddFailure("HTTP PostRequest nicht erfolgreich - existenter User");
