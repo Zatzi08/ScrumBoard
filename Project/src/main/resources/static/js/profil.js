@@ -12,3 +12,10 @@ function toggleProfilMenü(){
 
 }
 
+window.onclick = function(event) {
+    var profilPopup = document.getElementById("profilEditMenü");
+    if (event.target == profilPopup) {
+        profilPopup.style.display = "none";
+    }
+}
+

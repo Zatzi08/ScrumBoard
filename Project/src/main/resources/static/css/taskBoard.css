@@ -1,6 +1,6 @@
 #outerContainer-Header{
     position: relative;
-    background-color: #0c3d5d;
+    background-color: #211f2b;
     margin-left: 2%;
     margin-right: 2%;
     margin-top: 2.5%;
@@ -18,7 +18,7 @@
     color: #ffffff;
     font-size: 12px;
     padding: 5px;
-    background-color: #252f50;
+    background-color: #46425e;
     display: inline;
     padding-right: 20px;
 }
@@ -27,7 +27,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    color: red;
+    color: #928fc0;
     cursor: pointer;
     font-size: 16px;
     padding: 5px;
@@ -40,12 +40,37 @@
     color: #ffffff;
     font-size: 12px;
     padding: 1px;
-    background-color: #888585;
+    background-color: #67648f;
     display: inline;
 }
 
+#outerContainer-HeaderChangeTBName{
+    position: absolute;
+    width: fit-content;
+    height: 25px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 1px;
+    background-color: #46425e;
+    display: inline;
+    right: 15px;
+}
+
+#outerContainer-HeaderChangeTBName:hover{
+    background-color: #38364b;
+    cursor: pointer;
+}
+
+#outerContainer-HeaderBtnAdd:hover{
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    background-color: #46425e;
+    cursor: pointer;
+}
+/*#38618C*/
 #outerContainer{
-    background-color: #0c3d5d;
+    background-color: #211f2b;
     border-bottom: 10px;
     position: relative;
     margin-top: 1%;
@@ -55,7 +80,7 @@
 }
 
 .innerContainer{
-    background-color: rgba(35, 73, 101, 0.8);
+    background-color: #302d3f;
     height: 75vh;
     width: 20%;
     border-radius: 10px;
@@ -87,10 +112,17 @@
 .columnTableHead {
     position: sticky;
     top: 0;
-    background-color: #000000;
+    background-color: black;
     cursor: default;
 }
 
+.columnTableHead tr th{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    text-align: center;
+    background-color: #295266;
+    color: white
+}
 .columnTable th,
 .columnTable td {
     padding: 10px;
@@ -135,18 +167,18 @@ hr {
 #tableContent-LeftTime{
     display: inline-block;
     float: left;
-    color: #b6b6b6;
+    color: black;
 }
 
 #tableContent-Role{
     display: inline-block;
     float: right;
-    color: #b6b6b6;
+    color: black;
 }
 
 #tableContent-UsId{
     text-align: right;
-    color: #b6b6b6;
+    color: black;
 }
 
 #tableContent-Beschreibung{
@@ -170,7 +202,7 @@ hr {
     transform: translate(-50%, -50%);
     width: 500px;
     height: auto;
-    background-color: rgba(36, 56, 98, 0.9);
+    background-color: #373347;
     border-radius: 10px;
     padding: 15px;
     overflow-x: auto;
@@ -280,4 +312,54 @@ hr {
 .placeholder {
     background-color: #f0f0f0;
     border: 2px dashed #ccc;
+}
+
+#popupChangeTBName{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+}
+
+#changeTBNameForm{
+    position: relative;
+    background-color: #373347;
+    margin: 15% auto;
+    padding: 20px;
+    width: 80%;
+    border-radius: 12px;
+}
+
+#changeTBNameInput{
+    position: relative;
+    background-color: #d1d1d1;
+    width: 80%;
+    height:40px;
+    color:black;
+    font-size: 13px;
+    border-radius: 12px;
+    margin-top: 15px;
+    margin-left: 10%;
+
+
+}
+
+#changeTBNameBtn{
+    position: relative;
+    height:30px;
+    width:fit-content;
+    margin-top: 30px;
+    margin-left: 45%;
+    background-color: #4b6294;
+    color:white;
+    border-radius: 12px;
+
+}
+
+#changeTBNameBtn:hover{
+    background-color: #3b4c70;
 }
