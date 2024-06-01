@@ -203,7 +203,17 @@ function changeTBName(){
 
 window.onclick = function(event) {
     var TBNamePopup = document.getElementById("popupChangeTBName");
+    var fertigPopup = document.getElementById("popupTaskFertig");
     if (event.target == TBNamePopup) {
         TBNamePopup.style.display = "none";
     }
+
+    else if (event.target == fertigPopup) {
+        fertigPopup.style.display = "none";
+    }
+}
+
+function openPopup(){
+    var fertigPopup = document.getElementById("popupTaskFertig");
+    fertigPopup.style.display = "block";
 }
