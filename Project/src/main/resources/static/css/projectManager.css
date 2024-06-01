@@ -16,13 +16,14 @@
     padding: 20px;
     border-radius: 10px;
     overflow: auto;
+    overflow-y: scroll;
     margin-top: -625px;
     margin-left: 25%;
     z-index: 1000;
 }
 
 .editMenu::-webkit-scrollbar{
-    display: none;
+    display: block;
 }
 
 #editMenu-saveEditBtn {
@@ -72,6 +73,7 @@
     align-items: center;
     justify-content: center;
 }
+
 
 .inputEditPrio:hover {background-color: rgb(249,250,251);}
 
@@ -484,6 +486,55 @@ ul{list-style-type: none;}
 }
 
 .rightsDropdown:focus{background-color: #87939f;}
+
+.dropdown-check-list {
+    display: inline-block;
+    /*display: inline-flex;*/
+    align-items: center;
+    justify-content: center;
+    right:0;
+    width: fit-content;
+    height:30px;
+    margin-left: 30%;
+}
+
+.dropdown-check-list .anchor {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    background-color: #283d48;
+    color: #afafaf;
+    border: 2px solid #6e7f91;
+    border-radius: 8px;
+    font-size: 12px;
+    box-shadow: white;
+    padding: .75rem 1rem;
+    text-align: center;
+    right:0;
+}
+
+.dropdown-check-list ul.items {
+    position: fixed;
+    padding: 2px;
+    display: none;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+    z-index: 1;
+    background-color: #23353f;
+    width: fit-content;
+    height:150px;
+    overflow: scroll;
+}
+
+.dropdown-check-list ul.items li {
+    list-style: none;
+}
+
+
+.dropdown-check-list.visible .items {
+    display: block;
+}
 
 
 
