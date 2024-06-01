@@ -186,6 +186,5 @@ public class TaskService {
         }
         DAOTaskService.updateById(dt.getId(),dt.getDescription(),dt.getPriority(),dt.isDone(),dt.getDueDate(),dt.getProcessingTimeEstimatedInHours(),dt.getProcessingTimeRealInHours(), list, dt.getUserStory(),dt.getUsers());
         DAOTask t = DAOTaskService.getById(tID);
-
     }
 }

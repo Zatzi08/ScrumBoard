@@ -1,7 +1,11 @@
 package com.team3.project.Classes;
 
 import com.team3.project.Classes.Enumerations.Priority;
+import com.team3.project.DAO.DAOTask;
+import com.team3.project.DAO.DAOTaskList;
 import com.team3.project.DAOService.DAOTaskBoardService;
+import com.team3.project.DAOService.DAOTaskListService;
+import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.service.UserStoryService;
 import lombok.*;
 
@@ -9,6 +13,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 // Definiert Datentyp
@@ -86,5 +91,15 @@ public class Task extends abstraktDataClasses {
     public String getTaskBoardNameOfTask(){
         if (this.getTbID() == -1) return "";
         return DAOTaskBoardService.getById(this.getTbID()).getName();
+    }
+
+    public boolean isDone(){
+        if (this.getTbID() >= 1) {
+            List<DAOTaskList> dtls = DAOTaskListService.getByTaskBoardId(this.getTbID());
+            for (DAOTask dt : DAOTaskListService.getWithTasksById(dtls.get(dtls.size() - 1).getId()).getTasks()) {
+                if (dt.getId() == this.getID()) return true;
+            }
+        }
+        return false;
     }
 }
