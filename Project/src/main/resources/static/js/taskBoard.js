@@ -241,7 +241,7 @@ function changeTBName(sessionID, tbID) {
     let name = document.getElementById('changeTBNameInput').value;
     saveTaskBoard(sessionID, tbID, name);
     let id = 'Name' + tbID;
-    document.getElementById(id).text = name;
+    document.getElementById(id).innerText = name;
 }
 
 function addTaskBoard(sessionID) {
