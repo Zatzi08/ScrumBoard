@@ -314,7 +314,7 @@ class DAOService {
     static <Dao> List<Dao> getListByPara(Class<Dao> daoClass, String parameter, String parameterName) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
-        String query = "SELECT item FROM " + daoClass.getName() + " AS item WHERE " + parameterName + " = ?1";
+        String query = "SELECT item FROM " + daoClass.getName() + " AS item WHERE item." + parameterName + " = ?1";
         List<Dao> retrieve;
         try {
             retrieve = entityManager.createQuery(query, daoClass)

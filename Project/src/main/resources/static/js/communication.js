@@ -183,8 +183,25 @@ function saveTaskBoard(sessionID){
         body: JSON.stringify({
             'tbID': TBID,
             'name': TBName,
+            'taskListList': null
         })
     })
+}
+
+function deleteTB(sessionID, TBID){
+    let url = 'deleteTaskBoard?TBID=' +TBID
+        fetch(url, {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionID': sessionID
+        }
+    }).then(r  => {
+            if (!r.ok){
+                document.location.reload()
+            }
+        })
 }
 
 function changeAuth(sessionID, selectID, usID){

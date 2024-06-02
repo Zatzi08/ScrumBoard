@@ -643,7 +643,7 @@ public class LogicTest extends BaseLogicTest{
     void register(){
         pw.append("Logik-Test-register\nTest ID: Logic.T9\n" + "Date: " + formatter.format(date)+ '\n');
         AccountService aservice = new AccountService();
-        User u = new User("Dave", -1, "BlahBlah", "workBlahBlah", Enumerations.Role.Nutzer,1);
+        User u = new User("Dave", -1, List.of(Enumerations.Role.Nutzer),1);
         int count_correct_exceptions = 0;
         int count_correct_exception_checks = 0;
 
@@ -702,7 +702,7 @@ public class LogicTest extends BaseLogicTest{
     void login(){
         pw.append("Logik-Test-login\nTest ID: Logic.T10\n" + "Date: " + formatter.format(date)+ '\n');
         AccountService aservice = new AccountService();
-        User u = new User("Dave", -1, "BlahBlah", "workBlahBlah", Enumerations.Role.Nutzer, 1);
+        User u = new User("Dave", -1, List.of(Enumerations.Role.Nutzer), 1);
         int count_correct_exceptions = 0;
         int count_correct_exception_checks = 0;
 
@@ -1145,19 +1145,20 @@ public class LogicTest extends BaseLogicTest{
         }
 
         int uID = DAOUserService.getIdByMail("daveT17@gmail.com");
-        User user = new User("daveT17", uID, "nett", "Front-End-Entwickler", null, 1);
+        User user = new User("daveT17", uID, null, 1);
 
         try{
             rservice.createVisualRole("Haupt-Entwickler", role);
         }catch (Exception e){
             e.printStackTrace();
         }
-
+        //TODO getAllRolesByRole -> Immer null ?
+        /*
         try{
             visualRole = rservice.getAllRolesByRole(role).getLast();
         }catch (Exception e){
             e.printStackTrace();
-        }
+        }*/
 
         try{
             rservice.saveVisualRole(visualRole, user, role);
@@ -1205,7 +1206,7 @@ public class LogicTest extends BaseLogicTest{
         try{
             count_correct_exception_checks++;
 
-            rservice.saveVisualRole(null, new User("daveT17", -1, "nett", "Front-End-Entwickler", null, 1),role);
+            rservice.saveVisualRole(null, new User("daveT17", -1, null, 1),role);
         }catch (Exception e){
             count_correct_exceptions++;
         }

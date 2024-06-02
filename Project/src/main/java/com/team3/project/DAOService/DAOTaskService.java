@@ -281,6 +281,15 @@ public class DAOTaskService {
         return DAOService.merge(daoTask);
     }
 
+    static boolean emptyTasksByTaskBoardId(int id) {
+        String parameterName = "taskList.taskBoard.id";
+        List<DAOTask> tasks = DAOService.getListByPara(DAOTask.class, id, parameterName);
+        tasks.stream().forEach(task -> {
+            task.setTaskList(null);
+        });
+        return DAOService.mergeList(tasks);
+    }
+
     //deletes
     /* Author: Tom-Malte Seep
      * Revisited: /

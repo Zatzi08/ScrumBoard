@@ -35,7 +35,7 @@ public class DAOTaskList {
     @JoinColumn(name = "taskBoardID")
     private DAOTaskBoard taskBoard;
 
-    @OneToMany(mappedBy = "taskList")
+    @OneToMany(mappedBy = "taskList", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<DAOTask> tasks;
 
     DAOTaskList() {}

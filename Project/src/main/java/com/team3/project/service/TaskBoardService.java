@@ -1,10 +1,12 @@
 package com.team3.project.service;
 import com.team3.project.Classes.TaskBoard;
 import com.team3.project.Classes.TaskList;
+import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAO.DAOTaskList;
 import com.team3.project.DAOService.DAOTaskBoardService;
 import com.team3.project.DAOService.DAOTaskListService;
+import com.team3.project.DAOService.DAOTaskService;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -69,5 +71,37 @@ public class TaskBoardService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public void saveTaskBoard(TaskBoard taskBoard) throws Exception {
+        if (taskBoard.getID() < -1) throw new Exception("Invalid tbID");
+        if (taskBoard.getName().isEmpty()) throw new Exception("Invalid Name");
+        if (taskBoard.getID() == -1){
+            createTaskBoard(taskBoard.getName());
+        } else {
+            if (DAOTaskBoardService.getById(taskBoard.getID()) != null){
+                DAOTaskBoardService.updateNameById(taskBoard.getID(),taskBoard.getName());
+            } else throw new Exception("TaskBoard not found");
+        }
+    }
+
+    /* Author: Lucas Krüger
+     * Revisited: /
+     * Funktion: /
+     * Grund: /
+     * UserStory/Task-ID: TB11.B1
+     */
+    public void deleteTaskBoard(int tbID) throws Exception {
+        if (tbID <= 0) throw new Exception("Invalid tbID");
+        if (DAOTaskBoardService.getAll().size() < 2) throw new Exception("Invalid Operation");
+        DAOTaskBoard dtb = DAOTaskBoardService.getWithTaskListsWithTasksById(tbID);
+        if (dtb == null) throw new Exception("TaskBoard not found");
+        for (DAOTaskList dtl : dtb.getTaskLists()){
+            for (DAOTask dt : dtl.getTasks()){
+                DAOTaskService.updateTaskListById(dt.getId(),null);
+            }
+            // TODO: Delete TaskList dtl
+        }
+        DAOTaskBoardService.deleteById(dtb.getId());
     }
 }

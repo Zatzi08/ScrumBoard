@@ -130,6 +130,7 @@ public class DAOTaskBoardService {
         DAOTaskBoard taskBoard = DAOService.getByID(id, DAOTaskBoard.class);
         if (taskBoard != null) {
             try { 
+                DAOTaskService.emptyTasksByTaskBoardId(id);
                 DAOService.delete(taskBoard);
             } catch (Exception e) {
                 System.out.println("Error occurred: " + e.toString());
