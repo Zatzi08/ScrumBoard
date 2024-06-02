@@ -9,25 +9,19 @@ import java.util.List;
 @Setter
 public class User extends abstraktDataClasses {
     private String name;
-    private String privatDescription;  // TODO: Descriptions in Profil (können hier raus)
-    private String workDescription;   // TODO: Descriptions in Profil (können hier raus)
-    private Enumerations.Role roles; // TODO: Roles (plural) sollte eigentlich ne Liste sein
+    private List<Enumerations.Role> roles; // TODO: Roles (plural) sollte eigentlich ne Liste sein
     private int authorization; //von der DB gestellt
 
     /* Author: Henry L. Freyschmidt
-     * Revisited: /
+     * Revisited: Henry van Rooyen 25.05.24
      * Funktion: User Konstruktor
-     * Grund: /
+     * Grund_ /
      * UserStory/Task-ID: /
      */
 
-    //Frage von Henry: soll beim Konstruktor von User die Profil-Sachen dabei sein?
-    //Antwort: Muss eigentlich nicht
-    public User(String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles, int authorization){
+    public User(String name, int userID, List<Enumerations.Role> roles, int authorization){
         super(userID);
         this.name = name;
-        this.privatDescription = privatDescription;
-        this.workDescription = workDescription;
         this.roles = roles;
         this.authorization = authorization;
     }

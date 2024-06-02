@@ -1,7 +1,9 @@
 package com.team3.project.service;
 
+import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.User;
+import com.team3.project.DAO.DAORole;
 import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOAccountService;
 import com.team3.project.DAOService.DAOUserService;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -106,16 +109,36 @@ public class AccountService {
      */
     public List<User> getAllUser(){
         List <User> list = new LinkedList<>();
-        List <DAOUser> daoUserList = DAOUserService.getAll();
+        List <DAOUser> daoUserList = DAOUserService.getAllPlusRoles();
         if(daoUserList != null){
             User toAdd;
             for(DAOUser daoUser : daoUserList){
-                toAdd = new User(daoUser.getName(),daoUser.getId(),daoUser.getPrivatDescription(),daoUser.getWorkDescription(),null, daoUser.getAuthorization().getAuthorization());
+                toAdd = new User(daoUser.getName(),daoUser.getId(), convertDaoRolesToEnumRoles(daoUser.getRoles())  , daoUser.getAuthorization().getAuthorization());
                 list.add(toAdd);
             }
         }
         return list;
     }
+
+    /* Author: Henry van Rooyen
+     * Revisited: /
+     * Funktion: Konvertieren einer DaoRolle zu EnumRolle
+     * Grund: Erweiterung User um Rolle
+     * UserStory/Task-ID: R1.B1
+     */
+    public static List<Enumerations.Role> convertDaoRolesToEnumRoles(List<DAORole> daoRoles) {
+        return daoRoles.stream()
+                .map(daoRole -> switch (daoRole.getName().toLowerCase()) {
+                    case "admin" -> Enumerations.Role.admin;
+                    case "productowner" -> Enumerations.Role.ProductOwner;
+                    case "manager" -> Enumerations.Role.Manager;
+                    case "nutzer" -> Enumerations.Role.Nutzer;
+                    default -> throw new IllegalArgumentException("Unknown role name: " + daoRole.getName());
+                })
+                .collect(Collectors.toList());
+    }
+
+
 
     /* Author: Lucas Krüger
      * Revisited: /

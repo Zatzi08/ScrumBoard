@@ -516,3 +516,151 @@ Date: 27/05/24 14:17:28
 pass: true
 
 
+Hyper-Text-Transport-Protocol-Tests:
+
+Hyper-Text-Transport-Protocol-Test-saveTask
+Test ID: HTTP.T15
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-RequestResetPasswort
+Test ID: HTTP.T7
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-saveTaskBoard
+Test ID: HTTP.T19
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-getProfilPageByID
+Test ID: HTTP.T9
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-Register
+Test ID: HTTP.T2
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-setTaskListOfTask
+Test ID: HTTP.T22
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-getTaskBoardByID
+Test ID: HTTP.T18
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-saveUserData
+Test ID: HTTP.T11
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-setAuthority
+Test ID: HTTP.T21
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-getAllTask
+Test ID: HTTP.T12
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-getTaskBoard
+Test ID: HTTP.T20
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-getTaskByTLID
+Test ID: HTTP.T14
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-getTaskByUSID
+Test ID: HTTP.T13
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-neuesPasswortPage
+Test ID: HTTP.T3
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-Login
+Test ID: HTTP.T1
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-getProfilPageByEmail
+Test ID: HTTP.T10
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-neuesPasswort
+Test ID: HTTP.T4
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-DeleteTaskByID
+Test ID: HTTP.T16
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-addUserStory
+Test ID: HTTP.T5
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-SendMail
+Test ID: HTTP.T8
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-RequestResetCode
+Test ID: HTTP.T6
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-getUserList
+Test ID: HTTP.T17
+Date: 01/06/24 11:41:25
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Tests:
+
+Hyper-Text-Transport-Protocol-Test-deleteTaskBoard
+Test ID: HTTP.T23
+Date: 01/06/24 14:16:29
+fail: initial Fail
+
+Hyper-Text-Transport-Protocol-Tests:
+
+Hyper-Text-Transport-Protocol-Test-deleteTaskBoard
+Test ID: HTTP.T23
+Date: 01/06/24 14:41:57
+pass: true
+

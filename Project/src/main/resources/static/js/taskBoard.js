@@ -195,3 +195,25 @@ function addHeaderButton() {
 function deleteButton(button) {
     button.parentNode.removeChild(button);
 }
+
+function changeTBName(){
+    var TBNamePopup = document.getElementById("popupChangeTBName");
+    TBNamePopup.style.display = "block";
+}
+
+window.onclick = function(event) {
+    var TBNamePopup = document.getElementById("popupChangeTBName");
+    var fertigPopup = document.getElementById("popupTaskFertig");
+    if (event.target == TBNamePopup) {
+        TBNamePopup.style.display = "none";
+    }
+
+    else if (event.target == fertigPopup) {
+        fertigPopup.style.display = "none";
+    }
+}
+
+function openPopup(){
+    var fertigPopup = document.getElementById("popupTaskFertig");
+    fertigPopup.style.display = "block";
+}

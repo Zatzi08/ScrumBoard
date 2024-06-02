@@ -38,7 +38,7 @@ public class BaseHTTPTest extends BaseTest {
     }
 
     protected static void after() {
-        BaseTest.after(false);
+        BaseTest.after(true);
     }
     protected static void tearDown() {
         BaseTest.tearDown();
