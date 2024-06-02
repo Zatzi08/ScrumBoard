@@ -212,7 +212,7 @@ function createTBNamePopUp(){
 
 window.onclick = function(event) {
     var TBNamePopup = document.getElementById("popupChangeTBName");
-    var TBCreatePopup = document.getElementById("popupCreateTBTBName");
+    var TBCreatePopup = document.getElementById("popupCreateTB");
     var fertigPopup = document.getElementById("popupTaskFertig");
     if (event.target == TBNamePopup) {
         TBNamePopup.style.display = "none";
@@ -223,8 +223,9 @@ window.onclick = function(event) {
     }
 
     else if (event.target == TBCreatePopup) {
-        fertigPopup.style.display = "none";
+        TBCreatePopup.style.display = "none";
     }
+
 }
 
 function openPopup(){

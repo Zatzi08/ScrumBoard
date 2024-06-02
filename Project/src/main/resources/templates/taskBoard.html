@@ -67,13 +67,23 @@
         <br>
         <label class="zoomedTaskCard-content" id="zoomedTaskCard-workedTime">Bearbeitungszeit</label>
         <label class="zoomedTaskCard-content" id="zoomedTaskCard-role"><i class="fa fa-briefcase" style="margin-right: 5px; margin-top: 5px"></i>Rolle</label>
-        <label class="zoomedTaskCard-content" id="zoomedTaskCard-deadline">Abgabefrist</label>
+        <br>
+        <div  class="zoomedTaskCard-content"id="zoomedTaskCard-nutzerDropdown">
+            <button class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdownBtn">Zugewiesene Nutzer</button>
+            <ul class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdown-content">
+                <li>Nutzer 1</li>
+                <li>Nutzer 1</li>
+                <li>Nutzer 1</li>
+            </ul>
+            <label class="zoomedTaskCard-content" id="zoomedTaskCard-deadline">Abgabefrist</label>
+        </div>
+
     </div>
 
 
     <div th:if="${authority == 2 || authority == 4}" id="popupChangeTBName">
         <form id = changeTBNameForm>
-        <label style = "color: #d1d1d1" > Ändere den Namen des Task-Boards <i class = "fa fa-pencil" style="margin-right:10px;"></i></label>
+        <label style = "color: #d1d1d1; " > Ändere den Namen des Task-Boards <i class = "fa fa-pencil" style="margin-right:10px;"></i></label>
         <input form = "changeTBNameForm" id = "changeTBNameInput" th:value="${Board.getName()}">
         <button type="button" th:tbID="${Board.getID()}" th:sID="${sessionID}" id = "changeTBNameBtn" onclick="changeTBName(this.getAttribute('sID'), this.getAttribute('tbID'))" >Ändern</button>
         </form>
@@ -81,7 +91,7 @@
 
     <div th:if="${authority == 2 || authority == 4}" id="popupCreateTB">
         <form id = createTBForm>
-            <label style = "color: #d1d1d1" > Name des Taskboards </label>
+            <label style = "color: #d1d1d1; " > Name des Taskboards </label>
             <input form = "changeTBNameForm" id = "createTBNameInput">
             <button type="button" th:sID="${sessionID}" id = "createTBNameBtn" onclick="addTaskBoard(this.getAttribute('sID'))" >Ändern</button>
         </form>
@@ -90,7 +100,7 @@
 
     <div th:if="${authority == 2 || authority == 4}" id = popupTaskFertig>
         <form id = taskFertigForm>
-            <label style = "color: #d1d1d1" > Gebe die Bearbeitungszeit der Task an <i class = "fa fa-clock-o" style="margin-right:10px"></i></label>
+            <label style = "color: #d1d1d1; " > Gebe die Bearbeitungszeit der Task an <i class = "fa fa-clock-o" style="margin-right:10px"></i></label>
             <input type = "number" min="0" max="1000" step="0.5" form = "taskFertigForm" id = "taskFertigInput">
             <input type="hidden" id="taskID">
             <button type="button" th:sID="${sessionID}"  id = "taskFertigBtn" onclick="setTaskTime(this.getAttribute('sID'))" >Ändern</button>

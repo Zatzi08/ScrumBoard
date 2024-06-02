@@ -23,6 +23,10 @@
     padding-right: 20px;
 }
 
+.outerContainer-HeaderBtn:hover{
+    background-color: #302d41;
+}
+
 .delete-btn {
     position: absolute;
     top: 0;
@@ -223,6 +227,7 @@ hr {
 
 .zoomedTaskCard-content{
     color: #d1d1d1;
+    display: inline-flex;
 }
 
 #zoomedTaskCard-US{
@@ -281,13 +286,60 @@ hr {
 }
 
 #zoomedTaskCard-deadline{
+    display: inline-flex;
     font-size: 12px;
-    display: block;
-    position: sticky;
-    margin-top: 2%;
     text-align: right;
+    float:right;
+    margin-left: 70%;
+}
+#zoomedTaskCard-nutzerDropdown{
+    position: relative;
+    display: inline-flex;
+    float: left;
+    font-size: 12px;
+    background-color: transparent;
+    width: 100%;
+    color: #d1d1d1;
+    border-color:transparent;
 }
 
+#zoomedTaskCard-nutzerDropdown button{
+    font-size: 12px;
+    background-color: transparent;
+    color: #d1d1d1;
+    font-size: 12px;
+    width:fit-content;
+    border: none;
+}
+#zoomedTaskCard-nutzerDropdown ul{
+    display: none;
+    float: left;
+    position: fixed;
+    background-color: transparent;
+    min-width: fit-content;
+    height:150px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    overflow: scroll;
+    margin-top: 2%;
+    margin-right: 2%;
+    z-index: 1;
+}
+#zoomedTaskCard-nutzerDropdown ul li{
+    overflow: scroll;
+    background-color: transparent;
+    color: #d1d1d1;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+#zoomedTaskCard-nutzerDropdownBtn:hover #zoomedTaskCard-nutzerDropdown-content {display: block;}
+#zoomedTaskCard-nutzerDropdownBtn:hover #zoomedTaskCard-nutzerDropdownBtn {background-color: #2c2938;}
+
+#zoomedTaskCard-nutzerDropdown:focus{
+    outline: none;
+    box-shadow: none;
+    border-color:transparent;
+}
 ::-webkit-scrollbar {
     width: 20px;
 }
@@ -334,7 +386,7 @@ hr {
     border-radius: 12px;
 }
 
-#changeTBNameInput, #taskFertigBtnInput #createTBNameInput {
+#changeTBNameInput, #taskFertigInput, #createTBNameInput {
     position: relative;
     background-color: #d1d1d1;
     width: 80%;
@@ -344,7 +396,6 @@ hr {
     border-radius: 12px;
     margin-top: 15px;
     margin-left: 10%;
-
 
 }
 
@@ -360,6 +411,6 @@ hr {
 
 }
 
-#changeTBNameBtn:hover, #taskFertigBtn:hover #createTBNameBtn:hover {
+#changeTBNameBtn:hover, #taskFertigBtn:hover, #createTBNameBtn:hover {
     background-color: #3b4c70;
 }
