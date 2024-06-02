@@ -2,10 +2,6 @@ package com.team3.project.DAOService;
 
 import java.util.List;
 
-import org.hibernate.Hibernate;
-import org.hibernate.annotations.QueryHints;
-import org.hibernate.jpa.AvailableHints;
-
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
 
@@ -26,6 +22,22 @@ class DAOService {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
         String query = "SELECT item FROM " + daoClass.getName() + " AS item";
+        List<Dao> retrieve;
+        try {
+            retrieve = entityManager.createQuery(query ,daoClass)
+                .getResultList();
+        } catch (Exception e) {
+            retrieve = null;
+        } finally {
+            DAOSession.closeEntityManager(entityManager);
+        }
+        return retrieve;
+    }
+
+    static <Dao> List<Dao> getAllFloating(Class<Dao> daoClass, String linkName) {
+        EntityManager entityManager = DAOSession.getNewEntityManager();
+        entityManager.getTransaction().begin();
+        String query = "SELECT item FROM " + daoClass.getName() + " AS item WHERE item." + linkName + " IS NULL";
         List<Dao> retrieve;
         try {
             retrieve = entityManager.createQuery(query ,daoClass)

@@ -26,6 +26,11 @@ public class DAOTaskService {
         return DAOService.getAll(DAOTask.class);
     }
 
+    static List<DAOTask> getAllFloating() {
+        String linkName = "taskList";
+        return DAOService.getAllFloating(DAOTask.class, linkName);
+    }
+
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: gets entry by ID

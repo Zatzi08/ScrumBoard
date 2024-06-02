@@ -65,6 +65,8 @@ public class DAOTask {
         this.description = description;
         /*this.taskList = taskList;*/
         this.userStory = userStory;
+        this.processingTimeEstimatedInHours = 0;
+        this.processingTimeRealInHours = 0;
     }
     public DAOTask(String description, int priority, boolean done, String dueDate,
                    double processingTimeEstimatedInHours, double processingTimeRealInHours, 

@@ -35,7 +35,7 @@ public class DAOTaskList {
     @JoinColumn(name = "taskBoardID")
     private DAOTaskBoard taskBoard;
 
-    @OneToMany(mappedBy = "taskList", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "taskList")
     private List<DAOTask> tasks;
 
     DAOTaskList() {}
