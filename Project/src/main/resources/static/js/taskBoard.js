@@ -113,6 +113,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // Retrieve the ID of the dragged element
             const draggedElementId = e.dataTransfer.getData('text/plain');
             setTaskList(document.getElementById('sessionID').value, draggedElementId, targetContainer.id);
+            if (parseInt(targetContainer.id) % 5 === 0 ) {
+                openPopup(draggedElementId)
+                document.getElementById('taskID').value = draggedElementId
+            }
         }
     }
 });

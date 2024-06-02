@@ -91,8 +91,9 @@
     <div th:if="${authority == 2 || authority == 4}" id = popupTaskFertig>
         <form id = taskFertigForm>
             <label style = "color: #d1d1d1" > Gebe die Bearbeitungszeit der Task an <i class = "fa fa-clock-o" style="margin-right:10px"></i></label>
-            <input form = "taskFertigForm" id = "taskFertigInput">
-            <button type="button" th:sID="${sessionID}"  id = "taskFertigBtn" onclick="" >Ändern</button>
+            <input type = "number" min="0" max="1000" step="0.5" form = "taskFertigForm" id = "taskFertigInput">
+            <input type="hidden" id="taskID">
+            <button type="button" th:sID="${sessionID}"  id = "taskFertigBtn" onclick="setTaskTime(this.getAttribute('sID'))" >Ändern</button>
         </form>
     </div>
 

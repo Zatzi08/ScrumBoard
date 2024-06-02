@@ -359,6 +359,22 @@ public class WebController {
         return index();
     }
 
+    @RequestMapping(value = "/setRealTaskTime", method = RequestMethod.POST)
+    private ResponseEntity<HttpStatus> setRealTaskTime(@RequestHeader(value = "sessionID") String sessionID,
+                                                       @RequestParam(value = "TID") int tID,
+                                                       @RequestParam(value = "time") int time){
+        try {
+            if (presentationToLogic.webSessionService.verify(sessionID)){
+                presentationToLogic.taskService.setRealTimeAufwand(tID,time);
+                return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
+    }
+
     /* Author: Lucas Krüger
      * Revisited: /
      * Funktion:

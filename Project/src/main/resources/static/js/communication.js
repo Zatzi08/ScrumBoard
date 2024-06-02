@@ -79,6 +79,25 @@ function saveTask($this, sessionID) {
     }
 }
 
+function setTaskTime(sessionID){
+    let tID = document.getElementById('taskID').value;
+    let time = document.getElementById('taskFertigInput').value;
+
+    let url = "/setRealTaskTime?TID="+ tID + "&time=" + time;
+    fetch(url, {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionID': sessionID
+        }
+    }).then(r =>{
+        if (!r.ok){
+            document.location.reload()
+        }
+    })
+}
+
 function saveUS($this, sessionID) {
     let id = document.getElementById('editId').value;
     let name = document.getElementById('inputName').value;

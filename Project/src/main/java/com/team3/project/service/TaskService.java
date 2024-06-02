@@ -93,13 +93,6 @@ public class TaskService {
                     DAOTaskService.updateDueDateById(task.getID(), task.getDueDateAsString());
                 if(dt.getProcessingTimeEstimatedInHours() != task.getTimeNeededG())
                     DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), task.getTimeNeededG());
-                /*
-                if(dt.getProcessingTimeRealInHours() != task.getTimeNeededA())
-                    DAOTaskService.updateProcessingTimeRealInHoursById(task.getID(), task.getTimeNeededA());
-                if(dt.getDone() != task.getDone())
-                    DAOTaskService.updateDoneById(task.getID(), task.getDone());
-                 */
-
             } else throw new Exception("DB Task not found");
         }
     }
@@ -186,5 +179,11 @@ public class TaskService {
         }
         DAOTaskService.updateById(dt.getId(),dt.getDescription(),dt.getPriority(),dt.isDone(),dt.getDueDate(),dt.getProcessingTimeEstimatedInHours(),dt.getProcessingTimeRealInHours(), list, dt.getUserStory(),dt.getUsers());
         DAOTask t = DAOTaskService.getById(tID);
+    }
+
+    public void setRealTimeAufwand(int tID, int time){
+        DAOTask dt = DAOTaskService.getById(tID);
+        if(dt.getProcessingTimeRealInHours() != time)
+            DAOTaskService.updateProcessingTimeRealInHoursById(dt.getId(), time);
     }
 }
