@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
  */
 
-function addHeaderButton() {
+function addHeaderButton(text) {
 
     var newButton = document.createElement('button');
     newButton.className = 'outerContainer-HeaderBtn';
@@ -173,7 +173,7 @@ function addHeaderButton() {
 
 
     var buttonText = document.createElement('span');
-    buttonText.innerText = 'New Sprint';
+    buttonText.innerText = text;
 
 
     var deleteBtn = document.createElement('span');
@@ -196,13 +196,19 @@ function deleteButton(button) {
     button.parentNode.removeChild(button);
 }
 
-function changeTBName(){
+function changeTBNamePopUp(){
     var TBNamePopup = document.getElementById("popupChangeTBName");
+    TBNamePopup.style.display = "block";
+}
+
+function createTBNamePopUp(){
+    var TBNamePopup = document.getElementById("popupCreateTB");
     TBNamePopup.style.display = "block";
 }
 
 window.onclick = function(event) {
     var TBNamePopup = document.getElementById("popupChangeTBName");
+    var TBCreatePopup = document.getElementById("popupCreateTBTBName");
     var fertigPopup = document.getElementById("popupTaskFertig");
     if (event.target == TBNamePopup) {
         TBNamePopup.style.display = "none";
@@ -211,9 +217,32 @@ window.onclick = function(event) {
     else if (event.target == fertigPopup) {
         fertigPopup.style.display = "none";
     }
+
+    else if (event.target == TBCreatePopup) {
+        fertigPopup.style.display = "none";
+    }
 }
 
 function openPopup(){
     var fertigPopup = document.getElementById("popupTaskFertig");
     fertigPopup.style.display = "block";
+}
+
+function deleteTaskBoard(button, sessionID, TBID){
+    deleteTB(sessionID,TBID)
+    deleteButton(button.parentElement)
+}
+
+function changeTBName(sessionID, tbID) {
+    let name = document.getElementById('changeTBNameInput').value;
+    saveTaskBoard(sessionID, tbID, name);
+    let id = 'Name' + tbID;
+    document.getElementById(id).text = name;
+}
+
+function addTaskBoard(sessionID) {
+    let name = document.getElementById('createTBNameInput').value;
+    saveTaskBoard(sessionID, -1, name);
+    console.log('Hi')
+    document.location.reload()
 }

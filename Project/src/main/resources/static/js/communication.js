@@ -30,7 +30,7 @@ function SwitchToOtherProfile(sessionID, email){
 }
 
 function SwitchToTaskBoardByID(sessionID, TBID){
-    let url = "/getTaskBoardbByID?sessionID=" + sessionID + "&TBID=" + TBID;
+    let url = "/getTaskBoardByID?sessionID=" + sessionID + "&TBID=" + TBID;
     document.location.assign(url)
 }
 
@@ -163,20 +163,17 @@ function deleteT(Tid, sessionID){
             'sessionID': sessionID
         }
     }).then(r => {
-        if (r.ok) {
-            location.reload()
-        }
+        document.location.reload()
     });
 }
 
-function saveTaskBoard(sessionID){
-    let TBName = "Temp"//document.getElementById('').value;
-    let TBID = -1;
+function saveTaskBoard(sessionID, TBID, TBName) {
 
-    fetch('saveTaskBoard',{
+    fetch('saveTaskBoard', {
         method: 'POST',
         cache: 'no-cache',
-        headers:{
+        redirect: 'manual',
+        headers: {
             'Content-Type': 'application/json',
             'sessionID': sessionID
         },
@@ -185,6 +182,10 @@ function saveTaskBoard(sessionID){
             'name': TBName,
             'taskListList': null
         })
+    }).then(r=> {
+        if(!r.ok){
+            document.location.reload()
+        }
     })
 }
 

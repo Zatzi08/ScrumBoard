@@ -490,6 +490,7 @@ public class WebController {
                         .addObject("Board",presentationToLogic.taskBoardService.getTaskBoardByID(tbid))
                         .addObject("TBIDs", IDs)
                         .addObject("sessionID", sessionID)
+                        .addObject("authority", presentationToLogic.accountService.getAuthority(sessionID))
                         .addObject("TaskBoards", presentationToLogic.taskBoardService.getAllTaskBoards());
                 return modelAndView;
             }
@@ -516,6 +517,7 @@ public class WebController {
                         .addObject("Board",presentationToLogic.taskBoardService.getTaskBoard())
                         .addObject("TBIDs", IDs)
                         .addObject("sessionID", sessionID)
+                        .addObject("authority", presentationToLogic.accountService.getAuthority(sessionID))
                         .addObject("TaskBoards", presentationToLogic.taskBoardService.getAllTaskBoards());
                 return modelAndView;
             }
@@ -532,7 +534,7 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: TB9.B1
      */
-    @RequestMapping("/saveTaskBoard")
+    @RequestMapping(value = "/saveTaskBoard", method = RequestMethod.POST)
     private ResponseEntity<HttpStatus> saveTaskBoard(@RequestHeader(value = "sessionID", required = true) String sessionID,
                                                      @RequestBody() TaskBoard taskBoard){
         try {

@@ -94,14 +94,8 @@ public class TaskBoardService {
     public void deleteTaskBoard(int tbID) throws Exception {
         if (tbID <= 0) throw new Exception("Invalid tbID");
         if (DAOTaskBoardService.getAll().size() < 2) throw new Exception("Invalid Operation");
-        DAOTaskBoard dtb = DAOTaskBoardService.getWithTaskListsWithTasksById(tbID);
+        DAOTaskBoard dtb = DAOTaskBoardService.getById(tbID);
         if (dtb == null) throw new Exception("TaskBoard not found");
-        for (DAOTaskList dtl : dtb.getTaskLists()){
-            for (DAOTask dt : dtl.getTasks()){
-                DAOTaskService.updateTaskListById(dt.getId(),null);
-            }
-            // TODO: Delete TaskList dtl
-        }
         DAOTaskBoardService.deleteById(dtb.getId());
     }
 }

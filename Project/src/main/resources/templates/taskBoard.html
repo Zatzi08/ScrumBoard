@@ -26,12 +26,11 @@
     </div>
 
     <div id="outerContainer-Header">
-        <button style="position: relative; margin-right: 5px;" th:each="Taskboard : ${TaskBoards}" class="outerContainer-HeaderBtn" th:tbID="${Taskboard.getID()}" ondblclick="this.contentEditable=true">
-            <span th:text="${Taskboard.getName()}">  </span>
-            <span class='delete-btn' contenteditable='false' onclick="console.log('delete')">×</span></button>
-        <!-- TODO: if TBID != 1 <span> tbName </span> <span class="delete-btn" contenteditable="false">×</span>-->
-        <button id="outerContainer-HeaderBtnAdd" onclick="addHeaderButton()"><b>+</b></button>
-        <button id = "outerContainer-HeaderChangeTBName" onclick="changeTBName()">Task-Board Name <i class = "fa fa-pencil"></i></button>
+        <button style="position: relative; margin-right: 5px;" th:each="Taskboard : ${TaskBoards}" th:sID="${sessionID}" th:id="@{Button{tb}(tb=${Taskboard.getID()})}" class="outerContainer-HeaderBtn" th:tbID="${Taskboard.getID()}" ondblclick="SwitchToTaskBoardByID(this.getAttribute('sID'), this.getAttribute('tbID'))">
+            <span th:id="@{Name{tb}(tb=${Taskboard.getID()})}" th:text="${Taskboard.getName()}">  </span>
+            <span th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" th:tbID="${Taskboard.getID()}" class='delete-btn' onclick="deleteTaskBoard(this, this.getAttribute('sID'), this.getAttribute('tbID'))">×</span></button>
+        <button type="button" th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" id="outerContainer-HeaderBtnAdd" onclick="createTBNamePopUp()"><b>+</b></button>
+        <button type="button" th:if="${authority == 2 || authority == 4}" id = "outerContainer-HeaderChangeTBName" onclick="changeTBNamePopUp()">change Name <i class = "fa fa-pencil"></i></button>
 
         <div id="outerContainer">
             <div th:each="TaskList : ${Board.getTaskListList()}" th:id="${TaskList.getID()}" class="innerContainer" style="margin-left: 10px">
@@ -72,19 +71,28 @@
     </div>
 
 
-    <div id = popupChangeTBName>
+    <div th:if="${authority == 2 || authority == 4}" id="popupChangeTBName">
         <form id = changeTBNameForm>
         <label style = "color: #d1d1d1" > Ändere den Namen des Task-Boards <i class = "fa fa-pencil" style="margin-right:10px;"></i></label>
-        <input form = "changeTBNameForm" id = "changeTBNameInput">
-        <button id = "changeTBNameBtn">Ändern</button>
+        <input form = "changeTBNameForm" id = "changeTBNameInput" th:value="${Board.getName()}">
+        <button type="button" th:tbID="${Board.getID()}" th:sID="${sessionID}" id = "changeTBNameBtn" onclick="changeTBName(this.getAttribute('sID'), this.getAttribute('tbID'))" >Ändern</button>
         </form>
     </div>
 
-    <div id = popupTaskFertig>
+    <div th:if="${authority == 2 || authority == 4}" id="popupCreateTB">
+        <form id = createTBForm>
+            <label style = "color: #d1d1d1" > Name des Taskboards </label>
+            <input form = "changeTBNameForm" id = "createTBNameInput">
+            <button type="button" th:sID="${sessionID}" id = "createTBNameBtn" onclick="addTaskBoard(this.getAttribute('sID'))" >Ändern</button>
+        </form>
+    </div>
+
+
+    <div th:if="${authority == 2 || authority == 4}" id = popupTaskFertig>
         <form id = taskFertigForm>
             <label style = "color: #d1d1d1" > Gebe die Bearbeitungszeit der Task an <i class = "fa fa-clock-o" style="margin-right:10px"></i></label>
             <input form = "taskFertigForm" id = "taskFertigInput">
-            <button id = "taskFertigBtn">Ändern</button>
+            <button type="button" th:sID="${sessionID}"  id = "taskFertigBtn" onclick="" >Ändern</button>
         </form>
     </div>
 
