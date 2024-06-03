@@ -112,10 +112,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Retrieve the ID of the dragged element
             const draggedElementId = e.dataTransfer.getData('text/plain');
-            setTaskList(document.getElementById('sessionID').value, draggedElementId, targetContainer.id);
-            if (parseInt(targetContainer.id) % 5 === 0 ) {
+            setTaskList(document.getElementById('sessionID').value, draggedElementId.substring(1), targetContainer.id);
+            let id = targetContainer.id
+            if (parseInt(id) % 5 === 0 ) {
                 openPopup(draggedElementId)
                 document.getElementById('taskID').value = draggedElementId
+            } else {
+                document.getElementById(draggedElementId).setAttribute('real', 0);
             }
         }
     }
@@ -233,9 +236,13 @@ function openPopup(){
     fertigPopup.style.display = "block";
 }
 
-function deleteTaskBoard(button, sessionID, TBID){
-    deleteTB(sessionID,TBID)
+async function deleteTaskBoard(button, sessionID, TBID) {
+    await deleteTB(sessionID, TBID)
     deleteButton(button.parentElement)
+    let aktuellTB = document.getElementById('outerContainer').getAttribute('tbID');
+    if (TBID === aktuellTB) {
+        SwitchToTaskBoard(sessionID);
+    }
 }
 
 function changeTBName(sessionID, tbID) {
@@ -245,9 +252,27 @@ function changeTBName(sessionID, tbID) {
     document.getElementById(id).innerText = name;
 }
 
-function addTaskBoard(sessionID) {
+async function addTaskBoard(sessionID) {
     let name = document.getElementById('createTBNameInput').value;
-    saveTaskBoard(sessionID, -1, name);
+    let num = await saveTaskBoard(sessionID, -1, name);
     console.log('Hi')
     document.location.reload()
+}
+
+function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime,prio ,DueDate, NutzerList){
+    toggleZoomedTaskCard()
+    document.getElementById('zoomedTaskCard-US').innerText = USName;
+    document.getElementById('zoomedTaskCard-taskBoard').innerText = TBName;
+    document.getElementById('zoomedTaskCard-description').innerText = TaskDesc;
+    document.getElementById('zoomedTaskCard-estimatedTime').innerText = estTime;
+    document.getElementById('zoomedTaskCard-priority').innerText = prio;
+    document.getElementById('zoomedTaskCard-workedTime').innerText = realTime;
+    document.getElementById('zoomedTaskCard-deadline').innerText = DueDate
+    document.getElementById('zoomedTaskCard-role').innerText;
+    NutzerID = 0;
+    NutzerName = 'Kevin';
+    var ul = document.getElementById("zoomedTaskCard-nutzerDropdown-content");
+    var li = document.createElement("li").id = NutzerID;
+    li.appendChild(document.createTextNode(NutzerName));
+    ul.appendChild(li);
 }

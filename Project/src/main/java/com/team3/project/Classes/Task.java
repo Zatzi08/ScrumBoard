@@ -56,27 +56,6 @@ public class Task extends abstraktDataClasses {
 
     }
 
-    public Task(int tID, String description, int priority, int userStoryID, String dueDate, double timeNeededG, double timeNeededA, boolean done, int tbID) throws ParseException {
-        super(tID);
-        Enumerations prior = new Enumerations();
-        this.description = description;
-        this.priority = prior.IntToPriority(priority);
-        this.userStoryID = userStoryID;
-        if (dueDate != null) {
-            DateFormat dformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            if (dueDate != null && !dueDate.equals("")) {
-                this.dueDate = dformat.parse(dueDate.replace('T', ' '));
-            }
-        } else {
-            this.dueDate = null;
-        }
-        this.timeNeededG = timeNeededG;
-        this.timeNeededA = timeNeededA;
-        this.done = done;
-        this.tbID = tbID;
-
-    }
-
     public int getPriorityAsInt(){
         Enumerations prior = new Enumerations();
         return prior.getInt(this.getPriority());
@@ -116,10 +95,7 @@ public class Task extends abstraktDataClasses {
 
     public boolean isDone(){
         if (this.getTbID() >= 1) {
-            List<DAOTaskList> dtls = DAOTaskListService.getByTaskBoardId(this.getTbID());
-            for (DAOTask dt : DAOTaskListService.getWithTasksById(dtls.get(dtls.size() - 1).getId()).getTasks()) {
-                if (dt.getId() == this.getID()) return true;
-            }
+            return DAOTaskService.getById(this.getID()).getTaskList().getSequence() == 5;
         }
         return false;
     }

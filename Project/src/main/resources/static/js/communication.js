@@ -80,8 +80,9 @@ function saveTask($this, sessionID) {
 }
 
 function setTaskTime(sessionID){
-    let tID = document.getElementById('taskID').value;
+    let tID = document.getElementById('taskID').value.substring(1);
     let time = document.getElementById('taskFertigInput').value;
+    document.getElementById(document.getElementById('taskID').value).setAttribute('real', time);
 
     let url = "/setRealTaskTime?TID="+ tID + "&time=" + time;
     fetch(url, {
@@ -186,9 +187,8 @@ function deleteT(Tid, sessionID){
     });
 }
 
-function saveTaskBoard(sessionID, TBID, TBName) {
-
-    fetch('saveTaskBoard', {
+async function saveTaskBoard(sessionID, TBID, TBName) {
+    return fetch('saveTaskBoard', {
         method: 'POST',
         cache: 'no-cache',
         redirect: 'manual',
@@ -204,13 +204,15 @@ function saveTaskBoard(sessionID, TBID, TBName) {
     }).then(r=> {
         if(!r.ok){
             document.location.reload()
+
         }
+        return r.status;
     })
 }
 
-function deleteTB(sessionID, TBID){
+async function deleteTB(sessionID, TBID){
     let url = 'deleteTaskBoard?TBID=' +TBID
-        fetch(url, {
+    return fetch(url, {
         method: 'POST',
         cache: 'no-cache',
         headers: {
@@ -220,7 +222,7 @@ function deleteTB(sessionID, TBID){
     }).then(r  => {
             if (!r.ok){
                 document.location.reload()
-            }
+            } else return r.status
         })
 }
 
@@ -254,9 +256,11 @@ function setTaskList(sessionID, tID, tlID){
             'sessionID': sessionID
         }
     }).then(r => {
-        if (!r.ok){
+        if (!r.ok && r.status === 400){
             alert("Invalid Request")
             document.location.reload()
+        } else if (r.status === 409){
+
         }
     })
 }
