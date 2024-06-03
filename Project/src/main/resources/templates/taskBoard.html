@@ -32,7 +32,7 @@
         <button type="button" th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" id="outerContainer-HeaderBtnAdd" onclick="createTBNamePopUp()"><b>+</b></button>
         <button type="button" th:if="${authority == 2 || authority == 4}" id = "outerContainer-HeaderChangeTBName" onclick="changeTBNamePopUp()">change Name <i class = "fa fa-pencil"></i></button>
 
-        <div id="outerContainer">
+        <div id="outerContainer" th:tbID="${Board.getID()}" >
             <div th:each="TaskList : ${Board.getTaskListList()}" th:id="${TaskList.getID()}" class="innerContainer" style="margin-left: 10px">
                 <table class="columnTable">
                     <thead class="columnTableHead">
@@ -41,7 +41,8 @@
                     </tr>
                     </thead>
                     <tbody class="columnTableBody">
-                    <tr th:each="task : ${TaskList.getTasks()}" th:id="${task.getID()}" draggable="true" ondblclick="toggleZoomedTaskCard()">
+                    <tr th:each="task : ${TaskList.getTasks()}" th:id="@{T{TID}(TID=${task.getID()})}" draggable="true" th:us="${task.getUserStory().getName()}" th:tb="${Board.getName()}" th:desc="${task.getDescription()}" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}" th:pri="${task.getPriority()}" th:due="${task.getDueDateAsPresentable()}"
+                        ondblclick="toggleZoomedTaskCardforTask(this.getAttribute('us'),this.getAttribute('tb'),this.getAttribute('desc'), this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('pri'), this.getAttribute('due'))">
                         <td th:style = "${(task.getPriorityAsInt() == 1) ? 'background-color: #9EC5E5' : (task.getPriorityAsInt() == 2) ? 'background-color: #f5dd90' : (task.getPriorityAsInt() == 3) ? 'background-color: #f68e5f' : (task.getPriorityAsInt() == 4) ? 'background-color: #f76c5e' : 'background-color: rgba(255, 255, 255, 0.66)'}">
                             <label class="tableContentLabel" id="tableContent-UsId" th:text="${task.getUserStory().getName()}">US-ID</label>
                             <label class="tableContentLabel" id="tableContent-Beschreibung" th:text="${task.getDescription()}">XDD</label>

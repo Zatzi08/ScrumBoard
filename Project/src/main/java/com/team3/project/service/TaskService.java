@@ -81,8 +81,10 @@ public class TaskService {
                         && (dt.getTaskList() == null
                         || task.getTbID() != dt.getTaskList().getTaskBoard().getId())){
                     DAOTaskService.updateTaskBoardIdById(dt.getId(), task.getTbID());
+                    DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), 0);
                 } else if (task.getTbID() == -1 && dt.getTaskList() != null){
                     DAOTaskService.updateTaskListById(dt.getId(),null);
+                    DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), 0);
                 }
                 if (!dt.getDescription().equals(task.getDescription()))
                     DAOTaskService.updateDescriptonById(task.getID(),task.getDescription());
@@ -187,7 +189,7 @@ public class TaskService {
         if (tasks.isEmpty()) return null;
         List<Task> list = new LinkedList<Task>();
         for (DAOTask task : tasks) {
-            int tbID = task.getTaskList() == null ? -1 : DAOTaskListService.getWithTasksById(task.getId()).getTaskBoard().getId();
+            int tbID = task.getTaskList() == null ? -1 : task.getTaskList().getTaskBoard().getId();
             Task toAdd = new Task(task.getId(),task.getDescription(), task.getPriority(), task.getUserStory().getId(), task.getDueDate(), task.getProcessingTimeEstimatedInHours(), task.getProcessingTimeRealInHours(), tbID);
             list.add(toAdd);
         }
@@ -204,7 +206,9 @@ public class TaskService {
             list = DAOTaskListService.getById(tlID);
             if (list == null) throw new Exception("TaskList not Found");
         }
-        DAOTaskService.updateById(dt.getId(),dt.getDescription(),dt.getPriority(),dt.isDone(),dt.getDueDate(),dt.getProcessingTimeEstimatedInHours(),dt.getProcessingTimeRealInHours(), list, dt.getUserStory(),dt.getUsers());
+        if (list == null || list.getSequence() != 5)
+            DAOTaskService.updateProcessingTimeRealInHoursById(dt.getId(), 0);
+        DAOTaskService.updateTaskListById(dt.getId(), list);
         DAOTask t = DAOTaskService.getById(tID);
     }
 
