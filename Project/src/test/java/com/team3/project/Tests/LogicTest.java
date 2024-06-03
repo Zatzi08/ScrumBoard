@@ -9,6 +9,8 @@ import com.team3.project.service.*;
 import org.junit.jupiter.api.*;
 
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
@@ -374,7 +376,7 @@ public class LogicTest extends BaseLogicTest{
         u1 = uservice.getUserStoryByName(u1.getName());
 
         try{
-            t1 = new Task(-1, "Task1", 0, u1.getID(), "2030-10-10 10:10", 10, 50 , -1);
+            t1 = new Task(-1, "TaskT3B1", 0, u1.getID(), "2030-10-10 10:10", 10, 50 , -1);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -813,7 +815,7 @@ public class LogicTest extends BaseLogicTest{
         }
 
         try{
-            rservice.changeAuthority(uID, 1);
+            rservice.changeAuthority(uID, 3);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -874,7 +876,7 @@ public class LogicTest extends BaseLogicTest{
         }
 
         try{
-            Assertions.assertNotEquals("Entwickler2", list.getLast());
+            Assertions.assertNotEquals("Entwickler2", list.get(list.size()-1));
         }catch (AssertionError e){
             pass = false;
             pw.append("Fail: non-existent visual Role found\n");
@@ -894,7 +896,7 @@ public class LogicTest extends BaseLogicTest{
         }
 
         try{
-            Assertions.assertEquals("Entwickler2", list.getLast());
+            Assertions.assertEquals("Entwickler2", list.get(list.size()-1));
         }catch (AssertionError e){
             pass = false;
             pw.append("Fail: existent visual Role not found\n");
@@ -925,15 +927,23 @@ public class LogicTest extends BaseLogicTest{
         RoleService rservice = new RoleService();
         int count_correct_exceptions = 0;
         int count_correct_exception_checks = 0;
+        Enumerations.Role role = Enumerations.Role.Nutzer;
+        try{
+            rservice.createVisualRole("Entwickler", role);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        List<Role> roles = new LinkedList<>();
 
         try{
-            rservice.createVisualRole("Entwickler", Enumerations.Role.Nutzer);
+            roles = rservice.getAllRolesByRole(role);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            Assertions.assertEquals("Entwickler", rservice.getAllRolesByRole(Enumerations.Role.Nutzer).getLast());
+            Assertions.assertEquals("Entwickler", roles.get(roles.size()-1));
         }catch (AssertionError | Exception e){
             pass = false;
             pw.append("Fail: visual Role was not created\n");
@@ -993,8 +1003,16 @@ public class LogicTest extends BaseLogicTest{
             e.printStackTrace();
         }
 
+        List<Role> roles = new LinkedList<>();
+
         try{
-            oldRole = rservice.getAllRolesByRole(role).getLast();
+            roles = rservice.getAllRolesByRole(role);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            oldRole = roles.get(roles.size()-1);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -1075,8 +1093,16 @@ public class LogicTest extends BaseLogicTest{
             e.printStackTrace();
         }
 
+        List<Role> roles = new LinkedList<>();
+
         try{
-            visualRole = rservice.getAllRolesByRole(role).getLast();
+            roles = rservice.getAllRolesByRole(role);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            visualRole = roles.get(roles.size()-1);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -1088,7 +1114,13 @@ public class LogicTest extends BaseLogicTest{
         }
 
         try{
-            Assertions.assertNotEquals(visualRole, rservice.getAllRolesByRole(role).getLast());
+            roles = rservice.getAllRolesByRole(role);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertNotEquals(visualRole, roles.get(roles.size()-1));
         }catch (AssertionError | Exception e){
             pass = false;
             pw.append("Fail: visual Role was not deleted \n");
@@ -1152,13 +1184,20 @@ public class LogicTest extends BaseLogicTest{
         }catch (Exception e){
             e.printStackTrace();
         }
-        //TODO getAllRolesByRole -> Immer null ?
-        /*
-        try{
-            visualRole = rservice.getAllRolesByRole(role).getLast();
+
+        List<Role> roles = new LinkedList<>();
+
+        try {
+            roles = rservice.getAllRolesByRole(role);
         }catch (Exception e){
             e.printStackTrace();
-        }*/
+        }
+
+        try{
+            visualRole = roles.get(roles.size()-1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         try{
             rservice.saveVisualRole(visualRole, user, role);
@@ -1167,7 +1206,13 @@ public class LogicTest extends BaseLogicTest{
         }
 
         try{
-            Assertions.assertEquals(visualRole, aservice.getProfileByEmail("daveT17@gmail.com").getRoles().getLast());
+            roles = aservice.getProfileByEmail("daveT17@gmail.com").getRoles();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertEquals(visualRole, roles.get(roles.size()-1));
         }catch (Exception | AssertionError e){
             pass = false;
             pw.append("Fail: visual Role was not attributed to User\n");
@@ -1339,8 +1384,10 @@ public class LogicTest extends BaseLogicTest{
             if(taskList.getSequence() == 1) break;
         }
 
+        DAOTask daoTask = DAOTaskService.getById(task.getID());
+
         try{
-            Assertions.assertEquals(task.getID(), taskList.getTasks().get(0).getId());
+            Assertions.assertEquals(daoTask.getTaskList().getId(), taskList.getId());
         }catch (AssertionError e){
             pass = false;
             pw.append("Fail: Task did not switch TaskBoards\n");
@@ -1369,7 +1416,344 @@ public class LogicTest extends BaseLogicTest{
          */
     void createTaskWithTaskBoardID(){
         pw.append("Logik-Test-createTaskWithTaskBoardID\nTest ID: Logic.T21\n" + "Date: " + formatter.format(date) + '\n');
+        TaskBoardService taskBoardService = new TaskBoardService();
+        String taskBoardName = "TaskBoardT16B3";
+        int count_correct_exceptions = 0;
+        int count_correct_exception_checks = 0;
 
+        try{
+            taskBoardService.createTaskBoard(taskBoardName);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        List<TaskBoard> taskBoards = taskBoardService.getAllTaskBoards();
+        if (taskBoards != null){
+            try{
+                Assertions.assertEquals(taskBoardName, taskBoards.get(taskBoards.size()-1).getName());
+            }catch (AssertionError e){
+                pass = false;
+                pw.append("Fail: TaskBoard not created\n");
+                throw new AssertionError(e);
+            }
+        }else{
+            pass = false;
+            pw.append("Fail: TaskBoard not created\n");
+        }
+
+        try{
+            count_correct_exception_checks++;
+            taskBoardService.createTaskBoard(null);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            taskBoardService.createTaskBoard("");
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        if (count_correct_exceptions != count_correct_exception_checks){
+            pass = false;
+            pw.append("Fail: wrong Exception-Handling\n");
+        }
+
+        pw.append(String.format("pass = %b", pass));
+    }
+
+    @Test
+    /*  Test ID: Logic.T22
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck: erstelle eine Task mit einer Priorität T7.B4
+     */
+    void createTaskWithPriority(){
+        pw.append("Logik-Test-createTaskWithPriority\nTest ID: Logic.T22\n" + "Date: " + formatter.format(date) + '\n');
+        TaskService taskService = new TaskService();
+        UserStoryService userStoryService = new UserStoryService();
+        UserStory userStory = new UserStory("UserStoryT7B4", "T7B4", 1, -1);
+
+        try{
+            userStoryService.saveUserStory(userStory);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        userStory.setID(userStoryService.getUserStoryByName(userStory.getName()).getID());
+        Task task = null;
+
+        try{
+            task = new Task(-1, "TaskT7B4", 1, userStory.getID(), "10-10-2030 10:10", 10, 20, -1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            taskService.saveTask(task);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
+            Assertions.assertEquals(task.getPriorityAsInt(), DAOTaskService.getById(task.getID()).getPriority());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: Task with wrong priority\n");
+            throw new AssertionError(e);
+        }
+
+        pw.append(String.format("pass = %b", pass));
+    }
+
+    @Test
+        /*  Test ID: Logic.T23
+         *  Author: Henry Lewis Freyschmidt
+         *  Zweck: verändern der Priorität eine Task mit T7.B2
+         */
+    void editTaskWithPriority() {
+        pw.append("Logik-Test-editTaskWithPriority\nTest ID: Logic.T23\n" + "Date: " + formatter.format(date) + '\n');
+        TaskService taskService = new TaskService();
+        UserStoryService userStoryService = new UserStoryService();
+        UserStory userStory = new UserStory("UserStoryT7B2", "T7B2", 1, -1);
+
+        try {
+            userStoryService.saveUserStory(userStory);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        userStory.setID(userStoryService.getUserStoryByName(userStory.getName()).getID());
+        Task task = null;
+
+        try {
+            task = new Task(-1, "TaskT7B2", 1, userStory.getID(), "10-10-2030 10:10", 10, 20, -1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            taskService.saveTask(task);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
+        task.setPriority(Enumerations.Priority.high);
+
+        try{
+            taskService.saveTask(task);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertEquals(3, DAOTaskService.getById(task.getID()).getPriority());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: Task-Priority was not changed\n");
+            throw new AssertionError(e);
+        }
+
+        pw.append(String.format("pass = %b", pass));
+    }
+
+    @Test
+        /*  Test ID: Logic.T24
+         *  Author: Henry Lewis Freyschmidt
+         *  Zweck: erstelle eine Task mit einer Schätzung T10.B3
+         */
+    void createTaskWithEstimate(){
+        pw.append("Logik-Test-createTaskWithEstimate\nTest ID: Logic.T24\n" + "Date: " + formatter.format(date) + '\n');
+        TaskService taskService = new TaskService();
+        UserStoryService userStoryService = new UserStoryService();
+        UserStory userStory = new UserStory("UserStoryT10B3", "T10B3", 1, -1);
+
+        try{
+            userStoryService.saveUserStory(userStory);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        userStory.setID(userStoryService.getUserStoryByName(userStory.getName()).getID());
+        Task task = null;
+
+        try{
+            task = new Task(-1, "TaskT10B3", 1, userStory.getID(), "10-10-2030 10:10", 10, 20, -1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            taskService.saveTask(task);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
+            Assertions.assertEquals(task.getTimeNeededG(), DAOTaskService.getById(task.getID()).getProcessingTimeEstimatedInHours());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: Task with wrong estimate\n");
+            throw new AssertionError(e);
+        }
+
+        pw.append(String.format("pass = %b", pass));
+    }
+
+    @Test
+        /*  Test ID: Logic.T25
+         *  Author: Henry Lewis Freyschmidt
+         *  Zweck: verändern der Schätzung eine Task mit T10.B2
+         */
+    void editTaskWithEstimate() {
+        pw.append("Logik-Test-editTaskWithEstimate\nTest ID: Logic.T25\n" + "Date: " + formatter.format(date) + '\n');
+        TaskService taskService = new TaskService();
+        UserStoryService userStoryService = new UserStoryService();
+        UserStory userStory = new UserStory("UserStoryT10B2", "T10B2", 1, -1);
+
+        try {
+            userStoryService.saveUserStory(userStory);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        userStory.setID(userStoryService.getUserStoryByName(userStory.getName()).getID());
+        Task task = null;
+
+        try {
+            task = new Task(-1, "TaskT9B2", 1, userStory.getID(), "10-10-2030 10:10", 10, 20, -1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            taskService.saveTask(task);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
+        task.setTimeNeededG(100);
+
+        try{
+            taskService.saveTask(task);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertEquals(100, DAOTaskService.getById(task.getID()).getProcessingTimeEstimatedInHours());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: Task-Estimate was not changed\n");
+            throw new AssertionError(e);
+        }
+
+        pw.append(String.format("pass = %b", pass));
+    }
+
+    @Test
+        /*  Test ID: Logic.T26
+         *  Author: Henry Lewis Freyschmidt
+         *  Zweck: erstelle eine Task mit einer Abgabefrist T9.B3
+         */
+    void createTaskWithDueDate(){
+        pw.append("Logik-Test-createTaskWithdueDate\nTest ID: Logic.T24\n" + "Date: " + formatter.format(date) + '\n');
+        TaskService taskService = new TaskService();
+        UserStoryService userStoryService = new UserStoryService();
+        UserStory userStory = new UserStory("UserStoryT9B3", "T9B3", 1, -1);
+
+        try{
+            userStoryService.saveUserStory(userStory);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        userStory.setID(userStoryService.getUserStoryByName(userStory.getName()).getID());
+        Task task = null;
+
+        try{
+            task = new Task(-1, "TaskT9B3", 1, userStory.getID(), "10-10-2030 10:10", 10, 20, -1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            taskService.saveTask(task);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
+            Assertions.assertEquals(task.getDueDateAsString(), DAOTaskService.getById(task.getID()).getDueDate());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: Task with wrong due date\n");
+            throw new AssertionError(e);
+        }
+
+        pw.append(String.format("pass = %b", pass));
+    }
+
+    @Test
+        /*  Test ID: Logic.T27
+         *  Author: Henry Lewis Freyschmidt
+         *  Zweck: verändern der Abgabefrist einer Task mit T9.B2
+         */
+    void editTaskWithDueDate() {
+        pw.append("Logik-Test-editTaskWithDueDate\nTest ID: Logic.T25\n" + "Date: " + formatter.format(date) + '\n');
+        TaskService taskService = new TaskService();
+        UserStoryService userStoryService = new UserStoryService();
+        UserStory userStory = new UserStory("UserStoryT9B2", "T9B2", 1, -1);
+
+        try {
+            userStoryService.saveUserStory(userStory);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        userStory.setID(userStoryService.getUserStoryByName(userStory.getName()).getID());
+        Task task = null;
+
+        try {
+            task = new Task(-1, "TaskT9B2", 1, userStory.getID(), "10-10-2030 10:10", 10, 20, -1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            taskService.saveTask(task);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
+        DateFormat dformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String dueDate = "2030-12-12T12:12";
+        try{
+            task.setDueDate(dformat.parse(dueDate.replace("T", " ")));
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+
+        try{
+            taskService.saveTask(task);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            String dbDueDate = DAOTaskService.getById(task.getID()).getDueDate();
+            Assertions.assertEquals(dueDate, DAOTaskService.getById(task.getID()).getDueDate());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: Task-DueDate was not changed\n");
+            throw new AssertionError(e);
+        }
 
         pw.append(String.format("pass = %b", pass));
     }
@@ -1379,9 +1763,7 @@ public class LogicTest extends BaseLogicTest{
 
 
 
-
-
-}
+    }
 
 /* erster Draft: Erfüllungsbedingungen für die User-Storys vom Sprint 2
 * Test A4:
