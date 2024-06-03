@@ -1,11 +1,12 @@
 package com.team3.project.service;
 
-import com.team3.project.Classes.Enumerations;
-import com.team3.project.Classes.Task;
+import com.team3.project.Classes.*;
 import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskList;
+import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOTaskListService;
 import com.team3.project.DAOService.DAOTaskService;
+import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.DAOService.DAOUserStoryService;
 import org.springframework.stereotype.Service;
 
@@ -93,10 +94,35 @@ public class TaskService {
                     DAOTaskService.updateDueDateById(task.getID(), task.getDueDateAsString());
                 if(dt.getProcessingTimeEstimatedInHours() != task.getTimeNeededG())
                     DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), task.getTimeNeededG());
+                if(dt.isDone()!= task.isDone()){
+                    if (task.isDone()) DAOTaskService.setDoneById(task.getID());
+                    else DAOTaskService.setUnDoneById(task.getID());
+                }
             } else throw new Exception("DB Task not found");
         }
     }
 
+
+    public void saveTaskXUser(TaskXUser taskXUser){
+        TaskService taskService = new TaskService();
+        try{
+            taskService.saveTask(new Task(taskXUser.getID(), taskXUser.getDescription(), taskXUser.getPriorityAsInt(),taskXUser.getUserStoryID(), taskXUser.getDueDateAsString(), taskXUser.getTimeNeededG(), taskXUser.getTimeNeededA(), taskXUser.getTbID()));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        int id = -1;
+        try{
+            id = taskService.getTaskByDescription(taskXUser.getDescription()).getID();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        List<DAOUser> daoUsers = new LinkedList<>();
+        for(User user : taskXUser.getUsers()){
+            DAOUser daoUser = DAOUserService.getById(user.getID());
+            daoUsers.add(daoUser);
+        }
+        DAOTaskService.updateUsersById(id, daoUsers);
+    }
     /* Author: Henry L. Freyschmidt
      * Revisited: /
      * Funktion: /
@@ -112,6 +138,7 @@ public class TaskService {
         if(taskID == -1) throw new Exception("not valid TaskID");
         DAOTaskService.deleteById(taskID);
     }
+
 
 
     /* Author: Lucas Krüger

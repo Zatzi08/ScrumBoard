@@ -35,7 +35,7 @@ public class Task extends abstraktDataClasses {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public Task(int tID, String description, int priority, int userStoryID, String dueDate, double timeNeededG, double timeNeededA, int tbID) throws ParseException {
+    public Task(int tID, String description, int priority, int userStoryID, String dueDate, double timeNeededG, double timeNeededA,int tbID) throws ParseException {
         super(tID);
         Enumerations prior = new Enumerations();
         this.description = description;
@@ -52,6 +52,27 @@ public class Task extends abstraktDataClasses {
         this.timeNeededG = timeNeededG;
         this.timeNeededA = timeNeededA;
         this.done = false;
+        this.tbID = tbID;
+
+    }
+
+    public Task(int tID, String description, int priority, int userStoryID, String dueDate, double timeNeededG, double timeNeededA, boolean done, int tbID) throws ParseException {
+        super(tID);
+        Enumerations prior = new Enumerations();
+        this.description = description;
+        this.priority = prior.IntToPriority(priority);
+        this.userStoryID = userStoryID;
+        if (dueDate != null) {
+            DateFormat dformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            if (dueDate != null && !dueDate.equals("")) {
+                this.dueDate = dformat.parse(dueDate.replace('T', ' '));
+            }
+        } else {
+            this.dueDate = null;
+        }
+        this.timeNeededG = timeNeededG;
+        this.timeNeededA = timeNeededA;
+        this.done = done;
         this.tbID = tbID;
 
     }
