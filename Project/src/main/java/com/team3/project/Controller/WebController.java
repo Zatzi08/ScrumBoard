@@ -638,14 +638,4 @@ public class WebController {
         modelAndView.addObject("Story", presentationToLogic.userStoryService.getUserStoryT());
         return modelAndView;
     }*/
-
-    @RequestMapping("/test")
-    private ModelAndView test() {
-        try {
-            return new ModelAndView("test");
-        } catch (Exception e){
-            e.printStackTrace();
-            return error(e);
-        }
-    }
 }
