@@ -256,7 +256,7 @@ function setTaskList(sessionID, tID, tlID){
             'sessionID': sessionID
         }
     }).then(r => {
-        if (!r.ok && r.status === 400){
+        if (!r.ok && r.status === 403){
             alert("Invalid Request")
             document.location.reload()
         } else if (r.status === 409){

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -30,7 +31,8 @@ public class AccountService {
      * @param mail -
      * @return Boolean - Existenz der E-Mail
      */
-    public boolean checkMail(String mail){
+    public boolean checkMail(String mail) throws Exception {
+        if (mail == null || mail.isEmpty()) throw new Exception("Null Mail");
         return DAOAccountService.checkMail(mail);
     }
 
@@ -48,8 +50,8 @@ public class AccountService {
      * @throws Exception Null Params
      */
     public boolean login(String email, String passwort) throws Exception {
-        if( email == null) throw new Exception("Null Email");
-        if( passwort == null) throw new Exception("Null Passwort");
+        if(email == null || email.isEmpty()) throw new Exception("Null Email");
+        if(passwort == null || passwort.isEmpty()) throw new Exception("Null Passwort");
         return DAOAccountService.checkLogin(email,passwort);
     }
 
@@ -68,9 +70,9 @@ public class AccountService {
      * @throws Exception Null Params
      */
     public boolean register(String username, String email, String passwort) throws Exception {
-        if( email == null) throw new Exception("Null Email");
-        if( passwort == null) throw new Exception("Null Passwort");
-        if( username == null) throw new Exception("Null Username");
+        if( email == null || email.isEmpty()) throw new Exception("Null Email");
+        if( passwort == null || passwort.isEmpty()) throw new Exception("Null Passwort");
+        if( username == null || username.isEmpty()) throw new Exception("Null Username");
         return DAOUserService.createByEMail(email,passwort, username,null,null,null,null, null, null, false);
     }
 
@@ -89,8 +91,8 @@ public class AccountService {
      * @throws Exception Null Params
      */
     public boolean resetPasswort(String EMail, String Passwort) throws Exception {
-        if (EMail == null) throw new Exception("Null Mail");
-        if (Passwort == null) throw new Exception("Null Passwort");
+        if (EMail == null || EMail.isEmpty()) throw new Exception("Null Mail");
+        if (Passwort == null || Passwort.isEmpty()) throw new Exception("Null Passwort");
         return DAOAccountService.updatePassword(EMail,Passwort);
     }
     /* Email um den Code zu schicken muss von Google geprüft werde, weil es geflaggt wurde
@@ -153,10 +155,11 @@ public class AccountService {
      * @throws Exception Null Params or User not found
      */
     public void savePublicData(String sessionId, Profile profile) throws Exception {
-        if (sessionId == null) throw new Exception("id outOfBound");
-        if (profile.getUname() == null) throw new Exception("Null Name");
-        if (profile.getWorkDesc() == null) throw new Exception("Null uDesc");
-        if (profile.getPrivatDesc() == null) throw new Exception("Null pDes");
+        if (profile == null) throw new Exception("Null Profile");
+        if (sessionId == null || sessionId.isEmpty()) throw new Exception("id outOfBound");
+        if (profile.getUname() == null || profile.getUname().isEmpty()) throw new Exception("Null Name");
+        if (profile.getWorkDesc() == null || profile.getWorkDesc().isEmpty()) throw new Exception("Null uDesc");
+        if (profile.getPrivatDesc() == null || profile.getPrivatDesc().isEmpty()) throw new Exception("Null pDes");
         DAOUser user = DAOUserService.getBySessionId(sessionId);
         if (user == null) throw new Exception("User not found");
         DAOUserService.updateByEMail(user.getEmail(), profile.getUname(),profile.getPrivatDesc(), profile.getWorkDesc(), user.getRoles());
@@ -175,7 +178,7 @@ public class AccountService {
      * @throws Exception
      */
     public Profile getProfileByEmail(String email) throws Exception {
-        if (email == null) throw new Exception("Null EMail");
+        if (email == null || email.isEmpty()) throw new Exception("Null EMail");
         DAOUser user = DAOUserService.getById(DAOUserService.getIdByMail(email));
         if (user == null) throw new Exception("User not found");
         return new Profile(user.getId(),user.getName(),user.getEmail(), user.getPrivatDescription(), user.getWorkDescription(), null, user.getAuthorization().getAuthorization());
@@ -194,10 +197,9 @@ public class AccountService {
      * @throws Exception
      */
     public Profile getProfileByID(String sessionId) throws Exception {
-        if (sessionId == null) throw new Exception("Null ID");
+        if (sessionId == null || sessionId.isEmpty()) throw new Exception("Null ID");
         DAOUser user = DAOUserService.getBySessionId(sessionId);
         if (user == null) throw new Exception("User not found");
-
         return new Profile(user.getId(), user.getName(),user.getEmail(), user.getPrivatDescription(), user.getWorkDescription(), null, user.getAuthorization().getAuthorization());
     }
 
@@ -214,7 +216,7 @@ public class AccountService {
      * @throws Exception Null Params or Object not found
      */
     public int getAuthority(String sessionId) throws Exception {
-        if (sessionId == null) throw new Exception("Null SessionID");
+        if (sessionId == null || sessionId.isEmpty()) throw new Exception("Null SessionID");
         if (sessionId.equals(MasterID)) return 999999999;
         else {
             DAOUser user = DAOUserService.getBySessionId(sessionId);

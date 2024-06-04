@@ -212,8 +212,11 @@ public class TaskService {
         DAOTask t = DAOTaskService.getById(tID);
     }
 
-    public void setRealTimeAufwand(int tID, int time){
+    public void setRealTimeAufwand(int tID, double time) throws Exception {
+        if (tID <= 0) throw new Exception("Invaid TID");
+        if (time < 0) throw new Exception("Invalid Time");
         DAOTask dt = DAOTaskService.getById(tID);
+        if (dt == null) throw new Exception("Task not Found");
         if(dt.getProcessingTimeRealInHours() != time)
             DAOTaskService.updateProcessingTimeRealInHoursById(dt.getId(), time);
     }

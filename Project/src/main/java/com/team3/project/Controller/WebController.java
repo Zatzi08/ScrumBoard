@@ -112,10 +112,8 @@ public class WebController {
                                  @RequestParam(value = "EMail", required = true) String EMail,
                                  @RequestParam(value = "Passwort", required = true) String Passwort){
             try {
-                if(!presentationToLogic.accountService.checkMail(EMail)) {
-                    if (presentationToLogic.accountService.register(Username, EMail, Passwort))
-                        return index();
-                }
+                if (presentationToLogic.accountService.register(Username, EMail, Passwort))
+                    return index();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -132,7 +130,7 @@ public class WebController {
     public ModelAndView login(@RequestParam(value = "EMail", required = true) String EMail,
                               @RequestParam(value = "Passwort", required = true) String Passwort) {
         try{
-            if( presentationToLogic.accountService.login(EMail, Passwort)) {
+            if(presentationToLogic.accountService.login(EMail, Passwort)) {
                 String id = presentationToLogic.webSessionService.getSessionID(EMail);
                 return ProjectManager(id);
             }
@@ -162,7 +160,7 @@ public class WebController {
             }
         } catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
@@ -197,16 +195,16 @@ public class WebController {
      */
     @RequestMapping(value = "/RequestResetCode", method = RequestMethod.POST)
     private ModelAndView RequestRestCode(@RequestParam(value = "email",required = true) String email){
-        if (presentationToLogic.accountService.checkMail(email)) {
-            try {
+        try {
+            if (presentationToLogic.accountService.checkMail(email)) {
                 String code = presentationToLogic.webSessionService.generatCode(1);
                 ModelAndView modelAndView = new ModelAndView("neuesPasswort")
                         .addObject("Code", code);
                 return modelAndView;
-            } catch (Exception e){
-                e.printStackTrace();
-                return error(e);
             }
+        } catch (Exception e){
+            e.printStackTrace();
+            return error(e);
         }
         return new ModelAndView("passwortForgot")
                 .addObject("error", true)
@@ -267,7 +265,7 @@ public class WebController {
         try{
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 Profile user = presentationToLogic.accountService.getProfileByID(sessionID);
-                if (user != null) return new ModelAndView("profil")
+                return new ModelAndView("profil")
                         .addObject("User" , user)
                         .addObject("sessionID", sessionID);
             }
@@ -290,7 +288,7 @@ public class WebController {
         try{
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 Profile user = presentationToLogic.accountService.getProfileByEmail(email);
-                if (user != null) return new ModelAndView("profil")
+                return new ModelAndView("profil")
                         .addObject("User", user)
                         .addObject("sessionID", sessionID);
             }
@@ -361,8 +359,8 @@ public class WebController {
 
     @RequestMapping(value = "/setRealTaskTime", method = RequestMethod.POST)
     private ResponseEntity<HttpStatus> setRealTaskTime(@RequestHeader(value = "sessionID") String sessionID,
-                                                       @RequestParam(value = "TID") int tID,
-                                                       @RequestParam(value = "time") int time){
+                                                       @RequestParam(value = "TID", required = true, defaultValue = "-99") int tID,
+                                                       @RequestParam(value = "time", required = true, defaultValue = "-99") double time){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 presentationToLogic.taskService.setRealTimeAufwand(tID,time);
@@ -381,9 +379,9 @@ public class WebController {
      * Grund: /
      * UserStory/Task-ID: T1.B1
      */
-    @RequestMapping(value = "/getTaskByTLID", method = RequestMethod.POST)
-    private ModelAndView getTaskByTLID(@RequestHeader(value = "sessionID", required = true) String sessionID,
-                          @RequestParam(value = "TLID", required = true, defaultValue = "-1") int TLId){
+    @RequestMapping(value = "/getTaskByTLID", method = RequestMethod.GET)
+    private ModelAndView getTaskByTLID(@RequestParam(value = "sessionID", required = true) String sessionID,
+                                       @RequestParam(value = "TLID", required = true, defaultValue = "-1") int TLId){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 return new ModelAndView("projectManager-Tasks")
@@ -440,9 +438,9 @@ public class WebController {
             }
         } catch(Exception e){
             e.printStackTrace();
-            return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
     }
 
     /* Author: Lucas Krüger
@@ -461,7 +459,7 @@ public class WebController {
             }
         } catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
         }
         return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
     }
@@ -474,17 +472,17 @@ public class WebController {
      */
     @RequestMapping(value = "/deleteUS", method = RequestMethod.POST)
     private ResponseEntity<HttpStatus> deleteUS(@RequestHeader(value = "sessionID", required = true) String sessionID,
-                                    @RequestParam(value = "ID", required = true, defaultValue = "-1") int id){
+                                                @RequestParam(value = "ID", required = true, defaultValue = "-1") int id){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 if (presentationToLogic.accountService.getAuthority(sessionID) >= 3){
                     presentationToLogic.userStoryService.deleteUserStoryAndLinkedTasks(id);
                     return new ResponseEntity<HttpStatus>(HttpStatus.OK);
-                } else return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
+                }
             }
         } catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
         }
         return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
     }
@@ -560,7 +558,7 @@ public class WebController {
             }
         } catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
         }
         return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
     }
@@ -586,7 +584,7 @@ public class WebController {
             e.printStackTrace();
             return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
     }
 
     @RequestMapping(value = "setTaskListToTask", method = RequestMethod.GET)
@@ -602,7 +600,7 @@ public class WebController {
             e.printStackTrace();
             return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
     }
 
     /* Author: Lucas Krüger
@@ -623,7 +621,7 @@ public class WebController {
             e.printStackTrace();
             return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
     }
 
     /* Author: Lucas Krüger

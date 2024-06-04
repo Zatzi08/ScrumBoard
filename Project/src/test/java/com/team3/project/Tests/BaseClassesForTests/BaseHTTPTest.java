@@ -84,12 +84,12 @@ public class BaseHTTPTest extends BaseTest {
             sessions.add(SessionID);
             if (reg) presentationToLogic.accountService.register("TU2", "T2@M.com", "TPW2");
             SessionID = presentationToLogic.webSessionService.getSessionID("T2@M.com");
-            presentationToLogic.accountService.savePublicData(SessionID, new Profile(0,"TU2", "T2@M.com", "pDesc2", "wDesc2",null,1));
+            presentationToLogic.accountService.savePublicData(SessionID, new Profile(0,"TU2", "T2@M.com", "pDesc2", "wDesc2",null,2));
             accounts.add(new Account("T2@M.com", "TPW2"));
             sessions.add(SessionID);
             if (reg) presentationToLogic.accountService.register("TU3", "T3@M.com", "TPW1");
             SessionID = presentationToLogic.webSessionService.getSessionID("T3@M.com");
-            presentationToLogic.accountService.savePublicData(SessionID, new Profile(0,"TU3", "T3@M.com", "pDesc3", "wDesc3",null, 1));
+            presentationToLogic.accountService.savePublicData(SessionID, new Profile(0,"TU3", "T3@M.com", "pDesc3", "wDesc3",null, 3));
             accounts.add(new Account("T3@M.com", "TPW3"));
             sessions.add(SessionID);
             presentationToLogic.accountService.setAuthority(3,4);
@@ -97,6 +97,7 @@ public class BaseHTTPTest extends BaseTest {
             profils = new LinkedList<Profile>();
             for (int i = 0; i<= 2; i++){
                 profils.add(presentationToLogic.accountService.getProfileByID(sessions.get(i)));
+                presentationToLogic.accountService.setAuthority(profils.get(i).getID(), i+1);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -110,9 +111,9 @@ public class BaseHTTPTest extends BaseTest {
             ids = new int[]{-1, -1, -1};
         }
         try{// TODO: TBID
-            presentationToLogic.taskService.saveTask(new Task(ids[0], "TT1", 1, 1, "2024-05-19T14:45", -1, -1,boards.get(0).getID()));
-            presentationToLogic.taskService.saveTask(new Task(ids[1], "TT2", 1, 2, "2024-05-19T14:45", -1, -1, boards.get(0).getID()));
-            presentationToLogic.taskService.saveTask(new Task(ids[2], "TT3", 1, 3, "2024-05-19T14:45", -1, -1, boards.get(0).getID()));
+            presentationToLogic.taskService.saveTask(new Task(ids[0], "TT1", 1, 1, "2024-05-19T14:45", 0, 0,boards.get(0).getID()));
+            presentationToLogic.taskService.saveTask(new Task(ids[1], "TT2", 1, 2, "2024-05-19T14:45", 1, 1, boards.get(0).getID()));
+            presentationToLogic.taskService.saveTask(new Task(ids[2], "TT3", 1, 3, "2024-05-19T14:45", 2, 2, boards.get(0).getID()));
             tasks = presentationToLogic.taskService.getAllTask();
         } catch (Exception e){
             e.printStackTrace();

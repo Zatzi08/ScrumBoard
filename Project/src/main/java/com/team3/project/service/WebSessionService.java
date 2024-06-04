@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.Objects;
 import java.util.Random;
 
 
@@ -19,7 +20,7 @@ public class WebSessionService {
     private final String MasterID = "EAIFPH8746531";
 
     public boolean verify(String sessionId) throws Exception {
-        if (sessionId == null) throw new Exception("Null ID");
+        if (sessionId == null || sessionId.isEmpty()) throw new Exception("Null ID");
         return sessionId.equals(MasterID) || checkSessionID(sessionId);
     }
 
