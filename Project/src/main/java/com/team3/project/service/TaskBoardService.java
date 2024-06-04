@@ -21,7 +21,6 @@ public class TaskBoardService {
         return taskBoard;
     }
 
-    //TODO: DB-Funktion zum erstellen von TaskBoards fehlt
     public void createTaskBoard(String taskBoardName) throws Exception{
         if(taskBoardName == null) throw new Exception("Null Name");
         if (taskBoardName.isEmpty()) throw new Exception("Empty Name");
