@@ -35,7 +35,9 @@ public class TaskService {
     public Task getTaskByID(int ID) throws Exception{
         DAOTask dt =  DAOTaskService.getById(ID);
         if (dt == null){ throw new Exception("Task not found");}
-
+        if (DAOTaskListService.getWithTasksById(dt.getId()) == null){
+            return new Task(dt.getId(),dt.getDescription(), dt.getPriority(), dt.getUserStory().getId(), dt.getDueDate(), dt.getProcessingTimeEstimatedInHours(),dt.getProcessingTimeRealInHours(), -1);
+        }
         return new Task(dt.getId(),dt.getDescription(), dt.getPriority() , dt.getUserStory().getId(),dt.getDueDate(), dt.getProcessingTimeEstimatedInHours(), dt.getProcessingTimeRealInHours(), DAOTaskListService.getWithTasksById(dt.getId()).getTaskBoard().getId());
     }
 
@@ -48,6 +50,9 @@ public class TaskService {
     public Task getTaskByDescription(String description) throws Exception{
         DAOTask dt =  DAOTaskService.getByDescription(description);
         if (dt == null) throw new Exception("Task not found");
+        if (DAOTaskListService.getWithTasksById(dt.getId()) == null){
+            return new Task(dt.getId(),dt.getDescription(), dt.getPriority(), dt.getUserStory().getId(), dt.getDueDate(), dt.getProcessingTimeEstimatedInHours(),dt.getProcessingTimeRealInHours(), -1);
+        }
         return new Task(dt.getId(),dt.getDescription(), dt.getPriority(), dt.getUserStory().getId(), dt.getDueDate(), dt.getProcessingTimeEstimatedInHours(),dt.getProcessingTimeRealInHours(), DAOTaskListService.getWithTasksById(dt.getId()).getTaskBoard().getId());
     }
 
