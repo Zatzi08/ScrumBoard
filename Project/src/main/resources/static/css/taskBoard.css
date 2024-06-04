@@ -1,14 +1,11 @@
 #outerContainer-Header{
     position: relative;
     background-color: #211f2b;
-    margin-left: 2%;
-    margin-right: 2%;
-    margin-top: 2.5%;
     overflow-x: scroll;
     overflow-y: hidden;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    padding:10px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 2% 2%;
 }
 
 .outerContainer-HeaderBtn{
@@ -49,16 +46,20 @@
 }
 
 #outerContainer-HeaderChangeTBName{
-    position: absolute;
+    position: relative;
     width: fit-content;
     height: 25px;
     border-radius: 5px;
     color: #ffffff;
     font-size: 12px;
-    padding: 1px;
+    padding: 5px;
     background-color: #46425e;
-    display: inline;
-    right: 15px;
+    /* display: inline; */
+    /* right: 15px; */
+    float: right;
+    content: antiquewhite;
+    /* justify-content: flex-end; */
+
 }
 
 #outerContainer-HeaderChangeTBName:hover{
@@ -168,6 +169,11 @@ hr {
     font-size: 12px;
 }
 
+#tableContent-Visualisation{
+    display: inline-block;
+    float: left;
+}
+
 #tableContent-LeftTime{
     display: inline-block;
     float: left;
@@ -181,7 +187,8 @@ hr {
 }
 
 #tableContent-UsId{
-    text-align: right;
+    display: inline-block;
+    float: right;
     color: black;
 }
 
@@ -209,8 +216,8 @@ hr {
     background-color: #373347;
     border-radius: 10px;
     padding: 15px;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     z-index: 1000;
 }
 
@@ -233,15 +240,19 @@ hr {
 #zoomedTaskCard-US{
     display: inline-flex;
     font-size: 12px;
+    user-select: none;
 }
 
 #zoomedTaskCard-seperator{
     font-size: 12px;
+    cursor: context-menu;
+    user-select: none;
 }
 
 #zoomedTaskCard-taskBoard{
     display: inline-flex;
     font-size: 12px;
+    user-select: none;
 }
 
 #zoomedTaskCard-description {
@@ -283,14 +294,16 @@ hr {
     display: inline-flex;
     float: right;
     font-size: 12px;
+    width: fit-content;
 }
 
 #zoomedTaskCard-deadline{
-    display: inline-flex;
+    display: inline;
+    position: relative;
     font-size: 12px;
-    text-align: right;
-    float:right;
-    margin-left: 70%;
+    float: right;
+    margin-right: 0;
+    margin-left: auto;
 }
 #zoomedTaskCard-nutzerDropdown{
     position: relative;
@@ -300,15 +313,15 @@ hr {
     background-color: transparent;
     width: 100%;
     color: #d1d1d1;
-    border-color:transparent;
+    border-color: transparent;
 }
 
 #zoomedTaskCard-nutzerDropdown button{
     font-size: 12px;
     background-color: transparent;
     color: #d1d1d1;
-    font-size: 12px;
-    width:fit-content;
+    width: fit-content;
+    display: inline;
     border: none;
 }
 #zoomedTaskCard-nutzerDropdown ul{
@@ -318,7 +331,7 @@ hr {
     background-color: transparent;
     min-width: fit-content;
     height:150px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 8px 16px rgba(0,0,0,0.2);
     overflow: scroll;
     margin-top: 2%;
     margin-right: 2%;
@@ -401,16 +414,30 @@ hr {
 
 #changeTBNameBtn, #taskFertigBtn, #createTBNameBtn {
     position: relative;
-    height:30px;
-    width:fit-content;
+    height: 30px;
+    width: fit-content;
     margin-top: 30px;
     margin-left: 45%;
     background-color: #4b6294;
-    color:white;
+    color: white;
     border-radius: 12px;
-
+    font-size: 11pt;
+    padding: 8px;
 }
 
 #changeTBNameBtn:hover, #taskFertigBtn:hover, #createTBNameBtn:hover {
     background-color: #3b4c70;
+}
+
+#visEstimateTracker{
+    width: 500px;
+    max-width: 500px;
+    position: relative;
+    height: 500px;
+    display: none;
+    margin: -44% auto;
+}
+
+.fa-pencil:before{
+    margin-right: 10px;
 }

@@ -5,9 +5,9 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Task Board</title>
-        <link rel="stylesheet" href="css/foundation.css">
-        <link rel="stylesheet" href="css/taskBoard.css">
-        <link rel="stylesheet" href="css/setup.css">
+        <link rel="stylesheet" href="/css/foundation.css">
+        <link rel="stylesheet" href="/css/taskBoard.css">
+        <link rel="stylesheet" href="/css/setup.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
@@ -23,6 +23,7 @@
         <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
         <button class = "reiterBtn" onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Task-Board </button>
         <button class = "reiterBtn">Kalender </button>
+        <button class = "reiterBtn" style="float: right">Abmelden</button>
     </div>
 
     <div id="outerContainer-Header">
@@ -30,7 +31,7 @@
             <span th:id="@{Name{tb}(tb=${Taskboard.getID()})}" th:text="${Taskboard.getName()}">  </span>
             <span th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" th:tbID="${Taskboard.getID()}" class='delete-btn' onclick="deleteTaskBoard(this, this.getAttribute('sID'), this.getAttribute('tbID'))">×</span></button>
         <button type="button" th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" id="outerContainer-HeaderBtnAdd" onclick="createTBNamePopUp()"><b>+</b></button>
-        <button type="button" th:if="${authority == 2 || authority == 4}" id = "outerContainer-HeaderChangeTBName" onclick="changeTBNamePopUp()">change Name <i class = "fa fa-pencil"></i></button>
+        <button type="button" th:if="${authority == 2 || authority == 4}" id = "outerContainer-HeaderChangeTBName" onclick="changeTBNamePopUp()"><i class = "fa fa-pencil">Name ändern</i></button>
 
         <div id="outerContainer" th:tbID="${Board.getID()}" >
             <div th:each="TaskList : ${Board.getTaskListList()}" th:id="${TaskList.getID()}" class="innerContainer" style="margin-left: 10px">
@@ -44,8 +45,9 @@
                     <tr th:each="task : ${TaskList.getTasks()}" th:id="@{T{TID}(TID=${task.getID()})}" draggable="true" th:us="${task.getUserStory().getName()}" th:tb="${Board.getName()}" th:desc="${task.getDescription()}" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}" th:pri="${task.getPriority()}" th:due="${task.getDueDateAsPresentable()}"
                         ondblclick="toggleZoomedTaskCardforTask(this.getAttribute('us'),this.getAttribute('tb'),this.getAttribute('desc'), this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('pri'), this.getAttribute('due'))">
                         <td th:style = "${(task.getPriorityAsInt() == 1) ? 'background-color: #9EC5E5' : (task.getPriorityAsInt() == 2) ? 'background-color: #f5dd90' : (task.getPriorityAsInt() == 3) ? 'background-color: #f68e5f' : (task.getPriorityAsInt() == 4) ? 'background-color: #f76c5e' : 'background-color: rgba(255, 255, 255, 0.66)'}">
+                            <button class="tableContentLabel" id="tableContent-Visualisation" title="Schätzungstracker" onclick="toggleVis()"><i class = "fa fa-pencil-square"></i></button>
                             <label class="tableContentLabel" id="tableContent-UsId" th:text="${task.getUserStory().getName()}">US-ID</label>
-                            <label class="tableContentLabel" id="tableContent-Beschreibung" th:text="${task.getDescription()}">XDD</label>
+                            <label class="tableContentLabel" id="tableContent-Beschreibung" th:text="${task.getDescription()}">Beschreibung</label>
                             <label class="tableContentLabel" id="tableContent-LeftTime" th:text="${task.getDueDateAsPresentable()}" >Left Time</label>
                             <label class="tableContentLabel" id="tableContent-Role">Rolle</label>
                         </td>
@@ -56,37 +58,37 @@
         </div>
     </div>
 
-
-
     <div id="zoomedTaskCard">
-        <label class="zoomedTaskCard-content" id="zoomedTaskCard-US">US</label>
+        <label class="zoomedTaskCard-content" id="zoomedTaskCard-US" title="Referenz zur dazugehörigen User-Story">US</label>
         <span class="zoomedTaskCard-content" id="zoomedTaskCard-seperator">/</span>
-        <label class="zoomedTaskCard-content" id="zoomedTaskCard-taskBoard">Task-Board</label>
-        <label class="zoomedTaskCard-content" id="zoomedTaskCard-description">Lacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velitLacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velit</label>
-        <label class="zoomedTaskCard-content" id="zoomedTaskCard-estimatedTime"><i class="fa fa-clock-o" style="margin-right: 5px; margin-top: 5px"></i>Geschätzte Zeit</label>
-        <label class="zoomedTaskCard-content" id="zoomedTaskCard-priority">Priorität</label>
+        <label class="zoomedTaskCard-content" id="zoomedTaskCard-taskBoard" title="Referenz zum dazugehörigen Task-Board">Task-Board</label>
+        <label class="zoomedTaskCard-content" id="zoomedTaskCard-description" title="Beschreibung der Task">Lacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velitLacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velit</label>
+        <label class="zoomedTaskCard-content" id="zoomedTaskCard-estimatedTime" title="Geschätzte Zeit der Task">Geschätzte Zeit</label>
+        <label class="zoomedTaskCard-content" id="zoomedTaskCard-priority" title="Priorität der Task">Priorität</label>
         <br>
-        <label class="zoomedTaskCard-content" id="zoomedTaskCard-workedTime">Bearbeitungszeit</label>
-        <label class="zoomedTaskCard-content" id="zoomedTaskCard-role"><i class="fa fa-briefcase" style="margin-right: 5px; margin-top: 5px"></i>Rolle</label>
+        <label class="zoomedTaskCard-content" id="zoomedTaskCard-workedTime" title="Real bearbeitete Zeit">Bearbeitungszeit</label>
+        <label class="zoomedTaskCard-content" id="zoomedTaskCard-role" title="Rolle">Rolle</label>
         <br>
-        <div  class="zoomedTaskCard-content"id="zoomedTaskCard-nutzerDropdown">
-            <button class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdownBtn">Zugewiesene Nutzer</button>
+        <div  class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdown">
+            <button class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdownBtn" title="Zugewiesene Nutzer">Zugewiesene Nutzer</button>
             <ul class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdown-content">
                 <li>Nutzer 1</li>
                 <li>Nutzer 1</li>
                 <li>Nutzer 1</li>
             </ul>
-            <label class="zoomedTaskCard-content" id="zoomedTaskCard-deadline">Abgabefrist</label>
+            <label class="zoomedTaskCard-content" id="zoomedTaskCard-deadline" title="Abgabefrist">Abgabefrist</label>
         </div>
-
     </div>
 
+    <div id = visEstimateTracker>
+        <canvas id = "myChart"></canvas>
+    </div>
 
     <div th:if="${authority == 2 || authority == 4}" id="popupChangeTBName">
         <form id = changeTBNameForm>
-        <label style = "color: #d1d1d1; " > Ändere den Namen des Task-Boards <i class = "fa fa-pencil" style="margin-right:10px;"></i></label>
+        <label style = "color: #d1d1d1; " ><i class = "fa fa-pencil" style="margin-right:10px;"></i>Ändere den Namen des Task-Boards</label>
         <input form = "changeTBNameForm" id = "changeTBNameInput" th:value="${Board.getName()}">
-        <button type="button" th:tbID="${Board.getID()}" th:sID="${sessionID}" id = "changeTBNameBtn" onclick="changeTBName(this.getAttribute('sID'), this.getAttribute('tbID'))" >Ändern</button>
+        <button type="button" th:tbID="${Board.getID()}" th:sID="${sessionID}" id = "changeTBNameBtn" title="Name des Taskboards ändern" onclick="changeTBName(this.getAttribute('sID'), this.getAttribute('tbID'))" >Ändern</button>
         </form>
     </div>
 
@@ -101,20 +103,23 @@
 
     <div th:if="${authority == 2 || authority == 4}" id = popupTaskFertig>
         <form id = taskFertigForm>
-            <label style = "color: #d1d1d1; " > Gebe die Bearbeitungszeit der Task an <i class = "fa fa-clock-o" style="margin-right:10px"></i></label>
+            <label style = "color: #d1d1d1; " ><i class = "fa fa-clock-o" style="margin-right:10px"></i> Gebe die Bearbeitungszeit der Task an</label>
             <input type = "number" min="0" max="1000" step="0.5" form = "taskFertigForm" id = "taskFertigInput">
             <input type="hidden" id="taskID">
             <button type="button" th:sID="${sessionID}"  id = "taskFertigBtn" onclick="setTaskTime(this.getAttribute('sID'))" >Ändern</button>
         </form>
     </div>
 
-<input type="hidden" id="sessionID" th:value="${sessionID}">
-        <script src="js/vendor/jquery.js"></script>
-        <script src="js/vendor/what-input.js"></script>
-        <script src="js/vendor/foundation.js"></script>
-        <script src="js/app.js"></script>
-        <script src="js/communication.js"></script>
-        <script type = "text/javascript" src="js/setup.js"></script>
-        <script type = "text/javascript" src="js/taskBoard.js"></script>
+    <input type="hidden" id="sessionID" th:value="${sessionID}">
+        <script src="/js/vendor/jquery.js"></script>
+        <script src="/js/vendor/what-input.js"></script>
+        <script src="/js/vendor/foundation.js"></script>
+        <script src="/js/app.js"></script>
+        <script src="/js/communication.js"></script>
+        <script type = "text/javascript" src="/js/setup.js"></script>
+        <script type = "text/javascript" src="/js/taskBoard.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script type="module" src="/js/myChart.js"></script>
     </body>
 </html>

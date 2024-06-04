@@ -37,6 +37,31 @@ function toggleZoomedTaskCard(id) {
     }
 }
 
+function toggleVis() {
+    var editMenu = document.querySelector('#visEstimateTracker');
+    var overlay = document.querySelector('.overlay');
+
+    if (editMenu) {
+        if (editMenu.style.display === "block") {
+            editMenu.style.display = "none";
+            if (overlay) {
+                overlay.remove();
+                overlay.removeEventListener('click', toggleZoomedTaskCard);
+            }
+        } else {
+            editMenu.style.display = "block";
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.classList.add('overlay');
+                document.body.appendChild(overlay);
+                overlay.addEventListener('click', toggleZoomedTaskCard);
+            }
+        }
+    } else {
+        console.error("Das Element mit der Klasse 'editMenu' wurde nicht gefunden.");
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const draggableRows = document.querySelectorAll('tbody tr[draggable="true"]');
     const innerContainers = document.querySelectorAll('.innerContainer');

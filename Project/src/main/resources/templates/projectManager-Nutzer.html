@@ -5,9 +5,9 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projektmanager-Nutzer</title>
-  <link rel="stylesheet" href="css/foundation.css">
-  <link rel="stylesheet" href="css/projectManager.css">
-  <link rel="stylesheet" href="css/setup.css">
+  <link rel="stylesheet" href="/css/foundation.css">
+  <link rel="stylesheet" href="/css/projectManager.css">
+  <link rel="stylesheet" href="/css/setup.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
@@ -23,19 +23,19 @@
   <button type="button" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
   <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
   <button class = "reiterBtn">Kalender </button>
+  <button class = "reiterBtn" style="float: right">Abmelden</button>
 </div>
 
 <div id="outerProjectManagerContainer">
-  <button class="selectBtn" id="selectUserstory" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" onmouseover = "hover('selectUserstory')" onmouseleave="hoverLeave('selectUserstory')" title="Wechsel Ansicht zu Userstories">Userstories</button>
-  <span class="userStoryTaskTrenner">|</span>
-  <button class="selectBtn" id="selectTasks" th:Sid="${sessionID}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
-  <span class="userStoryTaskTrenner">|</span>
-  <button class="selectBtn" id="selectUser" style= "border-bottom: 1px solid #ffffff" title = "Wechsel zur Nutzeransicht">Nutzer</button>
-
-  <div id = "roleBtn" >
-  <button class="addUserStoryBtn" title="Erstelle und bearbeite die Rollen" onclick="toggleRolesEditMenu()"  ><i class="fa fa-user-o" style = "margin-right: 5px"></i>Rollen bearbeiten</button>
+  <div id="Hi">
+    <button class="selectBtn" id="selectUserstory" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" onmouseover = "hover('selectUserstory')" onmouseleave="hoverLeave('selectUserstory')" title="Wechsel Ansicht zu Userstories">Userstories</button>
+    <span class="userStoryTaskTrenner">|</span>
+    <button class="selectBtn" id="selectTasks" th:Sid="${sessionID}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
+    <span class="userStoryTaskTrenner">|</span>
+    <button class="selectBtn" id="selectUser" style= "border-bottom: 1px solid #ffffff" title = "Wechsel zur Nutzeransicht">Nutzer</button>
+    <button class="addUserStoryBtn" title="Erstelle und Bearbeite die Rollen" onclick="toggleRolesEditMenu()"><i class="fa fa-user-o" style = "margin-right: 5px"></i>Rollen bearbeiten</button>
   </div>
-    <div id="innerProjectManagerContainer">
+  <div id="innerProjectManagerContainer">
     <div class="wrapper">
       <table class="userTaskTable">
         <thead id="userTaskTableHead">
@@ -79,11 +79,11 @@
   </div>
 </div> -->
 
-<script src="js/vendor/jquery.js"></script>
-<script src="js/vendor/what-input.js"></script>
-<script src="js/vendor/foundation.js"></script>
-<script src="js/app.js"></script>
-<script src="js/communication.js"></script>
-<script type = "text/javascript" src="setup.js"></script>
-<script type = "text/javascript" src="projectManager.js"></script>
+<script src="/js/vendor/jquery.js"></script>
+<script src="/js/vendor/what-input.js"></script>
+<script src="/js/vendor/foundation.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/communication.js"></script>
+<script type = "text/javascript" src="/js/setup.js"></script>
+<script type = "text/javascript" src="/js/projectManager.js"></script>
 </body>

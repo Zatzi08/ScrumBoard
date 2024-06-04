@@ -17,9 +17,9 @@
     border-radius: 10px;
     overflow: auto;
     overflow-y: scroll;
-    margin-top: -625px;
-    margin-left: 25%;
     z-index: 1000;
+    top: 25dvh;
+    left: 27dvw;
 }
 
 .editMenu::-webkit-scrollbar{
@@ -117,10 +117,10 @@
 }
 
 .selectBtn{
-    display: inline-flex;
+    display: inline;
     color: #ffffff;
-    background-color: rgba(64,59,59,0);
-    margin-right:20px;
+    background-color: rgba(64, 59, 59, 0);
+    margin-right: 20px;
     cursor: pointer;
     margin-left: 10px;
     font-size: 14px;
@@ -129,48 +129,40 @@
 
 #outerProjectManagerContainer{
     position: relative;
-    display: inline-flex;
+    display: flow-root;
     background-color: rgba(13, 71, 115, 0.7);
     color: #ffffff;
     padding: 12px 16px;
-    margin-right:20px;
-    border: none;
     border-radius: 15px;
     width: 97%;
-    margin-top: 30px;
-    margin-left: 30px;
     font-size: 16px;
-    height: 80vh;
+    height: 115dvh;
+    margin: 3% 2% 3%;
 }
 
 #innerProjectManagerContainer{
-    display: block;
+    display: inline;
     position: relative;
     max-height: 550px;
     background-color: rgba(13, 71, 115, 0);
     color: #ffffff;
     padding: 12px 16px;
-    margin-right:20px;
     border: none;
-    width: 1600px;
-    margin-top: 30px;
-    margin-left: -150px;
+    width: 190dvh;
     font-size: 16px;
     height: 95%;
     border-radius: 10px;
+    margin: 2% 3% 1%;
 }
 
 .addUserStoryBtn{
-    display: flex;
-    position: absolute;
-    margin-bottom: 1000px;
-    margin-right: 10px;
-    margin-left: 70%;
+    display: inline;
     width: 160px;
     height: 20px;
     border-radius: 5px;
     color: white;
     font-size: 14px;
+    float: right;
     padding: 1px;
 }
 
@@ -180,32 +172,6 @@
 #roleBtn:hover{
     background-color: #0a0a0a;
 }
-/*
-.userTaskTableBody-editBtn{
-    position:relative;
-    display: inline-block;
-    margin-left: 90%;
-    cursor: pointer;
-}
-
-.closeUserStoryTaskBtn{
-    position: relative;
-    display: inline-block;
-    position: absolute;
-    font-size: 22px;
-    cursor: pointer;
-    margin-left: 5px;
-    margin-top: -0.6%;
-}
-*/
- .Btn{
-     display:inline-block;
-     position: relative;
-     font-size: 22px;
-     cursor: pointer;
-     margin-right: 5px;
-     right:0;
- }
 
 #userTaskTableHead {
     position: sticky;
@@ -215,22 +181,20 @@
 }
 
 .wrapper {
-    height: 500px;
+    height: 100dvh;
     overflow: auto;
-    top: -4px;
     cursor: default;
 }
 
 .userTaskTable {
     position: relative;
-    width: 99%;
-    margin-left:5px;
+    width: 97%;
     border-collapse: separate;
     table-layout: auto;
     font-size: 10pt;
-    border-spacing: 0 20px;
+    border-spacing: 0 15px;
     cursor: default;
-
+    margin: 1%;
 }
 
 .userTaskTable th,
@@ -274,10 +238,9 @@
 
 .userTaskTableContentSubdate{
     position: relative;
-    margin-right: 5px;
     color: #919297;
     font-size: 12px;
-    margin-left: 90%;
+    float: right;
 }
 
 .userTaskTable-ContentStoryBoard{
@@ -536,6 +499,33 @@ ul{list-style-type: none;}
     display: block;
 }
 
+#pjDescription {
+    display: inline-block;
+    width: 100%;
+    white-space: break-spaces;
+}
 
+#Hi{
+    border: #1a568a;
+    border-radius: 10px;
+    border-style: outset;
+    padding: 5px;
+}
 
+#Btn1{
+    display: inline;
+    position: absolute;
+    font-size: 15px;
+    cursor: pointer;
+    margin-right: 30px;
+    right: 0;
+}
 
+#Btn2{
+    display: inline-block;
+    position: absolute;
+    font-size: 24px;
+    cursor: pointer;
+    right: 0;
+    margin: -0.5% 1%;
+}

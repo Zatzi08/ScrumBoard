@@ -5,9 +5,9 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil</title>
-    <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/profil.css">
-    <link rel="stylesheet" href="css/setup.css">
+    <link rel="stylesheet" href="/css/foundation.css">
+    <link rel="stylesheet" href="/css/profil.css">
+    <link rel="stylesheet" href="/css/setup.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
@@ -23,11 +23,12 @@
     <button class = "reiterBtn" onmouseover="hover()" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Profil </button>
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
+    <button class = "reiterBtn" style="float: right">Abmelden</button>
 </div>
 
 <div id = "profilContainer">
     <div id = "profilInhalt">
-        <button class = "fa fa-edit" title = "Bearbeite das Profil"th:uname="${User.uname}" th:udesc="${User.privatDesc}" th:projectdesc="${User.workDesc}" onclick="toggleProfilMenü(this.getAttribute('uname'), this.getAttribute('udesc'), this.getAttribute('projectdesc'))"></button>
+        <button class = "fa fa-edit" title = "Bearbeite das Profil" th:uname="${User.uname}" th:udesc="${User.privatDesc}" th:projectdesc="${User.workDesc}" onclick="toggleProfilMenü(this.getAttribute('uname'), this.getAttribute('udesc'), this.getAttribute('projectdesc'))"></button>
 
         <label th:text = "${User.uname}" id = "profilName">Benutzername </label>
         <label class = "profileText" >Deine Aufgabe im Projekt</label>
@@ -52,12 +53,12 @@
 </form>
 </div>
 
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/vendor/what-input.js"></script>
-    <script src="js/vendor/foundation.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/communication.js"></script>
-    <script type = "text/javascript" src="js/setup.js"></script>
-    <script type = "text/javascript" src="js/profil.js"></script>
+    <script src="/js/vendor/jquery.js"></script>
+    <script src="/js/vendor/what-input.js"></script>
+    <script src="/js/vendor/foundation.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/communication.js"></script>
+    <script type = "text/javascript" src="/js/setup.js"></script>
+    <script type = "text/javascript" src="/js/profil.js"></script>
 </body>
 </html>
