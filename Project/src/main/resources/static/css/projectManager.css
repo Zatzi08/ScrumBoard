@@ -208,6 +208,8 @@
     margin: 1%;
 }
 
+#userTaskTableBody tbody{background-color:transparent;}
+
 .userTaskTable th,
 .userTaskTable td {
     padding: 10px;
@@ -217,11 +219,11 @@
     border-radius: 10px;
     cursor: default;
 }
-
+/*hier ist das task kärtchen*/
 .userTaskTable th {
-    background-color: rgba(255, 255, 255, 0.66);
     color: black;
     white-space: nowrap;
+    background-color: #eee8da;
 }
 
 .userTaskTable tbody tr {
@@ -467,7 +469,7 @@ ul{list-style-type: none;}
     align-items: center;
     justify-content: center;
     right:0;
-    width: fit-content;
+    width: 25%;
     height:30px;
     margin-left: 30%;
 }
@@ -488,7 +490,7 @@ ul{list-style-type: none;}
 }
 
 .dropdown-check-list ul.items {
-    position: fixed;
+    position: absolute;
     padding: 2px;
     display: none;
     margin: 0;
@@ -496,9 +498,10 @@ ul{list-style-type: none;}
     border-top: none;
     z-index: 1;
     background-color: #23353f;
-    width: fit-content;
+    width: inherit;
     height:150px;
     overflow: scroll;
+    border-radius:8px;
 }
 
 .dropdown-check-list ul.items li {

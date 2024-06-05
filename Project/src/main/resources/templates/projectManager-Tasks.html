@@ -45,7 +45,7 @@
                 </thead>
                 <tbody id="userTaskTableBody">
                 <tr th:each="item : ${Tasks}">
-                    <th>
+                    <th th:style = "${item.isDone() ? 'background-color:rgba(255, 255, 255, 0.30)': 'background-color:#eee8da'}">
                         <label class="userTaskTable-ContentStoryBoard" th:text="${item.getUserStory().getName()}" title="Referenz zur entsprechenden User-Story">Story</label>
                         <span class="userTaskTable-ContentStoryBoard">/</span>
                         <label class="userTaskTable-ContentStoryBoard" th:text="${item.getTaskBoardNameOfTask()}" title="Referenz zum entsprechenden Taskboard">Board</label>
@@ -54,8 +54,10 @@
                                 onclick="toggleEditBoxT('editBtn', this.getAttribute('Tid'), this.getAttribute('description'), this.getAttribute('USID'), this.getAttribute('dueDate'), this.getAttribute('timeG'), this.getAttribute('tbID'), this.getAttribute('prio'));" ><i class="fa fa-edit"></i></button>
                             <button id="Btn2" th:Tid="${item.ID}" th:Sid="${sessionID}" onclick="deleteT(this.getAttribute('Tid'),this.getAttribute('Sid'))" title="Löschen">&times;</button>
                         </div>
-                            <!-- <label th:text = "${item.name}">Name</label> -->
-                        <label  title="Rolle">Rolle</label>
+                        <div style = "display:inline">
+                            <label style = "display:inline" title="Rolle">Rolle</label>
+                            <span style = "display:inline; float:right; margin-right:80%" th:if="${item.isDone()}" class = "fa fa-check-square-o">Erledigt</span>
+                        </div>
                         <label th:text = "${item.priority}" title="Titel der Task">Priorität</label>
                         <hr>
                         <label  id = "pjDescription" style="display: inline-block;" th:text = "${item.description}" title="Beschreibung der Task">Beschreibung</label>
