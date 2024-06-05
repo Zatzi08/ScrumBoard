@@ -513,12 +513,13 @@ ul{list-style-type: none;}
 
 #Btn1{
     display: inline;
-    position: absolute;
+    position: relative;
     font-size: 15px;
     cursor: pointer;
-    margin-right: 0px;
-    right: 31px;
-    margin-left: auto;
+    /* margin-right: 0px; */
+    /* right: 3dvw; */
+    float: right;
+    /* margin-left: auto; */
 }
 
 #Btn2{
@@ -528,6 +529,7 @@ ul{list-style-type: none;}
     cursor: pointer;
     float: right;
     margin-top: -0.8dvh;
+    margin-right: 0.7dvw;
 }
 
 hr{
