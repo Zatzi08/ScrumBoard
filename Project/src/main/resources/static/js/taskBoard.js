@@ -46,7 +46,7 @@ function toggleVis() {
             editMenu.style.display = "none";
             if (overlay) {
                 overlay.remove();
-                overlay.removeEventListener('click', toggleZoomedTaskCard);
+                overlay.removeEventListener('click', toggleVis);
             }
         } else {
             editMenu.style.display = "block";
@@ -54,7 +54,7 @@ function toggleVis() {
                 overlay = document.createElement('div');
                 overlay.classList.add('overlay');
                 document.body.appendChild(overlay);
-                overlay.addEventListener('click', toggleZoomedTaskCard);
+                overlay.addEventListener('click', toggleVis);
             }
         }
     } else {

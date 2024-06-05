@@ -506,9 +506,8 @@ ul{list-style-type: none;}
 }
 
 #Hi{
-    border: #1a568a;
+    border: solid #374c5e;
     border-radius: 10px;
-    border-style: outset;
     padding: 5px;
 }
 
@@ -517,15 +516,20 @@ ul{list-style-type: none;}
     position: absolute;
     font-size: 15px;
     cursor: pointer;
-    margin-right: 30px;
-    right: 0;
+    margin-right: 0px;
+    right: 31px;
+    margin-left: auto;
 }
 
 #Btn2{
     display: inline-block;
-    position: absolute;
-    font-size: 24px;
+    position: relative;
+    font-size: 25px;
     cursor: pointer;
-    right: 0;
-    margin: -0.5% 1%;
+    float: right;
+    margin-top: -0.8dvh;
+}
+
+hr{
+    width: 100%;
 }

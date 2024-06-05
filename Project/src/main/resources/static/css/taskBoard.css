@@ -438,6 +438,17 @@ hr {
     margin: -44% auto;
 }
 
+canvas#myChart{
+    display: block;
+    box-sizing: border-box;
+    height: 500px;
+    width: 500px;
+    z-index: 1001;
+    position: fixed;
+}
+
 .fa-pencil:before{
     margin-right: 10px;
+    z-index: 1000;
 }
+
