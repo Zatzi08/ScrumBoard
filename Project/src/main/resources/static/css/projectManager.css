@@ -511,6 +511,10 @@ ul{list-style-type: none;}
     padding: 5px;
 }
 
+.buttonBox{
+    display:inline
+}
+
 #Btn1{
     display: inline;
     position: absolute;
