@@ -571,8 +571,8 @@ public class WebController {
      */
     @RequestMapping("setAuthority")
     private ResponseEntity<HttpStatus> setAuthority(@RequestHeader(value = "sessionID", required = true) String sessionID,
-                                               @RequestParam(value = "USID", required = true, defaultValue = "-1") int usID,
-                                               @RequestParam(value = "Auth", required = true, defaultValue = "-1") int auth){
+                                                    @RequestParam(value = "USID", required = true, defaultValue = "-1") int usID,
+                                                    @RequestParam(value = "Auth", required = true, defaultValue = "-1") int auth){
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 if (presentationToLogic.accountService.getAuthority(sessionID) >= 3){

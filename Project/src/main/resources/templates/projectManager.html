@@ -46,8 +46,10 @@
                 <tbody id="userTaskTableBody">
                     <tr th:each="item : ${Storys}" th:USid="${item.ID}" th:Sid="${sessionID}"  ondblclick="SwitchToTasksbyUSID(this.getAttribute('Sid'), this.getAttribute('USid'))">
                         <th>
-                            <button id="Btn1" title="Bearbeiten" th:sname="${item.name}" th:sdescription="${item.description}" th:sid="${item.ID}" th:prio="${item.getPriorityAsInt()}" onclick="toggleEditBox('editBtn', this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'), this.getAttribute('prio'));" ><i class="fa fa-edit"></i></button>
-                            <button id="Btn2" th:USid="${item.ID}" th:Sid="${sessionID}" onclick="deleteUS(this.getAttribute('USid'),this.getAttribute('Sid'))" title="Löschen">&times;</button>
+                            <div class="buttonBox">
+                                <button id="Btn1" title="Bearbeiten" th:sname="${item.name}" th:sdescription="${item.description}" th:sid="${item.ID}" th:prio="${item.getPriorityAsInt()}" onclick="toggleEditBox('editBtn', this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'), this.getAttribute('prio'));" ><i class="fa fa-edit"></i></button>
+                                <button id="Btn2" th:USid="${item.ID}" th:Sid="${sessionID}" onclick="deleteUS(this.getAttribute('USid'),this.getAttribute('Sid'))" title="Löschen">&times;</button>
+                            </div>
                             <br/>
                             <label th:text = "${item.name}" title="Name der User-Story">Name</label>
                             <label th:text = "${item.priority}" title="Priorität der User-Story">Priorität</label>

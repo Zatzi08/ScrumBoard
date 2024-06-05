@@ -226,7 +226,7 @@ async function deleteTB(sessionID, TBID){
         })
 }
 
-function changeAuth(sessionID, selectID, usID){
+async function changeAuth(sessionID, selectID, usID){
     let selected = document.getElementById(selectID);
     let auth = selected.value;
     let url = 'setAuthority?USID=' + usID + '&Auth=' + auth;
@@ -239,7 +239,7 @@ function changeAuth(sessionID, selectID, usID){
             'sessionID': sessionID
         }
     }).then(r => {
-        if (!r.ok || parseInt(auth) < 2){
+        if (!r.ok || parseInt(auth) <= 2){
             document.location.reload()
         }
     })
