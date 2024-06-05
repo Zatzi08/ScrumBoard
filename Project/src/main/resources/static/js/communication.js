@@ -239,7 +239,7 @@ function changeAuth(sessionID, selectID, usID){
             'sessionID': sessionID
         }
     }).then(r => {
-        if (!r.ok){
+        if (!r.ok || parseInt(auth) < 2){
             document.location.reload()
         }
     })
