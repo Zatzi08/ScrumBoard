@@ -301,3 +301,7 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
     li.appendChild(document.createTextNode(NutzerName));
     ul.appendChild(li);
 }
+
+function visualisationOfTaskTime(estTime, realTime){
+
+}
