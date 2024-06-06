@@ -37,28 +37,30 @@ function toggleZoomedTaskCard(id) {
     }
 }
 
-function toggleVis() {
-    var editMenu = document.querySelector('#visEstimateTracker');
+function toggleVis(percentageDifference) {
+    var vis = document.querySelector('#visEstimateTracker');
     var overlay = document.querySelector('.overlay');
 
-    if (editMenu) {
-        if (editMenu.style.display === "block") {
-            editMenu.style.display = "none";
+    if (vis) {
+        if (vis.style.display === "block") {
+            vis.style.display = "none";
             if (overlay) {
                 overlay.remove();
                 overlay.removeEventListener('click', toggleVis);
+                destroy();
             }
         } else {
-            editMenu.style.display = "block";
+            vis.style.display = "block";
             if (!overlay) {
                 overlay = document.createElement('div');
                 overlay.classList.add('overlay');
                 document.body.appendChild(overlay);
+                document.getElementById('percentageDifferenceText').innerText = `Deine Schätzung weicht zu ${percentageDifference}% von der realen Bearbeitungszeit ab!`;
                 overlay.addEventListener('click', toggleVis);
             }
         }
     } else {
-        console.error("Das Element mit der Klasse 'editMenu' wurde nicht gefunden.");
+        console.error("Das Element mit der Klasse 'vis' wurde nicht gefunden.");
     }
 }
 
@@ -191,7 +193,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     enableButtonEdit();
 });
- */
 
 function addHeaderButton(text) {
 
@@ -223,6 +224,7 @@ function addHeaderButton(text) {
     var addButton = document.getElementById('outerContainer-HeaderBtnAdd');
     addButton.parentNode.insertBefore(newButton, addButton);
 }
+ */
 
 function deleteButton(button) {
     button.parentNode.removeChild(button);
@@ -300,8 +302,4 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
     var li = document.createElement("li").id = NutzerID;
     li.appendChild(document.createTextNode(NutzerName));
     ul.appendChild(li);
-}
-
-function visualisationOfTaskTime(estTime, realTime){
-
 }

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/foundation.css">
     <link rel="stylesheet" href="/css/projectManager.css">
     <link rel="stylesheet" href="/css/setup.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
 <!--
@@ -23,7 +23,7 @@
     <button type="button"  th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
-    <button class = "reiterBtn" style="float: right">Abmelden</button>
+    <button class = "reiterBtn" style="float: right"><a href="/">Abmelden</a></button>
 </div>
 
 <div id="outerProjectManagerContainer">
@@ -51,10 +51,10 @@
                                 <button id="Btn2" th:USid="${item.ID}" th:Sid="${sessionID}" onclick="deleteUS(this.getAttribute('USid'),this.getAttribute('Sid'))" title="Löschen">&times;</button>
                             </div>
                             <br/>
-                            <label th:text = "${item.name}" title="Name der User-Story">Name</label>
-                            <label th:text = "${item.priority}" title="Priorität der User-Story">Priorität</label>
+                            <i class="fa-solid fa-file-lines" id="iContent1"></i><label class="iContent-Label" style="margin-left: 2.3dvh; font-size: 16px">Titel</label><label class = "userTaskTableBody-Content" th:text = "${item.name}" title="Name der User-Story">Name</label>
+                            <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label" style="margin-left: 1.7dvh;">Priorität</label><label class = "userTaskTableBody-Content" th:text = "${item.priority}" title="Priorität der User-Story">Priorität</label>
                             <hr>
-                            <label id = "pjDescription" title="Beschreibung der User-Story" th:text="${item.description}">Beschreibung</label>
+                            <i class = "fa-solid fa-bars" id="iContent3"></i><label class="iContent-Label">Beschreibung</label><label class = "userTaskTableBody-Content" title="Beschreibung der User-Story" th:text="${item.description}">Beschreibung</label>
                         </th>
                     </tr>
                 </tbody>

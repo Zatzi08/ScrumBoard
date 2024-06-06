@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/css/foundation.css">
   <link rel="stylesheet" href="/css/projectManager.css">
   <link rel="stylesheet" href="/css/setup.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
 <!--
@@ -23,7 +23,7 @@
   <button type="button" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
   <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
   <button class = "reiterBtn">Kalender </button>
-  <button class = "reiterBtn" style="float: right">Abmelden</button>
+  <button class = "reiterBtn" style="float: right"><a href="/">Abmelden</a></button>
 </div>
 
 <div id="outerProjectManagerContainer">
@@ -44,12 +44,12 @@
         </tr>
         </thead>
         <tbody id="userTaskTableBody"> <!-- th:role="${user.getRoles()}" ist ne Liste kp wie wir das machen-->
-        <tr th:each="user : ${User}" th:Sid="${sessionID}" th:email="${user.getEmail()}" ondblclick="SwitchToOtherProfile( this.getAttribute('sid'), this.getAttribute('email'))">
+        <tr th:each="user : ${User}" th:Sid="${sessionID}" th:email="${user.getEmail()}" ondblclick="SwitchToOtherProfile( this.getAttribute('sid'), this.getAttribute('email'))" title="Doppelklick für Profilsicht">
           <th>
             <div id = userTextDiv>
-            <label class = "userText" th:text="${user.getUname()}" >Nutzername</label>
+              <i class="fa-solid fa-person" style="position: relative; line-height: 2.2; margin-right: 2dvh;"></i><label class = "userText" th:text="${user.getUname()}" style="line-height: 2.2;">Nutzername</label>
               <div id = "userRights">
-                <select class = "rightsDropdown" th:if = "${auth>2}" th:Sid="${sessionID}" onchange="changeAuth(this.getAttribute('Sid'),this.getAttribute('id'), this.getAttribute('usID'))" th:id="@{RoleDropdown:{id}(id=${user.getID()})}"  th:usID="${user.getID()}">
+                <select class = "rightsDropdown" th:if = "${auth>2}" th:Sid="${sessionID}" onchange="changeAuth(this.getAttribute('Sid'),this.getAttribute('id'), this.getAttribute('usID'))" th:id="@{RoleDropdown:{id}(id=${user.getID()})}"  th:usID="${user.getID()}" title="Auswahl der Rolle">
                   <option id="Role:1" value="1" th:selected="${user.getAuthorization() == 1} ? 'selected'">Nutzer</option>
                   <option id="Role:2" value="2" th:selected="${user.getAuthorization() == 2} ? 'selected'" >Manager</option>
                   <option id="Role:3" value="3" th:selected="${user.getAuthorization() == 3} ? 'selected'" >Project Owner</option>

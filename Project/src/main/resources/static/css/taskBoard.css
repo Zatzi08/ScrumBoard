@@ -272,6 +272,7 @@ hr {
     color: black;
     cursor: pointer;
     scrollbar-color: #084d6a;
+    hyphens: auto;
 }
 
 #zoomedTaskCard-estimatedTime{
@@ -430,21 +431,21 @@ hr {
 }
 
 #visEstimateTracker{
-    width: 500px;
-    max-width: 500px;
+    width: 79dvh;
     position: relative;
-    height: 500px;
+    height: 50dvh;
+    background-color: #373347;
     display: none;
     margin: -44% auto;
+    z-index: 1000;
+    border-radius: 10px;
 }
 
 canvas#myChart{
-    display: block;
-    box-sizing: border-box;
-    height: 500px;
-    width: 500px;
-    z-index: 1001;
-    position: fixed;
+    height: 231px;
+    width: 462px;
+    position: relative;
+    padding: 10px;
 }
 
 .fa-pencil:before{
@@ -452,3 +453,8 @@ canvas#myChart{
     z-index: 1000;
 }
 
+#percentageDifferenceText{
+    color: white;
+    position: relative;
+    padding: 8px;
+}

@@ -23,7 +23,7 @@
     <button class = "reiterBtn" onmouseover="hover()" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Profil </button>
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
-    <button class = "reiterBtn" style="float: right">Abmelden</button>
+    <button class = "reiterBtn" style="float: right"><a href="/">Abmelden</a></button>
 </div>
 
 <div id = "profilContainer">

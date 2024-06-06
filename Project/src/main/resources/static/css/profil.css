@@ -152,7 +152,9 @@
     font-family: "Lucida Console";
     color: #a8a398;
     margin-top:20px;
-
+    overflow-wrap: break-word;
+    text-align: justify;
+    hyphens: auto;
 }
 
 

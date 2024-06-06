@@ -23,7 +23,7 @@
         <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
         <button class = "reiterBtn" onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Task-Board </button>
         <button class = "reiterBtn">Kalender </button>
-        <button class = "reiterBtn" style="float: right">Abmelden</button>
+        <button class = "reiterBtn" style="float: right"><a href="/">Abmelden</a></button>
     </div>
 
     <div id="outerContainer-Header">
@@ -43,13 +43,13 @@
                     </thead>
                     <tbody class="columnTableBody">
                     <tr th:each="task : ${TaskList.getTasks()}" th:id="@{T{TID}(TID=${task.getID()})}" draggable="true" th:us="${task.getUserStory().getName()}" th:tb="${Board.getName()}" th:desc="${task.getDescription()}" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}" th:pri="${task.getPriority()}" th:due="${task.getDueDateAsPresentable()}"
-                        ondblclick="toggleZoomedTaskCardforTask(this.getAttribute('us'),this.getAttribute('tb'),this.getAttribute('desc'), this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('pri'), this.getAttribute('due'))">
+                        ondblclick="toggleZoomedTaskCardforTask(this.getAttribute('us'),this.getAttribute('tb'),this.getAttribute('desc'), this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('pri'), this.getAttribute('due'))" title="Doppelklicken, um gesamte Task zu sehen">
                         <td th:style = "${(task.getPriorityAsInt() == 1) ? 'background-color: #9EC5E5' : (task.getPriorityAsInt() == 2) ? 'background-color: #f5dd90' : (task.getPriorityAsInt() == 3) ? 'background-color: #f68e5f' : (task.getPriorityAsInt() == 4) ? 'background-color: #f76c5e' : 'background-color: rgba(255, 255, 255, 0.66)'}">
-                            <button class="tableContentLabel" id="tableContent-Visualisation" title="Schätzungstracker" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}"  onclick="visualisationOfTaskTime(this.getAttribute('est'), this.getAttribute('real'))"><i class = "fa fa-pencil-square"></i></button>
-                            <label class="tableContentLabel" id="tableContent-UsId" th:text="${task.getUserStory().getName()}">US-ID</label>
-                            <label class="tableContentLabel" id="tableContent-Beschreibung" th:text="${task.getDescription()}">Beschreibung</label>
-                            <label class="tableContentLabel" id="tableContent-LeftTime" th:text="${task.getDueDateAsPresentable()}" >Left Time</label>
-                            <label class="tableContentLabel" id="tableContent-Role">Rolle</label>
+                            <button class="tableContentLabel" id="tableContent-Visualisation" title="Schätzungstracker" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}"  onclick="visualisationOfTaskTime(this.getAttribute('est'), this.getAttribute('real'))"><i class = "fa fa-bar-chart-o"></i></button>
+                            <label class="tableContentLabel" id="tableContent-UsId" th:text="${task.getUserStory().getName()}" title="Referenz zur entsprechenden User-Sotry">US-ID</label>
+                            <label class="tableContentLabel" id="tableContent-Beschreibung" th:text="${task.getDescription()}" title="Beschreibung der Task">Beschreibung</label>
+                            <label class="tableContentLabel" id="tableContent-LeftTime" th:text="${task.getDueDateAsPresentable()}" title="Frist">Left Time</label>
+                            <label class="tableContentLabel" id="tableContent-Role" title="Rolle">Rolle</label>
                         </td>
                     </tr>
                     </tbody>
@@ -82,6 +82,7 @@
 
     <div id = visEstimateTracker>
         <canvas id = "myChart"></canvas>
+        <label id="percentageDifferenceText"></label>
     </div>
 
     <div th:if="${authority == 2 || authority == 4}" id="popupChangeTBName">
@@ -121,5 +122,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script type="module" src="/js/myChart.js"></script>
+        <script src="/js/myChart.js"></script>
     </body>
 </html>
