@@ -3,6 +3,7 @@ package com.team3.project.Classes;
 import com.team3.project.Classes.Enumerations.Priority;
 import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskList;
+import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOTaskBoardService;
 import com.team3.project.DAOService.DAOTaskListService;
 import com.team3.project.DAOService.DAOTaskService;
@@ -13,6 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -98,5 +100,15 @@ public class Task extends abstraktDataClasses {
             return DAOTaskService.getById(this.getID()).getTaskList().getSequence() == 5;
         }
         return false;
+    }
+
+    public List<User> getUser(){
+        List<DAOUser> dul = DAOTaskService.getById(this.getID()).getUsers();
+        List<User> list = new LinkedList<User>();
+        for (DAOUser u : dul){
+            User toAdd = new User(u.getName(),u.getId(),new LinkedList<Enumerations.Role>(),u.getAuthorization().getAuthorization());
+            list.add(toAdd);
+        }
+        return list;
     }
 }

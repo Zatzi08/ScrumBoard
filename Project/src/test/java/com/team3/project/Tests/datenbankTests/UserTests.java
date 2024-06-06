@@ -169,8 +169,8 @@ public class UserTests extends BaseDBTest {
      * UserStory/Task-ID: S7.D3
      */
     @Test 
-    void UpadteSessionIDTest(){
-        printWriterAddTest("UpadteSessionIDTest", "U.T4");
+    void UpdateSessionIDTest(){
+        printWriterAddTest("UpdateSessionIDTest", "U.T4");
         TestRoles.add(TestRole);
         String sessionID = "5";
         String sessionDate = "5";

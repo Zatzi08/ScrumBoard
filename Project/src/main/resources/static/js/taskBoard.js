@@ -297,10 +297,14 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
     document.getElementById('zoomedTaskCard-workedTime').innerText = realTime;
     document.getElementById('zoomedTaskCard-deadline').innerText = DueDate
     document.getElementById('zoomedTaskCard-role').innerText;
-    NutzerID = 0;
-    NutzerName = 'Kevin';
     var ul = document.getElementById("zoomedTaskCard-nutzerDropdown-content");
-    var li = document.createElement("li").id = NutzerID;
-    li.appendChild(document.createTextNode(NutzerName));
-    ul.appendChild(li);
+    for (nutzer in NutzerList){
+        var li = document.createElement("li")
+        li.id = nutzer.ID;
+        li.appendChild(document.createTextNode(nutzer.name));
+        ul.appendChild(li);
+    }
+
+
+
 }

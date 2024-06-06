@@ -110,26 +110,6 @@ public class TaskService {
     }
 
 
-    public void saveTaskXUser(TaskXUser taskXUser){
-        TaskService taskService = new TaskService();
-        try{
-            taskService.saveTask(new Task(taskXUser.getID(), taskXUser.getDescription(), taskXUser.getPriorityAsInt(),taskXUser.getUserStoryID(), taskXUser.getDueDateAsString(), taskXUser.getTimeNeededG(), taskXUser.getTimeNeededA(), taskXUser.getTbID()));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        int id = -1;
-        try{
-            id = taskService.getTaskByDescription(taskXUser.getDescription()).getID();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        List<DAOUser> daoUsers = new LinkedList<>();
-        for(User user : taskXUser.getUsers()){
-            DAOUser daoUser = DAOUserService.getById(user.getID());
-            daoUsers.add(daoUser);
-        }
-        DAOTaskService.updateUsersById(id, daoUsers);
-    }
     /* Author: Henry L. Freyschmidt
      * Revisited: /
      * Funktion: /
