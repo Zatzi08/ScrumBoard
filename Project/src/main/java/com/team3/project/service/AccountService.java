@@ -225,7 +225,7 @@ public class AccountService {
         }
     }
 
-    public List<Profile> getAllProfils() {
+    public List<Profile> getAllProfiles() {
         List <Profile> list = new LinkedList<>();
         List <DAOUser> daoUserList = DAOUserService.getAllPlusRoles();
         if(daoUserList != null){

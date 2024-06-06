@@ -324,7 +324,7 @@ public class WebController {
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 return new ModelAndView("projectManager-Nutzer")
-                        .addObject("User", presentationToLogic.accountService.getAllProfils())
+                        .addObject("User", presentationToLogic.accountService.getAllProfiles())
                         .addObject("sessionID", sessionID)
                         .addObject("auth",presentationToLogic.accountService.getAuthority(sessionID));
             }
