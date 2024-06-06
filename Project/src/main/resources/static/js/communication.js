@@ -82,7 +82,6 @@ function saveTask($this, sessionID) {
 function setTaskTime(sessionID){
     let tID = document.getElementById('taskID').value.substring(1);
     let time = document.getElementById('taskFertigInput').value;
-    document.getElementById(document.getElementById('taskID').value).setAttribute('real', time);
 
     let url = "/setRealTaskTime?TID="+ tID + "&time=" + time;
     fetch(url, {
@@ -95,6 +94,10 @@ function setTaskTime(sessionID){
     }).then(r =>{
         if (!r.ok){
             document.location.reload()
+        } else {
+            document.getElementById(document.getElementById('taskID').value).setAttribute('real', time);
+            let ID = "tableContent-Visualisation:"+ tID
+            document.getElementById(ID).setAttribute('real', time)
         }
     })
 }
