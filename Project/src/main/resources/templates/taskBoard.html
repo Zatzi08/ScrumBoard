@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="/css/foundation.css">
         <link rel="stylesheet" href="/css/taskBoard.css">
         <link rel="stylesheet" href="/css/setup.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     </head>
     <body>
     <!--
@@ -27,11 +27,11 @@
     </div>
 
     <div id="outerContainer-Header">
-        <button style="position: relative; margin-right: 5px;" th:each="Taskboard : ${TaskBoards}" th:sID="${sessionID}" th:id="@{Button{tb}(tb=${Taskboard.getID()})}" class="outerContainer-HeaderBtn" th:tbID="${Taskboard.getID()}" ondblclick="SwitchToTaskBoardByID(this.getAttribute('sID'), this.getAttribute('tbID'))">
+        <button style="position: relative; margin-right: 5px;" th:each="Taskboard : ${TaskBoards}" th:sID="${sessionID}" th:id="@{Button{tb}(tb=${Taskboard.getID()})}" class="outerContainer-HeaderBtn" th:tbID="${Taskboard.getID()}" ondblclick="SwitchToTaskBoardByID(this.getAttribute('sID'), this.getAttribute('tbID'))" title="Doppeklick, um auf Taskboard zu wechseln">
             <span th:id="@{Name{tb}(tb=${Taskboard.getID()})}" th:text="${Taskboard.getName()}">  </span>
-            <span th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" th:tbID="${Taskboard.getID()}" class='delete-btn' onclick="deleteTaskBoard(this, this.getAttribute('sID'), this.getAttribute('tbID'))">×</span></button>
-        <button type="button" th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" id="outerContainer-HeaderBtnAdd" onclick="createTBNamePopUp()"><b>+</b></button>
-        <button type="button" th:if="${authority == 2 || authority == 4}" id = "outerContainer-HeaderChangeTBName" onclick="changeTBNamePopUp()"><i class = "fa fa-pencil">Name ändern</i></button>
+            <span th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" th:tbID="${Taskboard.getID()}" class='delete-btn' onclick="deleteTaskBoard(this, this.getAttribute('sID'), this.getAttribute('tbID'))" title="Taskboard löschen">×</span></button>
+        <button type="button" th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" id="outerContainer-HeaderBtnAdd" onclick="createTBNamePopUp()" title="Taskboard hinzufügen"><b>+</b></button>
+        <button type="button" th:if="${authority == 2 || authority == 4}" id = "outerContainer-HeaderChangeTBName" onclick="changeTBNamePopUp()"><i id="pencilSym" class = "fa fa-pencil"></i>Name ändern</button>
 
         <div id="outerContainer" th:tbID="${Board.getID()}" >
             <div th:each="TaskList : ${Board.getTaskListList()}" th:id="${TaskList.getID()}" class="innerContainer" style="margin-left: 10px">
@@ -45,7 +45,7 @@
                     <tr th:each="task : ${TaskList.getTasks()}" th:id="@{T{TID}(TID=${task.getID()})}" draggable="true" th:us="${task.getUserStory().getName()}" th:tb="${Board.getName()}" th:desc="${task.getDescription()}" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}" th:pri="${task.getPriority()}" th:due="${task.getDueDateAsPresentable()}"
                         ondblclick="toggleZoomedTaskCardforTask(this.getAttribute('us'),this.getAttribute('tb'),this.getAttribute('desc'), this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('pri'), this.getAttribute('due'))" title="Doppelklicken, um gesamte Task zu sehen">
                         <td th:style = "${(task.getPriorityAsInt() == 1) ? 'background-color: #9EC5E5' : (task.getPriorityAsInt() == 2) ? 'background-color: #f5dd90' : (task.getPriorityAsInt() == 3) ? 'background-color: #f68e5f' : (task.getPriorityAsInt() == 4) ? 'background-color: #f76c5e' : 'background-color: rgba(255, 255, 255, 0.66)'}">
-                            <button class="tableContentLabel" id="tableContent-Visualisation" title="Schätzungstracker" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}"  onclick="visualisationOfTaskTime(this.getAttribute('est'), this.getAttribute('real'))"><i class = "fa fa-bar-chart-o"></i></button>
+                            <button class="tableContentLabel" id="tableContent-Visualisation" title="Schätzungstracker" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}"  onclick="visualisationOfTaskTime(this.getAttribute('est'), this.getAttribute('real'))"><i class = "fa-solid fa-chart-bar"></i></button>
                             <label class="tableContentLabel" id="tableContent-UsId" th:text="${task.getUserStory().getName()}" title="Referenz zur entsprechenden User-Sotry">US-ID</label>
                             <label class="tableContentLabel" id="tableContent-Beschreibung" th:text="${task.getDescription()}" title="Beschreibung der Task">Beschreibung</label>
                             <label class="tableContentLabel" id="tableContent-LeftTime" th:text="${task.getDueDateAsPresentable()}" title="Frist">Left Time</label>
@@ -59,18 +59,26 @@
     </div>
 
     <div id="zoomedTaskCard">
-        <label class="zoomedTaskCard-content" id="zoomedTaskCard-US" title="Referenz zur dazugehörigen User-Story">US</label>
-        <span class="zoomedTaskCard-content" id="zoomedTaskCard-seperator">/</span>
-        <label class="zoomedTaskCard-content" id="zoomedTaskCard-taskBoard" title="Referenz zum dazugehörigen Task-Board">Task-Board</label>
-        <label class="zoomedTaskCard-content" id="zoomedTaskCard-description" title="Beschreibung der Task">Lacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velitLacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velit</label>
+        <label id="zoomedTaskCard-US" title="Referenz zur dazugehörigen User-Story">US</label>
+        <span id="zoomedTaskCard-seperator">/</span>
+        <label id="zoomedTaskCard-taskBoard" title="Referenz zum dazugehörigen Task-Board">Task-Board</label>
+        <br/>
+        <i class="fa-solid fa-bars" id="zoomedTaskCard-sym5"></i><label class="zoomedTaskCard-symLab">Beschreibung</label>
+        <label id="zoomedTaskCard-description" title="Beschreibung der Task">Lacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velitLacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velit</label>
+        <i class="fa-regular fa-clock" id="zoomedTaskCard-sym1"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym1">Schätzung</label>
+        <i class="fa-solid fa-circle-exclamation" id="zoomedTaskCard-sym2"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym2">Priorität</label>
+        <br/>
         <label class="zoomedTaskCard-content" id="zoomedTaskCard-estimatedTime" title="Geschätzte Zeit der Task">Geschätzte Zeit</label>
         <label class="zoomedTaskCard-content" id="zoomedTaskCard-priority" title="Priorität der Task">Priorität</label>
-        <br>
+        <br/><br/>
+        <i class="fa-solid fa-hourglass-end" id="zoomedTaskCard-sym3"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym3">Bearbeitung</label>
+        <i class="fa-solid fa-people-group" id="zoomedTaskCard-sym4"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym4">Rolle</label>
+        <br/>
         <label class="zoomedTaskCard-content" id="zoomedTaskCard-workedTime" title="Real bearbeitete Zeit">Bearbeitungszeit</label>
         <label class="zoomedTaskCard-content" id="zoomedTaskCard-role" title="Rolle">Rolle</label>
         <br>
         <div  class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdown">
-            <button class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdownBtn" title="Zugewiesene Nutzer">Zugewiesene Nutzer</button>
+            <button class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdownBtn" title="Zugewiesene Nutzer" style="background: #282435;">Zugewiesene Nutzer</button>
             <ul class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdown-content">
                 <li>Nutzer 1</li>
                 <li>Nutzer 1</li>
@@ -87,7 +95,7 @@
 
     <div th:if="${authority == 2 || authority == 4}" id="popupChangeTBName">
         <form id = changeTBNameForm>
-        <label style = "color: #d1d1d1; " ><i class = "fa fa-pencil" style="margin-right:10px;"></i>Ändere den Namen des Task-Boards</label>
+        <i class = "fa fa-pencil" style="margin-right:10px;" title="Name des Taskboards ändern"></i><label style = "color: #d1d1d1; display: inline">Ändere den Namen des Task-Boards</label>
         <input form = "changeTBNameForm" id = "changeTBNameInput" th:value="${Board.getName()}">
         <button type="button" th:tbID="${Board.getID()}" th:sID="${sessionID}" id = "changeTBNameBtn" title="Name des Taskboards ändern" onclick="changeTBName(this.getAttribute('sID'), this.getAttribute('tbID'))" >Ändern</button>
         </form>

@@ -40,12 +40,12 @@
       <table class="userTaskTable">
         <thead id="userTaskTableHead">
         <tr>
-          <th id = "tableHeader">Nutzer</th>
+          <th id = "tableHeader" style="cursor:default;">Nutzer</th>
         </tr>
         </thead>
         <tbody id="userTaskTableBody"> <!-- th:role="${user.getRoles()}" ist ne Liste kp wie wir das machen-->
         <tr th:each="user : ${User}" th:Sid="${sessionID}" th:email="${user.getEmail()}" ondblclick="SwitchToOtherProfile( this.getAttribute('sid'), this.getAttribute('email'))" title="Doppelklick für Profilsicht">
-          <th>
+          <th style="cursor:alias;">
             <div id = userTextDiv>
               <i class="fa-solid fa-person" style="position: relative; line-height: 2.2; margin-right: 2dvh;"></i><label class = "userText" th:text="${user.getUname()}" style="line-height: 2.2;">Nutzername</label>
               <div id = "userRights">

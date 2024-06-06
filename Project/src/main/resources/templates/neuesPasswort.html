@@ -16,8 +16,11 @@
   Grund: Benutzerfreundlichkeitf
   User-ID/Task-ID: /
 -->
+
+<div id="primaryContainer" style="height: 350px"></div>
+
   <div class="loginBackground">
-    <div class="container">
+    <div class="secondaryContainer">
         <label id = "headerLogin">Passwort ändern</label>
       <form action="/neuesPasswort" method="post" autocomplete="off">
         <input required placeholder="Sicherheitscode" th:value="${Code}" class = "Input" name = "Sicherheitscode">
