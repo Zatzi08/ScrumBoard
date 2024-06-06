@@ -7,6 +7,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="/css/foundation.css">
     <link rel="stylesheet" href="/css/app.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
   </head>
     <body>
     <!--
@@ -17,12 +18,13 @@
       User-ID/Task-ID: A3.F1
     -->
 
+    <div id="primaryContainer"></div>
 
     <div class="loginBackground">
-        <div class="container">
+        <div class="secondaryContainer">
             <label id = "headerLogin">Login</label>
             <div id="container-content">
-                <form action="\Login" method="post" autocomplete="off" id="containerForm">
+                <form action="\Login" method="post" autocomplete="on" id="containerForm">
                     <input type="email" required placeholder="E-Mail" class = "Input" name="EMail">
                     <input type="password" required placeholder="Passwort" class = "Input" name="Passwort">
                     <input type="checkbox" value="lsRememberMe" id="rememberMe" style="margin-left: 11%;" onclick="lsRememberMe()"> <label for="rememberMe" style="position: relative; display: inline; top: -0.5%;margin-left: -1px;">Remember me</label>

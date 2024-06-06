@@ -16,7 +16,20 @@ min-height: 100vh;
 background-image: repeating-linear-gradient(135deg, hsla(280, 0%, 67%, 0.06) 0px, hsla(280, 0%, 67%, 0.06) 1px, transparent 1px, transparent 96px), repeating-linear-gradient(45deg, hsla(280, 0%, 67%, 0.06) 0px, hsla(280, 0%, 67%, 0.06) 1px, transparent 1px, transparent 96px), repeating-linear-gradient(45deg, hsla(280, 0%, 67%, 0.09) 0px, hsla(280, 0%, 67%, 0.09) 1px, transparent 1px, transparent 12px), repeating-linear-gradient(135deg, hsla(280, 0%, 67%, 0.09) 0px, hsla(280, 0%, 67%, 0.09) 1px, transparent 1px, transparent 12px), linear-gradient(135deg, hsl(226, 47%, 26%), hsl(226, 47%, 26%));
 }
 
-.container{
+#primaryContainer{
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  z-index: 15;
+  top: 48%;
+  left: 49%;
+  margin: -200px 0 0 -200px;
+  border-radius: 15px;
+  background-color: rgb(116 120 188);
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.secondaryContainer{
   position: absolute;
   width: 400px;
   height: auto;
@@ -46,10 +59,10 @@ User-ID/Task-ID: A3.F1
   color: rgb(209, 205, 205);
   font-size: 16px;
   transition-duration: 0.4s;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: -3px -3px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 15px;
-  margin-left: 137px;
-  margin-top: 10px;
+  margin-left: 140px;
+  margin-top: 11px;
 }
 
 #loginButton:hover {
@@ -74,7 +87,7 @@ User-ID/Task-ID: A3.F1
   border-radius: 15px;
   color: white;
   background-color: #0f315c;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: inset -3px -3px 5px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .Input:focus{
@@ -88,16 +101,17 @@ User-ID/Task-ID:
 **/
 #noAccount{
   position: relative;
-  margin-left: 86px;
-  bottom: 0;
-  top: 13%;
+  margin-left: 78px;
+  margin-top: 10%;
+  font-size: 15px;
 }
 
 #yesAccount{
-  position: absolute;
-  width:400px;
-  margin-left:30px;
-  bottom:0;
+  position: relative;
+  width: 400px;
+  margin-left: 30px;
+  bottom: 0;
+  margin-top: 34px;
 }
 #forgotP{margin-left:65px;}
 a{color:#103563;}

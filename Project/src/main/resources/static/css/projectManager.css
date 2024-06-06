@@ -208,6 +208,8 @@
     margin: 1%;
 }
 
+#userTaskTableBody tbody{background-color:transparent;}
+
 .userTaskTable th,
 .userTaskTable td {
     padding: 10px;
@@ -217,11 +219,11 @@
     border-radius: 10px;
     cursor: default;
 }
-
+/*hier ist das task kärtchen*/
 .userTaskTable th {
-    background-color: rgba(255, 255, 255, 0.66);
     color: black;
     white-space: nowrap;
+    background-color: #eee8da;
 }
 
 .userTaskTable tbody tr {
@@ -237,6 +239,15 @@
 
 .userTaskTable tbody tr.dragging {
     opacity: 0.5;
+}
+
+#A{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    text-align: center;
+    background-color: rgba(25,0,255,0.3);
+    color: white;
+    cursor: default
 }
 
 .userTaskTable tbody tr.drag-over {
@@ -361,10 +372,6 @@ hr {
     color: white;
 }
 
-.userTaskTableContentSubdate{
-    margin-right:5px;
-}
-
 #selectUser:hover{
    color: #ba55d3;
 }
@@ -379,7 +386,6 @@ hr {
         font-size: 22px;
         margin-right: 5px;
         flex:50%;
-
 }
 
 .editRoles-content{
@@ -443,14 +449,14 @@ ul{list-style-type: none;}
 }
 
 .rightsDropdown{
-    width:auto;
-    height:30px;
+    width: fit-content;
+    height: 30px;
     border-radius: 10px;
-    right:0;
     background-color: #bbcde0;
     color: black;
     font-family: Roboto;
     border: 1px solid black;
+    margin: 1%;
 
 }
 
@@ -467,7 +473,7 @@ ul{list-style-type: none;}
     align-items: center;
     justify-content: center;
     right:0;
-    width: fit-content;
+    width: 25%;
     height:30px;
     margin-left: 30%;
 }
@@ -488,7 +494,7 @@ ul{list-style-type: none;}
 }
 
 .dropdown-check-list ul.items {
-    position: fixed;
+    position: absolute;
     padding: 2px;
     display: none;
     margin: 0;
@@ -496,9 +502,10 @@ ul{list-style-type: none;}
     border-top: none;
     z-index: 1;
     background-color: #23353f;
-    width: fit-content;
+    width: inherit;
     height:150px;
     overflow: scroll;
+    border-radius:8px;
 }
 
 .dropdown-check-list ul.items li {
@@ -508,12 +515,6 @@ ul{list-style-type: none;}
 
 .dropdown-check-list.visible .items {
     display: block;
-}
-
-#pjDescription {
-    display: inline-block;
-    width: 100%;
-    white-space: break-spaces;
 }
 
 #Hi{
@@ -529,7 +530,7 @@ ul{list-style-type: none;}
 #Btn1{
     display: inline;
     position: absolute;
-    font-size: 15px;
+    font-size: 14px;
     cursor: pointer;
     margin-right: 0px;
     right: 31px;
@@ -547,4 +548,29 @@ ul{list-style-type: none;}
 
 hr{
     width: 100%;
+}
+
+#iContent1, #iContent2, #iContent3, #iContent4{
+    display: inline;
+    font-size: 13px;
+}
+
+.userTaskTableBody-Content {
+    display: block;
+    width: fit-content;
+    max-width: 86dvw;
+    height: auto;
+    white-space: break-spaces;
+    overflow-wrap: break-word;
+    text-align: justify;
+    font-size: 12px;
+    margin-left: 4.2dvh;
+    hyphens: auto;
+}
+
+.iContent-Label{
+    display: inline;
+    font-size: 15px;
+    font-family: system-ui;
+    margin-left: 2dvh;
 }

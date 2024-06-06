@@ -18,6 +18,7 @@
     background-color: #46425e;
     display: inline;
     padding-right: 20px;
+    cursor: alias;
 }
 
 .outerContainer-HeaderBtn:hover{
@@ -135,10 +136,10 @@
     width: 20%;
     border: 0 solid #adadad;
     border-radius: 10px;
-    cursor: default;
     overflow-wrap: break-word;
     overflow-x: hidden;
     overflow-y: hidden;
+    cursor: alias;
 }
 
 .columnTable th {
@@ -172,6 +173,7 @@ hr {
 #tableContent-Visualisation{
     display: inline-block;
     float: left;
+    cursor: pointer;
 }
 
 #tableContent-LeftTime{
@@ -234,25 +236,32 @@ hr {
 
 .zoomedTaskCard-content{
     color: #d1d1d1;
-    display: inline-flex;
+    display: inline-table;
+    width: 30dvh;
+    background: #282435;
+    border-radius: 10px;
+    text-align: center;
 }
 
 #zoomedTaskCard-US{
     display: inline-flex;
     font-size: 12px;
     user-select: none;
+    color: #d1d1d1;
 }
 
 #zoomedTaskCard-seperator{
     font-size: 12px;
     cursor: context-menu;
     user-select: none;
+    color: #d1d1d1;
 }
 
 #zoomedTaskCard-taskBoard{
     display: inline-flex;
     font-size: 12px;
     user-select: none;
+    color: #d1d1d1;
 }
 
 #zoomedTaskCard-description {
@@ -270,35 +279,30 @@ hr {
     margin-bottom: 10px;
     font-size: 13px;
     color: black;
-    cursor: pointer;
     scrollbar-color: #084d6a;
+    hyphens: auto;
+    cursor: text;
 }
 
 #zoomedTaskCard-estimatedTime{
-    display: inline-flex;
     font-size: 12px;
 }
 
 #zoomedTaskCard-priority{
-    display: inline-flex;
     float: right;
     font-size: 12px;
 }
 
 #zoomedTaskCard-workedTime{
-    display: inline-flex;
     font-size: 12px;
 }
 
 #zoomedTaskCard-role{
-    display: inline-flex;
     float: right;
     font-size: 12px;
-    width: fit-content;
 }
 
 #zoomedTaskCard-deadline{
-    display: inline;
     position: relative;
     font-size: 12px;
     float: right;
@@ -320,9 +324,8 @@ hr {
     font-size: 12px;
     background-color: transparent;
     color: #d1d1d1;
-    width: fit-content;
-    display: inline;
     border: none;
+    margin-top: 3px;
 }
 #zoomedTaskCard-nutzerDropdown ul{
     display: none;
@@ -430,25 +433,56 @@ hr {
 }
 
 #visEstimateTracker{
-    width: 500px;
-    max-width: 500px;
+    width: 79dvh;
     position: relative;
-    height: 500px;
+    height: 50dvh;
+    background-color: #373347;
     display: none;
     margin: -44% auto;
+    z-index: 1000;
+    border-radius: 10px;
 }
 
 canvas#myChart{
-    display: block;
-    box-sizing: border-box;
-    height: 500px;
-    width: 500px;
-    z-index: 1001;
-    position: fixed;
+    height: 231px;
+    width: 462px;
+    position: relative;
+    padding: 10px;
+    /* background: rgb(42, 39, 55, 0.6); */
 }
 
 .fa-pencil:before{
-    margin-right: 10px;
-    z-index: 1000;
+margin-right: 10px;
+z-index: 1000;
 }
 
+#percentageDifferenceText{
+    color: white;
+    position: relative;
+    padding: 11px;
+    font-family: system-ui;
+    margin-top: 1.5dvh;
+    text-align: center;
+}
+
+#zoomedTaskCard-sym1, #zoomedTaskCard-sym2, #zoomedTaskCard-sym3, #zoomedTaskCard-sym4, #zoomedTaskCard-sym5{
+font-size: 14px;
+}
+
+#zoomedTaskCard-sym2{
+margin-left: 34.6dvh;
+}
+
+#zoomedTaskCard-sym4{
+margin-left: 33.7dvh;
+}
+
+#zoomedTaskCard-sym5{
+margin-top: 3dvh;
+}
+
+.zoomedTaskCard-symLab{
+display: inline;
+margin-left: 1.3dvh;
+color: #d1d1d1;
+}

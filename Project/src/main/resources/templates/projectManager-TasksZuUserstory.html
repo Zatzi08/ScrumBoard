@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/foundation.css">
     <link rel="stylesheet" href="/css/projectManager.css">
     <link rel="stylesheet" href="/css/setup.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
 <!--
@@ -23,7 +23,7 @@
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
-    <button class = "reiterBtn" style="float: right">Abmelden</button>
+    <button class = "reiterBtn" style="float: right"><a href="/">Abmelden</a></button>
 </div>
 
 <div id="outerProjectManagerContainer">
@@ -40,7 +40,7 @@
             <table class="userTaskTable">
                 <thead id="userTaskTableHead">
                 <tr>
-                    <th style="border-top-left-radius: 0; border-top-right-radius: 0; text-align: center; background-color: rgba(25,0,255,0.3); color: white" th:text="@{Tasks zur Story {name}(name=${StoryName})}" ></th>
+                    <th id="A" th:text="@{Tasks zur Story {name}(name=${StoryName})}" ></th>
                 </tr>
                 </thead>
                 <tbody id="userTaskTableBody">
@@ -55,10 +55,11 @@
                             <button id="Btn2" th:Tid="${item.ID}" th:Sid="${sessionID}" onclick="deleteT(this.getAttribute('Tid'),this.getAttribute('Sid'))" title="Löschen">&times;</button>
                         </div>
                         <!-- <label th:text = "${item.name}">Name</label> -->
-                        <label title="Rolle">Rolle</label>
-                        <label th:text = "${item.priority}" title="Priorität der Task">Priorität</label>
+                        <br/>
+                        <i class="fa-solid fa-people-group" id="iContent4"></i><label class="iContent-Label" style="margin-left: 1.3dvh; font-size: 16px">Rolle</label><label title="Rolle" class="userTaskTableBody-Content">Rolle</label>
+                        <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label" style="margin-left: 1.7dvh;">Priorität</label><label th:text = "${item.priority}" title="Priorität der Task" class="userTaskTableBody-Content">Priorität</label>
                         <hr>
-                        <label  id = "pjDescription" style="display: inline-block;" th:text = "${item.description}" title="Beschreibung der Task">Beschreibung</label>
+                        <i class = "fa-solid fa-bars" id="iContent3"></i><label class="iContent-Label">Beschreibung</label><label class="userTaskTableBody-Content" th:text = "${item.description}" title="Beschreibung der Task">Beschreibung</label>
                         <label class = "userTaskTableContentSubdate" th:text="${item.getDueDateAsPresentable()}" title="Frist der Task">Abgabedatum</label>
                     </th>
                 </tr>

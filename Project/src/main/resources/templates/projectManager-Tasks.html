@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/foundation.css">
     <link rel="stylesheet" href="/css/projectManager.css">
     <link rel="stylesheet" href="/css/setup.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
 <!--
@@ -23,7 +23,7 @@
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
-    <button class = "reiterBtn" style="float: right">Abmelden</button>
+    <button class = "reiterBtn" style="float: right"><a href="/">Abmelden</a></button>
 </div>
 
 <div id="outerProjectManagerContainer">
@@ -40,12 +40,12 @@
             <table class="userTaskTable">
                 <thead id="userTaskTableHead">
                 <tr>
-                    <th id = "tableHeader">Tasks</th>
+                    <th id = "tableHeader" style="cursor: default">Tasks</th>
                 </tr>
                 </thead>
                 <tbody id="userTaskTableBody">
                 <tr th:each="item : ${Tasks}">
-                    <th>
+                    <th th:style = "${item.isDone() ? 'background-color:rgba(255, 255, 255, 0.30)': 'background-color:#eee8da'}">
                         <label class="userTaskTable-ContentStoryBoard" th:text="${item.getUserStory().getName()}" title="Referenz zur entsprechenden User-Story">Story</label>
                         <span class="userTaskTable-ContentStoryBoard">/</span>
                         <label class="userTaskTable-ContentStoryBoard" th:text="${item.getTaskBoardNameOfTask()}" title="Referenz zum entsprechenden Taskboard">Board</label>
@@ -54,11 +54,14 @@
                                 onclick="toggleEditBoxT('editBtn', this.getAttribute('Tid'), this.getAttribute('description'), this.getAttribute('USID'), this.getAttribute('dueDate'), this.getAttribute('timeG'), this.getAttribute('tbID'), this.getAttribute('prio'));" ><i class="fa fa-edit"></i></button>
                             <button id="Btn2" th:Tid="${item.ID}" th:Sid="${sessionID}" onclick="deleteT(this.getAttribute('Tid'),this.getAttribute('Sid'))" title="Löschen">&times;</button>
                         </div>
-                            <!-- <label th:text = "${item.name}">Name</label> -->
-                        <label  title="Rolle">Rolle</label>
-                        <label th:text = "${item.priority}" title="Titel der Task">Priorität</label>
+                        <div style = "display:inline">
+                            <br/>
+                            <i class="fa-solid fa-people-group" id="iContent4"></i><label class="iContent-Label" style="margin-left: 1.3dvh; font-size: 16px">Rolle</label><label class="userTaskTableBody-Content" title="Rolle">Rolle</label>
+                            <span style = "display:inline; float:right; margin-right:80%" th:if="${item.isDone()}" class = "fa fa-check-square-o">Erledigt</span>
+                        </div>
+                        <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label" style="margin-left: 1.7dvh;">Priorität</label><label class="userTaskTableBody-Content" th:text = "${item.priority}" title="Priorität der Task">Priorität</label>
                         <hr>
-                        <label  id = "pjDescription" style="display: inline-block;" th:text = "${item.description}" title="Beschreibung der Task">Beschreibung</label>
+                        <i class = "fa-solid fa-bars" id="iContent3"></i><label class="iContent-Label">Beschreibung</label><label  class="userTaskTableBody-Content" th:text = "${item.description}" title="Beschreibung der Task">Beschreibung</label>
                         <label class = userTaskTableContentSubdate th:text="${item.getDueDateAsPresentable()}" title="Frist der Task">Abgabedatum</label>
                     </th>
                 </tr>
