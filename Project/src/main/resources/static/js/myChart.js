@@ -1,10 +1,10 @@
 const ctx = document.getElementById("myChart");
-var myChart;
+let myChart;
 
 function visualisationOfTaskTime(estTime, realTime){
 
     const percentageDifference = ((Math.abs(estTime - realTime) / estTime) * 100).toFixed(2);
-    const myChart = new Chart(ctx, {
+    myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: ['Geschätzte Zeit', 'Reale Zeit'],
@@ -78,5 +78,6 @@ function visualisationOfTaskTime(estTime, realTime){
 
 function destroy(){
     myChart.destroy();
-    myChart = null;
+    //myChart = null;
 }
+

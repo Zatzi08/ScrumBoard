@@ -146,6 +146,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('taskID').value = draggedElementId
             } else {
                 document.getElementById(draggedElementId).setAttribute('real', 0);
+                let ID = "tableContent-Visualisation:"+ draggedElementId.substring(1)
+                document.getElementById(ID).setAttribute('real', 0)
             }
         }
     }
@@ -255,7 +257,6 @@ window.onclick = function(event) {
     else if (event.target == TBCreatePopup) {
         TBCreatePopup.style.display = "none";
     }
-
 }
 
 function openPopup(){
