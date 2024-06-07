@@ -75,6 +75,11 @@ public class DAOTaskService {
         return DAOService.getLeftJoinByID(id, DAOTask.class, joinOnAttributeName);
     }
 
+    public static DAOTask getWithUsersById(int id) {
+        String joinOnAttributeName = "users";
+        return DAOService.getLeftJoinByID(id, DAOTask.class, joinOnAttributeName);
+    }
+
     static DAOTask getWithTaskListById(int id) {
         String joinOnAtrributeName = "taskList";
         return DAOService.getLeftJoinByID(id, DAOTask.class, joinOnAtrributeName);
