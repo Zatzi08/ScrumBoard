@@ -6,8 +6,6 @@
 * User-Story/Task-ID: U3.F1, U4.F1
 */
 
-import {visualisationOfAllTime} from "./myChart";
-
 function toggleEditMenu(id) {
     var editMenu = document.querySelector('.editMenu');
     var overlay = document.querySelector('.overlay');
