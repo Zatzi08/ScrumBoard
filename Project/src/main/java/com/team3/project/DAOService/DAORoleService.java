@@ -1,5 +1,6 @@
 package com.team3.project.DAOService;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,10 +57,10 @@ public class DAORoleService {
     }
 
     public static List<DAORole> getByAuthorization(int authorization) {
-        String joinOnAttributeName = "authorization";
+        String joinOnAttributeName = "authorizations";
         List<DAORole> roles = DAOService.getAllLeftJoin(DAORole.class, joinOnAttributeName);
         if (roles == null) {
-            return null;
+            return new ArrayList<DAORole>();
         }
         return roles.stream()
             .filter(role -> role.getAuthorizations().stream()
@@ -93,7 +94,7 @@ public class DAORoleService {
         return false;
     }
 
-    static boolean deleteById(int id) {
+    public static boolean deleteById(int id) {
         DAORole role = DAOService.getByID(id, DAORole.class);
         if (role != null) {
             return DAOService.delete(role);

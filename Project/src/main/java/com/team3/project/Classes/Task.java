@@ -134,4 +134,3 @@ public class Task extends abstraktDataClasses {
         return a;
     }
 }
-// "[com.team3.project.Classes.User@6888a6c, com.team3.project.Classes.User@34a362c6]"

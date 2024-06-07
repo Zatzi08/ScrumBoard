@@ -28,7 +28,7 @@ public class AccountTests extends BaseDBTest {
 
     @AfterEach
     public void afterEach() {
-
+        after();
     }
 
     @AfterAll

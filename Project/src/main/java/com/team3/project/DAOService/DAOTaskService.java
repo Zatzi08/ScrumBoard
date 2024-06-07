@@ -3,6 +3,7 @@ package com.team3.project.DAOService;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.team3.project.DAO.DAOAuthorization;
 import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAO.DAOTaskList;
@@ -254,6 +255,10 @@ public class DAOTaskService {
 
     public static boolean updateUsersById(int id, List<DAOUser> daoUsers) {
         DAOTask daoTask = DAOService.getByID(id, DAOTask.class);
+        List<DAOAuthorization> authorizations = DAOAuthorizationService.getAll();
+        daoUsers.stream().forEach(user->{
+            user.setAuthorization(authorizations.stream().filter(auth->auth.getAuthorization()==user.getAuthorization().getAuthorization()).findFirst().orElse(null));
+        });
         daoTask.setUsers(daoUsers);
         return DAOService.merge(daoTask);
     }
