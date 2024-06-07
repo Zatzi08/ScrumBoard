@@ -89,10 +89,9 @@
             <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: #9EC5E5" name="low" form="editForm">Low</button>
 
             <div id="list1" class="dropdown-check-list">
-                <button class="anchor">Nutzer zuweisen</button>
-                <ul class="items">
-                    <li><input type="checkbox" />Nutzer 1 </li>
-
+                <button type="button" onclick="" class="anchor">Nutzer zuweisen</button>
+                <ul id="usersAuswahlID" class="items">
+                    <li th:each="nutzer : ${User}" th:id="@{N{id}(id = ${nutzer.getID()})}" ><input  type="checkbox" th:text="${nutzer.getUname()}" /> </li>
                 </ul>
             </div>
 
@@ -112,7 +111,7 @@
             </select>
             <input type="hidden" id = "editId" name="id" value="-1">
             <input type="hidden" id = "editPrio" name="priority" value="1">
-            <button type="button" th:sessionID="${sessionID}" onclick="saveTask(this,this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
+            <button type="button" th:sessionID="${sessionID}" onclick="saveTaskWithUserList(this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
         </form>
     </div>
 </div>

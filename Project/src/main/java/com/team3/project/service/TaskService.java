@@ -243,4 +243,17 @@ public class TaskService {
         }
         return name;
     }
+
+    public void setUsers(int tid,List<Integer> uIDs) throws Exception {
+        if (tid == -1) {
+            List<DAOTask> dtl = DAOTaskService.getAll();
+            tid = dtl.get(dtl.size()-1).getId();
+        }
+        List<DAOUser> dul = new LinkedList<DAOUser>();
+        for (int id : uIDs){
+            DAOUser du = DAOUserService.getById(id);
+            dul.add(du);
+        }
+        DAOTaskService.updateUsersById(tid, dul);
+    }
 }

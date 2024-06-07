@@ -40,21 +40,19 @@ function SwitchToTaskBoard(sessionID){
 }
 
 // Post Requests
-function saveTask($this, sessionID) {
-    let id = document.getElementById('editId').value;
+async function saveTask(sessionID, id) {
     let description = document.getElementById('inputDesc').value;
     let priority = document.getElementById('editPrio').value;
     let USID = document.getElementById('USDropdown').value;
     let dueDate = document.getElementById('inputDate').value;
     let TBID = document.getElementById("TBDropdown").value;
     let timeNeededG = document.getElementById("inputTimeNeeded").value;
-    let timeNeededA = -1;//TODO document.getElementById().value
 
     if (USID === "-1"){
         alert("Invalid UserStory-ID")
     } else {
 
-        fetch('/saveTask', {
+        return fetch('/saveTask', {
             method: 'POST',
             cache: 'no-cache',
             headers: {
@@ -69,14 +67,16 @@ function saveTask($this, sessionID) {
                 'dueDate': dueDate,
                 'tbID': TBID,
                 'timeNeededG': timeNeededG,
-                'timeNeededA': timeNeededA
+                'timeNeededA': 0
             })
         }).then(r => {
-            if (r.ok) {
+            if (!r.ok) {
                 location.reload();
             }
+            return r
         });
     }
+    return new Response("", {status: 400, statusText: "Bad Request"})
 }
 
 function setTaskTime(sessionID){
@@ -265,6 +265,25 @@ function setTaskList(sessionID, tID, tlID){
         } else if (r.status === 409){
 
         }
+    })
+}
+
+function setUsersOfTask(sessionID, tid, uIDs){
+    let url = "setUserToTask?tID="+ tid
+
+    return  fetch(url, {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionID': sessionID
+        },
+        body: JSON.stringify(uIDs)
+    }).then(r =>{
+        if (!r.ok){
+            document.location.reload()
+        }
+        return r
     })
 }
 

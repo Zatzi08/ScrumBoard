@@ -302,7 +302,7 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
     ul.innerHTML = ""
     NutzerList.forEach((nutzer)=>{
         var li = document.createElement("li")
-        li.id = 'N' + jfasldkjsldjfaljdfsfalnutzer.id;
+        li.id = 'N' + nutzer.id;
         li.appendChild(document.createTextNode(nutzer.name));
         ul.appendChild(li);
     })
@@ -310,7 +310,7 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
 
 function parseUser(a){
     let list = []
-    while (a != "]"){
+    while (a !== "]" && a !== "[]"){
         let user = a.substring(a.indexOf('{'), end = (a.indexOf('}') + 1)).replaceAll("'", '"')
         a = a.substring(a.indexOf('}') + 1)
         let ju = JSON.parse(user);
