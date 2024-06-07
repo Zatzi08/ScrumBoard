@@ -227,9 +227,12 @@ public class TaskService {
     
     public List<String> getAllName(){
         List<String> name = new LinkedList<String>();
-        for (Task t : getAllTask()){
-            String toAdd =  "'"+t.getDescription()+"'";
-            name.add(toAdd);
+        List<Task> dtl = getAllTask();
+        if (!dtl.isEmpty()) {
+            for (Task t : dtl) {
+                String toAdd = "'" + t.getDescription() + "'";
+                name.add(toAdd);
+            }
         }
         return name;
     }
