@@ -92,8 +92,8 @@
 
             <div id="list1" class="dropdown-check-list">
                 <button type="button" onclick="" class="anchor">Nutzer zuweisen</button>
-                <ul class="items">
-                    <li><input type="checkbox" />Nutzer 1 </li>
+                <ul id="usersAuswahlID" class="items">
+                    <li th:each="nutzer : ${User}" th:id="@{N{id}(id = ${nutzer.getID()})}" ><input  type="checkbox" th:text="${nutzer.getUname()}" /> </li>
                 </ul>
             </div>
 
@@ -115,7 +115,7 @@
             </select>
 
 
-            <button type="button" th:sessionID="${sessionID}" onclick="saveTask(this,this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
+            <button type="button" th:sessionID="${sessionID}" onclick="saveTaskWithUserList(this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
         </form>
     </div>
 </div>

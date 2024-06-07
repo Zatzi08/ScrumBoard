@@ -302,7 +302,7 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
     ul.innerHTML = ""
     NutzerList.forEach((nutzer)=>{
         var li = document.createElement("li")
-        li.id = 'N' + jfasldkjsldjfaljdfsfalnutzer.id;
+        li.id = 'N' + nutzer.id;
         li.appendChild(document.createTextNode(nutzer.name));
         ul.appendChild(li);
     })

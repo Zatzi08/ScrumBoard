@@ -233,3 +233,17 @@ function visualisationOfAllTime(est, real, names){
     real.forEach((e)=> console.log(e))
     names.forEach((e)=> console.log(e))
 }
+
+async function saveTaskWithUserList(sessionID) {
+    let id = document.getElementById('editId').value;
+    let r = await saveTask(sessionID, id)
+    if (r.status !== 400){
+        let lis = document.getElementById('usersAuswahlID').children;
+        let list = []
+        for (let li of lis) {
+            if (li.children[0].checked) list.push(li.id.substring(1))
+        }
+        await setUsersOfTask(sessionID, id, list)
+    }
+    //document.location.reload()
+}

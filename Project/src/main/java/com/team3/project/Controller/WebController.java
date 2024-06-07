@@ -350,6 +350,7 @@ public class WebController {
                         .addObject("Tasks", presentationToLogic.taskService.getAllTask())
                         .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys())
                         .addObject("sessionID", sessionID)
+                        .addObject("User", presentationToLogic.accountService.getAllProfiles())
                         .addObject("TaskBoard", presentationToLogic.taskBoardService.getAllTaskBoards());
             }
         } catch (Exception e){
@@ -409,6 +410,7 @@ public class WebController {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 return new ModelAndView("projectManager-TasksZuUserstory")
                         .addObject("sessionID",sessionID)
+                        .addObject("User", presentationToLogic.accountService.getAllProfiles())
                         .addObject("Tasks", presentationToLogic.taskService.getTasksbyUSID(USId))
                         .addObject("StoryName", presentationToLogic.userStoryService.getUserStory(USId).getName())
                         .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys())
@@ -616,6 +618,22 @@ public class WebController {
         try {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 presentationToLogic.taskBoardService.deleteTaskBoard(tbID);
+                return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
+    }
+
+    @RequestMapping(value = "/setUserToTask", method = RequestMethod.POST)
+    private ResponseEntity<HttpStatus> setUserToTask(@RequestHeader(value = "sessionID") String sessionID,
+                                                     @RequestBody List<Integer> uIDs,
+                                                     @RequestParam(value = "tID") int tID){
+        try {
+            if (presentationToLogic.webSessionService.verify(sessionID)){
+                presentationToLogic.taskService.setUsers(tID,uIDs);
                 return new ResponseEntity<HttpStatus>(HttpStatus.OK);
             }
         } catch (Exception e){
