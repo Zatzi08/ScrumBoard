@@ -210,17 +210,16 @@ hr {
 #zoomedTaskCard {
     position: fixed;
     display: none;
-    top: calc(80% - 175px);
-    left: calc(70% - 250px);
+    top: 50dvh;
+    left: 50dvw;
     transform: translate(-50%, -50%);
     width: 500px;
-    height: auto;
     background-color: #373347;
     border-radius: 10px;
     padding: 15px;
-    overflow-y: auto;
-    overflow-x: hidden;
     z-index: 1000;
+    text-align: justify;
+    height: fit-content;
 }
 
 .overlay {
@@ -236,37 +235,38 @@ hr {
 
 .zoomedTaskCard-content{
     color: #d1d1d1;
-    display: inline-table;
-    width: 40%;
+    /* display: inline-table; */
+    width: 86%;
     background: #282435;
     border-radius: 10px;
     text-align: center;
+    /* height: 3dvh; */
 }
 
-#zoomedTaskCard-US{
+.zoomedTaskCard-Header{
     display: inline-flex;
-    font-size: 12px;
     user-select: none;
     color: #d1d1d1;
-}
-
-#zoomedTaskCard-seperator{
-    font-size: 12px;
-    cursor: context-menu;
-    user-select: none;
-    color: #d1d1d1;
+    font-size: 75%;
 }
 
 #zoomedTaskCard-taskBoard{
     display: inline-flex;
-    font-size: 12px;
     user-select: none;
     color: #d1d1d1;
 }
 
+#zoomedTaskCard-workedTime,
+#zoomedTaskCard-estimatedTime,
+#zoomedTaskCard-role,
+#zoomedTaskCard-priority,
+#zoomedTaskCard-deadline,
+#zoomedTaskCard-nutzerDropdown{
+    font-size: 85%;
+}
+
 #zoomedTaskCard-description {
     position: relative;
-    width: 470px;
     max-height: 200px;
     border-radius: 5px;
     background-color: #d1d1d1;
@@ -277,56 +277,36 @@ hr {
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
-    font-size: 13px;
+    font-size: 85%;
     color: black;
     scrollbar-color: #084d6a;
     hyphens: auto;
     cursor: text;
+    text-align: justify;
 }
 
-#zoomedTaskCard-estimatedTime{
-    font-size: 12px;
-}
-
-#zoomedTaskCard-priority{
-    float: right;
-    font-size: 12px;
-}
-
-#zoomedTaskCard-workedTime{
-    font-size: 12px;
-}
-
-#zoomedTaskCard-role{
-    float: right;
-    font-size: 12px;
-}
-
-#zoomedTaskCard-deadline{
-    position: relative;
-    font-size: 12px;
-    float: right;
+#zoomedTaskCard-priority, #zoomedTaskCard-role, #zoomedTaskCard-deadline{
     margin-right: 0;
     margin-left: auto;
 }
-#zoomedTaskCard-nutzerDropdown{
-    position: relative;
-    display: inline-flex;
-    float: left;
-    font-size: 12px;
-    background-color: transparent;
-    width: 100%;
-    color: #d1d1d1;
-    border-color: transparent;
-}
 
-#zoomedTaskCard-nutzerDropdown button{
-    font-size: 12px;
+#zoomedTaskCard-nutzerDropdown{
     background-color: transparent;
     color: #d1d1d1;
     border: none;
-    margin-top: 3px;
+    margin-top: 3%;
+    display: inherit;
+    font-size: 85%;
 }
+
+#zoomedTaskCard-nutzerDropdown button{
+    background-color: transparent;
+    color: #d1d1d1;
+    border: none;
+    margin-top: 4%;
+    display: inherit;
+}
+
 #zoomedTaskCard-nutzerDropdown ul{
     display: none;
     float: left;
@@ -433,14 +413,16 @@ hr {
 }
 
 #visEstimateTracker{
-    width: 79dvh;
-    position: relative;
-    height: 50dvh;
-    background-color: #373347;
+    width: 500px;
+    position: fixed;
+    height: 344px;
+    background-color: rgb(42, 39, 55, 0.8);
     display: none;
-    margin: -44% auto;
     z-index: 1000;
+    top: 50dvh;
+    left: 50dvw;
     border-radius: 10px;
+    transform: translate(-50%, -50%);
 }
 
 canvas#myChart{
@@ -448,41 +430,57 @@ canvas#myChart{
     width: 462px;
     position: relative;
     padding: 10px;
-    /* background: rgb(42, 39, 55, 0.6); */
+    background: rgb(42, 39, 55, 0.6);
 }
 
 .fa-pencil:before{
-margin-right: 10px;
-z-index: 1000;
+    margin-right: 10px;
+    z-index: 1000;
 }
 
 #percentageDifferenceText{
-    color: white;
+    color: #c6c6c6;
     position: relative;
-    padding: 11px;
+    padding: 14px;
     font-family: system-ui;
-    margin-top: 1.5dvh;
+    margin-top: 2%;
     text-align: center;
+    hyphens: auto;
 }
 
-#zoomedTaskCard-sym1, #zoomedTaskCard-sym2, #zoomedTaskCard-sym3, #zoomedTaskCard-sym4, #zoomedTaskCard-sym5{
-font-size: 14px;
+#zoomedTaskCard-sym1, #zoomedTaskCard-sym2, #zoomedTaskCard-sym3, #zoomedTaskCard-sym4, #zoomedTaskCard-sym5, #zoomedTaskCard-sym6, #zoomedTaskCard-sym7{
+    font-size: 90%;
 }
 
-#zoomedTaskCard-sym2{
-    margin-left: 40%;
+#zoomedTaskCard-priority, #zoomedTaskCard-role, #zoomedTaskCard-estimatedTime, #zoomedTaskCard-workedTime{
+    margin-bottom: 6%;
 }
 
-#zoomedTaskCard-sym4{
-    margin-left: 40%;
+#zoomedTaskCard-sym2, #zoomedTaskCard-sym4, #zoomedTaskCard-sym6{
+    margin-left: 15%;
 }
 
 #zoomedTaskCard-sym5{
-margin-top: 3dvh;
+    margin-top: 3%;
 }
 
 .zoomedTaskCard-symLab{
-display: inline;
-margin-left: 2%;
-color: #d1d1d1;
+    display: inline;
+    margin-left: 4%;
+    color: #d1d1d1;
+    font-size: 90%;
+}
+
+#zoomedTaskCard-RightSide{
+    flex: 0 0 50%;
+    width: 50%;
+}
+
+#zoomedTaskCard-LeftSide{
+    flex: 0 0 50%;
+    width: 50%;
+}
+
+#wrapper{
+    display: flex;
 }

@@ -37,7 +37,7 @@ function toggleZoomedTaskCard(id) {
     }
 }
 
-function toggleVis(percentageDifference) {
+function toggleVis(percentageDifference, absNum, numType) {
     var vis = document.querySelector('#visEstimateTracker');
     var overlay = document.querySelector('.overlay');
 
@@ -55,7 +55,17 @@ function toggleVis(percentageDifference) {
                 overlay = document.createElement('div');
                 overlay.classList.add('overlay');
                 document.body.appendChild(overlay);
-                document.getElementById('percentageDifferenceText').innerText = `Deine Schätzung weicht zu ${percentageDifference}% von der realen Bearbeitungszeit ab!`;
+                switch (numType){
+                    case 0:
+                        document.getElementById('percentageDifferenceText').innerText = `Deine Bearbeitungszeit entspricht genau der Schätzung!`;
+                        break;
+                    case 1:
+                        document.getElementById('percentageDifferenceText').innerText = `Der Mehraufwand gegenüber der geschätzten Bearbeitungszeit beträgt ${absNum}h!`;
+                        break;
+                    case 2:
+                        document.getElementById('percentageDifferenceText').innerText = `Deine reale Bearbeitungszeit weicht zu ${percentageDifference}% von der geschätzten ab. Dies entspricht ${absNum}h!`;
+                        break;
+                }
                 overlay.addEventListener('click', toggleVis);
             }
         }

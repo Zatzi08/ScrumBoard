@@ -6,31 +6,20 @@
   User-ID/Task-ID: U3.F1
 */
 
-@media (max-height: 799px) {
-    .editMenu {
-        top: 2vh;
-    }
-}
-
-@media (min-height: 800px) {
-    .editMenu {
-        top: 25vh;
-    }
-}
-
 .editMenu {
     display: none;
     position: fixed;
-    width: 50%;
-    height: auto;
+    width: 550px;
+    height: fit-content;
     background-color: rgb(46, 46, 61);
     color: white;
     padding: 20px;
     border-radius: 10px;
     overflow: auto;
-    overflow-y: scroll;
     z-index: 1000;
-    left: 27dvw;
+    top: 50dvh;
+    left: 50dvw;
+    transform: translate(-50%, -50%);
 }
 
 .editMenu::-webkit-scrollbar{
@@ -38,15 +27,14 @@
 }
 
 #editMenu-saveEditBtn {
-    position: page;
-    bottom: 30px;
     border-radius: 10px;
     width: 80px;
     height: 20px;
-    background-color: white;
+    background-color: #cccbcb;
     font-size: 14px;
-    left: 30px;
-    margin-left:43%;
+    margin-left: 41%;
+    display: block;
+    margin-top: 7%;
 }
 
 #editMenu-saveEditBtn:hover{
@@ -223,6 +211,7 @@
 .userTaskTable th {
     color: black;
     white-space: nowrap;
+    max-width: 909px;
     background-color: #eee8da;
 }
 
@@ -481,7 +470,7 @@ ul{list-style-type: none;}
 .dropdown-check-list .anchor {
     position: relative;
     cursor: pointer;
-    display: inline-block;
+    display: inline-flex;
     background-color: #283d48;
     color: #afafaf;
     border: 2px solid #6e7f91;
@@ -489,23 +478,27 @@ ul{list-style-type: none;}
     font-size: 12px;
     box-shadow: white;
     padding: .75rem 1rem;
-    text-align: center;
-    right:0;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    width: 252px;
+    margin-left: -108%;
+    float: right;
 }
 
 .dropdown-check-list ul.items {
-    position: absolute;
+    position: relative;
     padding: 2px;
     display: none;
-    margin: 0;
     border: 1px solid #ccc;
     border-top: none;
     z-index: 1;
     background-color: #23353f;
-    width: inherit;
-    height:150px;
-    overflow: scroll;
-    border-radius:8px;
+    width: -webkit-fill-available;
+    height: 150px;
+    border-radius: 8px;
+    margin-left: -97%;
+    float: right;
 }
 
 .dropdown-check-list ul.items li {
@@ -558,13 +551,13 @@ hr{
 .userTaskTableBody-Content {
     display: block;
     width: fit-content;
-    max-width: 86dvw;
+    max-width: 98%;
     height: auto;
     white-space: break-spaces;
     overflow-wrap: break-word;
     text-align: justify;
     font-size: 12px;
-    margin-left: 4.2dvh;
+    margin-left: 25px;
     hyphens: auto;
 }
 
@@ -572,5 +565,36 @@ hr{
     display: inline;
     font-size: 15px;
     font-family: system-ui;
-    margin-left: 2dvh;
+    margin-left: 12.1px;
+}
+
+.userTaskTableBody-Border{
+    border-bottom: #000 1px solid;
+    padding-top: 1em;
+}
+
+#visEstimateTracker{
+    width: 500px;
+    position: fixed;
+    height: 344px;
+    background-color: rgb(42, 39, 55, 0.8);
+    display: none;
+    z-index: 1000;
+    top: 50dvh;
+    left: 50dvw;
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
+}
+
+canvas#myChart2{
+    height: 231px;
+    width: 462px;
+    position: relative;
+    padding: 10px;
+    background: rgb(42, 39, 55, 0.6);
+}
+
+#PrioUserAlignment{
+    display: inline-flex;
+    width: -webkit-fill-available;
 }

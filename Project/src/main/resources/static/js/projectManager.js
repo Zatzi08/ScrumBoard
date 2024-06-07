@@ -247,3 +247,40 @@ async function saveTaskWithUserList(sessionID) {
     }
     //document.location.reload()
 }
+
+function toggleVisAllTasks(){
+    var vis = document.querySelector('#visEstimateTracker');
+    var overlay = document.querySelector('.overlay');
+
+    if (vis) {
+        if (vis.style.display === "block") {
+            vis.style.display = "none";
+            if (overlay) {
+                overlay.remove();
+                overlay.removeEventListener('click', toggleVis);
+                destroy();
+            }
+        } else {
+            vis.style.display = "block";
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.classList.add('overlay');
+                document.body.appendChild(overlay);
+                switch (numType){
+                    case 0:
+                        document.getElementById('percentageDifferenceText').innerText = `Deine Bearbeitungszeit entspricht genau der Schätzung!`;
+                        break;
+                    case 1:
+                        document.getElementById('percentageDifferenceText').innerText = `Der Mehraufwand gegenüber der geschätzten Bearbeitungszeit beträgt ${absNum}h!`;
+                        break;
+                    case 2:
+                        document.getElementById('percentageDifferenceText').innerText = `Deine reale Bearbeitungszeit weicht zu ${percentageDifference}% von der geschätzten ab. Dies entspricht ${absNum}h!`;
+                        break;
+                }
+                overlay.addEventListener('click', toggleVis);
+            }
+        }
+    } else {
+        console.error("Das Element mit der Klasse 'vis' wurde nicht gefunden.");
+    }
+}

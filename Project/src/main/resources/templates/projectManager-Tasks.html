@@ -56,11 +56,11 @@
                         </div>
                         <div style = "display:inline">
                             <br/>
-                            <i class="fa-solid fa-people-group" id="iContent4"></i><label class="iContent-Label" style="margin-left: 1.3dvh; font-size: 16px">Rolle</label><label class="userTaskTableBody-Content" title="Rolle">Rolle</label>
+                            <i class="fa-solid fa-people-group" id="iContent4"></i><label class="iContent-Label" style="margin-left: 8px; font-size: 16px">Rolle</label><label class="userTaskTableBody-Content" title="Rolle">Rolle</label>
                             <span style = "display:inline; float:right; margin-right:80%" th:if="${item.isDone()}" class = "fa fa-check-square-o">Erledigt</span>
                         </div>
-                        <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label" style="margin-left: 1.7dvh;">Priorität</label><label class="userTaskTableBody-Content" th:text = "${item.priority}" title="Priorität der Task">Priorität</label>
-                        <hr>
+                        <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label">Priorität</label><label class="userTaskTableBody-Content" th:text = "${item.priority}" title="Priorität der Task">Priorität</label>
+                        <p class="userTaskTableBody-Border"></p>
                         <i class = "fa-solid fa-bars" id="iContent3"></i><label class="iContent-Label">Beschreibung</label><label  class="userTaskTableBody-Content" th:text = "${item.description}" title="Beschreibung der Task">Beschreibung</label>
                         <label class = userTaskTableContentSubdate th:text="${item.getDueDateAsPresentable()}" title="Frist der Task">Abgabedatum</label>
                     </th>
@@ -78,25 +78,26 @@
            Grund: /
            User-ID/Task-ID: U3. F1, U4. F1, U5. F1, U5. F2
 -->
-<div class = "editMenu">
+<div class = "editMenu" style="height: 581px;">
     <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
     <span id="closeToggleEdit" class="closeToggleEdit" onclick="toggleEditMenu()">&times;</span>
     <div class="editMenu-content">
         <form class="form" id="editForm" autocomplete="off" name="Story">
             <textarea id="inputDesc" class="inputEdit" required placeholder="Eine passende Beschreibung eingeben" name="description" form="editForm"></textarea>
             <label>Priorität</label>
-            <button type="button" class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: #f76c5e" name="urgent" form="editForm">Urgent</button>
-            <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: #f68e5f" name="high" form="editForm">High</button>
-            <button type="button" class="inputEditPrio" id="inputPrioNormal" onclick="highlightPriorityButton('inputPrioNormal')" style="background-color: #f5dd90" name="normal" form="editForm">Normal</button>
-            <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: #9EC5E5" name="low" form="editForm">Low</button>
+            <div id="PrioUserAlignment">
+                <button type="button" class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: #f76c5e" name="urgent" form="editForm">Urgent</button>
+                <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: #f68e5f" name="high" form="editForm">High</button>
+                <button type="button" class="inputEditPrio" id="inputPrioNormal" onclick="highlightPriorityButton('inputPrioNormal')" style="background-color: #f5dd90" name="normal" form="editForm">Normal</button>
+                <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: #9EC5E5" name="low" form="editForm">Low</button>
 
-            <div id="list1" class="dropdown-check-list">
-                <button type="button" onclick="" class="anchor">Nutzer zuweisen</button>
-                <ul id="usersAuswahlID" class="items">
-                    <li th:each="nutzer : ${User}" th:id="@{N{id}(id = ${nutzer.getID()})}" ><input  type="checkbox" th:text="${nutzer.getUname()}" /> </li>
-                </ul>
+                <div id="list1" class="dropdown-check-list">
+                    <button type="button" onclick="" class="anchor">Nutzer zuweisen</button>
+                    <ul id="usersAuswahlID" class="items">
+                        <li th:each="nutzer : ${User}" th:id="@{N{id}(id = ${nutzer.getID()})}" ><input  type="checkbox" th:text="${nutzer.getUname()}" /> </li>
+                    </ul>
+                </div>
             </div>
-
             <label style="margin-top: 15px">Abgabefrist</label>
             <input type="datetime-local" id="inputDate" class="inputEdit" placeholder="Abgabefrist">
             <label style="margin-top: 15px">Geschätzte Zeit in Stunden</label>

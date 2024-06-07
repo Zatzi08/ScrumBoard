@@ -59,33 +59,37 @@
     </div>
 
     <div id="zoomedTaskCard">
-        <label id="zoomedTaskCard-US" title="Referenz zur dazugehörigen User-Story">US</label>
-        <span id="zoomedTaskCard-seperator">/</span>
-        <label id="zoomedTaskCard-taskBoard" title="Referenz zum dazugehörigen Task-Board">Task-Board</label>
+        <label id="zoomedTaskCard-US" class="zoomedTaskCard-Header" title="Referenz zur dazugehörigen User-Story">US</label>
+        <span class="zoomedTaskCard-Header">/</span>
+        <label id="zoomedTaskCard-taskBoard" class="zoomedTaskCard-Header" title="Referenz zum dazugehörigen Task-Board">Task-Board</label>
         <br/>
-        <i class="fa-solid fa-bars" id="zoomedTaskCard-sym5"></i><label class="zoomedTaskCard-symLab">Beschreibung</label>
+        <i class="fa-solid fa-bars" id="zoomedTaskCard-sym5"></i><label class="zoomedTaskCard-symLab" style="margin-left: 2%;">Beschreibung</label>
         <label id="zoomedTaskCard-description" title="Beschreibung der Task">Lacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velitLacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velit</label>
-        <i class="fa-regular fa-clock" id="zoomedTaskCard-sym1"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym1">Schätzung</label>
-        <i class="fa-solid fa-circle-exclamation" id="zoomedTaskCard-sym2"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym2">Priorität</label>
-        <br/>
-        <label class="zoomedTaskCard-content" id="zoomedTaskCard-estimatedTime" title="Geschätzte Zeit der Task">Geschätzte Zeit</label>
-        <label class="zoomedTaskCard-content" id="zoomedTaskCard-priority" title="Priorität der Task">Priorität</label>
-        <br/><br/>
-        <i class="fa-solid fa-hourglass-end" id="zoomedTaskCard-sym3"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym3">Bearbeitung</label>
-        <i class="fa-solid fa-people-group" id="zoomedTaskCard-sym4"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym4">Rolle</label>
-        <br/>
-        <label class="zoomedTaskCard-content" id="zoomedTaskCard-workedTime" title="Real bearbeitete Zeit">Bearbeitungszeit</label>
-        <label class="zoomedTaskCard-content" id="zoomedTaskCard-role" title="Rolle">Rolle</label>
-        <br>
-        <div  class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdown">
-            <button class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdownBtn" title="Zugewiesene Nutzer" style="background: #282435;">Zugewiesene Nutzer</button>
-            <ul class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdown-content">
-                <li>Nutzer 1</li>
-                <li>Nutzer 1</li>
-                <li>Nutzer 1</li>
-            </ul>
-            <label class="zoomedTaskCard-content" id="zoomedTaskCard-deadline" title="Abgabefrist">Abgabefrist</label>
-        </div>
+           <div id="wrapper">
+                <div id="zoomedTaskCard-LeftSide">
+                    <i class="fa-regular fa-clock" id="zoomedTaskCard-sym1"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym1">Schätzung</label>
+                    <label class="zoomedTaskCard-content" id="zoomedTaskCard-estimatedTime" title="Geschätzte Zeit der Task">Geschätzte Zeit</label>
+                    <i class="fa-solid fa-hourglass-end" id="zoomedTaskCard-sym3"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym3" style="margin-left: 6%;">Bearbeitung</label>
+                    <label class="zoomedTaskCard-content" id="zoomedTaskCard-workedTime" title="Real bearbeitete Zeit">Bearbeitungszeit</label>
+                    <div  class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdown">
+                        <i class="fa-regular fa-user" id="zoomedTaskCard-sym7"></i>
+                        <button class="zoomedTaskCard-content zoomedTaskCard-symLab" id="zoomedTaskCard-nutzerDropdownBtn" title="Zugewiesene Nutzer">Zugewiesene Nutzer</button>
+                        <ul class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdown-content">
+                            <li>Nutzer 1</li>
+                            <li>Nutzer 1</li>
+                            <li>Nutzer 1</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="zoomedTaskCard-RightSide">
+                    <i class="fa-solid fa-circle-exclamation" id="zoomedTaskCard-sym2"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym2" style="margin-left: 5%;">Priorität</label>
+                    <label class="zoomedTaskCard-content" id="zoomedTaskCard-priority" title="Priorität der Task">Priorität</label>
+                    <i class="fa-solid fa-people-group" id="zoomedTaskCard-sym4"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym4">Rolle</label>
+                    <label class="zoomedTaskCard-content" id="zoomedTaskCard-role" title="Rolle">Rolle</label>
+                    <i class="fa-solid fa-calendar-days" id="zoomedTaskCard-sym6"></i><label  class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym6" style="margin-left: 6%;">Frist</label>
+                    <label class="zoomedTaskCard-content" id="zoomedTaskCard-deadline" title="Abgabefrist">Abgabefrist</label>
+                </div>
+           </div>
     </div>
 
     <div id = visEstimateTracker>

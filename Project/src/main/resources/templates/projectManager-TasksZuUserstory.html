@@ -56,9 +56,9 @@
                         </div>
                         <!-- <label th:text = "${item.name}">Name</label> -->
                         <br/>
-                        <i class="fa-solid fa-people-group" id="iContent4"></i><label class="iContent-Label" style="margin-left: 1.3dvh; font-size: 16px">Rolle</label><label title="Rolle" class="userTaskTableBody-Content">Rolle</label>
-                        <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label" style="margin-left: 1.7dvh;">Priorität</label><label th:text = "${item.priority}" title="Priorität der Task" class="userTaskTableBody-Content">Priorität</label>
-                        <hr>
+                        <i class="fa-solid fa-people-group" id="iContent4"></i><label class="iContent-Label" style="margin-left: 8px; font-size: 16px">Rolle</label><label title="Rolle" class="userTaskTableBody-Content">Rolle</label>
+                        <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label">Priorität</label><label th:text = "${item.priority}" title="Priorität der Task" class="userTaskTableBody-Content">Priorität</label>
+                        <p class="userTaskTableBody-Border"></p>
                         <i class = "fa-solid fa-bars" id="iContent3"></i><label class="iContent-Label">Beschreibung</label><label class="userTaskTableBody-Content" th:text = "${item.description}" title="Beschreibung der Task">Beschreibung</label>
                         <label class = "userTaskTableContentSubdate" th:text="${item.getDueDateAsPresentable()}" title="Frist der Task">Abgabedatum</label>
                     </th>
@@ -76,7 +76,7 @@
            Grund: /
            User-ID/Task-ID: U3.F1, U4.F1, U5.F1, U5.F2
 -->
-<div class = "editMenu">
+<div class = "editMenu" style="height: 581px;">
     <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
     <span id="closeToggleEdit" class="closeToggleEdit" onclick="toggleEditMenu()">&times;</span>
     <div class="editMenu-content">
