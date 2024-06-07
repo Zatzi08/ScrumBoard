@@ -205,4 +205,24 @@ public class TaskService {
         if(dt.getProcessingTimeRealInHours() != time)
             DAOTaskService.updateProcessingTimeRealInHoursById(dt.getId(), time);
     }
+
+    public List<Double> getAllAnforderungenG(){
+        List<DAOTask> dtl =DAOTaskService.getAll();
+        List<Double> AnforderungenG = new LinkedList<Double>();
+        for (DAOTask dt : dtl){
+            double g = dt.getProcessingTimeEstimatedInHours();
+            AnforderungenG.add(g);
+        }
+        return AnforderungenG;
+    }
+
+    public List<Double> getAllAnforderungenA(){
+        List<DAOTask> dtl =DAOTaskService.getAll();
+        List<Double> AnforderungenA = new LinkedList<Double>();
+        for (DAOTask dt : dtl){
+            double g = dt.getProcessingTimeRealInHours();
+            AnforderungenA.add(g);
+        }
+        return AnforderungenA;
+    }
 }
