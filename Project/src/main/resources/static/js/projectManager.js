@@ -245,5 +245,5 @@ async function saveTaskWithUserList(sessionID) {
         }
         await setUsersOfTask(sessionID, id, list)
     }
-    //document.location.reload()
+    document.location.reload()
 }
