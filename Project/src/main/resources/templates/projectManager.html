@@ -33,7 +33,7 @@
         <button class="selectBtn" id="selectTasks" th:Sid="${sessionID}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
         <span class="userStoryTaskTrenner">|</span>
         <button class="selectBtn" id="selectUser" th:Sid="${sessionID}" onclick="SwitchToUsers(this.getAttribute('Sid'))" title = "Wechsel zur Nutzeransicht">Nutzer</button>
-        <button type="button" th:est="${Storys.get(0).getAnforderungenG()}" th:real="${Storys.get(0).getAnforderungenA()}" th:names="${TNames}" onclick="visualisationOfAllTime(this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('names'))">click</button>
+        <button type="button" th:est="${Storys.get(0).getAnforderungenG()}" th:real="${Storys.get(0).getAnforderungenA()}" th:names="${TNames}" onclick="visualisationOfAllTimes(this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('names'))">click</button>
         <button class="addUserStoryBtn" title="Füge eine Userstory hinzu" onclick="toggleEditBox('addUserStoryBtn', -1)"><i class="fa fa-plus" style="margin-right: 10px"></i>Userstory erstellen</button>
     </div>
         <div id="innerProjectManagerContainer">
@@ -104,5 +104,7 @@
     <script src="/js/communication.js"></script>
     <script type = "text/javascript" src="/js/setup.js"></script>
     <script type = "text/javascript" src="/js/projectManager.js"></script>
+    <script type="module" src="/js/myChart.js"></script>
+    <script src="/js/myChart.js"></script>
 </body>
 </html>

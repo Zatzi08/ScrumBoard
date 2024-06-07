@@ -6,9 +6,7 @@
 * User-Story/Task-ID: U3.F1, U4.F1
 */
 
-function ansichtDropdown() {
-    document.getElementById("ansichtDropdownContent").classList.toggle("show");
-}
+import {visualisationOfAllTime} from "./myChart";
 
 function toggleEditMenu(id) {
     var editMenu = document.querySelector('.editMenu');
@@ -224,14 +222,15 @@ checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
         checkList.classList.add('visible');
 }
 
-function visualisationOfAllTime(est, real, names){
+function visualisationOfAllTimes(est, real, names){
     est = JSON.parse(est)
     real = JSON.parse(real)
     names = names.replaceAll("'", '"')
     names = JSON.parse(names)
-    est.forEach((e) => console.log(e))
-    real.forEach((e)=> console.log(e))
-    names.forEach((e)=> console.log(e))
+    // est.forEach((e) => console.log(e))
+    // real.forEach((e)=> console.log(e))
+    // names.forEach((e)=> console.log(e))
+    visualisationOfAllTime(est, real, names)
 }
 
 async function saveTaskWithUserList(sessionID) {
@@ -251,14 +250,13 @@ async function saveTaskWithUserList(sessionID) {
 function toggleVisAllTasks(){
     var vis = document.querySelector('#visEstimateTracker');
     var overlay = document.querySelector('.overlay');
-
     if (vis) {
         if (vis.style.display === "block") {
             vis.style.display = "none";
             if (overlay) {
                 overlay.remove();
-                overlay.removeEventListener('click', toggleVis);
-                destroy();
+                overlay.removeEventListener('click', toggleVisAllTasks);
+                destroyMyChart2();
             }
         } else {
             vis.style.display = "block";
@@ -266,18 +264,7 @@ function toggleVisAllTasks(){
                 overlay = document.createElement('div');
                 overlay.classList.add('overlay');
                 document.body.appendChild(overlay);
-                switch (numType){
-                    case 0:
-                        document.getElementById('percentageDifferenceText').innerText = `Deine Bearbeitungszeit entspricht genau der Schätzung!`;
-                        break;
-                    case 1:
-                        document.getElementById('percentageDifferenceText').innerText = `Der Mehraufwand gegenüber der geschätzten Bearbeitungszeit beträgt ${absNum}h!`;
-                        break;
-                    case 2:
-                        document.getElementById('percentageDifferenceText').innerText = `Deine reale Bearbeitungszeit weicht zu ${percentageDifference}% von der geschätzten ab. Dies entspricht ${absNum}h!`;
-                        break;
-                }
-                overlay.addEventListener('click', toggleVis);
+                overlay.addEventListener('click', toggleVisAllTasks);
             }
         }
     } else {

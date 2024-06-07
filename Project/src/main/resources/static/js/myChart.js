@@ -80,11 +80,7 @@ function visualisationOfTaskTime(estTime, realTime){
     toggleVis(Math.abs(percentageDifference), Math.abs(absDiff), numType);
 }
 
-function visualisationOfAllTime(estTime, realTime, names){
-    const percentageDifference = Number(((Math.abs(estTime - realTime) / estTime) * 100).toFixed(2));
-    const absDiff = estTime-realTime;
-    const numType = absDiff == 0 ? 0 : (absDiff < 0 ? 1 : 2)
-
+export function visualisationOfAllTime(estTime, realTime, names){
     myChart2 = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -162,7 +158,7 @@ function visualisationOfAllTime(estTime, realTime, names){
             }
         }
     });
-    toggleVis(Math.abs(percentageDifference), Math.abs(absDiff), numType);
+    toggleVisAllTasks();
 }
 
 function destroyMyChart(){

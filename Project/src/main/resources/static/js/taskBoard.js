@@ -47,7 +47,7 @@ function toggleVis(percentageDifference, absNum, numType) {
             if (overlay) {
                 overlay.remove();
                 overlay.removeEventListener('click', toggleVis);
-                destroy();
+                destroyMyChart();
             }
         } else {
             vis.style.display = "block";
