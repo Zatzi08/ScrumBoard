@@ -80,7 +80,7 @@ function visualisationOfTaskTime(estTime, realTime){
     toggleVis(Math.abs(percentageDifference), Math.abs(absDiff), numType);
 }
 
-export function visualisationOfAllTime(estTime, realTime, names){
+function visualisationOfAllTime(estTime, realTime, names){
     myChart2 = new Chart(ctx, {
         type: 'bar',
         data: {
