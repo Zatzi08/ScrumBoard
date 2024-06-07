@@ -227,9 +227,9 @@ public class TaskService {
     
     public List<String> getAllName(){
         List<String> name = new LinkedList<String>();
-        List<Task> dtl = getAllTask();
+        List<DAOTask> dtl = DAOTaskService.getAll();
         if (!dtl.isEmpty()) {
-            for (Task t : dtl) {
+            for (DAOTask t : dtl) {
                 String toAdd = "'" + t.getDescription() + "'";
                 name.add(toAdd);
             }
