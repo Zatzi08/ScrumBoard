@@ -74,10 +74,9 @@ public class TaskService {
         if(task.getUserStoryID() == -1) throw new Exception("invalid UserStory-ID");
         if(task.getID() == -1){
             if(task.getTbID() < 0){
-                DAOTaskService.create(task.getDescription(), task.getPriorityAsInt(),false,task.getDueDateAsString(),task.getTimeNeededG(),task.getTimeNeededA(),null, DAOUserStoryService.getById(task.getUserStoryID()), null);
+                DAOTaskService.create(task.getDescription(), task.getPriorityAsInt(),false,task.getDueDateAsString(),task.getTimeNeededG(),0,null, DAOUserStoryService.getById(task.getUserStoryID()), null);
             }else{
-
-                DAOTaskService.create(task.getDescription(), task.getPriorityAsInt(),false,task.getDueDateAsString(),task.getTimeNeededG(),task.getTimeNeededA(),DAOTaskListService.getByTaskBoardId(task.getTbID()).get(0), DAOUserStoryService.getById(task.getUserStoryID()), null);
+                DAOTaskService.create(task.getDescription(), task.getPriorityAsInt(),false,task.getDueDateAsString(),task.getTimeNeededG(),0,DAOTaskListService.getByTaskBoardId(task.getTbID()).get(0), DAOUserStoryService.getById(task.getUserStoryID()), null);
             }
         }else{
             DAOTask dt = DAOTaskService.getById(task.getID());
@@ -181,7 +180,7 @@ public class TaskService {
         return list;
     }
 
-    public void setTaskList(int tID, int tlID) throws Exception {
+    public  void setTaskList(int tID, int tlID) throws Exception {
         if (tID <= 0) throw new Exception("Null TID");
         if (tlID <= -1) throw new Exception("Null tlID");
         DAOTask dt = DAOTaskService.getById(tID);
@@ -206,7 +205,7 @@ public class TaskService {
             DAOTaskService.updateProcessingTimeRealInHoursById(dt.getId(), time);
     }
 
-    public List<Double> getAllAnforderungenG(){
+    public  List<Double> getAllAnforderungenG(){
         List<DAOTask> dtl =DAOTaskService.getAll();
         List<Double> AnforderungenG = new LinkedList<Double>();
         for (DAOTask dt : dtl){
@@ -224,5 +223,24 @@ public class TaskService {
             AnforderungenA.add(g);
         }
         return AnforderungenA;
+    }
+    
+    public List<String> getAllName(){
+        List<String> name = new LinkedList<String>();
+        for (Task t : getAllTask()){
+            String toAdd =  "'"+t.getDescription()+"'";
+            name.add(toAdd);
+        }
+        return name;
+    }
+
+    public List<String> getAllNameByUSID(int usID) throws Exception {
+        if (usID <= -1) throw new Exception("Null ID");
+        List<String> name = new LinkedList<String>();
+        for (Task t : getTasksbyUSID(usID)){
+            String toAdd = "'"+t.getDescription()+"'";
+            name.add(toAdd);
+        }
+        return name;
     }
 }

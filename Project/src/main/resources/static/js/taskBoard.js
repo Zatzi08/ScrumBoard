@@ -297,14 +297,24 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
     document.getElementById('zoomedTaskCard-workedTime').innerText = realTime;
     document.getElementById('zoomedTaskCard-deadline').innerText = DueDate
     document.getElementById('zoomedTaskCard-role').innerText;
+    NutzerList = parseUser(NutzerList)
     var ul = document.getElementById("zoomedTaskCard-nutzerDropdown-content");
-    for (nutzer in NutzerList){
+    ul.innerHTML = ""
+    NutzerList.forEach((nutzer)=>{
         var li = document.createElement("li")
-        li.id = nutzer.ID;
+        li.id = 'N' + jfasldkjsldjfaljdfsfalnutzer.id;
         li.appendChild(document.createTextNode(nutzer.name));
         ul.appendChild(li);
+    })
+}
+
+function parseUser(a){
+    let list = []
+    while (a != "]"){
+        let user = a.substring(a.indexOf('{'), end = (a.indexOf('}') + 1)).replaceAll("'", '"')
+        a = a.substring(a.indexOf('}') + 1)
+        let ju = JSON.parse(user);
+        list.push(ju)
     }
-
-
-
+    return list
 }

@@ -224,9 +224,12 @@ checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
         checkList.classList.add('visible');
 }
 
-function visualisationOfAllTime(est, real){
+function visualisationOfAllTime(est, real, names){
     est = JSON.parse(est)
     real = JSON.parse(real)
+    names = names.replaceAll("'", '"')
+    names = JSON.parse(names)
     est.forEach((e) => console.log(e))
     real.forEach((e)=> console.log(e))
+    names.forEach((e)=> console.log(e))
 }

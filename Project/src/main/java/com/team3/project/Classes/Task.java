@@ -1,14 +1,14 @@
 package com.team3.project.Classes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team3.project.Classes.Enumerations.Priority;
-import com.team3.project.DAO.DAOTask;
-import com.team3.project.DAO.DAOTaskList;
 import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOTaskBoardService;
-import com.team3.project.DAOService.DAOTaskListService;
 import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.service.UserStoryService;
 import lombok.*;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 
 // Definiert Datentyp
@@ -103,7 +104,7 @@ public class Task extends abstraktDataClasses {
     }
 
     public List<User> getUser(){
-        List<DAOUser> dul = DAOTaskService.getById(this.getID()).getUsers();
+        List<DAOUser> dul = DAOTaskService.getWithUsersById(this.getID()).getUsers();
         List<User> list = new LinkedList<User>();
         for (DAOUser u : dul){
             User toAdd = new User(u.getName(),u.getId(),new LinkedList<Enumerations.Role>(),u.getAuthorization().getAuthorization());
@@ -111,4 +112,26 @@ public class Task extends abstraktDataClasses {
         }
         return list;
     }
+
+    public List<String> getUserAsJSON(){
+        List<DAOUser> dul = DAOTaskService.getWithUsersById(this.getID()).getUsers();
+        List<String> list = new LinkedList<String>();
+        if (!dul.isEmpty()) {
+            for (DAOUser u : dul) {
+                User toAdd = new User(u.getName(), u.getId(), new LinkedList<Enumerations.Role>(), u.getAuthorization().getAuthorization());
+                list.add(toJSON(toAdd));
+            }
+        }
+        return list;
+    }
+
+    private String toJSON(User user){
+        String a = "{";
+        a += "'id':'"+user.getID()+"',";
+        a += "'name':'"+user.getName()+"',";
+        a += "'authorization':'"+user.getAuthorization()+"'";
+        a += "}";
+        return a;
+    }
 }
+// "[com.team3.project.Classes.User@6888a6c, com.team3.project.Classes.User@34a362c6]"

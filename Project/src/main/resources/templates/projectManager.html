@@ -90,7 +90,7 @@
     </div>
 </div>
 
-<button type="button" th:est="${Storys.get(0).getAnforderungenG()}" th:real="${Storys.get(0).getAnforderungenA()}" onclick="visualisationOfAllTime(this.getAttribute('est'), this.getAttribute('real'))">click</button>
+<button type="button" th:est="${Storys.get(0).getAnforderungenG()}" th:real="${Storys.get(0).getAnforderungenA()}" th:names="${TNames}" onclick="visualisationOfAllTime(this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('names'))">click</button>
 
     <script src="/js/vendor/jquery.js"></script>
     <script src="/js/vendor/what-input.js"></script>

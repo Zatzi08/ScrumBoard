@@ -177,6 +177,7 @@ public class WebController {
             if (presentationToLogic.webSessionService.verify(sessionID)) {
                 ModelAndView modelAndView = new ModelAndView("projectManager");
                 modelAndView.addObject("Storys", presentationToLogic.userStoryService.getAllUserStorys())
+                        .addObject("TNames", presentationToLogic.taskService.getAllName())
                         .addObject("sessionID", sessionID);
                 return modelAndView;
             }
