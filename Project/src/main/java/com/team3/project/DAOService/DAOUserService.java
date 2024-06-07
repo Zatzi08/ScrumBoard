@@ -337,12 +337,14 @@ public class DAOUserService {
         List<String> joinOnAttributeNames = Arrays.asList("authorization", "roles");
         DAOUser daoUser = DAOService.getSingleLeftJoinsById(id, DAOUser.class, joinOnAttributeNames);
         if (daoUser != null) {
+            boolean addrole = false;
             for (DAORole daoRole : roles) {
                 if (DAORoleService.checkAuthorizationById(daoRole.getId(), daoUser.getAuthorization())) {
                     daoUser.getRoles().add(daoRole);
+                    addrole = true;
                 }
             }
-            return DAOService.merge(daoUser);
+            return addrole && DAOService.merge(daoUser);
         }
         return false;
     }

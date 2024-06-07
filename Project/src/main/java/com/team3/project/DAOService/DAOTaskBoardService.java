@@ -38,7 +38,7 @@ public class DAOTaskBoardService {
         return DAOService.getByID(id, DAOTaskBoard.class);
     }
 
-    static DAOTaskBoard getByName(String name) {
+    public static DAOTaskBoard getByName(String name) {
         String parameterName = "name";
         return DAOService.getSingleByPara(DAOTaskBoard.class, name, parameterName);
     }

@@ -12,9 +12,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.team3.project.DAOService.DAOTaskService;
+import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.DAOService.DAOUserStoryService;
 import com.team3.project.Tests.BaseClassesForTests.BaseDBTest;
 import com.team3.project.DAO.DAOTask;
+import com.team3.project.DAO.DAOUser;
 
 public class TaskTest extends BaseDBTest {
     @BeforeAll
@@ -29,7 +31,7 @@ public class TaskTest extends BaseDBTest {
 
     @AfterEach
     public void afterEach() {
-
+        after();
     }
 
     @AfterAll
@@ -42,7 +44,13 @@ public class TaskTest extends BaseDBTest {
     String TaskDes1 = "TestTask1";
     String TaskDes2 = "TestTask2";
     String TaskDes3 = "TestTask3";
+    int prio = 1;
     List<DAOTask> TestTasks = new ArrayList<>();
+    List<DAOUser> userList = new ArrayList<>();
+    private String TestEmail = "TestEmail";
+    private String TestEmail1 = "TestEmail1";
+    private String TestPasword = "TestPasword";
+    
 
     /* Author: Marvin Prüger
      * Function: create/update/delete Task
@@ -108,6 +116,89 @@ public class TaskTest extends BaseDBTest {
         }
         DAOUserStoryService.deleteById(DAOUserStoryService.getByName(TestUserStoryName).getId());
         printWriterAddPass();
+    }
+
+    @Test
+    /* Author: Marvin Prüger
+     * Function: test priority 
+     * Reason:
+     * UserStory/Task-ID: T7
+     */
+    void prioTest(){
+        printWriterAddTest("prioTest", "T.T3");
+        DAOTaskService.create(TaskDes1, prio, false, null, 0, 0, null, null, null);
+        try {
+            assertEquals(DAOTaskService.getByDescription(TaskDes1).getPriority(),prio);
+        } catch (Exception e) {
+            printWriterAddFailure("prio not saved");
+            throw new AssertionError(e);
+        }
+        prio++;
+        try {
+            DAOTaskService.updatePriorityById(DAOTaskService.getByDescription(TaskDes1).getId(),prio);
+            assertEquals(DAOTaskService.getByDescription(TaskDes1).getPriority(),prio);
+        } catch (Exception e) {
+            printWriterAddFailure("prio not updated");
+            throw new AssertionError(e);
+        }
+    }
+
+    @Test
+    /* Author: Marvin Prüger
+     * Function: test conection of users and Task
+     * Reason:
+     * UserStory/Task-ID: T8
+     */
+    void userXtaskTest(){
+        printWriterAddTest("userXtaskTest", "T.T4");
+        DAOUserService.createByEMail(TestEmail, TestPasword, null, null, null, null, null, null, null, false);
+        DAOUserService.createByEMail(TestEmail1, TestPasword, null, null, null, null, null, null, null, false);
+        userList.add(DAOUserService.getById(DAOUserService.getIdByMail(TestEmail)));
+        DAOTaskService.create(TaskDes1, prio, false, null, 0, 0, null, null, userList);
+        try {
+            assertEquals(DAOTaskService.getWithUsersById(DAOTaskService.getByDescription(TaskDes1).getId()).getUsers().get(0).getEmail(),TestEmail);
+        } catch (Exception e) {
+            printWriterAddFailure("users not saved");
+            throw new AssertionError(e);
+        }
+        userList.add(DAOUserService.getById(DAOUserService.getIdByMail(TestEmail1)));
+        try {
+            assertTrue(DAOTaskService.updateUsersById(DAOTaskService.getByDescription(TaskDes1).getId(),userList));
+            assertEquals(DAOTaskService.getWithUsersById(DAOTaskService.getByDescription(TaskDes1).getId()).getUsers().get(1).getEmail(),TestEmail1);
+        } catch (Exception e) {
+            printWriterAddFailure("users not updated");
+            throw new AssertionError(e);
+        }
+    }
+    @Test
+    /* Author: Marvin Prüger
+     * Function: test Time related things of Tasks
+     * Reason:
+     * UserStory/Task-ID: T9/10/11
+     */
+    void TaskTime(){
+        printWriterAddTest("Taskfist", "T.T5");
+        DAOTaskService.create(TaskDes1, prio, false, "today", 5, 6, null, null, userList);
+        int taskId = DAOTaskService.getByDescription(TaskDes1).getId();
+        try {
+            assertEquals(DAOTaskService.getById(taskId).getDueDate(),"today");
+            assertEquals(DAOTaskService.getById(taskId).getProcessingTimeEstimatedInHours(),5);
+            assertEquals(DAOTaskService.getById(taskId).getProcessingTimeRealInHours(),6);
+        } catch (Exception e) {
+            printWriterAddFailure("dueDate or processingtime not saved");
+            throw new AssertionError(e);
+        }
+        DAOTaskService.updateDueDateById(taskId, "AAAAAAAAAAAAAAAA");
+        DAOTaskService.updateProcessingTimeEstimatedInHoursById(taskId,6);
+        DAOTaskService.updateProcessingTimeRealInHoursById(taskId,5);
+        try {
+            assertEquals(DAOTaskService.getById(taskId).getDueDate(),"AAAAAAAAAAAAAAAA");
+            assertEquals(DAOTaskService.getById(taskId).getProcessingTimeEstimatedInHours(),6);
+            assertEquals(DAOTaskService.getById(taskId).getProcessingTimeRealInHours(),5);
+        } catch (Exception e) {
+            printWriterAddFailure("dueDate or processingtime not updated");
+            throw new AssertionError(e);
+        }
     }
 
 }

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.team3.project.DAOService.DAORoleService;
 import com.team3.project.DAOService.DAOStartService;
 import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.Tests.BaseClassesForTests.BaseDBTest;
@@ -30,8 +31,7 @@ public class UserTests extends BaseDBTest {
 
     @AfterEach
     public void afterEach() {
-    DAOStartService.clearDBTable("User");
-    DAOStartService.clearDBTable("Role");
+        after();
     }
 
     @AfterAll
@@ -47,7 +47,9 @@ public class UserTests extends BaseDBTest {
     private String TestWorkDescription = "TestWorkDescription";
     private DAORole TestRole = new DAORole("TestRol");
     private DAORole TestRole2 = new DAORole("TestRol2");
+    private DAORole Admin = new DAORole("Admin");
     private List<DAORole> TestRoles = new ArrayList<>();
+
 
     /* Author: Marvin Prüger
      * Function: User Create Test
@@ -128,16 +130,16 @@ public class UserTests extends BaseDBTest {
     @Test 
     void UpdateUserTest(){
         printWriterAddTest("UpdateUserTest", "U.T3");
-        TestRoles.add(TestRole);
+        DAORoleService.create("testRole", 1);
+        TestRoles.add(DAORoleService.getByName("testRole"));
         try {
-            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, null, false));
+            assertTrue(DAOUserService.createByEMail(TestEmail, TestName, TestPasword, TestPrivatDescription, TestWorkDescription, null, null, null, null, false));
         } catch (Exception e) {
             printWriterAddFailure("User was not created");
             throw new AssertionError(e);
         }
         TestRoles.add(TestRole2);
         try {
-            assertTrue(DAOUserService.updateById(DAOUserService.getIdByMail(TestEmail), TestName2, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, null, false));
             assertTrue(DAOUserService.updateById(DAOUserService.getIdByMail(TestEmail), TestName2, TestPrivatDescription, TestWorkDescription, TestRoles, null, null, null, false));
         } catch (Exception e) {
             printWriterAddFailure("did not update");
@@ -290,7 +292,7 @@ public class UserTests extends BaseDBTest {
     }
 
 
-
+    
     // @Test
     // void UserGeneralTest(){
     //     printWriterAddTest("UserGeneral", null);

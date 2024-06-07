@@ -29,7 +29,7 @@ public class UserStoryTests extends BaseDBTest {
 
     @AfterEach
     public void afterEach() {
-
+        after();
     }
 
     @AfterAll
