@@ -34,7 +34,7 @@
         <label class = "profileText" >Deine Aufgabe im Projekt</label>
         <label th:text="${User.workDesc}" id = "profilProjektBeschreibung"> Projekt Beschreibung </label>
         <label class = "profileText" >Deine Rollen </label>
-        <label id = "rolleProfil"> Rolle <p>.</p> </label> <!-- Könnte das als Liste realisiert werden, danke LK -->
+        <label id = "rolleProfil"> <p>.</p> </label> <!-- Könnte das als Liste realisiert werden, danke LK -->
         <label class = "profileText" >Deine persönliche Beschreibung</label>
         <label th:text = "${User.privatDesc}" id = "profilPersoBeschreibung"> Persönliche Beschreibung </label>
     </div>
@@ -42,7 +42,7 @@
 
 <div id = "profilEditMenü" style="display: none;">
 <form id = "profilForm" autocomplete="off">
-    <span class = "fa fa-close" onclick="toggleProfilMenü()"></span>
+    <label style = "color:#ffffff; font-size: 15px; border-bottom: 2px solid #dcdcdc; width:100%"><i class = "fa fa-pencil" style = "margin-right:5px"></i>Profil bearbeiten</label>
     <label class = "labelProfil">Benutzername:</label>
     <textarea id="inputName" class = "profilInput" form = "profilForm" placeholder = "Benutzername bearbeiten" name = benutzername style = " height:30px;"></textarea>
     <label class = "labelProfil">projektbezogene Beschreibung:</label>

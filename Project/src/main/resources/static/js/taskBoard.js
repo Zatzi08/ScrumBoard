@@ -328,3 +328,11 @@ function parseUser(a){
     }
     return list
 }
+
+function closePopup(){
+    let popupChange = document.getElementById("popupChangeTBName");
+    let popupFertig = document.getElementById("popupTaskFertig");
+
+    popupChange.style.display = "none";
+    popupFertig.style.display = "none";
+}

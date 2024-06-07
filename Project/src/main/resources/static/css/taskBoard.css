@@ -294,42 +294,44 @@ hr {
     background-color: transparent;
     color: #d1d1d1;
     border: none;
-    margin-top: 3%;
     display: inherit;
-    font-size: 85%;
 }
 
-#zoomedTaskCard-nutzerDropdown button{
+#zoomedTaskCard-nutzerDropdown label{
     background-color: transparent;
     color: #d1d1d1;
     border: none;
-    margin-top: 4%;
     display: inherit;
+    background-color: #282435;
 }
 
 #zoomedTaskCard-nutzerDropdown ul{
     display: none;
     float: left;
     position: fixed;
-    background-color: transparent;
+    background-color: #373347;
     min-width: fit-content;
-    height:150px;
+    height:100px;
     box-shadow: 8px 16px rgba(0,0,0,0.2);
     overflow: scroll;
-    margin-top: 2%;
-    margin-right: 2%;
+    margin-top: 4%;
+    margin-left: 5%;
     z-index: 1;
+    border-radius:0px;
 }
 #zoomedTaskCard-nutzerDropdown ul li{
     overflow: scroll;
     background-color: transparent;
     color: #d1d1d1;
-    padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
-#zoomedTaskCard-nutzerDropdownBtn:hover #zoomedTaskCard-nutzerDropdown-content {display: block;}
-#zoomedTaskCard-nutzerDropdownBtn:hover #zoomedTaskCard-nutzerDropdownBtn {background-color: #2c2938;}
+
+#zoomedTaskCard-nutzerDropdownBtn{
+    background-color: transparent;
+}
+#zoomedTaskCard-nutzerDropdown:hover ul {display: block;}
+
 
 #zoomedTaskCard-nutzerDropdown:focus{
     outline: none;
@@ -375,7 +377,7 @@ hr {
 
 #changeTBNameForm, #taskFertigForm, #createTBForm {
     position: relative;
-    background-color: #373347;
+    background-color: rgb(46, 46, 61);
     margin: 15% auto;
     padding: 20px;
     width: 80%;
@@ -390,7 +392,7 @@ hr {
     color:black;
     font-size: 13px;
     border-radius: 12px;
-    margin-top: 15px;
+    margin-top: 3%;
     margin-left: 10%;
 
 }
@@ -448,7 +450,7 @@ canvas#myChart{
     hyphens: auto;
 }
 
-#zoomedTaskCard-sym1, #zoomedTaskCard-sym2, #zoomedTaskCard-sym3, #zoomedTaskCard-sym4, #zoomedTaskCard-sym5, #zoomedTaskCard-sym6, #zoomedTaskCard-sym7{
+#zoomedTaskCard-sym1, #zoomedTaskCard-sym2, #zoomedTaskCard-sym3, #zoomedTaskCard-sym4, #zoomedTaskCard-sym5, #zoomedTaskCard-sym6, #zoomedTaskCard-sym7, #zoomedTaskCard-sym8{
     font-size: 90%;
 }
 
