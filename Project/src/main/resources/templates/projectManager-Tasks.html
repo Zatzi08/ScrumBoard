@@ -60,7 +60,7 @@
                         <p class="userTaskTableBody-Border"></p>
                         <i class = "fa-solid fa-bars" id="iContent3"></i><label class="iContent-Label">Beschreibung</label><label  class="userTaskTableBody-Content" th:text = "${item.description}" title="Beschreibung der Task">Beschreibung</label>
                         <div id="userTaskTableBody-BottomAlignment">
-                            <span id="userTaskTableBody-TaskDone" th:if="${item.isDone()}"> <i class="fa-regular fa-square-check"></i> Erledigt</span>
+                            <span id="userTaskTableBody-TaskDone" th:if="${item.isDone()}" > <i class="fa fa-check-square"></i> Erledigt</span>
                             <label class = "userTaskTableContentSubdate" th:text="${item.getDueDateAsPresentable()}" title="Frist der Task">Abgabedatum</label>
                         </div>
                     </th>

@@ -28,7 +28,7 @@
 
 <div id = "profilContainer">
     <div id = "profilInhalt">
-        <button class = "fa fa-edit" title = "Bearbeite das Profil" th:uname="${User.uname}" th:udesc="${User.privatDesc}" th:projectdesc="${User.workDesc}" onclick="toggleProfilMenü(this.getAttribute('uname'), this.getAttribute('workDesc'), this.getAttribute('privatDesc'))"></button>
+        <button class = "fa fa-edit" title = "Bearbeite das Profil" th:uname="${User.uname}" th:udesc="${User.privatDesc}" th:projectdesc="${User.workDesc}" onclick="toggleProfilMenü(this.getAttribute('uname'), this.getAttribute('projectdesc'), this.getAttribute('udesc'))"></button>
         <label th:text = "${User.uname}" id = "profilName">Benutzername </label>
         <label class = "profileText" >Deine Aufgabe im Projekt</label>
         <label th:text="${User.workDesc}" id = "profilProjektBeschreibung"> Projektbeschreibung </label>
