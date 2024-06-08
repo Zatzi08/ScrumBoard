@@ -3,6 +3,7 @@ package com.team3.project.Tests;
 import com.team3.project.Classes.*;
 import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskList;
+import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.*;
 import com.team3.project.Tests.BaseClassesForTests.BaseLogicTest;
 import com.team3.project.service.*;
@@ -145,7 +146,7 @@ public class LogicTest extends BaseLogicTest{
             Assertions.assertEquals(u1.getDescription(), DAOUserStoryService.getById(u1.getID()).getDescription());
         }catch (AssertionError | Exception e){
             pass = false;
-            pw.append("Fail: UserStory not updated");
+            pw.append("Fail: UserStory not updated\n");
             throw new AssertionError(e);
         }
 
@@ -173,6 +174,14 @@ public class LogicTest extends BaseLogicTest{
         int count_correct_exception_checks = 0;
 
         try{
+            Assertions.assertEquals(0, aservice.getAllProfiles().size());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: non-existent Profile(s) found\n");
+            throw new AssertionError(e);
+        }
+
+        try{
             aservice.register("Dave","dave@gmail.com", "123");
         }catch (Exception e){
             e.printStackTrace();
@@ -194,11 +203,59 @@ public class LogicTest extends BaseLogicTest{
         }
 
         try{
-            Assertions.assertNotNull(aservice.getProfileByEmail("dave@gmail.com"));
+            Assertions.assertNotNull(aservice.getProfileByID(sessionID));
         }catch(AssertionError | Exception e){
             pw.append("Fail: existent User-Profile not found\n");
             pass = false;
             throw new AssertionError(e);
+        }
+
+
+
+        Profile profile1 = new Profile(0,"Dave", "dave@gmail.com", "Manager","slow thinker" ,null, 2);
+        try{
+            Assertions.assertEquals(Enumerations.Role.Nutzer, profile1.getAuthorizationAsEnum());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: wrong Authorization\n");
+        }
+
+        try{//TODO: setAuthorization to setAuthority
+            profile1.setAuthorization(2);
+            Assertions.assertEquals(Enumerations.Role.Manager, profile1.getAuthorizationAsEnum());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: wrong Authorization\n");
+        }
+
+        try{
+            profile1.setAuthorization(3);
+            Assertions.assertEquals(Enumerations.Role.ProductOwner, profile1.getAuthorizationAsEnum());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: wrong Authorization\n");
+        }
+
+        try{
+            profile1.setAuthorization(4);
+            Assertions.assertEquals(Enumerations.Role.Nutzer, profile1.getAuthorizationAsEnum());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: wrong Authorization\n");
+        }
+
+        try{
+            count_correct_exception_checks++;
+            aservice.getProfileByID(null);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            aservice.getProfileByID("-1");
+        }catch (Exception e){
+            count_correct_exceptions++;
         }
 
         try{
@@ -241,8 +298,18 @@ public class LogicTest extends BaseLogicTest{
             count_correct_exceptions++;
         }
 
+        List<Profile> profiles = aservice.getAllProfiles();
         DAOAccountService.deleteByMail("dave@gmail.com");
-
+        List<Profile> profilesEmpty = aservice.getAllProfiles();
+        try{
+            if(profilesEmpty != null){
+                Assertions.assertNotEquals(profiles.size(), profilesEmpty.size());
+            }
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: Profile not deleted\n");
+            throw new AssertionError(e);
+        }
         if(count_correct_exception_checks != count_correct_exceptions){
             pass = false;
             pw.append("Fail: Wrong Exception-Handling\n");
@@ -303,7 +370,7 @@ public class LogicTest extends BaseLogicTest{
 
         DAOUserService.deleteById(uid);
 
-        pw.append(String.format("pass = %b \n",pass));
+        pw.append(String.format("pass = %b",pass));
     }
 
     @Test
@@ -433,16 +500,36 @@ public class LogicTest extends BaseLogicTest{
         }
 
         u1 = uservice.getUserStoryByName(u1.getName());
-        Task t1 = null;
+        Task task = null;
 
         try{
-            t1 = new Task(-1,"Task1", 0, u1.getID(),"2030-10-10 10:10", 10, 20,-1);
+            task = new Task(-1,"Task1", 0, u1.getID(),"2030-10-10 10:10", 10, 20,-1);
         }catch (Exception e){
             e.printStackTrace();
         }
 
         try{
-            tservice.saveTask(t1);
+            UserStory userStory = task.getUserStory();
+            Assertions.assertEquals(u1.getName(), userStory.getName());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: Wrong UserStory found\n");
+            throw new AssertionError(e);
+        }
+
+        try{
+            task.setUserStoryID(-1);
+            Assertions.assertNull(task.getUserStory());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: non-existent UserStory found\n");
+            throw new AssertionError(e);
+        }
+
+        task.setUserStoryID(u1.getID());
+
+        try{
+            tservice.saveTask(task);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -450,7 +537,7 @@ public class LogicTest extends BaseLogicTest{
         int t1ID = -10;
 
         try{
-            t1ID = tservice.getTaskByDescription(t1.getDescription()).getID();
+            t1ID = tservice.getTaskByDescription(task.getDescription()).getID();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -458,7 +545,7 @@ public class LogicTest extends BaseLogicTest{
         Task tCopy = null;
 
         try{
-            tCopy = new Task(t1ID, newdescription, t1.getPriorityAsInt(), t1.getUserStoryID(), t1.getDueDateAsString(), t1.getTimeNeededG(), t1.getTimeNeededA(),t1.getTbID());
+            tCopy = new Task(t1ID, newdescription, task.getPriorityAsInt(), task.getUserStoryID(), task.getDueDateAsString(), task.getTimeNeededG(), task.getTimeNeededA(),task.getTbID());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -645,6 +732,7 @@ public class LogicTest extends BaseLogicTest{
     void register(){
         pw.append("Logik-Test-register\nTest ID: Logic.T9\n" + "Date: " + formatter.format(date)+ '\n');
         AccountService aservice = new AccountService();
+        Account account = new Account("dave@gmail.com", "123");
         User u = new User("Dave", -1, List.of(Enumerations.Role.Nutzer),1);
         int count_correct_exceptions = 0;
         int count_correct_exception_checks = 0;
@@ -671,7 +759,7 @@ public class LogicTest extends BaseLogicTest{
         }
 
         try{
-            aservice.register("Dave","dave@gmail.com", "123");
+            aservice.register("Dave",account.getMail(), account.getPassword());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -682,11 +770,12 @@ public class LogicTest extends BaseLogicTest{
             Assertions.assertEquals("Dave", DAOUserService.getById(userID).getName());
         }catch (AssertionError e){
             pass = false;
-            pw.append("Fail: User was not registered");
+            pw.append("Fail: User was not registered\n");
             throw new AssertionError(e);
         }
 
         DAOUserService.deleteById(userID);
+
 
         if(count_correct_exceptions != count_correct_exception_checks){
             pass = false;
@@ -771,7 +860,7 @@ public class LogicTest extends BaseLogicTest{
             Assertions.assertEquals(1, aservice.getAuthority(sessionID));
         }catch (AssertionError | Exception e){
             e.printStackTrace();
-            pw.append("Fail: User created with wrong authority");
+            pw.append("Fail: User created with wrong authority\n");
             pass = false;
             throw new AssertionError(e);
         }
@@ -1227,22 +1316,34 @@ public class LogicTest extends BaseLogicTest{
             e.printStackTrace();
         }
 
+        Role failVisualRole = null;
         try{
             count_correct_exception_checks++;
-            rservice.saveVisualRole(null, user,role);
+            rservice.saveVisualRole(visualRole, user,role);
         }catch (Exception e){
             count_correct_exceptions++;
         }
 
         try{
             count_correct_exception_checks++;
-            rservice.saveVisualRole(new Role(-10, "Fail"), user,role);
+            failVisualRole = new Role(-10, null);
+            failVisualRole.setName("Fail");
+            rservice.saveVisualRole(failVisualRole, user,role);
         }catch (Exception e){
             count_correct_exceptions++;
         }
 
         try{
             count_correct_exception_checks++;
+            failVisualRole.setName("");
+            rservice.saveVisualRole(failVisualRole, user,role);
+        }catch (Exception e){
+            count_correct_exceptions++;
+        }
+
+        try{
+            count_correct_exception_checks++;
+            failVisualRole.setName("Fail");
             rservice.saveVisualRole(visualRole, null,role);
         }catch (Exception e){
             count_correct_exceptions++;
@@ -1306,11 +1407,62 @@ public class LogicTest extends BaseLogicTest{
     @Test
     /*  Test ID: Logic.T19
      *  Author: Henry Lewis Freyschmidt
-     *  Zweck: Task-Erweiterung um "done" T6.B1
+     *  Zweck: Task-Erweiterung um zugeteilten Nutzern  T8
      */
-    void addDoneToTask(){
+    //TODO: Test schreiben
+    void TaskWithUsers(){
         pw.append("Logik-Test-addDoneToTask\nTest ID: Logic.T19\n" + "Date: " + formatter.format(date) + '\n');
+        AccountService accountService = new AccountService();
+        TaskService taskService = new TaskService();
+        UserStoryService userStoryService = new UserStoryService();
+        UserStory userStory = new UserStory("UserStoryT8", "T19T8", 2, -1);
 
+        try{
+            accountService.register("DaveT8.1", "davet8.1@gmail.com", "T8");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        List<DAOUser> users = DAOUserService.getAllPlusRoles();
+        List<Integer> uIDs = new LinkedList<>();
+        for(DAOUser daoUser: users){
+            uIDs.add(daoUser.getId());
+        }
+
+        try{
+            userStoryService.saveUserStory(userStory);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        userStory.setID(DAOUserStoryService.getByName(userStory.getName()).getId());
+        Task task = null;
+        try{
+            task = new Task(-1,"TaskDescription",0,userStory.getID(), "2030-10-10 10:10", 20, 50,-1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            taskService.saveTask(task);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
+        try{
+            taskService.setUsers(task.getID(), uIDs);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            DAOTask daoTask = DAOTaskService.getById(task.getID());
+            if (daoTask == null) throw new AssertionError();
+            Assertions.assertEquals(uIDs.get(0), daoTask.getUsers().get(daoTask.getUsers().size()-1).getId());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: none or wrong user(s) connected to task\n");
+        }
 
         pw.append(String.format("pass = %b", pass));
     }
@@ -1357,6 +1509,27 @@ public class LogicTest extends BaseLogicTest{
             taskService.saveTask(task);
         }catch (Exception e){
             e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertEquals("TaskBoard1T16B2", task.getTaskBoardNameOfTask());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: Task not attributed to correct TaskBoard\n");
+            throw new AssertionError(e);
+        }
+        Task taskFail = null;
+        try{
+            taskFail = new Task(-1, "TaskT16B2", 1, userStory.getID(), "10-10-2030 10:10", 10, 20, -1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            Assertions.assertEquals("", taskFail.getTaskBoardNameOfTask());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: non-existent TaskBoard found\n");
         }
 
         task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
@@ -1694,6 +1867,23 @@ public class LogicTest extends BaseLogicTest{
             pass = false;
             pw.append("Fail: Task with wrong due date\n");
             throw new AssertionError(e);
+        }
+
+        try{
+            Task taskFail = new Task(-1, "TaskT9B3", 1, userStory.getID(), "10-10-2030 10:10", 10, 20, -1);
+            taskFail.setDueDate(null);
+            Assertions.assertEquals("", task.getDueDateAsString());
+        }catch (AssertionError | Exception e){
+            pass = false;
+            pw.append("Fail: null Date not converted to empty String\n");
+        }
+
+        try{
+            String dueDateString = task.getDueDateAsPresentable();
+            Assertions.assertEquals("10/10/30 10:10", dueDateString);
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: Date wrong/wrong formatted\n");
         }
 
         pw.append(String.format("pass = %b", pass));
