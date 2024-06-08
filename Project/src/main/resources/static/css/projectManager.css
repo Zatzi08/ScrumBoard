@@ -626,3 +626,7 @@ hr{
     color:#116A2A;
     padding: 5px 5px 5px
 }
+
+#editMenu-priorityDropAlignment{
+    display: inline-flex;
+}
