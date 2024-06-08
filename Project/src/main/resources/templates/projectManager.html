@@ -23,7 +23,7 @@
     <button type="button"  th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
-    <button class = "reiterBtn" style="float: right"><a href="/">Abmelden</a></button>
+    <button class = "reiterBtn" style="margin-left: auto; margin-right: 0;"><a href="/">Abmelden</a></button>
 </div>
 
 <div id="outerProjectManagerContainer">
@@ -56,7 +56,6 @@
                             <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label">Priorität</label><label class = "userTaskTableBody-Content" th:text = "${item.priority}" title="Priorität der User-Story">Priorität</label>
                             <p class="userTaskTableBody-Border"></p>
                             <i class = "fa-solid fa-bars" id="iContent3"></i><label class="iContent-Label">Beschreibung</label><label class = "userTaskTableBody-Content" title="Beschreibung der User-Story" th:text="${item.description}">Beschreibung</label>
-                            <span id="userTaskTableBody-TaskDone" th:if="${item.isDone()}"> <i class="fa-regular fa-square-check"></i> Erledigt</span>
                         </th>
                     </tr>
                 </tbody>

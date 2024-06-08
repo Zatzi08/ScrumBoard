@@ -458,9 +458,6 @@ ul{list-style-type: none;}
 .dropdown-check-list {
     display: inline-block;
     /*display: inline-flex;*/
-    align-items: center;
-    justify-content: center;
-    right:0;
     width: 25%;
     height:30px;
     margin-left: 30%;
@@ -623,4 +620,8 @@ hr{
     border: dotted;
     border-radius: 10px;
     width: 20px;
+}
+
+#editMenu-priorityDropAlignment{
+    display: inline-flex;
 }

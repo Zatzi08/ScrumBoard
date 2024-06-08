@@ -23,7 +23,7 @@
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
-    <button class = "reiterBtn" style="float: right"><a href="/">Abmelden</a></button>
+    <button class = "reiterBtn" style="margin-left: auto; margin-right: 0;"><a href="/">Abmelden</a></button>
 </div>
 
 <div id="outerProjectManagerContainer">
@@ -86,18 +86,19 @@
         <form class="form" id="editForm" autocomplete="off" name="Story">
             <textarea id="inputDesc" class="inputEdit" required placeholder="Eine passende Beschreibung eingeben" name="description" form="editForm"></textarea>
             <label>Priorität</label>
-            <button type="button" class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: #f76c5e" name="urgent" form="editForm">Urgent</button>
-            <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: #f68e5f" name="high" form="editForm">High</button>
-            <button type="button" class="inputEditPrio" id="inputPrioNormal" onclick="highlightPriorityButton('inputPrioNormal')" style="background-color: #f5dd90" name="normal" form="editForm">Normal</button>
-            <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: #9EC5E5" name="low" form="editForm">Low</button>
+            <div id="editMenu-priorityDropAlignment">
+                <button type="button" class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: #f76c5e" name="urgent" form="editForm">Urgent</button>
+                <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: #f68e5f" name="high" form="editForm">High</button>
+                <button type="button" class="inputEditPrio" id="inputPrioNormal" onclick="highlightPriorityButton('inputPrioNormal')" style="background-color: #f5dd90" name="normal" form="editForm">Normal</button>
+                <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: #9EC5E5" name="low" form="editForm">Low</button>
 
-            <div id="list1" class="dropdown-check-list">
-                <button type="button" onclick="" class="anchor">Nutzer zuweisen</button>
-                <ul id="usersAuswahlID" class="items">
-                    <li th:each="nutzer : ${User}" th:id="@{N{id}(id = ${nutzer.getID()})}" ><input  type="checkbox" th:text="${nutzer.getUname()}" /> </li>
-                </ul>
+                <div id="list1" class="dropdown-check-list">
+                    <button type="button" onclick="" class="anchor" style="width: 265px; margin-left: 12px;">Nutzer zuweisen</button>
+                    <ul id="usersAuswahlID" class="items" style="margin-top: 33px; margin-right: 44px; float: unset; width: 261px;">
+                        <li th:each="nutzer : ${User}" th:id="@{N{id}(id = ${nutzer.getID()})}" ><input  type="checkbox" th:text="${nutzer.getUname()}" /> </li>
+                    </ul>
+                </div>
             </div>
-
             <label style="margin-top: 15px">Abgabefrist</label>
             <input type="datetime-local" id="inputDate" class="inputEdit" placeholder="Abgabefrist">
             <label style="margin-top: 15px">Geschätzte Zeit in Stunden</label>

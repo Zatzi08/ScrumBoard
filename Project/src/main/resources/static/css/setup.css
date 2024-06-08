@@ -24,6 +24,7 @@ body {
   User-ID/Task-ID: U1.F1
 */
 .Reiter {
+    display: flex;
     background-color: rgba(16, 22, 58, 0.6);
     height: 30%;
     width: 100%;
