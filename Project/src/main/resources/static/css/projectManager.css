@@ -612,3 +612,15 @@ hr{
 #visAllTasks{
     float: right;
 }
+
+#userTaskTableBody-BottomAlignment{
+    display: block;
+    margin-top: 5px;
+}
+
+#userTaskTableBody-TaskDone{
+    position: relative;
+    border: dotted;
+    border-radius: 10px;
+    width: 20px;
+}
