@@ -33,7 +33,6 @@
         <button class="selectBtn" id="selectTasks" th:Sid="${sessionID}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
         <span class="userStoryTaskTrenner">|</span>
         <button class="selectBtn" id="selectUser" th:Sid="${sessionID}" onclick="SwitchToUsers(this.getAttribute('Sid'))" title = "Wechsel zur Nutzeransicht">Nutzer</button>
-        <button type="button" th:unless="${Storys.isEmpty()}" th:est="${Storys.get(0).getAnforderungenG()}" th:real="${Storys.get(0).getAnforderungenA()}" th:names="${TNames}" onclick="visualisationOfAllTimes(this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('names'))">click</button>
         <button class="addUserStoryBtn" title="Füge eine Userstory hinzu" onclick="toggleEditBox('addUserStoryBtn', -1)"><i class="fa fa-plus" style="margin-right: 10px"></i>Userstory erstellen</button>
     </div>
         <div id="innerProjectManagerContainer">
@@ -41,7 +40,7 @@
             <table class="userTaskTable">
                 <thead id="userTaskTableHead">
                     <tr>
-                        <th id = "tableHeader" style="cursor: default">Userstories</th>
+                        <th id = "tableHeader" style="cursor: default">Userstories <button type="button" id="visAllTasks" th:unless="${Storys.isEmpty()}" th:est="${Storys.get(0).getAnforderungenG()}" th:real="${Storys.get(0).getAnforderungenA()}" th:names="${TNames}" onclick="visualisationOfAllTimes(this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('names'))" title="Schätzungstracker für alle Tasks"><i class="fa-solid fa-chart-bar" style="color: white"></i></button></th>
                     </tr>
                 </thead>
                 <tbody id="userTaskTableBody">
@@ -72,7 +71,7 @@
            Grund: /
            User-ID/Task-ID: U3.F1, U4.F1, U5.F1, U5.F2
 -->
-<div class = "editMenu">
+<div class = "editMenu" style="width: 560px; height: 326px;">
     <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
     <span id="closeToggleEdit" class="closeToggleEdit" onclick="toggleEditMenu()">&times;</span>
     <div class="editMenu-content">
@@ -92,8 +91,10 @@
     </div>
 </div>
 
-<div id = visEstimateTracker>
-    <canvas id = "myChart2"></canvas>
+<div id = "visEstimateTracker">
+    <div id = "visEstimateTracker-graph">
+        <canvas id = "myChart2"></canvas>
+    </div>
     <label id="percentageDifferenceText"></label>
 </div>
 
@@ -104,6 +105,8 @@
     <script src="/js/communication.js"></script>
     <script type = "text/javascript" src="/js/setup.js"></script>
     <script src="/js/projectManager.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="/js/myChart.js"></script>
     <script src="/js/myChart.js"></script>
 </body>

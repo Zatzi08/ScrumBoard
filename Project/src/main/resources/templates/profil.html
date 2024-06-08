@@ -32,7 +32,7 @@
 
         <label th:text = "${User.uname}" id = "profilName">Benutzername </label>
         <label class = "profileText" >Deine Aufgabe im Projekt</label>
-        <label th:text="${User.workDesc}" id = "profilProjektBeschreibung"> Projekt Beschreibung </label>
+        <label th:text="${User.workDesc}" id = "profilProjektBeschreibung"> Projektbeschreibung </label>
         <label class = "profileText" >Deine Rollen </label>
         <label id = "rolleProfil"> <p>.</p> </label> <!-- Könnte das als Liste realisiert werden, danke LK -->
         <label class = "profileText" >Deine persönliche Beschreibung</label>
@@ -42,13 +42,13 @@
 
 <div id = "profilEditMenü" style="display: none;">
 <form id = "profilForm" autocomplete="off">
-    <label style = "color:#ffffff; font-size: 15px; border-bottom: 2px solid #dcdcdc; width:100%"><i class = "fa fa-pencil" style = "margin-right:5px"></i>Profil bearbeiten</label>
+    <label style = "color:#ffffff; font-size: 15px; border-bottom: 2px solid #dcdcdc; width:100%"><i class = "fa fa-pencil" style = "margin-right:15px"></i>Profil bearbeiten</label>
     <label class = "labelProfil">Benutzername:</label>
-    <textarea id="inputName" class = "profilInput" form = "profilForm" placeholder = "Benutzername bearbeiten" name = benutzername style = " height:30px;"></textarea>
-    <label class = "labelProfil">projektbezogene Beschreibung:</label>
-    <textarea id="inputWDesc" class = "profilInput" form = "profilForm" placeholder = "projektbezogene Beschreibung bearbeiten" name = projektBeschreibung></textarea>
-    <label class = "labelProfil">persönliche Beschreibung:</label>
-    <textarea id="inputPDesc" class = "profilInput" form = "profilForm" placeholder = "persönliche Beschreibung bearbeiten" name = persoBeschreibung></textarea>
+    <textarea id="inputName" class = "profilInput" form = "profilForm" placeholder = "Benutzername bearbeiten" name = benutzername></textarea>
+    <label class = "labelProfil">Projektbezogene Beschreibung</label>
+    <textarea id="inputWDesc" class = "profilInput" form = "profilForm" placeholder = "Projektbezogene Beschreibung bearbeiten" name = projektBeschreibung></textarea>
+    <label class = "labelProfil">Persönliche Beschreibung</label>
+    <textarea id="inputPDesc" class = "profilInput" form = "profilForm" placeholder = "Persönliche Beschreibung bearbeiten" name = persoBeschreibung></textarea>
     <button type = "button" title = "Speichern der Änderungen" th:sessionID="${sessionID}" onclick="saveProfile(this.getAttribute('sessionID'))" id = "profilEditBtn">Speichern</button>
 </form>
 </div>

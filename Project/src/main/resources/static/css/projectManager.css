@@ -9,8 +9,7 @@
 .editMenu {
     display: none;
     position: fixed;
-    width: 550px;
-    height: fit-content;
+    height: 330px;
     background-color: rgb(46, 46, 61);
     color: white;
     padding: 20px;
@@ -497,8 +496,9 @@ ul{list-style-type: none;}
     width: -webkit-fill-available;
     height: 150px;
     border-radius: 8px;
-    margin-left: -97%;
+    margin-left: -100%;
     float: right;
+    left: 2px;
 }
 
 .dropdown-check-list ul.items li {
@@ -574,10 +574,10 @@ hr{
 }
 
 #visEstimateTracker{
-    width: 500px;
+    width: 657px;
     position: fixed;
-    height: 344px;
-    background-color: rgb(42, 39, 55, 0.8);
+    height: 560px;
+    background-color: rgb(42, 39, 50, 0.8);
     display: none;
     z-index: 1000;
     top: 50dvh;
@@ -586,15 +586,29 @@ hr{
     transform: translate(-50%, -50%);
 }
 
-canvas#myChart2{
-    height: 231px;
-    width: 462px;
+#visEstimateTracker-graph{
+    width: 100%;
+    height: 80%;
     position: relative;
-    padding: 10px;
-    background: rgb(42, 39, 55, 0.6);
+    padding: 25px;
 }
 
 #PrioUserAlignment{
     display: inline-flex;
-    width: -webkit-fill-available;
+    width: 500px;
+}
+
+#percentageDifferenceText{
+    color: #c6c6c6;
+    position: relative;
+    padding: 14px;
+    font-family: system-ui;
+    margin-top: 2%;
+    text-align: center;
+    hyphens: auto;
+    font-size: 90%;
+}
+
+#visAllTasks{
+    float: right;
 }

@@ -225,9 +225,9 @@ function visualisationOfAllTimes(est, real, names){
     real = JSON.parse(real)
     names = names.replaceAll("'", '"')
     names = JSON.parse(names)
-    // est.forEach((e) => console.log(e))
-    // real.forEach((e)=> console.log(e))
-    // names.forEach((e)=> console.log(e))
+    est.forEach((e) => console.log(e))
+    real.forEach((e)=> console.log(e))
+    names.forEach((e)=> console.log(e))
     visualisationOfAllTime(est, real, names)
 }
 
@@ -245,7 +245,7 @@ async function saveTaskWithUserList(sessionID) {
     document.location.reload()
 }
 
-function toggleVisAllTasks(){
+function toggleVisAllTasks(percentageDifference, absNum, numType){
     var vis = document.querySelector('#visEstimateTracker');
     var overlay = document.querySelector('.overlay');
     if (vis) {
@@ -254,7 +254,7 @@ function toggleVisAllTasks(){
             if (overlay) {
                 overlay.remove();
                 overlay.removeEventListener('click', toggleVisAllTasks);
-                destroyMyChart2();
+                destroyMyChart2()
             }
         } else {
             vis.style.display = "block";
@@ -262,6 +262,17 @@ function toggleVisAllTasks(){
                 overlay = document.createElement('div');
                 overlay.classList.add('overlay');
                 document.body.appendChild(overlay);
+                switch (numType){
+                    case 0:
+                        document.getElementById('percentageDifferenceText').innerText = `Die Summe der geschätzten und realen Bearbeitungszeit stimmen überein!`;
+                        break;
+                    case 1:
+                        document.getElementById('percentageDifferenceText').innerText = `Der insgesamte Mehraufwand gegenüber der Summe der geschätzten Bearbeitungszeiten beträgt ${absNum}h!`;
+                        break;
+                    case 2:
+                        document.getElementById('percentageDifferenceText').innerText = `Die Summe der realen Bearbeitungszeiten weicht zu ${percentageDifference}% von der geschätzten ab. Dies entspricht ${absNum}h!`;
+                        break;
+                }
                 overlay.addEventListener('click', toggleVisAllTasks);
             }
         }
