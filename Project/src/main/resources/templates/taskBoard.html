@@ -1,58 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Board</title>
-    <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/taskBoard.css">
-    <link rel="stylesheet" href="css/setup.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<body>
-<!--
-       Author: Zana Salih Hama
-       Revisited: /
-       Funktion: Reiter zur Übersicht aller Seiten[-optionen]
-       Grund: Übersichtlichkeit
-       User-ID/Task-ID: /
-    -->
-<div class="Reiter">
-    <button class="reiterBtn" >Projekt Manager</button>
-    <button class = "reiterBtn">Profil </button>
-    <button class = "reiterBtn"onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Task-Board </button>
-    <button class = "reiterBtn">Kalender </button>
-    <button class = "reiterBtn" id="einstellungBtn">Einstellungen </button>
-</div>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Task Board</title>
+        <link rel="stylesheet" href="/css/foundation.css">
+        <link rel="stylesheet" href="/css/taskBoard.css">
+        <link rel="stylesheet" href="/css/setup.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    </head>
+    <body>
+    <!--
+           Author: Zana Salih Hama
+           Revisited: /
+           Funktion: Reiter zur Übersicht aller Seiten[-optionen]
+           Grund: Übersichtlichkeit
+           User-ID/Task-ID: /
+        -->
+    <div class="Reiter">
+        <button class="reiterBtn" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" >Projekt Manager</button>
+        <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
+        <button class = "reiterBtn" onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Task-Board </button>
+        <button class = "reiterBtn">Kalender </button>
+        <button class = "reiterBtn" style="margin-left: auto; margin-right: 0;"><a href="/">Abmelden</a></button>
+    </div>
 
-<!--Author: Paula Krasnovska
-       Revisited: Entfernen unbrauchbarer Attribute und hinzufügen neuer, da Änderung im 2. Sprint
-       Funktion: User-Story Template
-       Grund: Task-Container für Zugehörigkeit zu User-Stories
-       User-ID/Task-ID: U1.F1
-       -->
+    <div id="outerContainer-Header">
+        <button style="position: relative; margin-right: 5px;" th:each="Taskboard : ${TaskBoards}" th:sID="${sessionID}" th:id="@{Button{tb}(tb=${Taskboard.getID()})}" class="outerContainer-HeaderBtn" th:tbID="${Taskboard.getID()}" ondblclick="SwitchToTaskBoardByID(this.getAttribute('sID'), this.getAttribute('tbID'))" title="Doppeklick, um auf Taskboard zu wechseln">
+            <span th:id="@{Name{tb}(tb=${Taskboard.getID()})}" th:text="${Taskboard.getName()}">  </span>
+            <span th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" th:tbID="${Taskboard.getID()}" class='delete-btn' onclick="deleteTaskBoard(this, this.getAttribute('sID'), this.getAttribute('tbID'))" title="Taskboard löschen">×</span></button>
+        <button type="button" th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" id="outerContainer-HeaderBtnAdd" onclick="createTBNamePopUp()" title="Taskboard hinzufügen"><b>+</b></button>
+        <button type="button" th:if="${authority == 2 || authority == 4}" id = "outerContainer-HeaderChangeTBName" onclick="changeTBNamePopUp()"><i id="pencilSym" class = "fa fa-pencil"></i>Name ändern</button>
 
-<!-- Todo: wenn Task Attribute erstellt wurden, ändere Thymelaf für taskCard nach den entsprechenden Attributen um, also description, zugehörige User Story usw. (PK)-->
-<!-- Todo: taskBoard hat kein editBtn für Tasks, verschiebe die Zeile nach projectManaerNeu.html sobald dies möglich ist, nur damm mit neuen Attributen (PK) -->
+        <div id="outerContainer" th:tbID="${Board.getID()}" >
+            <div th:each="TaskList : ${Board.getTaskListList()}" th:id="${TaskList.getID()}" class="innerContainer" style="margin-left: 10px">
+                <table class="columnTable">
+                    <thead class="columnTableHead">
+                    <tr>
+                        <th th:text="${TaskList.getName()}">Todo</th>
+                    </tr>
+                    </thead>
+                    <tbody class="columnTableBody">
+                    <tr th:each="task : ${TaskList.getTasks()}" th:users="${task.getUserAsJSON()}" th:id="@{T{TID}(TID=${task.getID()})}" draggable="true" th:us="${task.getUserStory().getName()}" th:tb="${Board.getName()}" th:desc="${task.getDescription()}" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}" th:pri="${task.getPriority()}" th:due="${task.getDueDateAsPresentable()}"
+                        ondblclick="toggleZoomedTaskCardforTask(this.getAttribute('us'),this.getAttribute('tb'),this.getAttribute('desc'), this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('pri'), this.getAttribute('due'), this.getAttribute('users'))" title="Doppelklicken, um gesamte Task zu sehen">
+                        <td th:style = "${(task.getPriorityAsInt() == 1) ? 'background-color: #9EC5E5' : (task.getPriorityAsInt() == 2) ? 'background-color: #f5dd90' : (task.getPriorityAsInt() == 3) ? 'background-color: #f68e5f' : (task.getPriorityAsInt() == 4) ? 'background-color: #f76c5e' : 'background-color: rgba(255, 255, 255, 0.66)'}">
+                            <button class="tableContentLabel" th:id="@{tableContent-Visualisation:{tID}(tID=${task.getID()})}" title="Schätzungstracker" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}"  onclick="visualisationOfTaskTime(this.getAttribute('est'), this.getAttribute('real'))"><i class = "fa-solid fa-chart-bar"></i></button>
+                            <label class="tableContentLabel" id="tableContent-UsId" th:text="${task.getUserStory().getName()}" title="Referenz zur entsprechenden User-Sotry">US-ID</label>
+                            <label class="tableContentLabel" id="tableContent-Beschreibung" th:text="${task.getDescription()}" title="Beschreibung der Task">Beschreibung</label>
+                            <label class="tableContentLabel" id="tableContent-LeftTime" th:text="${task.getDueDateAsPresentable()}" title="Frist">Left Time</label>
+                            <label class="tableContentLabel" id="tableContent-Role" title="Rolle">Rolle</label>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-<div> <!-- Müssen hier divs stehen, oder kann das weg? hatte dies einen besonderen Grund wegen Thymeleaf?-->
-    <ul>
-        <li th:each = "story: ${Storys}" class="taskCard" >
-                <label th:text = "${story.name}?:'Titel'" id="taskCardBeschreibung">Titel</label>
-                <label th:text = "${story.description}?:'Beschreibung'"id="taskCardUS">Beschreibung</label>
-            <!--<button class="editBtn" th:sname="${story.name}" th:sdescription="${story.description}" th:sid="${story.id}" onclick="toggleEditBox(this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'));" ><i class="fa fa-edit" style="margin-right: 8px;"></i></button> -->
-       </li>
-   </ul>
-</div>
+    <div id="zoomedTaskCard">
+        <label id="zoomedTaskCard-US" class="zoomedTaskCard-Header" title="Referenz zur dazugehörigen User-Story">US</label>
+        <span class="zoomedTaskCard-Header">/</span>
+        <label id="zoomedTaskCard-taskBoard" class="zoomedTaskCard-Header" title="Referenz zum dazugehörigen Task-Board">Task-Board</label>
+        <br/>
+        <i class="fa-solid fa-bars" id="zoomedTaskCard-sym5"></i><label class="zoomedTaskCard-symLab" style="margin-left: 2%;">Beschreibung</label>
+        <label id="zoomedTaskCard-description" title="Beschreibung der Task">Lacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velitLacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velit</label>
+           <div id="wrapper">
+                <div id="zoomedTaskCard-LeftSide">
+                    <i class="fa-regular fa-clock" id="zoomedTaskCard-sym1"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym1">Schätzung</label>
+                    <label class="zoomedTaskCard-content" id="zoomedTaskCard-estimatedTime" title="Geschätzte Zeit der Task">Geschätzte Zeit</label>
+                    <i class="fa-solid fa-hourglass-end" id="zoomedTaskCard-sym3"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym3" style="margin-left: 6%;">Bearbeitung</label>
+                    <label class="zoomedTaskCard-content" id="zoomedTaskCard-workedTime" title="Real bearbeitete Zeit">Bearbeitungszeit</label>
+                    <div  class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdown">
+                        <i class="fa-regular fa-user" id="zoomedTaskCard-sym7" style = "display:inline"></i> <label class="zoomedTaskCard-symLab" for = "zoomedTaskCard-sym7">Zugewiesene Nutzer</label>
+                        <label id="zoomedTaskCard-nutzerDropdownBtn" title="Zugewiesene Nutzer"><i class = "fa fa-level-down"></i> Nutzer</label>
+                        <ul class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdown-content">
+                            <li>Nutzer 1</li>
+                            <li>Nutzer 1</li>
+                            <li>Nutzer 1</li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="zoomedTaskCard-RightSide">
+                    <i class="fa-solid fa-circle-exclamation" id="zoomedTaskCard-sym2"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym2" style="margin-left: 5%;">Priorität</label>
+                    <label class="zoomedTaskCard-content" id="zoomedTaskCard-priority" title="Priorität der Task">Priorität</label>
+                    <i class="fa-solid fa-people-group" id="zoomedTaskCard-sym4"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym4">Rolle</label>
+                    <label class="zoomedTaskCard-content" id="zoomedTaskCard-role" title="Rolle">Rolle</label>
+                    <i class="fa-solid fa-calendar-days" id="zoomedTaskCard-sym6"></i><label  class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym6" style="margin-left: 6%;">Frist</label>
+                    <label class="zoomedTaskCard-content" id="zoomedTaskCard-deadline" title="Abgabefrist">Abgabefrist</label>
+                </div>
+           </div>
+    </div>
 
-   <script src="js/vendor/jquery.js"></script>
-   <script src="js/vendor/what-input.js"></script>
-   <script src="js/vendor/foundation.js"></script>
-   <script src="js/app.js"></script>
-   <script src="js/communication.js"></script>
-   <script type = "text/javascript" src="js/setup.js"></script>
-   <script type = "text/javascript" src="js/taskBoard.js"></script>
+    <div id = "visEstimateTracker">
+        <div id = "visEstimateTracker-graph">
+            <canvas id = "myChart"></canvas>
+        </div>
+        <label id="percentageDifferenceText"></label>
+    </div>
 
-</body>
+    <div th:if="${authority == 2 || authority == 4}" id="popupChangeTBName">
+        <form id = changeTBNameForm>
+        <i class = "fa fa-pencil" style="margin-right:10px;" title="Name des Taskboards ändern"></i><label style = "color: #d1d1d1; border-bottom: 2px solid #d1d1d1; display: inline">Ändere den Namen des Task-Boards</label>
+        <input form = "changeTBNameForm" id = "changeTBNameInput" th:value="${Board.getName()}">
+        <button type="button" th:tbID="${Board.getID()}" th:sID="${sessionID}" id = "changeTBNameBtn" title="Name des Taskboards ändern" onclick="changeTBName(this.getAttribute('sID'), this.getAttribute('tbID')); closePopup()" >Ändern</button>
+        </form>
+    </div>
+
+    <div th:if="${authority == 2 || authority == 4}" id="popupCreateTB">
+        <form id = createTBForm>
+            <i class = "fa fa-plus" style="margin-right:10px;" title="Name des Taskboards ändern"></i><label style = "color: #d1d1d1; border-bottom: 2px solid #d1d1d1; display: inline; width:100%" > Name des Taskboards </label>
+            <input form = "changeTBNameForm" id = "createTBNameInput">
+            <button type="button" th:sID="${sessionID}" id = "createTBNameBtn" onclick="addTaskBoard(this.getAttribute('sID')); closePopup()" >Erstellen</button>
+        </form>
+    </div>
+
+
+    <div th:if="${authority == 2 || authority == 4}" id = "popupTaskFertig">
+        <form id = taskFertigForm>
+            <i class = "fa fa-clock" style="margin-right:10px;" title="Name des Taskboards ändern"></i> <label style = "color: #d1d1d1; border-bottom: 2px solid #d1d1d1;display: inline; width:100%" > Gebe die Bearbeitungszeit der Task an</label>
+            <input type = "number" min="0" max="1000" step="0.5" form = "taskFertigForm" id = "taskFertigInput" placeholder="Deine Bearbeitungszeit">
+            <input type="hidden" id="taskID">
+            <button type="button" th:sID="${sessionID}"  id = "taskFertigBtn" onclick="setTaskTime(this.getAttribute('sID')); closePopup()" >Bestätigen</button>
+        </form>
+    </div>
+
+    <input type="hidden" id="sessionID" th:value="${sessionID}">
+        <script src="/js/vendor/jquery.js"></script>
+        <script src="/js/vendor/what-input.js"></script>
+        <script src="/js/vendor/foundation.js"></script>
+        <script src="/js/app.js"></script>
+        <script src="/js/communication.js"></script>
+        <script type = "text/javascript" src="/js/setup.js"></script>
+        <script type = "text/javascript" src="/js/taskBoard.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script type="module" src="/js/myChart.js"></script>
+        <script src="/js/myChart.js"></script>
+    </body>
 </html>

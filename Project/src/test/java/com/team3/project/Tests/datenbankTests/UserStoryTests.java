@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 
 import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.DAOUserStoryService;
+import com.team3.project.Tests.BaseClassesForTests.BaseDBTest;
 
-
-public class UserStoryTests extends BaseTest {
+public class UserStoryTests extends BaseDBTest {
     @BeforeAll
     public static void BeforeAll() {
         setup();
@@ -29,7 +29,7 @@ public class UserStoryTests extends BaseTest {
 
     @AfterEach
     public void afterEach() {
-
+        after();
     }
 
     @AfterAll

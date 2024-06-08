@@ -1,9 +1,12 @@
 package com.team3.project.Classes;
 
 import com.team3.project.Classes.Enumerations.Priority;
+import com.team3.project.DAO.DAOTask;
+import com.team3.project.DAOService.DAOTaskService;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Getter
@@ -12,7 +15,6 @@ public class UserStory extends abstraktDataClasses {
     private String name;
     private String description;
     private Priority priority;
-    private List<Task> Tasks = null;
 
     /* Author: Henry L. Freyschmidt
      * Revisited: /
@@ -20,11 +22,37 @@ public class UserStory extends abstraktDataClasses {
      * Grund: /
      * UserStory/Task-ID: /
      */
-    public UserStory(String name, String description, int priority, int id){
-        super(id);
+    public UserStory(String name, String description, int priority, int ID){
+        super(ID);
         Enumerations prior = new Enumerations();
         this.name = name;
         this.description = description;
         this.priority = prior.IntToPriority(priority);
+    }
+
+    public int getPriorityAsInt() {
+        Enumerations prior = new Enumerations();
+        return prior.getInt(this.getPriority());
+    }
+
+
+    public List<Double> getAnforderungenG(){
+        List<DAOTask> dtl =DAOTaskService.getListByUserStoryId(this.getID());
+        List<Double> AnforderungenG = new LinkedList<Double>();
+        for (DAOTask dt : dtl){
+            double g = dt.getProcessingTimeEstimatedInHours();
+            AnforderungenG.add(g);
+        }
+        return AnforderungenG;
+    }
+
+    public List<Double> getAnforderungenA(){
+        List<DAOTask> dtl =DAOTaskService.getListByUserStoryId(this.getID());
+        List<Double> AnforderungenA = new LinkedList<Double>();
+        for (DAOTask dt : dtl){
+            double g = dt.getProcessingTimeRealInHours();
+            AnforderungenA.add(g);
+        }
+        return AnforderungenA;
     }
 }

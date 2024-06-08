@@ -1,41 +1,490 @@
-/*
-  Author: Paula Krasnovska
-  Revisited: /
-  Funktion: Task im TaskBoard
-  Grund: Benutzerfreundlichkeit
-  User-ID/Task-ID: U1.F1
-*/
-/*Todo: User ID raussuchen für Task*/
-/*Todo: taskCard für das Task Board entsprechend umschreiben, damit die Größe und Attribute angemessen sind.*/
-.taskCard{
-    position:relative;
-    width: 300px;
-    height:200px;
-    background-color: #87939f;
-    color:#3b3b3b;
-    border-top-left-radius:15px;
-    border-top-right-radius:15px;
-    margin-top:30px;
-    margin-left:10px;
-    transition: all 0.5s ease;
-    list-style-type: none;
+#outerContainer-Header{
+    position: relative;
+    background-color: #211f2b;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 2% 2%;
 }
 
-.taskCard:hover{
+.outerContainer-HeaderBtn{
+    width: fit-content;
+    height: 25px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 5px;
+    background-color: #46425e;
+    display: inline;
+    padding-right: 20px;
+    cursor: alias;
+}
+
+.outerContainer-HeaderBtn:hover{
+    background-color: #302d41;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #928fc0;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px;
+}
+
+#outerContainer-HeaderBtnAdd{
+    width: 30px;
+    height: 25px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 1px;
+    background-color: #67648f;
+    display: inline;
+}
+
+#outerContainer-HeaderChangeTBName{
+    position: relative;
+    width: fit-content;
+    height: 25px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 5px;
+    background-color: #46425e;
+    /* display: inline; */
+    /* right: 15px; */
+    float: right;
+    content: antiquewhite;
+    /* justify-content: flex-end; */
+
+}
+
+#outerContainer-HeaderChangeTBName:hover{
+    background-color: #38364b;
+    cursor: pointer;
+}
+
+#outerContainer-HeaderBtnAdd:hover{
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
     0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    background-color: #46425e;
+    cursor: pointer;
+}
+/*#38618C*/
+#outerContainer{
+    background-color: #211f2b;
+    border-bottom: 10px;
+    position: relative;
+    margin-top: 1%;
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
 }
 
-
-#taskCardBeschreibung{
-    margin-top: 25px;
-    right: 0;
-    width:280px;
-    height:130px;
+.innerContainer{
+    background-color: #302d3f;
+    height: 75vh;
+    width: 20%;
+    border-radius: 10px;
+    overflow: auto;
 }
 
-/*Packen wir alle Infos auf das Kärtchen, oder lösen wir das auch mit einem Popup, dass dann da alle Infos angezeigt werden?*/
-#taskCardUS{}
-#taskCardPrio{}
-#taskCardDueDate{}
-#taskCardRole{}
+.wrapper {
+    height: 500px;
+    overflow: auto;
+    top: -4px;
+    cursor: default;
+}
+
+.columnLabels{
+    color: white;
+    text-align: center;
+}
+
+.columnTable {
+    position: relative;
+    border-collapse: separate;
+    table-layout: auto;
+    font-size: 10pt;
+    border-spacing: 0 20px;
+    cursor: default;
+}
+
+.columnTableHead {
+    position: sticky;
+    top: 0;
+    background-color: black;
+    cursor: default;
+}
+
+.columnTableHead tr th{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    text-align: center;
+    background-color: #295266;
+    color: white
+}
+.columnTable th,
+.columnTable td {
+    padding: 10px;
+    text-align: left;
+    width: 20%;
+    border: 0 solid #adadad;
+    border-radius: 10px;
+    overflow-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    cursor: alias;
+}
+
+.columnTable th {
+    background-color: rgba(255, 255, 255, 0.66);
+    color: black;
+    white-space: nowrap;
+}
+
+.columnTable tbody tr {
+    transition: background-color 0.3s;
+}
+
+.columnTable tbody tr:hover{
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    color: black;
+    white-space: nowrap;
+}
+
+hr {
+    border: 1px solid #bebebe;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.tableContentLabel{
+    font-size: 12px;
+}
+
+#tableContent-Visualisation{
+    display: inline-block;
+    float: left;
+    cursor: pointer;
+}
+
+#tableContent-LeftTime{
+    display: inline-block;
+    float: left;
+    color: black;
+}
+
+#tableContent-Role{
+    display: inline-block;
+    float: right;
+    color: black;
+}
+
+#tableContent-UsId{
+    display: inline-block;
+    float: right;
+    color: black;
+}
+
+#tableContent-Beschreibung{
+    padding: 10px;
+    text-align: left;
+    width: 95%;
+    max-width: 200px;
+    border: 0 solid #adadad;
+    border-radius: 10px;
+    cursor: default;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#zoomedTaskCard {
+    position: fixed;
+    display: none;
+    top: 50dvh;
+    left: 50dvw;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    background-color: #373347;
+    border-radius: 10px;
+    padding: 15px;
+    z-index: 1000;
+    text-align: justify;
+    height: fit-content;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    overflow-y: scroll;
+}
+
+.zoomedTaskCard-content{
+    color: #d1d1d1;
+    /* display: inline-table; */
+    width: 86%;
+    background: #282435;
+    border-radius: 10px;
+    text-align: center;
+    /* height: 3dvh; */
+}
+
+.zoomedTaskCard-Header{
+    display: inline-flex;
+    user-select: none;
+    color: #d1d1d1;
+    font-size: 75%;
+}
+
+#zoomedTaskCard-taskBoard{
+    display: inline-flex;
+    user-select: none;
+    color: #d1d1d1;
+}
+
+#zoomedTaskCard-workedTime,
+#zoomedTaskCard-estimatedTime,
+#zoomedTaskCard-role,
+#zoomedTaskCard-priority,
+#zoomedTaskCard-deadline,
+#zoomedTaskCard-nutzerDropdown{
+    font-size: 85%;
+}
+
+#zoomedTaskCard-description {
+    position: relative;
+    max-height: 200px;
+    border-radius: 5px;
+    background-color: #d1d1d1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    white-space: normal;
+    overflow-wrap: break-word;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 85%;
+    color: black;
+    scrollbar-color: #084d6a;
+    hyphens: auto;
+    cursor: text;
+    text-align: justify;
+}
+
+#zoomedTaskCard-priority, #zoomedTaskCard-role, #zoomedTaskCard-deadline{
+    margin-right: 0;
+    margin-left: auto;
+}
+
+#zoomedTaskCard-nutzerDropdown{
+    background-color: transparent;
+    color: #d1d1d1;
+    border: none;
+    display: inherit;
+}
+
+#zoomedTaskCard-nutzerDropdown label{
+    background-color: transparent;
+    color: #d1d1d1;
+    border: none;
+    display: inherit;
+    background-color: #282435;
+}
+
+#zoomedTaskCard-nutzerDropdown ul{
+    display: none;
+    float: left;
+    position: fixed;
+    background-color: #373347;
+    min-width: fit-content;
+    height:100px;
+    box-shadow: 8px 16px rgba(0,0,0,0.2);
+    overflow: scroll;
+    margin-top: 4%;
+    margin-left: 5%;
+    z-index: 1;
+    border-radius:0px;
+}
+#zoomedTaskCard-nutzerDropdown ul li{
+    overflow: scroll;
+    background-color: transparent;
+    color: #d1d1d1;
+    text-decoration: none;
+    display: block;
+}
+
+#zoomedTaskCard-nutzerDropdownBtn{
+    background-color: transparent;
+}
+#zoomedTaskCard-nutzerDropdown:hover ul {display: block;}
+
+
+#zoomedTaskCard-nutzerDropdown:focus{
+    outline: none;
+    box-shadow: none;
+    border-color:transparent;
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+}
+::-webkit-scrollbar-track {background-color: transparent;}
+::-webkit-scrollbar-thumb {
+    background-color: #627378;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {background-color: #a8bbbf;}
+
+::-webkit-scrollbar-corner {
+    background: rgba(0,0,0,0);
+}
+
+.dragging {
+    opacity: .25;
+
+}
+
+.placeholder {
+    background-color: #f0f0f0;
+    border: 2px dashed #ccc;
+}
+
+#popupChangeTBName, #popupTaskFertig, #popupCreateTB{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+}
+
+#changeTBNameForm, #taskFertigForm, #createTBForm {
+    position: relative;
+    background-color: rgb(46, 46, 61);
+    padding: 20px;
+    width: 80%;
+    border-radius: 12px;
+    top: 50dvh;
+    left: 50dvw;
+    transform: translate(-50%, -50%);
+}
+
+#changeTBNameInput, #taskFertigInput, #createTBNameInput {
+    position: relative;
+    background-color: #d1d1d1;
+    width: 80%;
+    height: 40px;
+    color: black;
+    font-size: 13px;
+    border-radius: 12px;
+    margin-top: 3%;
+    margin-left: 10%;
+    padding: 10px;
+}
+
+#changeTBNameBtn, #taskFertigBtn, #createTBNameBtn {
+    position: relative;
+    height: 30px;
+    width: fit-content;
+    margin-top: 30px;
+    margin-left: 45%;
+    background-color: #4b6294;
+    color: white;
+    border-radius: 12px;
+    font-size: 11pt;
+    padding: 8px;
+}
+
+#changeTBNameBtn:hover, #taskFertigBtn:hover, #createTBNameBtn:hover {
+    background-color: #3b4c70;
+}
+
+#visEstimateTracker{
+    width: 657px;
+    position: fixed;
+    height: 560px;
+    background-color: rgb(42, 39, 50, 0.8);
+    display: none;
+    z-index: 1000;
+    top: 50dvh;
+    left: 50dvw;
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
+}
+
+#visEstimateTracker-graph{
+    width: 100%;
+    height: 80%;
+    position: relative;
+    padding: 25px;
+}
+
+.fa-pencil:before{
+    margin-right: 10px;
+    z-index: 1000;
+}
+
+#percentageDifferenceText{
+    color: #c6c6c6;
+    position: relative;
+    padding: 14px;
+    font-family: system-ui;
+    margin-top: 2%;
+    text-align: center;
+    hyphens: auto;
+    font-size: 90%;
+}
+
+#zoomedTaskCard-sym1, #zoomedTaskCard-sym2, #zoomedTaskCard-sym3, #zoomedTaskCard-sym4, #zoomedTaskCard-sym5, #zoomedTaskCard-sym6, #zoomedTaskCard-sym7, #zoomedTaskCard-sym8{
+    font-size: 90%;
+}
+
+#zoomedTaskCard-priority, #zoomedTaskCard-role, #zoomedTaskCard-estimatedTime, #zoomedTaskCard-workedTime{
+    margin-bottom: 6%;
+}
+
+#zoomedTaskCard-sym2, #zoomedTaskCard-sym4, #zoomedTaskCard-sym6{
+    margin-left: 15%;
+}
+
+#zoomedTaskCard-sym5{
+    margin-top: 3%;
+}
+
+.zoomedTaskCard-symLab{
+    display: inline;
+    margin-left: 4%;
+    color: #d1d1d1;
+    font-size: 90%;
+}
+
+#zoomedTaskCard-RightSide{
+    flex: 0 0 50%;
+    width: 50%;
+}
+
+#zoomedTaskCard-LeftSide{
+    flex: 0 0 50%;
+    width: 50%;
+}
+
+#wrapper{
+    display: flex;
+}

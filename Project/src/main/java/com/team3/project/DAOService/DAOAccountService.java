@@ -1,6 +1,7 @@
 package com.team3.project.DAOService;
 
 import com.team3.project.DAO.DAOAccount;
+import com.team3.project.DAO.DAOUser;
 
 public class DAOAccountService {
     //creates
@@ -19,6 +20,9 @@ public class DAOAccountService {
         if (!checkMail(email)) {
             try {
                 DAOService.persist(new DAOAccount(email, password));
+                DAOUser user = DAOUserService.getByMail(email);
+                user.setAuthorization(DAOAuthorizationService.getByAuthorization(1));
+                DAOService.merge(user);
             } catch (Exception e) {
                 return false;
             }

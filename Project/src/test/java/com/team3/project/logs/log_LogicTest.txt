@@ -277,3 +277,847 @@ Logik-Test-createProfile
 Test ID: Logic.T3
 Date: 07/05/24 16:21:20
 pass: trueUserStory: not empty Database
+
+
+UserStory: not empty Database
+
+
+UserStory: not empty Database
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 18/05/24 17:06:03
+Fail: created Task not found
+
+
+UserStory: not empty Database
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 18/05/24 17:07:58
+Fail: created Task not found
+
+
+UserStory: not empty Database
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 18/05/24 17:09:52
+Fail: created Task not found
+
+
+UserStory: not empty Database
+Logik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 20/05/24 19:09:42
+pass: true
+
+UserStory: not empty Database
+Logik-Test-deleteVisualRole
+Test ID: Logic.T16
+Date: 20/05/24 19:10:00
+Fail: visual Role was not deleted 
+
+
+UserStory: not empty Database
+Logik-Test-changeVisualRoleName
+Test ID: Logic.T15
+Date: 20/05/24 19:10:00
+Fail: visual Role Name was not changed
+pass = false
+
+UserStory: not empty Database
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 20/05/24 19:10:00
+
+
+UserStory: not empty Database
+Logik-Test-getAllProfiles
+Test ID: Logic.T18
+Date: 20/05/24 19:10:00
+Fail: did not return all Users
+
+
+UserStory: not empty Database
+Logik-Test-createUserStory
+Test ID: Logic.T1
+Date: 20/05/24 19:10:00
+pass: true
+
+UserStory: not empty Database
+Logik-Test-addDoneToTask
+Test ID: Logic.T19
+Date: 20/05/24 19:10:00
+pass = true
+
+UserStory: not empty Database
+Logik-Test-showVisualRole
+Test ID: Logic.T13
+Date: 20/05/24 19:10:00
+
+
+UserStory: not empty Database
+Logik-Test-register
+Test ID: Logic.T9
+Date: 20/05/24 19:10:00
+
+
+UserStory: not empty Database
+Logik-Test-login
+Test ID: Logic.T10
+Date: 20/05/24 19:10:00
+pass = true
+
+UserStory: not empty Database
+Logik-Test-changeVisualRole
+Test ID: Logic.T17
+Date: 20/05/24 19:10:00
+
+
+UserStory: not empty Database
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 20/05/24 19:10:00
+Fail: deleted User Story found
+
+
+UserStory: not empty Database
+Logik-Test-changeAuthority
+Test ID: Logic.T12
+Date: 20/05/24 19:10:00
+
+
+UserStory: not empty Database
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 20/05/24 19:10:00
+Fail: created Task not found
+
+
+UserStory: not empty Database
+Logik-Test-authority
+Test ID: Logic.T11
+Date: 20/05/24 19:10:00
+Fail: User created with wrong authority
+
+UserStory: not empty Database
+Logik-Test-createVisualRole
+Test ID: Logic.T14
+Date: 20/05/24 19:10:00
+Fail: visual Role was not created
+
+
+UserStory: not empty Database
+Logik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 20/05/24 19:10:00
+pass: true
+
+UserStory: not empty Database
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 20/05/24 19:10:00
+
+
+UserStory: not empty Database
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 20/05/24 19:10:00
+pass = true
+
+
+UserStory: not empty Database
+Logik-Test-createProfile
+Test ID: Logic.T3
+Date: 20/05/24 19:10:00
+
+
+UserStory: not empty Database
+Logik-Test-register
+Test ID: Logic.T9
+Date: 21/05/24 12:50:27
+
+
+UserStory: not empty Database
+Logik-Test-deleteVisualRole
+Test ID: Logic.T16
+Date: 21/05/24 12:56:12
+Fail: visual Role was not deleted 
+
+
+UserStory: not empty Database
+Logik-Test-changeVisualRoleName
+Test ID: Logic.T15
+Date: 21/05/24 12:56:12
+Fail: visual Role Name was not changed
+pass = false
+
+UserStory: not empty Database
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 21/05/24 12:56:12
+
+
+UserStory: not empty Database
+Logik-Test-getAllProfiles
+Test ID: Logic.T18
+Date: 21/05/24 12:56:12
+Fail: did not return all Users
+
+
+UserStory: not empty Database
+Logik-Test-createUserStory
+Test ID: Logic.T1
+Date: 21/05/24 12:56:12
+pass: true
+
+UserStory: not empty Database
+Logik-Test-addDoneToTask
+Test ID: Logic.T19
+Date: 21/05/24 12:56:12
+pass = true
+
+UserStory: not empty Database
+Logik-Test-showVisualRole
+Test ID: Logic.T13
+Date: 21/05/24 12:56:12
+
+
+UserStory: not empty Database
+Logik-Test-register
+Test ID: Logic.T9
+Date: 21/05/24 12:56:12
+
+
+UserStory: not empty Database
+Logik-Test-login
+Test ID: Logic.T10
+Date: 21/05/24 12:56:12
+pass = true
+
+UserStory: not empty Database
+Logik-Test-changeVisualRole
+Test ID: Logic.T17
+Date: 21/05/24 12:56:12
+
+
+UserStory: not empty Database
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 21/05/24 12:56:12
+Fail: deleted User Story found
+
+
+UserStory: not empty Database
+Logik-Test-changeAuthority
+Test ID: Logic.T12
+Date: 21/05/24 12:56:12
+
+
+UserStory: not empty Database
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 21/05/24 12:56:12
+Fail: created Task not found
+
+
+UserStory: not empty Database
+Logik-Test-authority
+Test ID: Logic.T11
+Date: 21/05/24 12:56:12
+Fail: User created with wrong authority
+
+UserStory: not empty Database
+Logik-Test-createVisualRole
+Test ID: Logic.T14
+Date: 21/05/24 12:56:12
+Fail: visual Role was not created
+
+
+UserStory: not empty Database
+Logik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 21/05/24 12:56:12
+pass: true
+
+UserStory: not empty Database
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 21/05/24 12:56:12
+
+
+UserStory: not empty Database
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 21/05/24 12:56:12
+pass = true
+
+
+UserStory: not empty Database
+Logik-Test-createProfile
+Test ID: Logic.T3
+Date: 21/05/24 12:56:12
+
+
+UserStory: not empty Database
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 21/05/24 12:59:30
+Fail: deleted User Story found
+
+
+UserStory: not empty Database
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 21/05/24 13:00:32
+Fail: deleted User Story found
+
+
+UserStory: not empty Database
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 21/05/24 13:01:51
+Fail: deleted User Story found
+
+
+UserStory: not empty Database
+Logik-Test-deleteVisualRole
+Test ID: Logic.T16
+Date: 21/05/24 13:03:31
+Fail: visual Role was not deleted 
+
+
+UserStory: not empty Database
+Logik-Test-changeVisualRoleName
+Test ID: Logic.T15
+Date: 21/05/24 13:03:31
+Fail: visual Role Name was not changed
+pass = false
+
+UserStory: not empty Database
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 21/05/24 13:03:31
+
+
+UserStory: not empty Database
+Logik-Test-getAllProfiles
+Test ID: Logic.T18
+Date: 21/05/24 13:03:31
+Fail: did not return all Users
+
+
+UserStory: not empty Database
+Logik-Test-createUserStory
+Test ID: Logic.T1
+Date: 21/05/24 13:03:31
+pass: true
+
+UserStory: not empty Database
+Logik-Test-addDoneToTask
+Test ID: Logic.T19
+Date: 21/05/24 13:03:31
+pass = true
+
+UserStory: not empty Database
+Logik-Test-showVisualRole
+Test ID: Logic.T13
+Date: 21/05/24 13:03:31
+
+
+UserStory: not empty Database
+Logik-Test-register
+Test ID: Logic.T9
+Date: 21/05/24 13:03:31
+
+
+UserStory: not empty Database
+Logik-Test-login
+Test ID: Logic.T10
+Date: 21/05/24 13:03:31
+pass = true
+
+UserStory: not empty Database
+Logik-Test-changeVisualRole
+Test ID: Logic.T17
+Date: 21/05/24 13:03:31
+
+
+UserStory: not empty Database
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 21/05/24 13:03:31
+Fail: deleted User Story found
+
+
+UserStory: not empty Database
+Logik-Test-changeAuthority
+Test ID: Logic.T12
+Date: 21/05/24 13:03:31
+
+
+UserStory: not empty Database
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 21/05/24 13:03:31
+Fail: created Task not found
+
+
+UserStory: not empty Database
+Logik-Test-authority
+Test ID: Logic.T11
+Date: 21/05/24 13:03:31
+Fail: User created with wrong authority
+
+UserStory: not empty Database
+Logik-Test-createVisualRole
+Test ID: Logic.T14
+Date: 21/05/24 13:03:31
+Fail: visual Role was not created
+
+
+UserStory: not empty Database
+Logik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 21/05/24 13:03:31
+pass: true
+
+UserStory: not empty Database
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 21/05/24 13:03:31
+
+
+UserStory: not empty Database
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 21/05/24 13:03:31
+pass = true
+
+
+UserStory: not empty Database
+Logik-Test-createProfile
+Test ID: Logic.T3
+Date: 21/05/24 13:03:31
+
+
+UserStory: not empty Database
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 21/05/24 13:17:56
+UserStory: not empty Database
+Fail: deleted User Story found
+
+
+UserStory: not empty Database
+Logik-Test-register
+Test ID: Logic.T9
+Date: 21/05/24 13:30:43
+
+
+UserStory: not empty Database
+Logik-Test-register
+Test ID: Logic.T9
+Date: 21/05/24 13:40:24
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-register
+Test ID: Logic.T9
+Date: 21/05/24 13:48:38
+pass = true
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-deleteVisualRole
+Test ID: Logic.T16
+Date: 21/05/24 13:49:16
+Fail: visual Role was not deleted 
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-changeVisualRoleName
+Test ID: Logic.T15
+Date: 21/05/24 13:49:16
+Fail: visual Role Name was not changed
+pass = false
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 21/05/24 13:49:16
+pass = true 
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-getAllProfiles
+Test ID: Logic.T18
+Date: 21/05/24 13:49:16
+pass = true
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-createUserStory
+Test ID: Logic.T1
+Date: 21/05/24 13:49:16
+pass: true
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-addDoneToTask
+Test ID: Logic.T19
+Date: 21/05/24 13:49:16
+pass = true
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-showVisualRole
+Test ID: Logic.T13
+Date: 21/05/24 13:49:16
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-register
+Test ID: Logic.T9
+Date: 21/05/24 13:49:16
+pass = true
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-login
+Test ID: Logic.T10
+Date: 21/05/24 13:49:16
+pass = true
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-changeVisualRole
+Test ID: Logic.T17
+Date: 21/05/24 13:49:16
+Fail: visual Role was not attributed to User
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 21/05/24 13:49:16
+UserStory: not empty Database
+Profile: not empty Database
+pass = true
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-changeAuthority
+Test ID: Logic.T12
+Date: 21/05/24 13:49:16
+Fail: Authority was not changed
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 21/05/24 13:49:16
+pass = true
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-authority
+Test ID: Logic.T11
+Date: 21/05/24 13:49:16
+Fail: User created with wrong authority
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-createVisualRole
+Test ID: Logic.T14
+Date: 21/05/24 13:49:16
+Fail: visual Role was not created
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 21/05/24 13:49:16
+pass: true
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 21/05/24 13:49:16
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 21/05/24 13:49:16
+pass = true
+
+
+UserStory: not empty Database
+Profile: not empty Database
+Logik-Test-createProfile
+Test ID: Logic.T3
+Date: 21/05/24 13:49:16
+pass: trueBack-End-Tests:
+
+Back-End-Tests:
+
+Back-End-Tests:
+
+Logik-Test-createUserStory
+Test ID: Logic.T1
+Date: 21/05/24 14:12:22
+pass: trueBack-End-Tests:
+
+Logik-Test-deleteVisualRole
+Test ID: Logic.T16
+Date: 21/05/24 14:12:41
+Fail: visual Role was not deleted 
+Logik-Test-changeVisualRoleName
+Test ID: Logic.T15
+Date: 21/05/24 14:12:41
+Fail: visual Role Name was not changed
+pass = falseLogik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 21/05/24 14:12:41
+pass = true 
+Logik-Test-getAllProfiles
+Test ID: Logic.T18
+Date: 21/05/24 14:12:41
+pass = trueLogik-Test-createUserStory
+Test ID: Logic.T1
+Date: 21/05/24 14:12:41
+pass: trueLogik-Test-addDoneToTask
+Test ID: Logic.T19
+Date: 21/05/24 14:12:41
+pass = trueLogik-Test-showVisualRole
+Test ID: Logic.T13
+Date: 21/05/24 14:12:41
+Logik-Test-register
+Test ID: Logic.T9
+Date: 21/05/24 14:12:41
+pass = trueLogik-Test-login
+Test ID: Logic.T10
+Date: 21/05/24 14:12:41
+pass = trueLogik-Test-changeVisualRole
+Test ID: Logic.T17
+Date: 21/05/24 14:12:41
+Fail: visual Role was not attributed to User
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 21/05/24 14:12:41
+pass = true
+Logik-Test-changeAuthority
+Test ID: Logic.T12
+Date: 21/05/24 14:12:41
+Fail: Authority was not changed
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 21/05/24 14:12:41
+pass = true
+Logik-Test-authority
+Test ID: Logic.T11
+Date: 21/05/24 14:12:41
+Fail: User created with wrong authorityLogik-Test-createVisualRole
+Test ID: Logic.T14
+Date: 21/05/24 14:12:41
+Fail: visual Role was not created
+Logik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 21/05/24 14:12:41
+pass: trueLogik-Test-editTask
+Test ID: Logic.T7
+Date: 21/05/24 14:12:41
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 21/05/24 14:12:41
+pass = true
+Logik-Test-createProfile
+Test ID: Logic.T3
+Date: 21/05/24 14:12:41
+pass: trueBack-End-Tests:
+
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 21/05/24 14:19:46
+Back-End-Tests:
+
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 21/05/24 14:20:08
+Back-End-Tests:
+
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 21/05/24 14:20:26
+Back-End-Tests:
+
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 21/05/24 14:26:30
+Back-End-Tests:
+
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 21/05/24 14:33:59
+Fail: updated Task-description not found
+Back-End-Tests:
+
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 21/05/24 14:36:43
+pass = true
+Back-End-Tests:
+
+Logik-Test-deleteVisualRole
+Test ID: Logic.T16
+Date: 21/05/24 14:40:25
+Fail: visual Role was not deleted 
+Logik-Test-changeVisualRoleName
+Test ID: Logic.T15
+Date: 21/05/24 14:40:25
+Fail: visual Role Name was not changed
+pass = falseLogik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 21/05/24 14:40:25
+pass = true 
+Logik-Test-getAllProfiles
+Test ID: Logic.T18
+Date: 21/05/24 14:40:25
+pass = trueLogik-Test-createUserStory
+Test ID: Logic.T1
+Date: 21/05/24 14:40:25
+pass: trueLogik-Test-addDoneToTask
+Test ID: Logic.T19
+Date: 21/05/24 14:40:25
+pass = trueLogik-Test-showVisualRole
+Test ID: Logic.T13
+Date: 21/05/24 14:40:25
+Logik-Test-register
+Test ID: Logic.T9
+Date: 21/05/24 14:40:25
+pass = trueLogik-Test-login
+Test ID: Logic.T10
+Date: 21/05/24 14:40:25
+pass = trueLogik-Test-changeVisualRole
+Test ID: Logic.T17
+Date: 21/05/24 14:40:25
+Fail: visual Role was not attributed to User
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 21/05/24 14:40:25
+pass = true
+Logik-Test-changeAuthority
+Test ID: Logic.T12
+Date: 21/05/24 14:40:25
+Fail: Authority was not changed
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 21/05/24 14:40:25
+pass = true
+Logik-Test-authority
+Test ID: Logic.T11
+Date: 21/05/24 14:40:25
+Fail: User created with wrong authorityLogik-Test-createVisualRole
+Test ID: Logic.T14
+Date: 21/05/24 14:40:25
+Fail: visual Role was not created
+Logik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 21/05/24 14:40:25
+pass: trueLogik-Test-editTask
+Test ID: Logic.T7
+Date: 21/05/24 14:40:25
+pass = true
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 21/05/24 14:40:25
+pass = true
+Logik-Test-createProfile
+Test ID: Logic.T3
+Date: 21/05/24 14:40:25
+pass: trueBack-End-Tests:
+
+Logik-Test-authority
+Test ID: Logic.T11
+Date: 21/05/24 14:57:32
+pass = trueBack-End-Tests:
+
+Logik-Test-deleteVisualRole
+Test ID: Logic.T16
+Date: 21/05/24 14:57:51
+Fail: visual Role was not deleted 
+Logik-Test-changeVisualRoleName
+Test ID: Logic.T15
+Date: 21/05/24 14:57:51
+Fail: visual Role Name was not changed
+pass = falseLogik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 21/05/24 14:57:51
+pass = true 
+Logik-Test-getAllProfiles
+Test ID: Logic.T18
+Date: 21/05/24 14:57:51
+pass = trueLogik-Test-createUserStory
+Test ID: Logic.T1
+Date: 21/05/24 14:57:51
+pass: trueLogik-Test-addDoneToTask
+Test ID: Logic.T19
+Date: 21/05/24 14:57:51
+pass = trueLogik-Test-showVisualRole
+Test ID: Logic.T13
+Date: 21/05/24 14:57:51
+Logik-Test-register
+Test ID: Logic.T9
+Date: 21/05/24 14:57:51
+pass = trueLogik-Test-login
+Test ID: Logic.T10
+Date: 21/05/24 14:57:51
+pass = trueLogik-Test-changeVisualRole
+Test ID: Logic.T17
+Date: 21/05/24 14:57:51
+Fail: visual Role was not attributed to User
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 21/05/24 14:57:51
+pass = true
+Logik-Test-changeAuthority
+Test ID: Logic.T12
+Date: 21/05/24 14:57:51
+Fail: Authority was not changed
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 21/05/24 14:57:51
+pass = true
+Logik-Test-authority
+Test ID: Logic.T11
+Date: 21/05/24 14:57:51
+pass = trueLogik-Test-createVisualRole
+Test ID: Logic.T14
+Date: 21/05/24 14:57:51
+Fail: visual Role was not created
+Logik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 21/05/24 14:57:51
+pass: trueLogik-Test-editTask
+Test ID: Logic.T7
+Date: 21/05/24 14:57:51
+pass = true
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 21/05/24 14:57:51
+pass = true
+Logik-Test-createProfile
+Test ID: Logic.T3
+Date: 21/05/24 14:57:51
+pass: true

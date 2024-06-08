@@ -2,10 +2,13 @@ package com.team3.project.DAOService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import com.team3.project.Classes.abstraktDataClasses;
 import com.team3.project.DAO.DAOAccount;
+import com.team3.project.DAO.DAOAuthorization;
 import com.team3.project.DAO.DAORole;
 import com.team3.project.DAO.DAOUser;
 
@@ -25,6 +28,10 @@ public class DAOUserService {
      */
     public static List<DAOUser> getAll() {
         return DAOService.getAll(DAOUser.class);
+    }
+
+    public static List<String> getAllUserNames() {
+        return getAll().stream().map(DAOUser::getName).toList();
     }
 
     /* Author: Tom-Malte Seep
@@ -99,9 +106,19 @@ public class DAOUserService {
      * @return      identifier
      */
     public static int getIdByMail(String email) {
+        return getByMail(email).getId();
+    }
+
+    public static DAOUser getByMail(String email) {
         String parameterName = "email";
         DAOUser user = DAOService.getSingleByPara(DAOUser.class, email, parameterName);
-        return user.getUid();
+        return user;
+    }
+
+    static DAOUser getWithAuthorizationById(int id) {
+        String parameterName = "authorization";
+        DAOUser user = DAOService.getLeftJoinByID(id, DAOUser.class, parameterName);
+        return user;
     }
 
     //creates
@@ -121,14 +138,29 @@ public class DAOUserService {
      * @return                  true if create was successfull
      */
     public static boolean createByEMail(String email, String password, @Nullable String name, @Nullable String privatDescription, 
-                                        @Nullable String workDescription, @Nullable List<DAORole> roles,
+                                        @Nullable String workDescription, @Nullable List<DAORole> roles, @Nullable DAOAuthorization authorization,
                                         @Nullable String sessionId, @Nullable String sessionDate, boolean newSessionId) {
+        DAOAuthorization daoAuthorization = DAOAuthorizationService.getByAuthorization(1);
+        if (authorization != null) {
+            daoAuthorization = DAOAuthorizationService.getByAuthorization(authorization.getAuthorization());
+        }
         if (newSessionId) {
             String createdSessionId = (sessionId != null) ? sessionId : createSessionId();
             String createdSessionDate = (sessionDate != null) ? sessionDate : createSessionDate();
-            return DAOService.persist(new DAOUser(email, password, name, privatDescription, workDescription, roles, createdSessionId, createdSessionDate));
+            return DAOService.merge(new DAOUser(email, password, name, privatDescription, workDescription, DAOAuthorizationService.filterRolesByAuthorization(daoAuthorization, roles), 
+                                                  createdSessionId, createdSessionDate, daoAuthorization));
         }
-        return DAOService.persist(new DAOUser(email, password, name, privatDescription, workDescription, roles));
+        return DAOService.merge(new DAOUser(email, password, name, privatDescription, workDescription, roles, daoAuthorization));
+    }
+
+    public static boolean createByEMail(String email, String password, @Nullable String name, @Nullable String privatDescription, 
+                                        @Nullable String workDescription, @Nullable List<DAORole> roles, int authorization,
+                                        @Nullable String sessionId, @Nullable String sessionDate, boolean newSessionId) {
+        DAOAuthorization daoAuthorization = DAOAuthorizationService.getByAuthorization(1);
+        if (authorization > 0) {
+            daoAuthorization = DAOAuthorizationService.getByAuthorization(authorization);
+        }
+        return createByEMail(email, password, name, privatDescription, workDescription, roles, daoAuthorization, sessionId, sessionDate, newSessionId);
     }
 
     //updates
@@ -147,19 +179,23 @@ public class DAOUserService {
      * @return                  true if update was successfull
      */
     public static boolean updateById(int id, @Nullable String name, @Nullable String privatDescription, 
-                                     @Nullable String workDescription, @Nullable List<DAORole> roles,
+                                     @Nullable String workDescription, @Nullable List<DAORole> roles, @Nullable DAOAuthorization authorization,
                                      @Nullable String sessionId, @Nullable String sessionDate,
                                      boolean newSessionId) {
         try {
-            String joinOnAttributeName = "roles";
-            DAOUser user = DAOService.getLeftJoinByID(id, DAOUser.class, joinOnAttributeName);
+            DAOAuthorization daoAuthorization = null;
+            if (authorization != null) {
+                daoAuthorization = DAOAuthorizationService.getByAuthorization(authorization.getAuthorization());
+            }
+            List<String> joinOnAttributeNames = Arrays.asList("authorization", "roles");
+            DAOUser user = DAOService.getSingleLeftJoinsById(id, DAOUser.class, joinOnAttributeNames);
             if (user != null) {
                 if (newSessionId) {
                     String createdSessionId = (sessionId != null) ? sessionId : createSessionId();
                     String createdSessionDate = (sessionDate != null) ? sessionDate : createSessionDate();
-                    user.cloneValues(new DAOUser(name, privatDescription, workDescription, roles, createdSessionId, createdSessionDate));
+                    user.cloneDAOUser(new DAOUser(name, privatDescription, workDescription, DAOAuthorizationService.filterRolesByAuthorization(user.getAuthorization(), roles), daoAuthorization, createdSessionId, createdSessionDate));
                 } else {
-                    user.cloneValues(new DAOUser(name, privatDescription, workDescription, roles));
+                    user.cloneDAOUser(new DAOUser(name, privatDescription, workDescription, DAOAuthorizationService.filterRolesByAuthorization(user.getAuthorization(), roles), daoAuthorization));
                 }
                 return DAOService.merge(user);
             }
@@ -169,22 +205,29 @@ public class DAOUserService {
         return false;
     }
 
+    public static boolean updateById(int id, @Nullable String name, @Nullable String privatDescription, 
+                                     @Nullable String workDescription, @Nullable List<DAORole> roles, int authorization,
+                                     @Nullable String sessionId, @Nullable String sessionDate,
+                                     boolean newSessionId) {
+        return updateById(id, name, privatDescription, workDescription, roles, DAOAuthorizationService.getByAuthorization(authorization), sessionId, sessionDate, newSessionId);
+    }
+
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: updates by a DAOUser Object
      * Reason:
      * UserStory/Task-ID:
      */
-    /** 
+    /*
      * @param id           identifier
      * @param user         DAOUser
      * @param newSessionId create a newSessionId
      * @return     true if update was successfull
-     */
+     *//*
     static boolean updateById(int id, DAOUser user, boolean newSessionId) {
         return updateById(id, user.getName(), user.getPrivatDescription(), user.getWorkDescription(), user.getRoles(), 
                           user.getSessionId(), user.getSessionDate(), newSessionId);
-    }
+    } */
     
     /* Author: Tom-Malte Seep
      * Revisited: /
@@ -215,7 +258,7 @@ public class DAOUserService {
      * @return                  true if update was successfull
      */
     public static boolean updateByEMail(String email, String name, String privatDescription, String workDescription, List<DAORole> roles) {
-        return updateById(getIdByMail(email), name, privatDescription, workDescription, roles, null, null, false);
+        return updateById(getIdByMail(email), name, privatDescription, workDescription, roles, null, null, null, false);
     }
     
     /* Author: Tom-Malte Seep
@@ -237,7 +280,7 @@ public class DAOUserService {
      */
     public static boolean updateByEMail(String email, String name, String privatDescription, String workDescription, List<DAORole> roles,
                                         String sessionId, String sessionDate, boolean newSessionId) {
-        return updateById(getIdByMail(email), name, privatDescription, workDescription, roles, null, null, newSessionId);
+        return updateById(getIdByMail(email), name, privatDescription, workDescription, roles, null, null, null, newSessionId);
     }
 
     /* Author: Tom-Malte Seep
@@ -274,6 +317,46 @@ public class DAOUserService {
      */
     public static boolean emptySessionIdById(int id) {
         return updateSessionIdById(id, null, null);
+    }
+
+    public static boolean updateAuthorizationById(int id, int authorization) {
+        DAOUser user = DAOService.getByID(id, DAOUser.class);
+        int maxAuthorization = 4;
+        if (user != null && authorization <= maxAuthorization) {
+            user.setAuthorization(DAOAuthorizationService.getByAuthorization(authorization));
+            return DAOService.merge(user);
+        }
+        return false;
+    }
+
+    public static boolean updateAuthorizationById(int id, DAOAuthorization daoAuthorization) {
+        return updateAuthorizationById(id, daoAuthorization.getAuthorization());
+    }
+
+    public static boolean updateRolesById(int id, List<DAORole> roles) {
+        List<String> joinOnAttributeNames = Arrays.asList("authorization", "roles");
+        DAOUser daoUser = DAOService.getSingleLeftJoinsById(id, DAOUser.class, joinOnAttributeNames);
+        if (daoUser != null) {
+            boolean addrole = false;
+            for (DAORole daoRole : roles) {
+                if (DAORoleService.checkAuthorizationById(daoRole.getId(), daoUser.getAuthorization())) {
+                    daoUser.getRoles().add(daoRole);
+                    addrole = true;
+                }
+            }
+            return addrole && DAOService.merge(daoUser);
+        }
+        return false;
+    }
+
+    static boolean updateAddRoleById(int id, DAORole role) {
+        List<String> joinOnAttributeNames = Arrays.asList("authorization", "roles");
+        DAOUser daoUser = DAOService.getSingleLeftJoinsById(id, DAOUser.class, joinOnAttributeNames);
+        if (DAORoleService.checkAuthorizationById(role.getId(), daoUser.getAuthorization()) && daoUser != null) {
+            daoUser.getRoles().add(role);
+            return DAOService.merge(daoUser);
+        }
+        return false;
     }
 
     //deletes

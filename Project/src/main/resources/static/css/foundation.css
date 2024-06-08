@@ -3037,11 +3037,6 @@ li {
   font-size: inherit;
 }
 
-ul {
-  margin-left: 1.25rem;
-  list-style-type: disc;
-}
-
 ol {
   margin-left: 1.25rem;
 }
@@ -3586,7 +3581,7 @@ input[type=search] {
 [type=file],
 [type=checkbox],
 [type=radio] {
-  margin: 0 0 1rem;
+  margin: 0 6px 1rem;
 }
 
 [type=checkbox] + label,

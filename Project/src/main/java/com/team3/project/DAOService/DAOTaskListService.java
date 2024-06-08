@@ -1,8 +1,14 @@
 package com.team3.project.DAOService;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.team3.project.DAO.DAOTask;
+import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAO.DAOTaskList;
+
+import io.micrometer.common.lang.Nullable;
 
 public class DAOTaskListService {
     //gets
@@ -60,7 +66,51 @@ public class DAOTaskListService {
      * @return   List of DAOTaskLists to the taskBoard
      */
     public static List<DAOTaskList> getByTaskBoardId(int id) {
-        String parameterName = "taskBoard";
+        String parameterName = "taskBoard.id";
         return DAOService.getListByPara(DAOTaskList.class, id, parameterName);
     }
+
+    static boolean create(String name, int sequence, DAOTaskBoard taskBoard, @Nullable List<DAOTask> tasks) {
+        //checkIfNameIsAlreadyListForTaskBoard
+        DAOTaskList daoTaskList = new DAOTaskList(name, sequence, taskBoard, tasks);
+        try {
+            DAOService.merge(daoTaskList);
+            return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+    
+
+    static boolean createDefaultsForTaskBoardByTaskBoardName(String name) {
+        List<String> defaultTaskLists = Arrays.asList("freie Tasks", "Tasks in Bearbeitung", "Tasks unter Review", "Tasks unter Test", "fertiggestellte Tasks");
+        String joinOnAttributeName = "taskLists";
+        DAOTaskBoard daoTaskBoard = DAOService.getLeftJoinByID(DAOTaskBoardService.getByName(name).getId(), DAOTaskBoard.class, joinOnAttributeName);
+        for (String defaultTaskName : defaultTaskLists) {
+            if (daoTaskBoard != null && daoTaskBoard.getTaskLists() != null && !daoTaskBoard.getTaskLists().stream().map(DAOTaskList::getName).collect(Collectors.toList()).contains(defaultTaskName)) {
+                try {
+                    create(defaultTaskName, defaultTaskLists.indexOf(defaultTaskName) + 1, daoTaskBoard, null);
+                } catch (Exception e) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+
+    public static boolean updateTasksById(int id, List<DAOTask> daoTasks) {
+        String joinOnAttributeName = "tasks";
+        DAOTaskList taskList = DAOService.getLeftJoinByID(id, DAOTaskList.class, joinOnAttributeName);
+        taskList.setTasks(daoTasks);
+        return DAOService.merge(taskList);
+    }
+
+    public static boolean addTaskById(int id, DAOTask daoTask) {
+        return DAOTaskService.updateTaskListById(daoTask.getId(), getById(id));
+    }
+
+    
 }

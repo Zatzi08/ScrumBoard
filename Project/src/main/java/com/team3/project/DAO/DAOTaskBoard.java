@@ -2,6 +2,7 @@ package com.team3.project.DAO;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,13 +21,17 @@ public class DAOTaskBoard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tbID")
-    private int tbid;
+    private int id;
 
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "taskBoard")
+    @OneToMany(mappedBy = "taskBoard", cascade = CascadeType.REMOVE)
     private List<DAOTaskList> taskLists;
     
-    DAOTaskBoard() {}
+    public DAOTaskBoard() {}
+    public DAOTaskBoard(String name, List<DAOTaskList> daoTaskLists) {
+        this.name = name;
+        this.taskLists = daoTaskLists;
+    }   
 }

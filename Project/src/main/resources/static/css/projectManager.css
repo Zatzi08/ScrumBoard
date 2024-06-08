@@ -9,32 +9,31 @@
 .editMenu {
     display: none;
     position: fixed;
-    width: 50%;
-    height: auto;
+    height: 330px;
     background-color: rgb(46, 46, 61);
     color: white;
     padding: 20px;
     border-radius: 10px;
     overflow: auto;
-    margin-top: -625px;
-    margin-left: 25%;
     z-index: 1000;
+    top: 50dvh;
+    left: 50dvw;
+    transform: translate(-50%, -50%);
 }
 
 .editMenu::-webkit-scrollbar{
-    display: none;
+    display: block;
 }
 
 #editMenu-saveEditBtn {
-    position: page;
-    bottom: 30px;
     border-radius: 10px;
     width: 80px;
     height: 20px;
-    background-color: white;
+    background-color: #cccbcb;
     font-size: 14px;
-    left: 30px;
-    margin-left:43%;
+    margin-left: 41%;
+    display: block;
+    margin-top: 7%;
 }
 
 #editMenu-saveEditBtn:hover{
@@ -73,6 +72,7 @@
     justify-content: center;
 }
 
+
 .inputEditPrio:hover {background-color: rgb(249,250,251);}
 
 .inputEditPrio:focus {
@@ -83,8 +83,9 @@
 .inputEditPrio:focus-visible {box-shadow: none;}
 .inputEditPrio.selected {border: 2px solid #ba55d3;}
 
-#inputDate {font-size: 12px; height: 30px}
-#inputDate{border-radius: 5px;}
+#inputDate {font-size: 12px; height: 30px; border-radius: 5px;}
+#inputTimeNeeded {font-size: 12px; height: 30px; border-radius: 5px;}
+
 .editMenu-content form label{color: white;}
 
 .closeToggleEdit {
@@ -114,10 +115,10 @@
 }
 
 .selectBtn{
-    display: inline-flex;
+    display: inline;
     color: #ffffff;
-    background-color: rgba(64,59,59,0);
-    margin-right:20px;
+    background-color: rgba(64, 59, 59, 0);
+    margin-right: 20px;
     cursor: pointer;
     margin-left: 10px;
     font-size: 14px;
@@ -126,69 +127,48 @@
 
 #outerProjectManagerContainer{
     position: relative;
-    display: inline-flex;
+    display: flow-root;
     background-color: rgba(13, 71, 115, 0.7);
     color: #ffffff;
     padding: 12px 16px;
-    margin-right:20px;
-    border: none;
     border-radius: 15px;
-    width: 95%;
-    margin-top: 30px;
-    margin-left: 30px;
+    width: 97%;
     font-size: 16px;
-    height: 600px;
+    height: 115dvh;
+    margin: 3% 2% 3%;
 }
 
 #innerProjectManagerContainer{
-    display: block;
+    display: inline;
     position: relative;
     max-height: 550px;
     background-color: rgba(13, 71, 115, 0);
     color: #ffffff;
     padding: 12px 16px;
-    margin-right:20px;
     border: none;
-    width: 1600px;
-    margin-top: 30px;
-    margin-left: -150px;
+    width: 190dvh;
     font-size: 16px;
-    height: 510px;
+    height: 95%;
     border-radius: 10px;
+    margin: 2% 3% 1%;
 }
 
 .addUserStoryBtn{
-    position: absolute;
-    margin-top: -4px;
-    margin-bottom: 1000px;
-    margin-left: 83.5%;
+    display: inline;
     width: 160px;
-    height: 25px;
+    height: 20px;
     border-radius: 5px;
     color: white;
     font-size: 14px;
+    float: right;
     padding: 1px;
 }
 
 .addUserStoryBtn:hover{
-    background-color: black;
+    background-color: rgb(0, 0, 0);
 }
-
-.userTaskTableBody-editBtn{
-    position:relative;
-    display: inline;
-    margin-left: 90%;
-    cursor: pointer;
-}
-
-.closeUserStoryTaskBtn{
-    position: relative;
-    display: inline;
-    position: absolute;
-    font-size: 22px;
-    cursor: pointer;
-    margin-left: 5px;
-    margin-top: -0.6%;
+#roleBtn:hover{
+    background-color: #0a0a0a;
 }
 
 #userTaskTableHead {
@@ -199,21 +179,23 @@
 }
 
 .wrapper {
-    height: 500px;
+    height: 100dvh;
     overflow: auto;
-    top: -4px;
     cursor: default;
 }
 
 .userTaskTable {
     position: relative;
-    width: 98%;
+    width: 97%;
     border-collapse: separate;
     table-layout: auto;
     font-size: 10pt;
-    border-spacing: 0 20px;
+    border-spacing: 0 15px;
     cursor: default;
+    margin: 1%;
 }
+
+#userTaskTableBody tbody{background-color:transparent;}
 
 .userTaskTable th,
 .userTaskTable td {
@@ -224,11 +206,12 @@
     border-radius: 10px;
     cursor: default;
 }
-
+/*hier ist das task kärtchen*/
 .userTaskTable th {
-    background-color: rgba(255, 255, 255, 0.66);
     color: black;
     white-space: nowrap;
+    max-width: 909px;
+    background-color: #eee8da;
 }
 
 .userTaskTable tbody tr {
@@ -246,6 +229,15 @@
     opacity: 0.5;
 }
 
+#A{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    text-align: center;
+    background-color: rgba(25,0,255,0.3);
+    color: white;
+    cursor: default
+}
+
 .userTaskTable tbody tr.drag-over {
     background-color: rgba(255, 255, 255, 0.1);
 }
@@ -255,9 +247,10 @@
 }
 
 .userTaskTableContentSubdate{
+    position: relative;
     color: #919297;
     font-size: 12px;
-    margin-left: 93%;
+    float: right;
 }
 
 .userTaskTable-ContentStoryBoard{
@@ -277,6 +270,10 @@
     background-clip: content-box;
 }
 ::-webkit-scrollbar-thumb:hover {background-color: #a8bbbf;}
+
+::-webkit-scrollbar-corner {
+    background: rgba(0,0,0,0);
+}
 
 hr {
     border: 1px solid #bebebe;
@@ -338,14 +335,298 @@ hr {
 
 .show {display:block;}
 
-#USDropdown{
+.dropdownTask{
     background-color: #283d48;
     color: #afafaf;
     border: 2px solid #6e7f91;
     border-radius: 8px;
+    font-size: 12px;
+
 }
-#USDropdown option:hover{
+
+.dropdownTask option:hover{
     background-color: #3a5865;
+}
+
+.dropdownTask:focus{
+    background-color: transparent;
+}
+
+#tableHeader{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    text-align: center;
+    background-color: rgba(25,0,255,0.3);
+    color: white;
+}
+
+#selectUser:hover{
+   color: #ba55d3;
+}
+
+#userTextDiv{
+    display: flex;
+}
+
+#userText{
+        display:inline-block;
+        position: relative;
+        font-size: 22px;
+        margin-right: 5px;
+        flex:50%;
+}
+
+.editRoles-content{
+    display: inline-block;
+    overflow: hidden;
+    width:100%;
+    height:auto;
+}
+
+#editRolesBtn{
+    display: inline-block;
+    height: auto;
+    width: auto;
+    border-radius: 15px;
+    position: page;
+    bottom: 30px;
+    font-size: 15px;
+    left: 30px;
+    margin-left: 90%;
+    color: #da9a27;
+    margin-bottom: 5px;
+}
+
+#editRolesBtn:hover{
+    color: #cb7e14;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+#visualRole{
+    display: block;
+    background-color: #0d1525;
+    border-radius: 10px;
+    max-width:90%;
+    width:90%;
+    max-height: 25px;
+    font-size: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    color: white;
+}
+ul{list-style-type: none;}
+
+#editRoleBtn, #deleteRoleBtn{
+    position: relative;
+    margin-right: 2%;
+}
+#deleteRoleBtn:hover{
+    color: grey;
+}
+#editRoleBtn:hover {
+    color: grey;
+}
+
+#userRights{
+    float:right;
+    overflow: hidden;
+    width:auto;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.rightsDropdown{
+    width: fit-content;
+    height: 30px;
+    border-radius: 10px;
+    background-color: #407FA0;
+    color: black;
+    font-family: Roboto;
+    border: 1px solid black;
+    margin: 1%;
+
+}
+
+.rightsDropdown hover{
+    background-color: #b2bbc4;
+    height: 30px;
+}
+
+.rightsDropdown:focus{background-color: #87939f;}
+
+.dropdown-check-list {
+    display: inline-block;
+    /*display: inline-flex;*/
+    align-items: center;
+    justify-content: center;
+    right:0;
+    width: 25%;
+    height:30px;
+    margin-left: 30%;
+}
+
+.dropdown-check-list .anchor {
+    position: relative;
+    cursor: pointer;
+    display: inline-flex;
+    background-color: #283d48;
+    color: #afafaf;
+    border: 2px solid #6e7f91;
+    border-radius: 8px;
+    font-size: 12px;
+    box-shadow: white;
+    padding: .75rem 1rem;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    width: 252px;
+    margin-left: -108%;
+    float: right;
+}
+
+.dropdown-check-list ul.items {
+    position: relative;
+    padding: 2px;
+    display: none;
+    border: 1px solid #ccc;
+    border-top: none;
+    z-index: 1;
+    background-color: #23353f;
+    width: -webkit-fill-available;
+    height: 150px;
+    border-radius: 8px;
+    margin-left: -100%;
+    float: right;
+    left: 2px;
+}
+
+.dropdown-check-list ul.items li {
+    list-style: none;
+}
 
 
+.dropdown-check-list.visible .items {
+    display: block;
+}
+
+#Hi{
+    border: solid #374c5e;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.buttonBox{
+    display:inline
+}
+
+#Btn1{
+    display: inline;
+    position: absolute;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 0px;
+    right: 31px;
+    margin-left: auto;
+}
+
+#Btn2{
+    display: inline-block;
+    position: relative;
+    font-size: 25px;
+    cursor: pointer;
+    float: right;
+    margin-top: -0.6dvh;
+}
+
+hr{
+    width: 100%;
+}
+
+#iContent1, #iContent2, #iContent3, #iContent4{
+    display: inline;
+    font-size: 13px;
+}
+
+.userTaskTableBody-Content {
+    display: block;
+    width: fit-content;
+    max-width: 98%;
+    height: auto;
+    white-space: break-spaces;
+    overflow-wrap: break-word;
+    text-align: justify;
+    font-size: 12px;
+    margin-left: 25px;
+    hyphens: auto;
+}
+
+.iContent-Label{
+    display: inline;
+    font-size: 15px;
+    font-family: system-ui;
+    margin-left: 12.1px;
+}
+
+.userTaskTableBody-Border{
+    border-bottom: #000 1px solid;
+    padding-top: 1em;
+}
+
+#visEstimateTracker{
+    width: 657px;
+    position: fixed;
+    height: 560px;
+    background-color: rgb(42, 39, 50, 0.8);
+    display: none;
+    z-index: 1000;
+    top: 50dvh;
+    left: 50dvw;
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
+}
+
+#visEstimateTracker-graph{
+    width: 100%;
+    height: 80%;
+    position: relative;
+    padding: 25px;
+}
+
+#PrioUserAlignment{
+    display: inline-flex;
+    width: 500px;
+}
+
+#percentageDifferenceText{
+    color: #c6c6c6;
+    position: relative;
+    padding: 14px;
+    font-family: system-ui;
+    margin-top: 2%;
+    text-align: center;
+    hyphens: auto;
+    font-size: 90%;
+}
+
+#visAllTasks{
+    float: right;
+}
+
+#userTaskTableBody-BottomAlignment{
+    display: block;
+    margin-top: 5px;
+}
+
+#userTaskTableBody-TaskDone{
+    position: relative;
+    border: dotted;
+    border-radius: 10px;
+    width: 20px;
+    color:#116A2A;
+    padding: 5px 5px 5px
+}
+
+#editMenu-priorityDropAlignment{
+    display: inline-flex;
 }

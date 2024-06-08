@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.Objects;
 import java.util.Random;
 
 
@@ -19,7 +20,7 @@ public class WebSessionService {
     private final String MasterID = "EAIFPH8746531";
 
     public boolean verify(String sessionId) throws Exception {
-        if (sessionId == null) throw new Exception("Null ID");
+        if (sessionId == null || sessionId.isEmpty()) throw new Exception("Null ID");
         return sessionId.equals(MasterID) || checkSessionID(sessionId);
     }
 
@@ -34,10 +35,10 @@ public class WebSessionService {
             while (DAOUserService.checkSessionId(sessionID)){
                 sessionID = generatCode(0);
             }
-            DAOUserService.updateSessionIdById(user.getUid(),sessionID, dformat.format(currentDate));
+            DAOUserService.updateSessionIdById(user.getId(),sessionID, dformat.format(currentDate));
             return sessionID;
         } else {
-            DAOUserService.updateSessionIdById(user.getUid(),user.getSessionId(), dformat.format(currentDate));
+            DAOUserService.updateSessionIdById(user.getId(),user.getSessionId(), dformat.format(currentDate));
             return user.getSessionId();
         }
     }
@@ -45,14 +46,14 @@ public class WebSessionService {
     private boolean checkSessionID(String sessionID) throws Exception {
         if( sessionID == null) throw new Exception("Null SessionID");
         DAOUser user = DAOUserService.getBySessionId(sessionID);
-        if (user == null) throw new Exception("User not found");
-
-        Date d = dformat.parse(user.getSessionDate());
-        d.setTime(d.getTime() + sessionTimeOffset);
-        Date currentDate = new Date();
-        if (d.after(currentDate)){
-            DAOUserService.updateSessionIdById(user.getUid(),sessionID, dformat.format(currentDate));
-            return true;
+        if (user != null) {
+            Date d = dformat.parse(user.getSessionDate());
+            d.setTime(d.getTime() + sessionTimeOffset);
+            Date currentDate = new Date();
+            if (d.after(currentDate)) {
+                DAOUserService.updateSessionIdById(user.getId(), sessionID, dformat.format(currentDate));
+                return true;
+            }
         }
         return false;
     }
