@@ -1,4 +1,3 @@
-
 function toggleProfilMenü(uname, priDesc, workDesc){
     var profilBtn = document.getElementById("profilEditBtn");
     var profilMenü = document.getElementById("profilEditMenü");

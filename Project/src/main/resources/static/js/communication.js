@@ -157,6 +157,7 @@ function saveProfile(sessionID) {
             location.reload();
         }
     });
+
 }
 
 function deleteUS(usid, sessionID){
