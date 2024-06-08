@@ -4,20 +4,19 @@
     margin-left: 5%;
     margin-right: 5%;
     margin-top: 20px;
-    height: -webkit-fill-available;
+    height: auto;
     width: 90%;
     background-image: linear-gradient(to bottom right, #23262f, #26375d);
     border-radius: 15px;
 }
 
 #profilInhalt{
-    position: absolute;
+    position: relative;
     margin: 2%;
     margin-left: 5%;
     margin-right: 5%;
     width: 90%;
-    height: 400px;
-
+    height: fit-content;
 }
 
 #profilName{
