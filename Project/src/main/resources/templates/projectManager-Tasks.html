@@ -50,8 +50,8 @@
                         <span class="userTaskTable-ContentStoryBoard">/</span>
                         <label class="userTaskTable-ContentStoryBoard" th:text="${item.getTaskBoardNameOfTask()}" title="Referenz zum entsprechenden Taskboard">Board</label>
                         <div class="buttonBox">
-                            <button id="Btn1" title="Bearbeiten" style="margin-left: 90%" th:USID="${item.userStoryID}"  th:description="${item.description}" th:Tid="${item.ID}" th:dueDate="${item.getDueDateAsString()}" th:timeG="${item.getTimeNeededG()}" th:tbID="${item.getTbID()}" th:prio="${item.getPriorityAsInt()}"
-                                onclick="toggleEditBoxT('editBtn', this.getAttribute('Tid'), this.getAttribute('description'), this.getAttribute('USID'), this.getAttribute('dueDate'), this.getAttribute('timeG'), this.getAttribute('tbID'), this.getAttribute('prio'));" ><i class="fa fa-edit"></i></button>
+                            <button id="Btn1" title="Bearbeiten" style="margin-left: 90%" th:USID="${item.userStoryID}"  th:description="${item.description}" th:Tid="${item.ID}" th:dueDate="${item.getDueDateAsString()}" th:timeG="${item.getTimeNeededG()}" th:tbID="${item.getTbID()}" th:prio="${item.getPriorityAsInt()}" th:names="${item.getUserAsJSON()}"
+                                onclick="toggleEditBoxT('editBtn', this.getAttribute('Tid'), this.getAttribute('description'), this.getAttribute('USID'), this.getAttribute('dueDate'), this.getAttribute('timeG'), this.getAttribute('tbID'), this.getAttribute('prio'), this.getAttribute('names'));" ><i class="fa fa-edit"></i></button>
                             <button id="Btn2" th:Tid="${item.ID}" th:Sid="${sessionID}" onclick="deleteT(this.getAttribute('Tid'),this.getAttribute('Sid'))" title="Löschen">&times;</button>
                         </div>
                         <br/>
