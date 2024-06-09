@@ -5,8 +5,8 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Passwort Vergessen</title>
-    <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="/css/foundation.css">
+    <link rel="stylesheet" href="/css/app.css">
   </head>
 <body>
 
@@ -18,24 +18,23 @@
   User-ID/Task-ID: /
 -->
 
+<div id="primaryContainer" style="height: 250px; margin: -150px 0 0 -200px;"></div>
+
   <div class="loginBackground">
-    <div class="container">
+    <div class="secondaryContainer" style="height: 250px; margin: -150px 0 0 -200px;">
       <label id = "headerLogin">Passwort zurücksetzen</label>
     <form action="/neuesPasswortPage" method="post" autocomplete="off">
-        <input id = "emailInput" type="email" required placeholder="Email" class = "Input" name="EMail" style = "margin-top: 25%;">
-        <button id="passwortResetBtn" onclick="emailPopup()">Anfordern</button>
+        <input id = "emailInput" type="email" required placeholder="Email" class = "Input" name="EMail">
+        <button id="passwortResetBtn" onclick="emailPopup()" style="margin-top: 20px;">Anfordern</button>
         <p id = "noAccount"> Kein Account? <a href="/RegisterPage">Hier Registrieren!</a></p>
-      </form>
+    </form>
         <div id = "emailGesendetPopup" >Email versendet!</div>
     </div>
+  </div>
 
-</div>
-  
-</body>
-
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/vendor/what-input.js"></script>
-    <script src="js/vendor/foundation.js"></script>
-    <script src="js/app.js"></script>
+    <script src="/js/vendor/jquery.js"></script>
+    <script src="/js/vendor/what-input.js"></script>
+    <script src="/js/vendor/foundation.js"></script>
+    <script src="/js/app.js"></script>
   </body>
 </html>

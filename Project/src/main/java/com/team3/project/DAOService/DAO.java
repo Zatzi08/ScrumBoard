@@ -1,18 +1,11 @@
 package com.team3.project.DAOService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Function;
 
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-
-import com.team3.project.Classes.UserStory;
-import com.team3.project.DAO.DAORole;
-import com.team3.project.DAO.DAOTask;
-import com.team3.project.DAO.DAOUserStory;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -22,39 +15,8 @@ class DAO {
     public static void main(String[] args) {
         try {
         setUp();
-        //  String TestEmail = "TestEmail";
-        //  String TestName = "TestName";
-        //  String TestName2 = "TestName2";
-        //  String TestPrivatDescription = "TestPrivatDescription";
-        //  String TestWorkDescription = "TestWorkDescription";
-        //  DAORole TestRole = new DAORole("TestRol");
-        //  DAORole TestRole2 = new DAORole("TestRol2");
-        //  List<DAORole> TestRols = new ArrayList<>();
-        // DAOAccountService.create(TestEmail, "TestPW");
-        // DAOUserService.createByEMail(TestEmail, TestName, TestPrivatDescription, TestWorkDescription, TestRols);
-        /* 
-        List<DAORole> list = DAOUserService.getRoleBySessionID(1);
-        for (DAORole daoRole : list) {
-            System.out.println(daoRole.getName());
-        }
-        //System.out.println(DAOUserService.getById(1).getName());
-        DAORole roleDeveloper = DAORoleService.getByID(1);
-        List<DAOUser> users = DAOUserService.getAllPlusRoles();
+        
 
-        if (users != null && !users.isEmpty()) {
-            users.stream().forEach(user -> {
-                user.setPassword("null");
-                user.getRoles().add(roleDeveloper);
-            });
-            users.get(0).getRoles().add(DAORoleService.getByID(4));
-            System.out.println(DAOUserService.updateUsers(users));
-        } else System.out.println("Null/Empty - 555555555555555555555555555555555555555");
-        /**/
-        /*
-        DAOUserStory userStory = DAOUserStoryService.getById(1);
-        System.out.println(DAOTaskService.create("Farbe kaufen", userStory.getId()));
-        /**/
-        System.out.println(DAOTaskService.getListByUserStoryId(1));
 
         //Usertest();   
         tearDown();    

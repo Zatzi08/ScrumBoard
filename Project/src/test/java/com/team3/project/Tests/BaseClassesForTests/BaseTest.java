@@ -1,4 +1,4 @@
-package com.team3.project.Tests.datenbankTests;
+package com.team3.project.Tests.BaseClassesForTests;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -8,15 +8,15 @@ import java.util.Date;
 
 import com.team3.project.DAOService.DAOStartService;
 
-public class BaseTest {
+public abstract class BaseTest {
     protected static PrintWriter printWriter;
     protected static Date date;
     protected static SimpleDateFormat formatter;
     protected boolean pass = true;
 
-    protected static void setup() {
+    static void setup(String logName, String mainTestName) {
         try {
-            File logFile = new File("src/test/java/com/team3/project/logs/log_DatabaseTest.txt");
+            File logFile = new File(String.format("src/test/java/com/team3/project/logs/%s", logName));
             logFile.setWritable(true);
             logFile.setReadable(true);
             FileWriter fileWriter = new FileWriter(logFile, true);
@@ -26,27 +26,29 @@ public class BaseTest {
         }
         formatter = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         date = new Date();
-        printWriter.append("Datenbank-Tests:\n\n");
-        DAOStartService.start();
+        printWriter.append(String.format("%s-Tests:\n\n", mainTestName));
+        DAOStartService.restartForTests();
     }
 
-    protected static void before() {
-
+    protected static void wipeDb(boolean isWiping) {
+        if (isWiping) {
+            DAOStartService.wipeDb();
+        }
     }
 
-    protected static void after() {
-
-    }
-
-    protected static void tearDown() {
+    static void tearDown() {
         printWriter.close();
+        
     }
 
-    protected void printWriterAddTest(String testName, String testId) {
+    void printWriterAddTest(String mainTestName, String testIDPrefix, String testName, String testId) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Datenbank-Test-");
+        stringBuilder.append(mainTestName);
+        stringBuilder.append("-Test-");
         stringBuilder.append(testName);
-        stringBuilder.append("\nTest ID: DB.");
+        stringBuilder.append("\nTest ID: ");
+        stringBuilder.append(testIDPrefix);
+        stringBuilder.append(".");
         stringBuilder.append(testId);
         stringBuilder.append("\nDate: ");
         stringBuilder.append(formatter.format(date));
@@ -55,7 +57,7 @@ public class BaseTest {
     }
 
     protected void printWriterAddFailure(String failureMessage) {
-        printWriter.append(String.format("fail: " + failureMessage + '\n'));
+        printWriter.append(String.format("fail: " + failureMessage + "\n\n\n"));
         pass = false;
     }
 

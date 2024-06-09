@@ -1,6 +1,7 @@
 package com.team3.project.DAOService;
 
 import com.team3.project.DAO.DAOAccount;
+import com.team3.project.DAO.DAOUser;
 
 public class DAOAccountService {
     //creates
@@ -8,7 +9,7 @@ public class DAOAccountService {
     * Revisited: Tom-Malte Seep
      * Function: creates a account
      * Reason: refactoring
-     * UserStory/Task-ID:
+     * UserStory/Task-ID: A2.D1
      */
     /** creates a Account with a Mail and a password
      * @param email    email
@@ -19,6 +20,9 @@ public class DAOAccountService {
         if (!checkMail(email)) {
             try {
                 DAOService.persist(new DAOAccount(email, password));
+                DAOUser user = DAOUserService.getByMail(email);
+                user.setAuthorization(DAOAuthorizationService.getByAuthorization(1));
+                DAOService.merge(user);
             } catch (Exception e) {
                 return false;
             }
@@ -32,12 +36,12 @@ public class DAOAccountService {
     * Revisited: Tom-Malte Seep
     * Function: updates the password for an account
     * Reason: refactoring
-    * UserStory/Task-ID:
+    * UserStory/Task-ID: A5.D1
     */
     /** updates the password for an account 
      * @param email    email
      * @param password new password
-     * @return         true if update was successfull
+     * @return         true if update was successful
      */
     public static boolean updatePassword(String email, String password) {
         String parameterName = "email";
@@ -55,7 +59,7 @@ public class DAOAccountService {
      * Function: deletes a user by email
      * Reason: refactoring
      *         cascading issues
-     * UserStory/Task-ID:
+     * UserStory/Task-ID: 
      */
     /** FOR TESTING ONLY <p>
      * deletes a user by mail
@@ -71,7 +75,7 @@ public class DAOAccountService {
      * Revisited: Tom-Malte Seep
      * Function: checks if the email exists
      * Reason: refactoring
-     * UserStory/Task-ID:
+     * UserStory/Task-ID: A3.D1
      */
     /** checks if the email exists
      * @param email email 

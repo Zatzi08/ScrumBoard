@@ -6,10 +6,6 @@
 * User-Story/Task-ID: U3.F1, U4.F1
 */
 
-function ansichtDropdown() {
-    document.getElementById("ansichtDropdownContent").classList.toggle("show");
-}
-
 function toggleEditMenu(id) {
     var editMenu = document.querySelector('.editMenu');
     var overlay = document.querySelector('.overlay');
@@ -42,12 +38,6 @@ function toggleEditMenu(id) {
     }
 }
 
-function toggleEditBox(id,storyId, name, description){
-    toggleEditMenu(id);
-    document.getElementById("inputName").textContent = name;
-    document.getElementById("inputDesc").textContent = description;
-    document.getElementById("editId").value = storyId;
-}
 /*
 * Author: Zana Salih Hama
 * Revisited: /
@@ -149,10 +139,155 @@ function deleteTableRow() {
     }
 }
 
-function toggleEditBoxT(id, TId, description, USID){
+function toggleEditBoxT(id, TId, description, usID, dueDate, timeG, tbID, prio, names){
     toggleEditMenu(id);
     document.getElementById("inputDesc").textContent = description;
-    document.getElementById("editId").value = TId;
-    let EID = 'USDropdown:'+USID
-    document.getElementById('USDropdown').value = document.getElementById(EID).value;
+    if (TId !== undefined){
+        document.getElementById("editId").value = TId;
+    } else {
+        document.getElementById("editId").value = -1;
+    }
+    let EID = ""
+    if (usID !== undefined){
+        EID = 'USDropdown:'+usID;
+        document.getElementById('USDropdown').value = document.getElementById(EID).value;
+    } else {
+        document.getElementById('USDropdown').value = -1;
+    }
+    if (timeG !== undefined){
+        document.getElementById('inputTimeNeeded').value = timeG;
+    } else {
+        document.getElementById('inputTimeNeeded').value = 0;
+    }
+    if (tbID !== undefined && tbID !== "-1"){
+        EID = 'TBDropdown:'+tbID;
+        document.getElementById('TBDropdown').value = document.getElementById(EID).value;
+    } else {
+        document.getElementById('TBDropdown').value = document.getElementById('TBDropDown:-1').value;
+    }
+    switch (prio){
+        case "2":
+            highlightPriorityButton('inputPrioNormal')
+            break;
+        case "3":
+            highlightPriorityButton('inputPrioHigh')
+            break;
+        case "4":
+            highlightPriorityButton('inputPrioUrgent')
+            break;
+        default:
+            highlightPriorityButton('inputPrioLow')
+            break;
+    }
+    if (dueDate !== undefined){
+        document.getElementById('inputDate').value = dueDate;
+    } else{
+        document.getElementById('inputDate').value = "";
+    }
+
+    let lis = document.getElementById('usersAuswahlID').children;
+    for (let li of lis) {
+        li.children[0].checked = false
+    }
+
+    names = parseUser(names)
+    names.forEach((name) =>{
+        id = 'N'+name.id
+        document.getElementById(id).children[0].checked = true;
+    })
+}
+
+function toggleEditBox(id,storyId, name, description, prio){
+    toggleEditMenu(id);
+    document.getElementById("inputName").textContent = name;
+    document.getElementById("inputDesc").textContent = description;
+    if (storyId !== undefined){
+        document.getElementById("editId").value = storyId;
+    } else {
+        document.getElementById("editId").value = -1;
+    }
+    switch (prio){
+        case "2":
+            highlightPriorityButton('inputPrioNormal')
+            break;
+        case "3":
+            highlightPriorityButton('inputPrioHigh')
+            break;
+        case "4":
+            highlightPriorityButton('inputPrioUrgent')
+            break;
+        default:
+            highlightPriorityButton('inputPrioLow')
+            break;
+    }
+}
+
+
+var checkList = document.getElementById('list1');
+checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
+    if (checkList.classList.contains('visible'))
+        checkList.classList.remove('visible');
+    else
+        checkList.classList.add('visible');
+}
+
+function visualisationOfAllTimes(est, real, names){
+    est = JSON.parse(est)
+    real = JSON.parse(real)
+    names = names.replaceAll("'", '"')
+    names = JSON.parse(names)
+    est.forEach((e) => console.log(e))
+    real.forEach((e)=> console.log(e))
+    names.forEach((e)=> console.log(e))
+    visualisationOfAllTime(est, real, names)
+}
+
+async function saveTaskWithUserList(sessionID) {
+    let id = document.getElementById('editId').value;
+    let r = await saveTask(sessionID, id)
+    if (r.status !== 400){
+        let lis = document.getElementById('usersAuswahlID').children;
+        let list = []
+        for (let li of lis) {
+            if (li.children[0].checked) list.push(li.id.substring(1))
+        }
+        await setUsersOfTask(sessionID, id, list)
+    }
+    document.location.reload()
+}
+
+function toggleVisAllTasks(percentageDifference, absNum, numType){
+    var vis = document.querySelector('#visEstimateTracker');
+    var overlay = document.querySelector('.overlay');
+    if (vis) {
+        if (vis.style.display === "block") {
+            vis.style.display = "none";
+            if (overlay) {
+                overlay.remove();
+                overlay.removeEventListener('click', toggleVisAllTasks);
+                destroyMyChart2()
+            }
+        } else {
+            vis.style.display = "block";
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.classList.add('overlay');
+                document.body.appendChild(overlay);
+                switch (numType){
+                    case 0:
+                        document.getElementById('percentageDifferenceText').innerText = `Die Summe der geschätzten und realen Bearbeitungszeit stimmen überein!`;
+                        break;
+                    case 1:
+                        document.getElementById('percentageDifferenceText').innerText = `Der insgesamte Mehraufwand gegenüber der Summe der geschätzten Bearbeitungszeiten beträgt ${absNum}h!`;
+                        break;
+                    case 2:
+                        document.getElementById('percentageDifferenceText').innerText = `Die Summe der realen Bearbeitungszeiten weicht zu ${percentageDifference}% von der geschätzten ab. Dies entspricht ${absNum}h!`;
+                        break;
+                }
+                overlay.addEventListener('click', toggleVisAllTasks);
+            }
+        }
+    } else {
+        console.error("Das Element mit der Klasse 'vis' wurde nicht gefunden.");
+    }
 }

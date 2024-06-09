@@ -20,6 +20,17 @@ public class DAOStartService {
         DAOSession.startOrStop(true);
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: starts the EntityManagerFactory for tests
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /** starts the EntityManagerFactory for tests
+     */
+    public static void restartForTests() {
+        DAOSession.testStart();
+    }
     
     /* Author: Tom-Malte Seep
      * Revisited: /
@@ -43,35 +54,50 @@ public class DAOStartService {
      * @param <Dao> DAOObject
      * @param name  "account""user"<p>"role"<p>"task"<p>"tasklist"<p>"taskboard"<p>"userstory"
      */
-    public static <Dao> void clearDB(String name) {
+    public static <Dao> void clearDBTable(String name) {
         switch (name.toLowerCase()) {
-            case "account":
-            case "user":
+            case "accounts": case "account":
+            case "users": case "user":
                 DAOService.deleteAll(DAOUser.class);
                 break;
-            case "role":
+            case "roles": case "role":
                 DAOService.deleteAll(DAORole.class);
                 break;
-            case "task":
+            case "tasks": case "task":
                 DAOService.deleteAll(DAOTask.class);
                 break;
-            case "tasklist":
+            case "tasklists": case "tasklist":
                 DAOService.deleteAll(DAOTaskList.class);
                 break;
-            case "taskboard":
+            case "taskboards": case "taskboard":
                 DAOService.deleteAll(DAOTaskBoard.class);
                 break;
-            case "userstory":
+            case "userstories": case "userstorys": case "userstory":
                 DAOService.deleteAll(DAOUserStory.class);
                 break;
             default:
-                DAOService.deleteAll(DAOUser.class);
-                DAOService.deleteAll(DAORole.class);
-                DAOService.deleteAll(DAOTask.class);
-                DAOService.deleteAll(DAOTaskList.class);
-                DAOService.deleteAll(DAOTaskBoard.class);
-                DAOService.deleteAll(DAOUserStory.class);
                     break;
         }
+    }
+    
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: 
+     * Reason: 
+     * UserStory/Task-ID:
+     */
+    public static <Dao> boolean wipeDb() {
+        try {
+            DAOService.deleteAll(DAORole.class);
+            DAOService.deleteAll(DAOTask.class);
+            DAOService.deleteAll(DAOTaskList.class);
+            DAOService.deleteAll(DAOTaskBoard.class);
+            DAOService.deleteAll(DAOUser.class);
+            DAOService.deleteAll(DAOUserStory.class);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
     }
 }

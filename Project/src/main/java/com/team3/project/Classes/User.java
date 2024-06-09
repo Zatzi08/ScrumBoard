@@ -1,7 +1,5 @@
 package com.team3.project.Classes;
 
-import com.team3.project.Classes.Account;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,26 +9,21 @@ import java.util.List;
 @Setter
 public class User extends abstraktDataClasses {
     private String name;
-    private String privatDescription;
-    private String workDescription;
-    private Enumerations.Role roles;
-    private List<Integer> taskIDs;
+    private List<Enumerations.Role> roles; // TODO: Roles (plural) sollte eigentlich ne Liste sein
     private int authorization; //von der DB gestellt
 
     /* Author: Henry L. Freyschmidt
-     * Revisited: /
+     * Revisited: Henry van Rooyen 25.05.24
      * Funktion: User Konstruktor
-     * Grund: /
+     * Grund_ /
      * UserStory/Task-ID: /
      */
 
-    //Frage von Henry: soll beim Konstruktor von User die Profil-Sachen dabei sein?
-    public User(String name, int userID, String privatDescription, String workDescription, Enumerations.Role roles){
+    public User(String name, int userID, List<Enumerations.Role> roles, int authorization){
         super(userID);
         this.name = name;
-        this.privatDescription = privatDescription;
-        this.workDescription = workDescription;
         this.roles = roles;
+        this.authorization = authorization;
     }
 
 }
