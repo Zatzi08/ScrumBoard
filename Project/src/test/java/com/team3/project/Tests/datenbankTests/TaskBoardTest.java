@@ -16,7 +16,6 @@ import com.team3.project.Tests.BaseClassesForTests.BaseDBTest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -24,16 +23,17 @@ public class TaskBoardTest extends BaseDBTest {
         @BeforeAll
     public static void BeforeAll() {
         setup();
+        wipeDb(true);
     }
 
     @BeforeEach
     public void beforeEach() {
-        before();
+        wipeDb(false);
     }
 
     @AfterEach
     public void afterEach() {
-        after();
+        wipeDb(true);
     }
 
     @AfterAll

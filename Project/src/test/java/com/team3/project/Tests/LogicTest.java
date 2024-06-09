@@ -9,6 +9,8 @@ import com.team3.project.Tests.BaseClassesForTests.BaseLogicTest;
 import com.team3.project.service.*;
 import org.junit.jupiter.api.*;
 
+import static org.mockito.Mockito.after;
+
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -35,12 +37,12 @@ public class LogicTest extends BaseLogicTest{
 
     @BeforeEach
     public void beforeTest(){
-        before();
+        wipeDb(true);
     }
 
     @AfterEach
     public void afterTest(){
-        after();
+        wipeDb(false);
     }
 
 
@@ -1422,7 +1424,7 @@ public class LogicTest extends BaseLogicTest{
         }catch (Exception e){
             e.printStackTrace();
         }
-        List<DAOUser> users = DAOUserService.getAllPlusRoles();
+        List<DAOUser> users = DAOUserService.getAllWithRoles();
         List<Integer> uIDs = new LinkedList<>();
         for(DAOUser daoUser: users){
             uIDs.add(daoUser.getId());

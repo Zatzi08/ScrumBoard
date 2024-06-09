@@ -111,7 +111,7 @@ public class AccountService {
      */
     public List<User> getAllUser(){
         List <User> list = new LinkedList<>();
-        List <DAOUser> daoUserList = DAOUserService.getAllPlusRoles();
+        List <DAOUser> daoUserList = DAOUserService.getAllWithRoles();
         if(daoUserList != null){
             User toAdd;
             for(DAOUser daoUser : daoUserList){
@@ -227,7 +227,7 @@ public class AccountService {
 
     public List<Profile> getAllProfiles() {
         List <Profile> list = new LinkedList<>();
-        List <DAOUser> daoUserList = DAOUserService.getAllPlusRoles();
+        List <DAOUser> daoUserList = DAOUserService.getAllWithRoles();
         if(daoUserList != null){
             Profile toAdd;
             for(DAOUser daoUser : daoUserList){

@@ -48,6 +48,23 @@ final class DAOSession {
             System.out.println(e + "\n" + errorIdentifier);
         }
     }
+
+    static void testStart() {
+        if (entityManagerFactory != null) {
+            entityManagerFactory.close();
+        }
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+            .configure("DB/hibernate.cfg.xml") // configures settings from hibernate.cfg.xml
+            .applySetting("hibernate.connection.url", "jdbc:sqlite:file:./src/main/resources/DB/databaseTest.db")
+            .build();
+        try {
+            entityManagerFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+        } catch (Exception e) {
+            StandardServiceRegistryBuilder.destroy(registry);
+            String errorIdentifier = "setup fehlgeschlagen 666666666666666666666666666666666666666666666666666";
+            System.out.println(e + "\n" + errorIdentifier);
+        }
+    }
     
     /* Author: Marvin Oliver Prüger
      * Revisited: Tom-Malte Seep

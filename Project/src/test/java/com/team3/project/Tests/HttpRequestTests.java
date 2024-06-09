@@ -32,26 +32,24 @@ public class HttpRequestTests extends BaseHTTPTest {
 
     @BeforeAll
     public static void BeforeAll() throws Exception {
-        changeHibernateCfg(true);
         setup(true);
         if (accounts.isEmpty()) throw new RuntimeException("Fuck IT");
     }
 
     @BeforeEach
     public void beforeEach() {
-        before();
+        wipeDb(false);
     }
 
     @AfterEach
     public void afterEach() {
-
+        wipeDb(false);
     }
 
     @AfterAll
     public static void afterAll() {
         tearDown();
-        after();
-        changeHibernateCfg(true);
+        wipeDb(true);
     }
 
 
