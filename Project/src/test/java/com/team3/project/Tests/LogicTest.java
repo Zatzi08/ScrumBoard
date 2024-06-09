@@ -51,6 +51,7 @@ public class LogicTest extends BaseLogicTest{
     public static void closeWriter(){
         pw.close();
         tearDown();
+        wipeDb(true);
     }
 
     @Test
