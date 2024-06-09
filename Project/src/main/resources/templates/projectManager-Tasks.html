@@ -23,7 +23,7 @@
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
-    <button class = "reiterBtn" style="float: right"><a href="/">Abmelden</a></button>
+    <button class = "reiterBtn" style="margin-left: auto; margin-right: 0;"><a href="/">Abmelden</a></button>
 </div>
 
 <div id="outerProjectManagerContainer">
@@ -50,19 +50,19 @@
                         <span class="userTaskTable-ContentStoryBoard">/</span>
                         <label class="userTaskTable-ContentStoryBoard" th:text="${item.getTaskBoardNameOfTask()}" title="Referenz zum entsprechenden Taskboard">Board</label>
                         <div class="buttonBox">
-                            <button id="Btn1" title="Bearbeiten" style="margin-left: 90%" th:USID="${item.userStoryID}"  th:description="${item.description}" th:Tid="${item.ID}" th:dueDate="${item.getDueDateAsString()}" th:timeG="${item.getTimeNeededG()}" th:tbID="${item.getTbID()}" th:prio="${item.getPriorityAsInt()}"
-                                onclick="toggleEditBoxT('editBtn', this.getAttribute('Tid'), this.getAttribute('description'), this.getAttribute('USID'), this.getAttribute('dueDate'), this.getAttribute('timeG'), this.getAttribute('tbID'), this.getAttribute('prio'));" ><i class="fa fa-edit"></i></button>
+                            <button id="Btn1" title="Bearbeiten" style="margin-left: 90%" th:USID="${item.userStoryID}"  th:description="${item.description}" th:Tid="${item.ID}" th:dueDate="${item.getDueDateAsString()}" th:timeG="${item.getTimeNeededG()}" th:tbID="${item.getTbID()}" th:prio="${item.getPriorityAsInt()}" th:names="${item.getUserAsJSON()}"
+                                onclick="toggleEditBoxT('editBtn', this.getAttribute('Tid'), this.getAttribute('description'), this.getAttribute('USID'), this.getAttribute('dueDate'), this.getAttribute('timeG'), this.getAttribute('tbID'), this.getAttribute('prio'), this.getAttribute('names'));" ><i class="fa fa-edit"></i></button>
                             <button id="Btn2" th:Tid="${item.ID}" th:Sid="${sessionID}" onclick="deleteT(this.getAttribute('Tid'),this.getAttribute('Sid'))" title="Löschen">&times;</button>
                         </div>
-                        <div style = "display:inline">
-                            <br/>
-                            <i class="fa-solid fa-people-group" id="iContent4"></i><label class="iContent-Label" style="margin-left: 8px; font-size: 16px">Rolle</label><label class="userTaskTableBody-Content" title="Rolle">Rolle</label>
-                            <span style = "display:inline; float:right; margin-right:80%" th:if="${item.isDone()}" class = "fa fa-check-square-o">Erledigt</span>
-                        </div>
+                        <br/>
+                        <i class="fa-solid fa-people-group" id="iContent4"></i><label class="iContent-Label" style="margin-left: 8px; font-size: 16px">Rolle</label><label class="userTaskTableBody-Content" title="Rolle">Rolle</label>
                         <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label">Priorität</label><label class="userTaskTableBody-Content" th:text = "${item.priority}" title="Priorität der Task">Priorität</label>
                         <p class="userTaskTableBody-Border"></p>
                         <i class = "fa-solid fa-bars" id="iContent3"></i><label class="iContent-Label">Beschreibung</label><label  class="userTaskTableBody-Content" th:text = "${item.description}" title="Beschreibung der Task">Beschreibung</label>
-                        <label class = userTaskTableContentSubdate th:text="${item.getDueDateAsPresentable()}" title="Frist der Task">Abgabedatum</label>
+                        <div id="userTaskTableBody-BottomAlignment">
+                            <span id="userTaskTableBody-TaskDone" th:if="${item.isDone()}" > <i class="fa fa-check-square"></i> Erledigt</span>
+                            <label class = "userTaskTableContentSubdate" th:text="${item.getDueDateAsPresentable()}" title="Frist der Task">Abgabedatum</label>
+                        </div>
                     </th>
                 </tr>
                 </tbody>

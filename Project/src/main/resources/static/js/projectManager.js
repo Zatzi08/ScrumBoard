@@ -139,7 +139,7 @@ function deleteTableRow() {
     }
 }
 
-function toggleEditBoxT(id, TId, description, usID, dueDate, timeG, tbID, prio){
+function toggleEditBoxT(id, TId, description, usID, dueDate, timeG, tbID, prio, names){
     toggleEditMenu(id);
     document.getElementById("inputDesc").textContent = description;
     if (TId !== undefined){
@@ -184,6 +184,17 @@ function toggleEditBoxT(id, TId, description, usID, dueDate, timeG, tbID, prio){
     } else{
         document.getElementById('inputDate').value = "";
     }
+
+    let lis = document.getElementById('usersAuswahlID').children;
+    for (let li of lis) {
+        li.children[0].checked = false
+    }
+
+    names = parseUser(names)
+    names.forEach((name) =>{
+        id = 'N'+name.id
+        document.getElementById(id).children[0].checked = true;
+    })
 }
 
 function toggleEditBox(id,storyId, name, description, prio){

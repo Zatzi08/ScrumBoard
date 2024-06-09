@@ -10,7 +10,7 @@ public class DAOUserStoryService {
      * Revisited: Tom-Malte Seep
      * Function: gets all entries for userStory
      * Reason: refactoring
-     * UserStory/Task-ID:
+     * UserStory/Task-ID: U1.D1
      */
     /** retrieves all userStories
      * @return list of DAOUserStory
@@ -24,7 +24,7 @@ public class DAOUserStoryService {
      * Revisited: Tom-Malte Seep
      * Function: gets user story by ID
      * Reason: refactoring
-     * UserStory/Task-ID:
+     * UserStory/Task-ID: U2.D1
      */
     /** gets user story by ID
      * @param id identifier
@@ -71,7 +71,7 @@ public class DAOUserStoryService {
      * Revisited: Tom-Malte Seep
      * Function: creates a entry for a userStory
      * Reason: refactoring
-     * UserStory/Task-ID:
+     * UserStory/Task-ID: U3.D2,U5.D2
      */
     /** creates a entry for a userStory
      * @param name        name
@@ -97,7 +97,7 @@ public class DAOUserStoryService {
      * Revisited: Tom-Malte Seep
      * Function: updates name by id
      * Reason: refactoring
-     * UserStory/Task-ID:
+     * UserStory/Task-ID: U4.D1
      */
     /** updates name by id
      * @param id   identifier
@@ -125,7 +125,7 @@ public class DAOUserStoryService {
      * Revisited: Tom-Malte Seep
      * Function: updates a description by id
      * Reason: refactoring
-     * UserStory/Task-ID:
+     * UserStory/Task-ID: U4.D1
      */
     /** updates a description by id
      * @param id          identifier
@@ -150,7 +150,7 @@ public class DAOUserStoryService {
      * Revisited: Tom-Malte Seep
      * Function: updates priority by id
      * Reason: refactoring
-     * UserStory/Task-ID:
+     * UserStory/Task-ID: U4.D1, U5.D3
      */
     /** updates priority by id
      * @param id       identifier 
@@ -176,7 +176,7 @@ public class DAOUserStoryService {
      * Revisited: Tom-Malte Seep
      * Function: removes a userStory from the database
      * Reason: refactoring
-     * UserStory/Task-ID:
+     * UserStory/Task-ID: U6.D1
      */
     /** removes a userStory from the database
      * @param id identifier

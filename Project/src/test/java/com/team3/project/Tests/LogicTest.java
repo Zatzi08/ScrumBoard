@@ -1,7 +1,6 @@
 package com.team3.project.Tests;
 
 import com.team3.project.Classes.*;
-import com.team3.project.Controller.WebController;
 import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskList;
 import com.team3.project.DAO.DAOUser;
@@ -837,7 +836,7 @@ public class LogicTest extends BaseLogicTest{
     @Test
     /*  Test ID: Logic.T11
      *  Author: Henry Lewis Freyschmidt
-     *  Zweck: initiale reelle Rechte Zuweisung R1.B1
+     *  Zweck: initiale reelle Rechte Zuweisung
      */
     void authority(){
         pw.append("Logik-Test-authority\nTest ID: Logic.T11\n" + "Date: " + formatter.format(date)+ '\n');
@@ -1412,7 +1411,7 @@ public class LogicTest extends BaseLogicTest{
      */
     //TODO: Test schreiben
     void TaskWithUsers(){
-        pw.append("Logik-Test-TaskWithUsers\nTest ID: Logic.T19\n" + "Date: " + formatter.format(date) + '\n');
+        pw.append("Logik-Test-addDoneToTask\nTest ID: Logic.T19\n" + "Date: " + formatter.format(date) + '\n');
         AccountService accountService = new AccountService();
         TaskService taskService = new TaskService();
         UserStoryService userStoryService = new UserStoryService();
@@ -1423,7 +1422,11 @@ public class LogicTest extends BaseLogicTest{
         }catch (Exception e){
             e.printStackTrace();
         }
-
+        List<DAOUser> users = DAOUserService.getAllPlusRoles();
+        List<Integer> uIDs = new LinkedList<>();
+        for(DAOUser daoUser: users){
+            uIDs.add(daoUser.getId());
+        }
 
         try{
             userStoryService.saveUserStory(userStory);
@@ -1445,11 +1448,9 @@ public class LogicTest extends BaseLogicTest{
             e.printStackTrace();
         }
 
-        List<DAOUser> users = DAOUserService.getAllPlusRoles();
-        int uID = users.get(users.size()-1).getId();
         task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
         try{
-            DAOTaskService.updateUsersById(task.getID(), users);
+            taskService.setUsers(task.getID(), uIDs);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -1457,7 +1458,7 @@ public class LogicTest extends BaseLogicTest{
         try{
             DAOTask daoTask = DAOTaskService.getById(task.getID());
             if (daoTask == null) throw new AssertionError();
-            Assertions.assertEquals(uID, daoTask.getUsers().get(daoTask.getUsers().size()-1).getId());
+            Assertions.assertEquals(uIDs.get(0), daoTask.getUsers().get(daoTask.getUsers().size()-1).getId());
         }catch (AssertionError e){
             pass = false;
             pw.append("Fail: none or wrong user(s) connected to task\n");
@@ -1894,7 +1895,7 @@ public class LogicTest extends BaseLogicTest{
          *  Zweck: verändern der Abgabefrist einer Task mit T9.B2
          */
     void editTaskWithDueDate() {
-        pw.append("Logik-Test-editTaskWithDueDate\nTest ID: Logic.T27\n" + "Date: " + formatter.format(date) + '\n');
+        pw.append("Logik-Test-editTaskWithDueDate\nTest ID: Logic.T25\n" + "Date: " + formatter.format(date) + '\n');
         TaskService taskService = new TaskService();
         UserStoryService userStoryService = new UserStoryService();
         UserStory userStory = new UserStory("UserStoryT9B2", "T9B2", 1, -1);

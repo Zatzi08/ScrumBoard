@@ -23,7 +23,7 @@
     <button type="button"  th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
-    <button class = "reiterBtn" style="float: right"><a href="/">Abmelden</a></button>
+    <button class = "reiterBtn" style="margin-left: auto; margin-right: 0;"><a href="/">Abmelden</a></button>
 </div>
 
 <div id="outerProjectManagerContainer">
@@ -71,7 +71,7 @@
            Grund: /
            User-ID/Task-ID: U3.F1, U4.F1, U5.F1, U5.F2
 -->
-<div class = "editMenu" style="width: 560px; height: 326px;">
+<div class = "editMenu" style="width: 560px; height: 340px;">
     <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
     <span id="closeToggleEdit" class="closeToggleEdit" onclick="toggleEditMenu()">&times;</span>
     <div class="editMenu-content">

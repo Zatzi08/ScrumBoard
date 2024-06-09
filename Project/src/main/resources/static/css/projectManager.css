@@ -440,7 +440,7 @@ ul{list-style-type: none;}
     width: fit-content;
     height: 30px;
     border-radius: 10px;
-    background-color: #bbcde0;
+    background-color: #407FA0;
     color: black;
     font-family: Roboto;
     border: 1px solid black;
@@ -611,4 +611,22 @@ hr{
 
 #visAllTasks{
     float: right;
+}
+
+#userTaskTableBody-BottomAlignment{
+    display: block;
+    margin-top: 5px;
+}
+
+#userTaskTableBody-TaskDone{
+    position: relative;
+    border: dotted;
+    border-radius: 10px;
+    width: 20px;
+    color:#116A2A;
+    padding: 5px 5px 5px
+}
+
+#editMenu-priorityDropAlignment{
+    display: inline-flex;
 }

@@ -20,16 +20,17 @@ public class UserStoryTests extends BaseDBTest {
     @BeforeAll
     public static void BeforeAll() {
         setup();
+        wipeDb(true);
     }
 
     @BeforeEach
     public void beforeEach() {
-        before();
+        wipeDb(false);
     }
 
     @AfterEach
     public void afterEach() {
-        after();
+        wipeDb(true);
     }
 
     @AfterAll

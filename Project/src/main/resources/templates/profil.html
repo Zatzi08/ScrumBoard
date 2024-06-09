@@ -23,24 +23,23 @@
     <button class = "reiterBtn" onmouseover="hover()" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Profil </button>
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
-    <button class = "reiterBtn" style="float: right"><a href="/">Abmelden</a></button>
+    <button class = "reiterBtn" style="margin-left: auto; margin-right: 0;"><a href="/">Abmelden</a></button>
 </div>
 
 <div id = "profilContainer">
     <div id = "profilInhalt">
-        <button class = "fa fa-edit" title = "Bearbeite das Profil" th:uname="${User.uname}" th:udesc="${User.privatDesc}" th:projectdesc="${User.workDesc}" onclick="toggleProfilMenü(this.getAttribute('uname'), this.getAttribute('privatDesc'), this.getAttribute('workDesc'))"></button>
-
+        <button th:if="${own}" class = "fa fa-edit" title = "Bearbeite das Profil" th:uname="${User.uname}" th:udesc="${User.privatDesc}" th:projectdesc="${User.workDesc}" onclick="toggleProfilMenü(this.getAttribute('uname'), this.getAttribute('projectdesc'), this.getAttribute('udesc'))"></button>
         <label th:text = "${User.uname}" id = "profilName">Benutzername </label>
         <label class = "profileText" >Deine Aufgabe im Projekt</label>
-        <label th:text="${User.workDesc}" id = "profilProjektBeschreibung">Projektbeschreibung</label>
+        <label th:text="${User.workDesc}" id = "profilProjektBeschreibung"> Projektbeschreibung </label>
         <label class = "profileText" >Deine Rollen </label>
         <label id = "rolleProfil"> <p>.</p> </label> <!-- Könnte das als Liste realisiert werden, danke LK -->
         <label class = "profileText" >Deine persönliche Beschreibung</label>
-        <label th:text = "${User.privatDesc}" id = "profilPersoBeschreibung">Persönliche Beschreibung</label>
+        <label th:text = "${User.privatDesc}" id = "profilPersoBeschreibung"> Persönliche Beschreibung </label>
     </div>
 </div>
 
-<div id = "profilEditMenü" style="display: none;">
+<div th:if="${own}" id = "profilEditMenü" style="display: none;">
 <form id = "profilForm" autocomplete="off">
     <label style = "color:#ffffff; font-size: 15px; border-bottom: 2px solid #dcdcdc; width:100%"><i class = "fa fa-pencil" style = "margin-right:15px"></i>Profil bearbeiten</label>
     <label class = "labelProfil">Benutzername:</label>

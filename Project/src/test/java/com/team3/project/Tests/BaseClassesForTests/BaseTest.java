@@ -3,11 +3,6 @@ package com.team3.project.Tests.BaseClassesForTests;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -20,7 +15,6 @@ public abstract class BaseTest {
     protected boolean pass = true;
 
     static void setup(String logName, String mainTestName) {
-        changeHibernateCfg(true);
         try {
             File logFile = new File(String.format("src/test/java/com/team3/project/logs/%s", logName));
             logFile.setWritable(true);
@@ -33,22 +27,18 @@ public abstract class BaseTest {
         formatter = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         date = new Date();
         printWriter.append(String.format("%s-Tests:\n\n", mainTestName));
-        DAOStartService.start();
+        DAOStartService.restartForTests();
     }
 
-    static void before() {
-
-    }
-
-    static void after(boolean clean) {
-        if (clean) {
+    protected static void wipeDb(boolean isWiping) {
+        if (isWiping) {
             DAOStartService.wipeDb();
         }
     }
 
     static void tearDown() {
         printWriter.close();
-        changeHibernateCfg(false);
+        
     }
 
     void printWriterAddTest(String mainTestName, String testIDPrefix, String testName, String testId) {
@@ -74,23 +64,5 @@ public abstract class BaseTest {
     protected void printWriterAddPass() {
         printWriter.append(String.format("pass: %b", pass));
         printWriter.append("\n\n\n");
-    }
-
-    public static void changeHibernateCfg(boolean isTesting) {
-        Path path = Paths.get("src/main/resources/DB/hibernate.cfg.xml");
-        Charset charset = StandardCharsets.UTF_8;
-        try {
-            String content = new String(Files.readAllBytes(path), charset);
-            String database = "database.db", testDatabase = "databaseTest.db",
-                   getter = testDatabase, setter = database;
-            if (isTesting) {
-                getter = database;
-                setter = testDatabase;
-            }
-            content = content.replaceAll(getter, setter);
-            Files.write(path, content.getBytes(charset));
-        } catch (Exception e) {
-            System.out.println(e);
-        }
     }
 }
