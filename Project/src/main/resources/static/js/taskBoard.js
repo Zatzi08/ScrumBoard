@@ -236,6 +236,17 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
     // })
 }
 
+function parseUser(a){
+    let list = []
+    while (a !== "]" && a !== "[]"){
+        let user = a.substring(a.indexOf('{'), end = (a.indexOf('}') + 1)).replaceAll("'", '"')
+        a = a.substring(a.indexOf('}') + 1)
+        let ju = JSON.parse(user);
+        list.push(ju)
+    }
+    return list
+}
+
 function closePopup(){
     let popupChange = document.getElementById("popupChangeTBName");
     let popupFertig = document.getElementById("popupTaskFertig");
@@ -280,4 +291,9 @@ function closeOverlay2() {
     } else {
         toggleZoomedTaskCard();
     }
+}
+
+function randomizeAssignedUsersColour(id){
+    var selected = document.getElementById(id)
+    selected.style.backgroundColor = generateColors(1)[0]
 }
