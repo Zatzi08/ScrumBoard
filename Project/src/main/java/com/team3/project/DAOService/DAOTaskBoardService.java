@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAO.DAOTaskList;
-import com.team3.project.DAO.DAOUserStory;
 
 public class DAOTaskBoardService {
     //gets
@@ -38,6 +36,12 @@ public class DAOTaskBoardService {
         return DAOService.getByID(id, DAOTaskBoard.class);
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: 
+     * Reason: 
+     * UserStory/Task-ID:
+     */
     public static DAOTaskBoard getByName(String name) {
         String parameterName = "name";
         return DAOService.getSingleByPara(DAOTaskBoard.class, name, parameterName);
@@ -47,7 +51,7 @@ public class DAOTaskBoardService {
      * Revisited: /
      * Function: gets entry by ID
      * Reason:
-     * UserStory/Task-ID:
+     * UserStory/Task-ID: 
      */
     /** gets entry by ID 
      * @param id identifier
@@ -58,6 +62,12 @@ public class DAOTaskBoardService {
         return DAOService.getLeftJoinByID(id, DAOTaskBoard.class, joinOnAttributeName);
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: gets taskboard with affiliated tasklists and affiliated tasks
+     * Reason: 
+     * UserStory/Task-ID: TB2.D1
+     */
     public static DAOTaskBoard getWithTaskListsWithTasksById(int id) {
         List<String> joinOnAtrributeNames = Arrays.asList("taskLists", "taskLists.tasks");
         DAOTaskBoard daoTaskBoard = DAOService.getLeftJoinByID(id, DAOTaskBoard.class, joinOnAtrributeNames.get(0));
@@ -69,6 +79,17 @@ public class DAOTaskBoardService {
         return daoTaskBoard;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: creates a taskboard
+     * Reason: 
+     * UserStory/Task-ID: TB9.D3
+     */
+    /** Mit 
+     * @param name TaskBoard Name
+     * @param daoTaskLists TaskLists - Nullable for default Lists
+     * @return returns true if create was successful
+     */
     public static boolean create(String name, List<DAOTaskList> daoTaskLists) {
         if (!existsName(name)) {
             if (daoTaskLists == null) {
@@ -79,6 +100,12 @@ public class DAOTaskBoardService {
         return false;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: creates taskboard with custom tasklists
+     * Reason: 
+     * UserStory/Task-ID: TB9.D3
+     */
     static boolean createWithoutDefaultTaskLists(String name, List<DAOTaskList> daoTaskLists) {
         DAOTaskBoard taskBoard = new DAOTaskBoard(name, daoTaskLists);
             try {
@@ -93,6 +120,13 @@ public class DAOTaskBoardService {
             }
             return true;
     }
+
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: creates taskboard with default tasklists
+     * Reason: 
+     * UserStory/Task-ID: TB9.D3
+     */
     static boolean createWithDefaultTaskLists(String name) {
         DAOTaskBoard daoTaskBoard = new DAOTaskBoard(name, null);
         try {
@@ -107,6 +141,12 @@ public class DAOTaskBoardService {
         return false;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: updates name
+     * Reason: 
+     * UserStory/Task-ID: TB10.D1
+     */
     public static boolean updateNameById(int id, String name) {
         DAOTaskBoard taskBoard = DAOService.getByID(id, DAOTaskBoard.class);
         if (!existsName(name)) {
@@ -116,16 +156,34 @@ public class DAOTaskBoardService {
         return false;
     }
 
-    public static boolean emptyTaskListsByTaskBoardId(int taskboardId) {
-        DAOTaskBoard taskBoard = DAOTaskBoardService.getWithTaskListsById(taskboardId);
-        taskBoard.setTaskLists(null);
-        return DAOService.merge(taskBoard);
-    }
+    // /* Author: Tom-Malte Seep
+    //  * Revisited: 
+    //  * Function: sets tasklists null
+    //  * Reason: 
+    //  * UserStory/Task-ID: TB11.D2
+    //  */
+    // public static boolean emptyTaskListsByTaskBoardId(int taskboardId) {
+    //     DAOTaskBoard taskBoard = DAOTaskBoardService.getWithTaskListsById(taskboardId);
+    //     taskBoard.setTaskLists(null);
+    //     return DAOService.merge(taskBoard);
+    // }
 
-    public static boolean emptyTaskListsByTaskBoard(DAOTaskBoard daoTaskBoard) {
-        return emptyTaskListsByTaskBoardId(daoTaskBoard.getId());
-    }
+    // /* Author: Tom-Malte Seep
+    //  * Revisited: 
+    //  * Function: sets tasklists null 
+    //  * Reason: 
+    //  * UserStory/Task-ID: TB11.D2
+    //  */
+    // public static boolean emptyTaskListsByTaskBoard(DAOTaskBoard daoTaskBoard) {
+    //     return emptyTaskListsByTaskBoardId(daoTaskBoard.getId());
+    // }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: deletes a taskboard
+     * Reason: 
+     * UserStory/Task-ID: TB11.D1
+     */
     public static boolean deleteById(int id) {
         DAOTaskBoard taskBoard = DAOService.getByID(id, DAOTaskBoard.class);
         if (taskBoard != null) {
@@ -140,6 +198,12 @@ public class DAOTaskBoardService {
         return true;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: checks if name exists
+     * Reason: 
+     * UserStory/Task-ID:
+     */
     static boolean existsName(String name) {
         String parameterName = "name";
         DAOTaskBoard taskBoard = DAOService.getSingleByPara(DAOTaskBoard.class, name, parameterName);

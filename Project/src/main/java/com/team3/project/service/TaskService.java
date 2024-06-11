@@ -259,4 +259,24 @@ public class TaskService {
         }
         DAOTaskService.updateUsersById(tid, dul);
     }
+
+    /* Author: Henry van Rooyen
+     * Revisited: /
+     * Funktion: aktualisiert die Bearbeitungszeit einer Task, sofern fertig
+     * Grund: /
+     * UserStory/Task-ID: T11.B2
+     */
+    public void editTaskTimeIfDone(final Task task,
+                                   final double newProcessingTimeEstimatedInHours,
+                                   final double newProcessingTimeRealInHours) throws Exception {
+        if (task == null || newProcessingTimeEstimatedInHours < 0 || newProcessingTimeRealInHours < 0) {
+            throw new IllegalArgumentException("Wrong input parameters");}
+        if (task.isDone()){
+            final DAOTask daoTask = DAOTaskService.getById(task.getID());
+            DAOTaskService.updateProcessingTimeEstimatedInHoursById(daoTask.getId(), newProcessingTimeEstimatedInHours );
+            DAOTaskService.updateProcessingTimeRealInHoursById(daoTask.getId(), newProcessingTimeRealInHours);
+            task.setTimeNeededG(newProcessingTimeEstimatedInHours);
+            task.setTimeNeededA(newProcessingTimeRealInHours);
+        }
+    }
 }

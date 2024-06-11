@@ -1,5 +1,6 @@
 package com.team3.project.DAOService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.EntityExistsException;
@@ -34,6 +35,12 @@ class DAOService {
         return retrieve;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: 
+     * Reason: 
+     * UserStory/Task-ID:
+     */
     static <Dao> List<Dao> getAllFloating(Class<Dao> daoClass, String linkName) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
@@ -163,7 +170,23 @@ class DAOService {
     }
 
     
-
+    static <Dao> List<Dao> getListLeftJoins(Class<Dao> daoClass, List<String> joinOnAttributeName) {
+        EntityManager entityManager = DAOSession.getNewEntityManager();
+        entityManager.getTransaction().begin();
+        StringBuilder querySb = new StringBuilder("SELECT item FROM " + daoClass.getName() + " AS item");
+        joinOnAttributeName.stream().forEach(attributeName -> {
+            querySb.append(" LEFT JOIN item." + attributeName);
+        });
+        List<Dao> retrieve;
+        try {
+            retrieve = entityManager.createQuery(querySb.toString(), daoClass).getResultList();
+        } catch (Exception e) {
+            retrieve = new ArrayList<Dao>();
+        } finally {
+            entityManager.close();
+        }
+        return retrieve;
+    }
     
     static <Dao> Dao getSingleLeftJoinsById(int id, Class<Dao> daoClass, List<String> joinOnAttributeNames) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
@@ -236,6 +259,12 @@ class DAOService {
         return retrieve;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: 
+     * Reason: 
+     * UserStory/Task-ID:
+     */
     static <Dao> List<Dao> getListLeftJoinByPara(Class<Dao> daoClass, String parameter, String parameterName, String joinOnAttributeName) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
@@ -512,6 +541,7 @@ class DAOService {
             entityManager.merge(daoObject);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            System.out.println(e);
             //Something went wrong
         } finally {
             DAOSession.closeEntityManager(entityManager);

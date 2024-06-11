@@ -32,14 +32,7 @@ public class BaseHTTPTest extends BaseTest {
         if (storys.isEmpty())TestDBUserStory();
         if (tasks.isEmpty())TestDBTask();
     }
-    protected static void before() {
-        BaseTest.before();
-
-    }
-
-    protected static void after() {
-        BaseTest.after(true);
-    }
+    
     protected static void tearDown() {
         BaseTest.tearDown();
     }

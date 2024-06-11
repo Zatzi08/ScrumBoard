@@ -268,7 +268,8 @@ public class WebController {
                 Profile user = presentationToLogic.accountService.getProfileByID(sessionID);
                 return new ModelAndView("profil")
                         .addObject("User" , user)
-                        .addObject("sessionID", sessionID);
+                        .addObject("sessionID", sessionID)
+                        .addObject("own", true);
             }
         } catch (Exception e){
             e.printStackTrace();
@@ -291,7 +292,8 @@ public class WebController {
                 Profile user = presentationToLogic.accountService.getProfileByEmail(email);
                 return new ModelAndView("profil")
                         .addObject("User", user)
-                        .addObject("sessionID", sessionID);
+                        .addObject("sessionID", sessionID)
+                        .addObject("own", false);
             }
         } catch (Exception e){
             e.printStackTrace();

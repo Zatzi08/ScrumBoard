@@ -13,7 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.team3.project.DAOService.DAORoleService;
-import com.team3.project.DAOService.DAOStartService;
 import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.Tests.BaseClassesForTests.BaseDBTest;
 import com.team3.project.DAO.DAORole;
@@ -22,16 +21,17 @@ public class UserTests extends BaseDBTest {
     @BeforeAll
     public static void BeforeAll() {
         setup();
+        wipeDb(true);
     }
 
     @BeforeEach
     public void beforeEach() {
-        before();
+        wipeDb(false);
     }
 
     @AfterEach
     public void afterEach() {
-        after();
+        wipeDb(true);
     }
 
     @AfterAll
@@ -102,13 +102,13 @@ public class UserTests extends BaseDBTest {
             throw new AssertionError(e);
         }
         try {
-            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getEmail(),TestEmail);
+            assertEquals(DAOUserService.getWithRolesById(DAOUserService.getIdByMail(TestEmail)).getEmail(),TestEmail);
         } catch (Exception e) {
             printWriterAddFailure("did not retrieved right User");
             throw new AssertionError(e);
         }
         try{
-            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getRoles().get(0).getName(),TestRoles.get(0).getName());
+            assertEquals(DAOUserService.getWithRolesById(DAOUserService.getIdByMail(TestEmail)).getRoles().get(0).getName(),TestRoles.get(0).getName());
         } catch (Exception e) {
             printWriterAddFailure("retrieved wrong roles");
             throw new AssertionError(e);
@@ -146,13 +146,13 @@ public class UserTests extends BaseDBTest {
             throw new AssertionError(e);
         }
         try{
-            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getName(),TestName2);
+            assertEquals(DAOUserService.getWithRolesById(DAOUserService.getIdByMail(TestEmail)).getName(),TestName2);
         } catch (Exception e) {
             printWriterAddFailure("did not update name");
             throw new AssertionError(e);
         }
         try{
-            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getRoles().get(0).getName(),TestRoles.get(0).getName());
+            assertEquals(DAOUserService.getWithRolesById(DAOUserService.getIdByMail(TestEmail)).getRoles().get(0).getName(),TestRoles.get(0).getName());
         } catch (Exception e) {
             printWriterAddFailure("did not update rols");
             throw new AssertionError(e);
@@ -189,13 +189,13 @@ public class UserTests extends BaseDBTest {
             throw new AssertionError(e);
         }
         try{
-            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getSessionId(),sessionID);
+            assertEquals(DAOUserService.getWithRolesById(DAOUserService.getIdByMail(TestEmail)).getSessionId(),sessionID);
         } catch (Exception e) {
             printWriterAddFailure("did not update sessionID");
             throw new AssertionError(e);
         }
         try{
-            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getSessionDate(),sessionDate);
+            assertEquals(DAOUserService.getWithRolesById(DAOUserService.getIdByMail(TestEmail)).getSessionDate(),sessionDate);
         } catch (Exception e) {
             printWriterAddFailure("did not update sessionDate");
             throw new AssertionError(e);
@@ -239,7 +239,7 @@ public class UserTests extends BaseDBTest {
             throw new AssertionError(e);
         }
         try{
-            assertEquals(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getSessionId(), null);
+            assertEquals(DAOUserService.getWithRolesById(DAOUserService.getIdByMail(TestEmail)).getSessionId(), null);
         } catch (Exception e) {
             printWriterAddFailure("did not remove sessionID");
             throw new AssertionError(e);
