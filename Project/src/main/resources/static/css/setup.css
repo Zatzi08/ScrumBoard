@@ -34,14 +34,15 @@ body {
 
 
 .reiterBtn {
-    display:inline-block;
+    display: inline-block;
     position: relative;
     color: #d9dcde;
     background-color: transparent;
     padding: 12px 10px;
     transition: border-bottom-color 0.4s;
-    margin-right:4%;
+    margin-right: 4%;
     margin-top: 2%;
+    font-size: 105%;
 }
 
 .reiterBtn:hover {

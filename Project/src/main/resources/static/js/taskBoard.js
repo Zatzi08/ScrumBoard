@@ -1,17 +1,3 @@
-/*
-* Author: Paula Krasnovska
-* Revisited: /
-* Funktion: Toggeln des Bearbeitungsmenü, Zuweisung von Attributen für Thymeleaf
-* Grund: /
-* User-Story/Task-ID: U3.F1, U4.F1
-*/
-function toggleEditBox(storyId, name, description){
-    EditBox();
-    document.getElementById("inputName").textContent = name;
-    document.getElementById("inputDesc").textContent = description;
-    document.getElementById("editId").value = storyId;
-}
-
 function toggleZoomedTaskCard(id) {
     var editMenu = document.querySelector('#zoomedTaskCard');
     var overlay = document.querySelector('.overlay');
@@ -21,7 +7,7 @@ function toggleZoomedTaskCard(id) {
             editMenu.style.display = "none";
             if (overlay) {
                 overlay.remove();
-                overlay.removeEventListener('click', toggleZoomedTaskCard);
+                overlay.removeEventListener('click', closeOverlay);
             }
         } else {
             editMenu.style.display = "block";
@@ -29,11 +15,24 @@ function toggleZoomedTaskCard(id) {
                 overlay = document.createElement('div');
                 overlay.classList.add('overlay');
                 document.body.appendChild(overlay);
-                overlay.addEventListener('click', toggleZoomedTaskCard);
+                overlay.addEventListener('click', closeOverlay);
             }
         }
     } else {
         console.error("Das Element mit der Klasse 'editMenu' wurde nicht gefunden.");
+    }
+}
+
+function closeOverlay() {
+    var overlay = document.querySelector('.overlay');
+    var zoomedTaskCard = document.querySelector('#zoomedTaskCard');
+
+    if (zoomedTaskCard.style.display === "block") {
+        zoomedTaskCard.style.display = "none";
+        if (overlay) {
+            overlay.remove();
+            overlay.removeEventListener('click', closeOverlay);
+        }
     }
 }
 
@@ -147,7 +146,6 @@ document.addEventListener('DOMContentLoaded', function() {
             placeholder.remove();
             draggedElement.classList.remove('dragging');
 
-            // Retrieve the ID of the dragged element
             const draggedElementId = e.dataTransfer.getData('text/plain');
             setTaskList(document.getElementById('sessionID').value, draggedElementId.substring(1), targetContainer.id);
             let id = targetContainer.id
@@ -163,92 +161,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-/*
-document.addEventListener('DOMContentLoaded', function() {
-    function enableButtonEdit() {
-        const headerButtons = document.querySelectorAll('.outerContainer-HeaderBtn');
-
-        headerButtons.forEach(button => {
-            button.addEventListener('dblclick', function(event) {
-                const currentText = button.textContent.trim();
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.value = currentText;
-                input.style.width = button.offsetWidth + 'px';
-                input.style.height = button.offsetHeight + 'px';
-                input.style.fontFamily = window.getComputedStyle(button).fontFamily;
-                input.style.fontSize = window.getComputedStyle(button).fontSize;
-                input.style.padding = '2px';
-                input.style.margin = '0';
-                input.style.border = '1px solid #ccc';
-                input.style.borderRadius = '3px';
-                input.style.boxSizing = 'border-box';
-                input.style.display = 'inline';
-
-                input.addEventListener('keyup', function(e) {
-                    if (e.key === 'Enter') {
-                        button.textContent = input.value.trim();
-                        input.replaceWith(button);
-                    }
-                });
-
-                input.addEventListener('blur', function() {
-                    button.textContent = input.value.trim();
-                    input.replaceWith(button);
-                });
-
-                button.replaceWith(input);
-                input.focus();
-            });
-        });
-    }
-
-    enableButtonEdit();
-});
-
-function addHeaderButton(text) {
-
-    var newButton = document.createElement('button');
-    newButton.className = 'outerContainer-HeaderBtn';
-    newButton.style.position = 'relative';
-    newButton.ondblclick = function() {
-        this.contentEditable = true;
-    };
-    newButton.style.marginRight = '5px';
-
-
-    var buttonText = document.createElement('span');
-    buttonText.innerText = text;
-
-
-    var deleteBtn = document.createElement('span');
-    deleteBtn.className = 'delete-btn';
-    deleteBtn.innerHTML = '&times;';
-    deleteBtn.onclick = function() {
-        deleteButton(newButton);
-    };
-    deleteBtn.setAttribute('contenteditable', 'false');
-
-
-    newButton.appendChild(buttonText);
-    newButton.appendChild(deleteBtn);
-
-    var addButton = document.getElementById('outerContainer-HeaderBtnAdd');
-    addButton.parentNode.insertBefore(newButton, addButton);
-}
- */
-
 function deleteButton(button) {
     button.parentNode.removeChild(button);
 }
 
-function changeTBNamePopUp(){
-    var TBNamePopup = document.getElementById("popupChangeTBName");
-    TBNamePopup.style.display = "block";
-}
-
-function createTBNamePopUp(){
-    var TBNamePopup = document.getElementById("popupCreateTB");
+function changeTBNamePopUp(id){
+    var TBNamePopup = document.getElementById(id);
     TBNamePopup.style.display = "block";
 }
 
@@ -309,13 +227,13 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
     document.getElementById('zoomedTaskCard-role').innerText;
     NutzerList = parseUser(NutzerList)
     var ul = document.getElementById("zoomedTaskCard-nutzerDropdown-content");
-    ul.innerHTML = ""
-    NutzerList.forEach((nutzer)=>{
-        var li = document.createElement("li")
-        li.id = 'N' + nutzer.id;
-        li.appendChild(document.createTextNode(nutzer.name));
-        ul.appendChild(li);
-    })
+    // ul.innerHTML = ""
+    // NutzerList.forEach((nutzer)=>{
+    //     var li = document.createElement("li")
+    //     li.id = 'N' + nutzer.id;
+    //     li.appendChild(document.createTextNode(nutzer.name));
+    //     ul.appendChild(li);
+    // })
 }
 
 function parseUser(a){
@@ -335,4 +253,42 @@ function closePopup(){
 
     popupChange.style.display = "none";
     popupFertig.style.display = "none";
+}
+
+function openAssignedUsers(){
+    var assignedUsers = document.querySelector('#assignedUsers');
+    var overlay2 = document.querySelector('.overlay2');
+
+    if (assignedUsers) {
+        if (assignedUsers.style.display === "block") {
+            if (overlay2) {
+                overlay2.remove();
+                overlay2.removeEventListener('click', closeOverlay2);
+            }
+            assignedUsers.style.display = "none";
+        } else {
+            assignedUsers.style.display = "block";
+            if (!overlay2) {
+                overlay2 = document.createElement('div');
+                overlay2.classList.add('overlay2');
+                document.body.appendChild(overlay2);
+                overlay2.addEventListener('click', closeOverlay2);
+            }
+        }
+    }
+}
+
+function closeOverlay2() {
+    var overlay2 = document.querySelector('.overlay2');
+    var assignedUsers = document.querySelector('#assignedUsers');
+
+    if (assignedUsers.style.display === "block") {
+        assignedUsers.style.display = "none";
+        if (overlay2) {
+            overlay2.remove();
+            overlay2.removeEventListener('click', closeOverlay2);
+        }
+    } else {
+        toggleZoomedTaskCard();
+    }
 }

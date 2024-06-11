@@ -46,23 +46,6 @@
     display: inline;
 }
 
-#outerContainer-HeaderChangeTBName{
-    position: relative;
-    width: fit-content;
-    height: 25px;
-    border-radius: 5px;
-    color: #ffffff;
-    font-size: 12px;
-    padding: 5px;
-    background-color: #46425e;
-    /* display: inline; */
-    /* right: 15px; */
-    float: right;
-    content: antiquewhite;
-    /* justify-content: flex-end; */
-
-}
-
 #outerContainer-HeaderChangeTBName:hover{
     background-color: #38364b;
     cursor: pointer;
@@ -79,7 +62,8 @@
     background-color: #211f2b;
     border-bottom: 10px;
     position: relative;
-    margin-top: 1%;
+    margin: 1%;
+    margin-right: 0;
     display: flex;
     flex-direction: row;
     border-radius: 20px;
@@ -91,6 +75,7 @@
     width: 20%;
     border-radius: 10px;
     overflow: auto;
+    margin-right: 1%;
 }
 
 .wrapper {
@@ -197,7 +182,7 @@ hr {
     padding: 10px;
     text-align: left;
     width: 95%;
-    max-width: 200px;
+    max-width: 14dvw;
     border: 0 solid #adadad;
     border-radius: 10px;
     cursor: default;
@@ -229,6 +214,17 @@ hr {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 999;
+    overflow-y: scroll;
+}
+
+.overlay2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1001;
     overflow-y: scroll;
 }
 
@@ -294,48 +290,6 @@ hr {
     color: #d1d1d1;
     border: none;
     display: inherit;
-}
-
-#zoomedTaskCard-nutzerDropdown label{
-    background-color: transparent;
-    color: #d1d1d1;
-    border: none;
-    display: inherit;
-    background-color: #282435;
-}
-
-#zoomedTaskCard-nutzerDropdown ul{
-    display: none;
-    float: left;
-    position: fixed;
-    background-color: #373347;
-    min-width: fit-content;
-    height:100px;
-    box-shadow: 8px 16px rgba(0,0,0,0.2);
-    overflow: scroll;
-    margin-top: 4%;
-    margin-left: 5%;
-    z-index: 1;
-    border-radius:0px;
-}
-#zoomedTaskCard-nutzerDropdown ul li{
-    overflow: scroll;
-    background-color: transparent;
-    color: #d1d1d1;
-    text-decoration: none;
-    display: block;
-}
-
-#zoomedTaskCard-nutzerDropdownBtn{
-    background-color: transparent;
-}
-#zoomedTaskCard-nutzerDropdown:hover ul {display: block;}
-
-
-#zoomedTaskCard-nutzerDropdown:focus{
-    outline: none;
-    box-shadow: none;
-    border-color:transparent;
 }
 
 ::-webkit-scrollbar {
@@ -487,4 +441,87 @@ hr {
 
 #wrapper{
     display: flex;
+}
+
+.zoomedTaskCard-userCircle{
+    width: 26px;
+    height: 26px;
+    display: inline-block;
+    border-radius: 100%;
+    overflow: hidden;
+    background: aliceblue;
+    line-height: 26px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#assignedUsers{
+    display: none;
+    position: fixed;
+    padding: 20px;
+    width: 500px;
+    max-height: 499px;
+    height: auto;
+    background: azure;
+    top: 50dvh;
+    left: 50dvw;
+    transform: translate(-50%, -50%);
+    z-index: 1002;
+    border-radius: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#assignedUsers ul{
+    position: relative;
+    margin: 2% 2% 2% 2%;
+    list-style-type: none;
+}
+
+#assignedUsers li{
+    position: relative;
+    color: black;
+}
+
+#outerContainer-HeaderAlignment{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    align-content: center;
+    vertical-align: middle;
+    /* justify-content: center; */
+    /* margin-left: 0.7%; */
+}
+
+#outerContainer-HeaderAlignmentInner{
+    width: 100%;
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: scroll;
+}
+
+#outerContainer-HeaderChangeTBName{
+    position: relative;
+    margin-right: 0;
+    margin-left: auto;
+    width: fit-content;
+    height: 25px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 5px;
+    background-color: #46425e;
+    content: antiquewhite;
+}
+
+@media only screen and (max-width: 1400px) {
+    #outerContainer-HeaderAlignmentInner{
+        width: 84dvw;
+    }
+}
+
+@media only screen and (min-width: 1400px){
+    #outerContainer-HeaderAlignmentInner{
+        width: 88dvw;
+    }
 }

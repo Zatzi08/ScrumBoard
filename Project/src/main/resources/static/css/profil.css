@@ -1,13 +1,13 @@
 #profilContainer{
     position: absolute;
-    margin: 1%;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-top: 20px;
-    height: auto;
-    width: 90%;
+    margin: 2% 2% 2% 2%;
+    height: -webkit-fill-available;
+    width: 96%;
     background-image: linear-gradient(to bottom right, #23262f, #26375d);
     border-radius: 15px;
+    /* max-height: fit-content; */
+    overflow-y: scroll;
+    /* scroll-padding-bottom: 22%; */
 }
 
 #profilInhalt{
@@ -23,15 +23,16 @@
     display: inline-block;
     color: #f1b951;
     width: 500px;
-    font-size: 300%;
+    font-size: calc(2.8dvw + 2.8dvh);
     font-family: "Lucida Console";
 }
 
 #profilInhalt button{
     display: block;
     position: absolute;
-    margin-left:100%;
+    margin-left: 100%;
     color: white;
+    font-size: calc(1dvw + 1dvh);
 
 }
 
@@ -45,7 +46,7 @@
 #profilProjektBeschreibung, #profilPersoBeschreibung, rolleProfil{
     color: #e1dbdb;
     font-family: Roboto;
-    font-size: 110%;
+    font-size: calc(1dvw + 1dvh);
     overflow-wrap: break-word;
     text-align: justify;
     hyphens: auto;
@@ -137,12 +138,12 @@
 }
 
 .profileText{
-    font-size: 150%;
+    font-size: calc(1.2dvw + 1.2dvh);
     font-family: "Lucida Console";
     color: #a8a398;
     margin-top: 20px;
     overflow-wrap: break-word;
-    text-align: justify;
+    /* text-align: justify; */
     hyphens: auto;
 }
 
