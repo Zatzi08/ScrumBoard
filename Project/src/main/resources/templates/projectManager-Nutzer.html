@@ -33,7 +33,7 @@
     <button class="selectBtn" id="selectTasks" th:Sid="${sessionID}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
     <span class="userStoryTaskTrenner">|</span>
     <button class="selectBtn" id="selectUser" style= "border-bottom: 1px solid #ffffff" title = "Wechsel zur Nutzeransicht">Nutzer</button>
-    <button class="addUserStoryBtn" title="Erstelle und Bearbeite die Rollen" onclick="toggleRolesEditMenu()"><i class="fa fa-user-o" style = "margin-right: 5px"></i>Rollen bearbeiten</button>
+    <button class="addUserStoryBtn" title="Erstelle und Bearbeite die Rollen" onclick="toggleRolesEditMenu()"><i class="fa fa-user" style = "margin-right: 5px"></i>Rollen bearbeiten</button>
   </div>
   <div id="innerProjectManagerContainer">
     <div class="wrapper">
@@ -68,7 +68,7 @@
 
 <div id = "roleOverlay" style = "display:none">
 <div class = "editMenu"  id = "editRolesMenu">
-  <label id = "roleTitle" >  Rollen bearbeiten und erstellen <i class = fa fa-pencil></i>
+  <label id = "roleTitle" >  Rollen bearbeiten und erstellen <i class = "fa fa-pencil"></i>
     <span class="closeToggleEdit" onclick="toggleRolesEditMenu()">&times;
     </span>
   </label>

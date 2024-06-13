@@ -89,7 +89,7 @@
 .profilInput{
     display: block;
     width: 95%;
-    height: 90px;
+    height: 30px;
     border: #606060 solid 1px;
     background-color: #283d48;
     color: #afafaf;
@@ -161,6 +161,60 @@
 
 ::-webkit-scrollbar-corner {
     background: rgba(0,0,0,0);
+}
+
+.dropdown-check-list {
+    display: inline-block;
+    /*display: inline-flex;*/
+    align-items: center;
+    justify-content: center;
+    right:0;
+    width: 70%;
+    height:50px;
+    margin-left:3%;
+}
+
+.dropdown-check-list .anchor {
+    position: relative;
+    cursor: pointer;
+    display: inline-flex;
+    background-color: #283d48;
+    color: #afafaf;
+    border: #606060 solid 1px;
+    border-radius: 8px;
+    font-size: 12px;
+    box-shadow: white;
+    padding: .75rem 1rem;
+    height: 45px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-left: -108%;
+    float: right;
+}
+
+.dropdown-check-list ul.items {
+    position: relative;
+    padding: 2px;
+    display: none;
+    border: 1px solid #ccc;
+    border-top: none;
+    z-index: 1;
+    background-color: #23353f;
+    width: -webkit-fill-available;
+    height: 150px;
+    border-radius: 8px;
+    margin-left: -100%;
+    float: right;
+    left: 2px;
+}
+
+.dropdown-check-list ul.items li {
+    list-style: none;
+}
+
+.dropdown-check-list.visible .items {
+    display: block;
 }
 
 /*Todo: Hübsche Fonts raussuchen, Strich zentrieren, margins und Abstände anpassen*/

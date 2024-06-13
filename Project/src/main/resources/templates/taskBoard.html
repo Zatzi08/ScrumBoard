@@ -36,7 +36,7 @@
             <div id="outerContainer-HeaderAlignmentInner">
                 <button style="position: relative; margin-right: 5px;" th:each="Taskboard : ${TaskBoards}" th:sID="${sessionID}" th:id="@{Button{tb}(tb=${Taskboard.getID()})}" class="outerContainer-HeaderBtn" th:tbID="${Taskboard.getID()}" ondblclick="SwitchToTaskBoardByID(this.getAttribute('sID'), this.getAttribute('tbID'))" title="Doppeklick, um auf Taskboard zu wechseln">
                     <span th:id="@{Name{tb}(tb=${Taskboard.getID()})}" th:text="${Taskboard.getName()}">  </span>
-                    <span th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" th:tbID="${Taskboard.getID()}" class='delete-btn' onclick="deleteTaskBoard(this, this.getAttribute('sID'), this.getAttribute('tbID'))" title="Taskboard löschen">×</span></button>
+                    <span th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" th:tbID="${Taskboard.getID()}" class='delete-btn' onclick="deleteTBPopup(this, this.getAttribute('sID'), this.getAttribute('tbID'))" title="Taskboard löschen">×</span></button>
                 <button type="button" th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" id="outerContainer-HeaderBtnAdd" onclick="changeTBNamePopUp('popupCreateTB')" title="Taskboard hinzufügen"><b>+</b></button>
             </div>
             <button type="button" th:if="${authority == 2 || authority == 4}" id = "outerContainer-HeaderChangeTBName" onclick="changeTBNamePopUp('popupChangeTBName')"><i id="pencilSym" class = "fa fa-pencil"></i>Name ändern</button>

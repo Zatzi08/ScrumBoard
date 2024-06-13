@@ -44,12 +44,19 @@
 <div th:if="${own}" id = "profilEditMenü" style="display: none;">
 <form id = "profilForm" autocomplete="off">
     <label style = "color:#ffffff; font-size: 15px; border-bottom: 2px solid #dcdcdc; width:100%"><i class = "fa fa-pencil" style = "font-size: calc(1dvw + 1dvh); margin-right:15px"></i>Profil bearbeiten</label>
-    <label class = "labelProfil">Benutzername:</label>
+    <label class = "labelProfil">Benutzername</label>
     <textarea id="inputName" class = "profilInput" form = "profilForm" placeholder = "Benutzername bearbeiten" name = benutzername></textarea>
     <label class = "labelProfil">Projektbezogene Beschreibung</label>
     <textarea id="inputWDesc" class = "profilInput" form = "profilForm" placeholder = "Projektbezogene Beschreibung bearbeiten" name = projektBeschreibung></textarea>
     <label class = "labelProfil">Persönliche Beschreibung</label>
     <textarea id="inputPDesc" class = "profilInput" form = "profilForm" placeholder = "Persönliche Beschreibung bearbeiten" name = persoBeschreibung></textarea>
+    <label class = "labelProfil">Rollen auswählen</label>
+    <div id="list1" class="dropdown-check-list">
+        <button type="button" onclick="" class="anchor"> Rollen auswählen <i class = "fa fa-sort-down" style = "margin-left: 10px"></i></button>
+        <ul id="usersAuswahlID" class="items">
+            <li ><input  type="checkbox" /> </li>
+        </ul>
+    </div>
     <button type = "button" title = "Speichern der Änderungen" th:sessionID="${sessionID}" onclick="saveProfile(this.getAttribute('sessionID'))" id = "profilEditBtn">Speichern</button>
 </form>
 </div>
