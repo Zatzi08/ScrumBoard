@@ -11,14 +11,6 @@ public class ProjectApplication {
 
     public static void main(String[] args) throws Exception {
         DAOStartService.start();
-        PresentationToLogic p = PresentationToLogic.getInstance();
-        if (!DAOAccountService.checkMail("T@M.com")){
-            p.accountService.register("T","T@M.com", "T");
-        }
-        if (DAOTaskBoardService.getAll().isEmpty()){
-            p.taskBoardService.createTaskBoard("Default");
-        }
-        DAOUserService.updateAuthorizationById(DAOUserService.getIdByMail("T@M.com"), 4);
         SpringApplication.run(ProjectApplication.class, args);
     }
 

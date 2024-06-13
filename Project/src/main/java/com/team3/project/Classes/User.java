@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class User extends abstraktDataClasses {
+public class User extends dataClasses {
     private String name;
     private List<Enumerations.Role> roles; // TODO: Roles (plural) sollte eigentlich ne Liste sein
     private int authorization; //von der DB gestellt
@@ -26,4 +26,12 @@ public class User extends abstraktDataClasses {
         this.authorization = authorization;
     }
 
+    public String toJSON() {
+        String json = "{";
+        json += "\"id\":\""+this.getID();
+        json += "\",\"name\":\""+this.getName();
+        json += "\",\"authorization\":\""+this.getAuthorization();
+        json += "\"}";
+        return json;
+    }
 }

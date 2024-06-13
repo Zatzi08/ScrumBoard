@@ -7,6 +7,7 @@ import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.*;
+import com.team3.project.Facede.PresentationToLogic;
 import com.team3.project.Tests.BaseClassesForTests.BaseHTTPTest;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class HttpRequestTests extends BaseHTTPTest {
     private final String masterID = "EAIFPH8746531";
     @Autowired
     public TestRestTemplate restTemplate;
+
+    @Autowired
+    public HttpRequestTests(PresentationToLogic presentationToLogic) throws Exception {
+        super(presentationToLogic);
+    }
 
 
     @BeforeAll

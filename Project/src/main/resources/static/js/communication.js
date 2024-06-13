@@ -123,7 +123,7 @@ function saveUS($this, sessionID) {
         })
         }).then(r => {
         if (r.ok) {
-            location.reload();
+            //location.reload();
         }
         if (r.status === 403){
             window.alert("Unzureichende Rechte! Bei Anfrage kontaktieren Sie bitte den Admin!");

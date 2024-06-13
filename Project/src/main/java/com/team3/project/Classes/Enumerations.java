@@ -4,13 +4,14 @@ public class Enumerations {
 
     // default Priority = low
     public enum Priority {low, normal, high, urgent;}
-    public enum Role {admin, ProductOwner, Manager, Nutzer}
     /*Legende:
-    * Nutzer = 1
-    * Manager = 2
-    * ProductOwner = 3
-    * admin = 4
-    */
+     * Nutzer = 1
+     * Manager = 2
+     * ProductOwner = 3
+     * admin = 4
+     */
+    public enum Role {admin, ProductOwner, Manager, Nutzer}
+    public enum ResponceTyp {newItem, deletedItem, changedPrimitivParam, changedConplexParam, ERROR}
 
     /* Author: Lucas Krüger
      * Revisited: /
@@ -42,6 +43,16 @@ public class Enumerations {
             case 3 -> Priority.high;
             case 2 -> Priority.normal;
             default -> Priority.low;
+        };
+    }
+
+    public static ResponceTyp IntToResponceTyp(int typID){
+        return switch (typID) {
+            case 4 -> ResponceTyp.ERROR;
+            case 3 -> ResponceTyp.changedConplexParam;
+            case 2 -> ResponceTyp.changedPrimitivParam;
+            case 1 -> ResponceTyp.deletedItem;
+            default -> ResponceTyp.newItem;
         };
     }
 }

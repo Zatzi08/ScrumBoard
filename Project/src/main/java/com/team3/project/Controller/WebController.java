@@ -4,7 +4,11 @@ import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.Task;
 import com.team3.project.Classes.TaskBoard;
 import com.team3.project.Classes.UserStory;
+import com.team3.project.DAOService.DAOAccountService;
+import com.team3.project.DAOService.DAOTaskBoardService;
+import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.Facede.PresentationToLogic;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,9 +19,21 @@ import java.util.List;
 
 @Controller
 public class WebController {
-    public WebController() {
-        this.presentationToLogic = PresentationToLogic.getInstance();
+    public WebController(PresentationToLogic presentationToLogic) {
+        this.presentationToLogic = presentationToLogic;
+        try{
+            if (!DAOAccountService.checkMail("T@M.com")) {
+                presentationToLogic.accountService.register("T", "T@M.com", "T");
+            }
+            if (DAOTaskBoardService.getAll().isEmpty()) {
+                presentationToLogic.taskBoardService.createTaskBoard("Default");
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        DAOUserService.updateAuthorizationById(DAOUserService.getIdByMail("T@M.com"), 4);
     }
+    @Autowired
     private final PresentationToLogic presentationToLogic;
     private final String MasterID = "EAIFPH8746531";
 

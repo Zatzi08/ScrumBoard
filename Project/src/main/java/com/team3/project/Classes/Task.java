@@ -1,14 +1,11 @@
 package com.team3.project.Classes;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team3.project.Classes.Enumerations.Priority;
 import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOTaskBoardService;
 import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.service.UserStoryService;
 import lombok.*;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -16,13 +13,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 
 // Definiert Datentyp
 @Getter
 @Setter
-public class Task extends abstraktDataClasses {
+public class Task extends dataClasses {
     private String description;
     private Priority priority;
     private int userStoryID;
@@ -119,18 +115,23 @@ public class Task extends abstraktDataClasses {
         if (!dul.isEmpty()) {
             for (DAOUser u : dul) {
                 User toAdd = new User(u.getName(), u.getId(), new LinkedList<Enumerations.Role>(), u.getAuthorization().getAuthorization());
-                list.add(toJSON(toAdd));
+                list.add(toAdd.toJSON());
             }
         }
         return list;
     }
 
-    private String toJSON(User user){
-        String a = "{";
-        a += "'id':'"+user.getID()+"',";
-        a += "'name':'"+user.getName()+"',";
-        a += "'authorization':'"+user.getAuthorization()+"'";
-        a += "}";
-        return a;
+    public String toJSON() {
+        String json = "{";
+        json += "\"id\":\""+ this.getID();
+        json += "\",\"desc\":\""+ this.getDescription();
+        json += "\",\"userStoryID\":\""+ this.getUserStoryID();
+        json += "\",\"tbID\":\""+ this.getTbID();
+        json += "\",\"tlID\":\""+ DAOTaskService.getById(this.getID()).getTaskList().getId();
+        json += "\",\"dueDate\":\""+ this.getDueDateAsString();
+        json += "\",\"timeNeededG\":\""+ this.getTimeNeededG();
+        json += "\",\"timeNeededA\":\""+ this.getTimeNeededA();
+        json += "\"}";
+        return json;
     }
 }

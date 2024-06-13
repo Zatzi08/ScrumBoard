@@ -1,12 +1,12 @@
 package com.team3.project.service;
 
-import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.UserStory;
+import com.team3.project.Controller.WebsocketObserver;
 import com.team3.project.DAO.DAOTask;
-import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.DAOService.DAOUserStoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -14,6 +14,9 @@ import java.util.List;
 
 @Service
 public class UserStoryService {
+
+    @Autowired
+    private WebsocketObserver observer;
 
     /* Author: Lucas Krüger
      * Revisited: /
@@ -57,7 +60,14 @@ public class UserStoryService {
         if (userStory.getDescription() == null) throw new Exception("Null Story-Desc");
         if (userStory.getPriorityAsInt() <= -1) throw new Exception("Null Story-prio");
         if(userStory.getID() <= -1){
-            DAOUserStoryService.create(userStory.getName(),userStory.getDescription(), userStory.getPriorityAsInt());
+            boolean responce = DAOUserStoryService.create(userStory.getName(),userStory.getDescription(), userStory.getPriorityAsInt());
+            if (responce){
+                List<DAOUserStory> dusl = DAOUserStoryService.getAll();
+                DAOUserStory dus = dusl.get(dusl.size()-1);
+                observer.sendToProjectManager(0, new UserStory(dus.getName(), dus.getDescription(), dus.getPriority(), dus.getId()));
+            } else {
+                observer.sendToProjectManager(4, null);
+            }
         } else{
             DAOUserStory dus = DAOUserStoryService.getById(userStory.getID());
             if (dus != null){

@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class UserStory extends abstraktDataClasses {
+public class UserStory extends dataClasses implements parseable {
     private String name;
     private String description;
     private Priority priority;
@@ -54,5 +54,15 @@ public class UserStory extends abstraktDataClasses {
             AnforderungenA.add(g);
         }
         return AnforderungenA;
+    }
+
+    public String toJSON() {
+        String json = "{";
+        json += "\"id\":\"" + this.getID();
+        json += "\",\"name\":\"" + this.getName();
+        json += "\",\"desc\":\"" + this.getDescription();
+        json += "\",\"prio\":\"" + this.getPriorityAsInt();
+        json += "\"}";
+        return json;
     }
 }

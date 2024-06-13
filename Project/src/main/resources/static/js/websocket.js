@@ -1,14 +1,17 @@
+
 const stompClient = new StompJs.Client({
     brokerURL: 'ws://localhost:8080/gs-websocket'
 });
 
 stompClient.onConnect = (frame) => {
-    console.log('Connected: ' + frame);
-    stompClient.subscribe('/topic/ProjectManagerStorys', (ProjectManagerStorys) =>{
-        var message = JSON.parse(ProjectManagerStorys.body);
-        console.log(message);
-        ForceSync(message);
-    });
+    if (document.title === 'Projektmanager') {
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/projectManager', (r) => {
+            var message = JSON.parse(r.body);
+            console.log(JSON.parse(message.body).object);
+            //ForceSync(message);
+        });
+    }
 };
 
 stompClient.onWebsocketError = (error) => {
@@ -29,24 +32,16 @@ function disconnect() {
     console.log("Disconnected");
 }
 
-function sendStory(name, description, priority) {
-    //var name = JSON.stringify({'name': $("name").val()});
-    //var description = JSON.stringify({'description': $("discription").val()})
-    //var priority = JSON.stringify({'priority': $("priority").val()})
+function ping(message) {
     stompClient.publish({
-        destination: "/websocket/UserStory",
-        body: "name:" + name + ",discription:" + description + ",priority:" + priority
+        destination: "/websocket/ping",
+        body: message
         });
 }
 
 function ForceSync(sync) {
     if (sync) {
-        disconnect()
-        window.location.href = "";
+        disconnect();
+        document.location.reload();
     }
 }
-
-$(function () {
-    $("form").on('submit', (e) => e.preventDefault());
-    //$( "#send" ).click(() => sendStory());
-});

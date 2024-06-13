@@ -7,10 +7,12 @@ import com.team3.project.DAO.DAOTaskList;
 import com.team3.project.DAOService.DAOTaskBoardService;
 import com.team3.project.DAOService.DAOTaskListService;
 import com.team3.project.DAOService.DAOTaskService;
+import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
 
+@Service
 public class TaskBoardService {
     // TODO: FIX Konstruktor
     public TaskBoard getTaskBoardByID(int tbid) throws Exception {

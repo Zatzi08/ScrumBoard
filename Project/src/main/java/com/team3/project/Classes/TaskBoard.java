@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class TaskBoard extends abstraktDataClasses {
+public class TaskBoard extends dataClasses {
     String name;
     List<TaskList> taskListList;
 
@@ -16,5 +16,10 @@ public class TaskBoard extends abstraktDataClasses {
         super(tbID);
         this.name = name;
         this.taskListList = new LinkedList<TaskList>();
+    }
+
+    public String toJSON() {
+        System.out.println("HAHA! Musst du erst implementieren!");
+        return "";
     }
 }
