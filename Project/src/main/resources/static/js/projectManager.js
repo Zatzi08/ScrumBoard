@@ -290,4 +290,24 @@ function toggleVisAllTasks(percentageDifference, absNum, numType){
     } else {
         console.error("Das Element mit der Klasse 'vis' wurde nicht gefunden.");
     }
+
+    }
+
+
+function toggleRolesEditMenu() {
+    var rolesMenu = document.getElementById("roleOverlay");
+    if(rolesMenu.style.display == "none") {
+        rolesMenu.style.display = "block";
+    } else {
+        rolesMenu.style.display = "none";
+    }
 }
+
+
+
+    window.onclick = function(event) {
+        var rolesMenu = document.getElementById("roleOverlay");
+        if (event.target == rolesMenu) {
+            rolesMenu.style.display = "none";
+        }
+    }

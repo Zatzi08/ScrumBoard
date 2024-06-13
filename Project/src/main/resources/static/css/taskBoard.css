@@ -318,7 +318,7 @@ hr {
     border: 2px dashed #ccc;
 }
 
-#popupChangeTBName, #popupTaskFertig, #popupCreateTB{
+#popupChangeTBName, #popupTaskFertig, #popupCreateTB, #popupTBDelete{
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.4);
@@ -329,7 +329,7 @@ hr {
     top: 0;
 }
 
-#changeTBNameForm, #taskFertigForm, #createTBForm {
+#changeTBNameForm, #taskFertigForm, #createTBForm, #tBDeleteForm{
     position: relative;
     background-color: rgb(46, 46, 61);
     padding: 20px;
@@ -338,6 +338,7 @@ hr {
     top: 50dvh;
     left: 50dvw;
     transform: translate(-50%, -50%);
+    color:white;
 }
 
 #changeTBNameInput, #taskFertigInput, #createTBNameInput {
@@ -353,7 +354,23 @@ hr {
     padding: 10px;
 }
 
-#changeTBNameBtn, #taskFertigBtn, #createTBNameBtn {
+#tbDeleteBtn{background-color: #A23615; }
+#tbNotDeleteBtn{background-color: #50772C}
+
+#tbDeleteBtn:hover{background-color: #6C240F;}
+
+#tbNotDeleteBtn:hover{background-color: #3C5922;}
+
+.inline{
+    display:inline-block;
+    margin-right:5px;
+    padding: 2px 2px 2px;
+    border-radius: 12px;
+    margin-top:15px;
+    height:25px;
+}
+
+#changeTBNameBtn, #taskFertigBtn, #createTBNameBtn{
     position: relative;
     height: 30px;
     width: fit-content;

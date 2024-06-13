@@ -33,7 +33,9 @@
         <label class = "profileText" >Deine Aufgabe im Projekt</label>
         <label th:text="${User.workDesc}" id = "profilProjektBeschreibung"> Projektbeschreibung </label>
         <label class = "profileText" >Deine Rollen </label>
-        <label id = "rolleProfil"> <p>.</p> </label> <!-- Könnte das als Liste realisiert werden, danke LK -->
+        <ul>
+            <li></li>
+        </ul> <!-- Könnte das als Liste realisiert werden, danke LK -->
         <label class = "profileText" >Deine persönliche Beschreibung</label>
         <label th:text = "${User.privatDesc}" id = "profilPersoBeschreibung"> Persönliche Beschreibung </label>
     </div>

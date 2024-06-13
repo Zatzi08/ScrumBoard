@@ -1,3 +1,17 @@
+/*
+* Author: Paula Krasnovska
+* Revisited: /
+* Funktion: Toggeln des Bearbeitungsmenü, Zuweisung von Attributen für Thymeleaf
+* Grund: /
+* User-Story/Task-ID: U3.F1, U4.F1
+*/
+function toggleEditBox(storyId, name, description){
+    EditBox();
+    document.getElementById("inputName").textContent = name;
+    document.getElementById("inputDesc").textContent = description;
+    document.getElementById("editId").value = storyId;
+}
+
 function toggleZoomedTaskCard(id) {
     var editMenu = document.querySelector('#zoomedTaskCard');
     var overlay = document.querySelector('.overlay');
@@ -146,6 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
             placeholder.remove();
             draggedElement.classList.remove('dragging');
 
+            // Retrieve the ID of the dragged element
             const draggedElementId = e.dataTransfer.getData('text/plain');
             setTaskList(document.getElementById('sessionID').value, draggedElementId.substring(1), targetContainer.id);
             let id = targetContainer.id
@@ -160,6 +175,81 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+/*
+document.addEventListener('DOMContentLoaded', function() {
+    function enableButtonEdit() {
+        const headerButtons = document.querySelectorAll('.outerContainer-HeaderBtn');
+
+        headerButtons.forEach(button => {
+            button.addEventListener('dblclick', function(event) {
+                const currentText = button.textContent.trim();
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentText;
+                input.style.width = button.offsetWidth + 'px';
+                input.style.height = button.offsetHeight + 'px';
+                input.style.fontFamily = window.getComputedStyle(button).fontFamily;
+                input.style.fontSize = window.getComputedStyle(button).fontSize;
+                input.style.padding = '2px';
+                input.style.margin = '0';
+                input.style.border = '1px solid #ccc';
+                input.style.borderRadius = '3px';
+                input.style.boxSizing = 'border-box';
+                input.style.display = 'inline';
+
+                input.addEventListener('keyup', function(e) {
+                    if (e.key === 'Enter') {
+                        button.textContent = input.value.trim();
+                        input.replaceWith(button);
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    button.textContent = input.value.trim();
+                    input.replaceWith(button);
+                });
+
+                button.replaceWith(input);
+                input.focus();
+            });
+        });
+    }
+
+    enableButtonEdit();
+});
+
+function addHeaderButton(text) {
+
+    var newButton = document.createElement('button');
+    newButton.className = 'outerContainer-HeaderBtn';
+    newButton.style.position = 'relative';
+    newButton.ondblclick = function() {
+        this.contentEditable = true;
+    };
+    newButton.style.marginRight = '5px';
+
+
+    var buttonText = document.createElement('span');
+    buttonText.innerText = text;
+
+
+    var deleteBtn = document.createElement('span');
+    deleteBtn.className = 'delete-btn';
+    deleteBtn.innerHTML = '&times;';
+    deleteBtn.onclick = function() {
+        deleteButton(newButton);
+    };
+    deleteBtn.setAttribute('contenteditable', 'false');
+
+
+    newButton.appendChild(buttonText);
+    newButton.appendChild(deleteBtn);
+
+    var addButton = document.getElementById('outerContainer-HeaderBtnAdd');
+    addButton.parentNode.insertBefore(newButton, addButton);
+}
+ */
 
 function deleteButton(button) {
     button.parentNode.removeChild(button);
@@ -191,6 +281,27 @@ function openPopup(){
     var fertigPopup = document.getElementById("popupTaskFertig");
     fertigPopup.style.display = "block";
 }
+
+var TBdelete = false;
+
+
+function deleteTBPopup(button, sessionID, TBID){
+    let deleteTBPopup = document.getElementById("popupTBDelete")
+    deleteTBPopup.style.display = "block";
+    document.getElementById('tbNotDeleteBtn').addEventListener("click", function() {
+        TBdelete = false;
+        deleteTBPopup.style.display = "none";
+    });
+    document.getElementById('tbDeleteBtn').addEventListener("click", function() {
+        TBdelete = true;
+        deleteTaskBoard(button, sessionID, TBID)
+        deleteTBPopup.style.display = "none";
+    });
+
+    TBdelete = false;
+}
+
+
 
 async function deleteTaskBoard(button, sessionID, TBID) {
     await deleteTB(sessionID, TBID)
