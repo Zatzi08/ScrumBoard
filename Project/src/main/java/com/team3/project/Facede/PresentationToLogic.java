@@ -16,4 +16,13 @@ public class PresentationToLogic {
     public WebSessionService webSessionService;
     @Autowired
     public TaskBoardService taskBoardService;
+
+    public PresentationToLogic init_facade(){
+        this.taskService = new TaskService();
+        this.userStoryService = new UserStoryService();
+        this.accountService = new AccountService();
+        this.taskBoardService = new TaskBoardService();
+        this.webSessionService = new WebSessionService();
+        return this;
+    }
 }

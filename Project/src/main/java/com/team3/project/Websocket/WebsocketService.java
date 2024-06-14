@@ -1,4 +1,4 @@
-package com.team3.project.Controller;
+package com.team3.project.Websocket;
 
 import com.team3.project.Classes.Response;
 import com.team3.project.Classes.parseable;

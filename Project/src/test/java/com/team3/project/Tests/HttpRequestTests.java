@@ -30,11 +30,6 @@ public class HttpRequestTests extends BaseHTTPTest {
     @Autowired
     public TestRestTemplate restTemplate;
 
-    @Autowired
-    public HttpRequestTests(PresentationToLogic presentationToLogic) throws Exception {
-        super(presentationToLogic);
-    }
-
 
     @BeforeAll
     public static void BeforeAll() throws Exception {
@@ -1813,7 +1808,7 @@ public class HttpRequestTests extends BaseHTTPTest {
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + url + "?ID=" + 9999, method, message, String.class).getStatusCode())
-                    .isEqualTo(HttpStatus.OK);
+                    .isEqualTo(HttpStatus.CONFLICT);
         } catch (AssertionError e){
             printWriterAddFailure("Akzeptiert Request nicht - invalid USID");
             throw new AssertionError(e);

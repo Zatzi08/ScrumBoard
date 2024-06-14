@@ -18,7 +18,7 @@ import java.util.List;
 // Definiert Datentyp
 @Getter
 @Setter
-public class Task extends dataClasses {
+public class Task extends dataClasses implements parseable{
     private String description;
     private Priority priority;
     private int userStoryID;
