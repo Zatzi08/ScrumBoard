@@ -337,15 +337,30 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
     document.getElementById('zoomedTaskCard-deadline').innerText = DueDate
     document.getElementById('zoomedTaskCard-role').innerText;
     NutzerList = parseUser(NutzerList)
-    var ul = document.getElementById("zoomedTaskCard-nutzerDropdown-content");
-    // ul.innerHTML = ""
-    // NutzerList.forEach((nutzer)=>{
-    //     var li = document.createElement("li")
-    //     li.id = 'N' + nutzer.id;
-    //     li.appendChild(document.createTextNode(nutzer.name));
-    //     ul.appendChild(li);
-    // })
+    var label = document.getElementById("zoomedTaskCard-assignedUsers");
+    label.innerHTML = ""
+    NutzerList.slice(0, 5).forEach((nutzer)=>{
+        var circle = document.createElement("button");
+        circle.classList.add('zoomedTaskCard-userCircle');
+         circle.id = 'N' + nutzer.id;
+         circle.appendChild(document.createTextNode(nutzer.name.charAt(0).toUpperCase()));
+         label.appendChild(circle);
+
+     })
+    if (NutzerList.length > 5){
+        var moreUsersCircle = document.createElement("button");
+        moreUsersCircle.classList.add('zoomedTaskCard-userCircle');
+        moreUsersCircle.classList.add('#zoomedTaskCard-userCircle');
+        var leftUsers = (NutzerList.length)-5;
+        var moreUsersText = (leftUsers.toString()).concat('+');
+        moreUsersCircle.appendChild(document.createTextNode(moreUsersText));
+        label.appendChild(moreUsersCircle);
+    }
+    moreUsersCircle.onclick = function (){ openAssignedUsers(NutzerList)
+    };
 }
+
+
 
 function parseUser(a){
     let list = []
@@ -366,9 +381,18 @@ function closePopup(){
     popupFertig.style.display = "none";
 }
 
-function openAssignedUsers(){
+function openAssignedUsers(NutzerList){
     var assignedUsers = document.querySelector('#assignedUsers');
     var overlay2 = document.querySelector('.overlay2');
+
+    var ul = document.getElementById("assignedUsersList");
+    ul.innerHTML = ""
+    NutzerList.forEach((nutzer)=> {
+        var li = document.createElement("li");
+        li.id = 'N' + nutzer.id;
+        li.appendChild(document.createTextNode(nutzer.name));
+        ul.appendChild(li);
+    })
 
     if (assignedUsers) {
         if (assignedUsers.style.display === "block") {

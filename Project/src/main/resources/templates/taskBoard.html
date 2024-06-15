@@ -84,12 +84,6 @@
                         <i class="fa-regular fa-user" id="zoomedTaskCard-sym7" style = "display:inline"></i> <label class="zoomedTaskCard-symLab" for = "zoomedTaskCard-sym7" style="font-size: 100%;">Zugewiesene Nutzer</label>
                         <div id="zoomedTaskCard-nutzerDropdownAlignment">
                             <label class="zoomedTaskCard-content" id="zoomedTaskCard-assignedUsers" title="Zugewiesene Nutzer">
-                                <button class="zoomedTaskCard-userCircle"> A </button>
-                                <button class="zoomedTaskCard-userCircle"> B </button>
-                                <button class="zoomedTaskCard-userCircle"> C </button>
-                                <button class="zoomedTaskCard-userCircle"> D </button>
-                                <button class="zoomedTaskCard-userCircle"> E </button>
-                                <button class="zoomedTaskCard-userCircle" onclick="openAssignedUsers()"> +99 </button>
                             </label>
                         </div>
                     </div>
@@ -106,12 +100,9 @@
     </div>
 
     <div id="assignedUsers">
-        <ul>
+        <ul id = "assignedUsersList">
             <li id = "user" onclick="randomizeAssignedUsersColour('user')">A</li>
-            <li>B</li>
-            <li>C</li>
-            <li>D</li>
-            <li>E</li>
+
         </ul>
     </div>
 
