@@ -40,11 +40,11 @@
             <table class="userTaskTable">
                 <thead id="userTaskTableHead">
                 <tr>
-                    <th id="A" th:text="@{Tasks zur Story {name}(name=${StoryName})}" ></th>
+                    <th id="A" th:text="@{Tasks zur Story {name}(name=${Story.getName()})}" th:USID="${Story.getID()}"></th>
                 </tr>
                 </thead>
                 <tbody id="userTaskTableBody">
-                <tr th:each="item : ${Tasks}">
+                <tr th:each="item : ${Tasks}" th:id="@{T{id}(id=${item.getID()})}" >
                     <th>
                         <label class="userTaskTable-ContentStoryBoard" th:text="${item.getUserStory().getName()}" title="Referenz zur entsprechenden User-Story">Story</label>
                         <span class="userTaskTable-ContentStoryBoard">/</span>
@@ -128,5 +128,13 @@
 <script src="/js/communication.js"></script>
 <script type = "text/javascript" src="/js/setup.js"></script>
 <script type = "text/javascript" src="/js/projectManager.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+<script src="/js/webSockets/websocket.js"></script>
+<script src="/js/webSockets/WS_PM_TzUS.js"></script>
+<script type="application/javascript">
+    window.onbeforeunload = disconnect();
+    window.onload = connect();
+</script>
 </body>
 </html>

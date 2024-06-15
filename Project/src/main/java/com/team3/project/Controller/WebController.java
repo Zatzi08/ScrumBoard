@@ -430,7 +430,7 @@ public class WebController {
                         .addObject("sessionID",sessionID)
                         .addObject("User", presentationToLogic.accountService.getAllProfiles())
                         .addObject("Tasks", presentationToLogic.taskService.getTasksbyUSID(USId))
-                        .addObject("StoryName", presentationToLogic.userStoryService.getUserStory(USId).getName())
+                        .addObject("Story", presentationToLogic.userStoryService.getUserStory(USId))
                         .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys())
                         .addObject("TaskBoard", presentationToLogic.taskBoardService.getAllTaskBoards());
             }

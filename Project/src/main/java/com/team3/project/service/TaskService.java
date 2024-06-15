@@ -8,8 +8,11 @@ import com.team3.project.DAOService.DAOTaskListService;
 import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.DAOService.DAOUserStoryService;
+import com.team3.project.Websocket.WebsocketObserver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +21,8 @@ import java.util.Objects;
 @Service
 public class TaskService {
 
-    private final Enumerations enumerations = new Enumerations();
+    @Autowired
+    private WebsocketObserver observer;
 
     /* Author: Henry L. Freyschmidt
      * Revisited: /
@@ -73,36 +77,77 @@ public class TaskService {
         if (task.getDescription() == null ) throw new Exception("null description");
         if(task.getUserStoryID() == -1) throw new Exception("invalid UserStory-ID");
         if(task.getID() == -1){
+            boolean responce = false;
             if(task.getTbID() < 0){
-                DAOTaskService.create(task.getDescription(), task.getPriorityAsInt(),false,task.getDueDateAsString(),task.getTimeNeededG(),0,null, DAOUserStoryService.getById(task.getUserStoryID()), null);
+                responce = DAOTaskService.create(task.getDescription(), task.getPriorityAsInt(),false,task.getDueDateAsString(),task.getTimeNeededG(),0,null, DAOUserStoryService.getById(task.getUserStoryID()), null);
             }else{
-                DAOTaskService.create(task.getDescription(), task.getPriorityAsInt(),false,task.getDueDateAsString(),task.getTimeNeededG(),0,DAOTaskListService.getByTaskBoardId(task.getTbID()).get(0), DAOUserStoryService.getById(task.getUserStoryID()), null);
+                responce = DAOTaskService.create(task.getDescription(), task.getPriorityAsInt(),false,task.getDueDateAsString(),task.getTimeNeededG(),0,DAOTaskListService.getByTaskBoardId(task.getTbID()).get(0), DAOUserStoryService.getById(task.getUserStoryID()), null);
+            }
+            if (responce) {
+                try {
+                    List<DAOTask> dtl = DAOTaskService.getAll();
+                    DAOTask dt = dtl.get(dtl.size()-1);
+                    int tbID = dt.getTaskList() == null ? -1 : dt.getTaskList().getTaskBoard().getId();
+                    observer.sendToTaskGroup(0,
+                            new Task(dt.getId(),dt.getDescription(),dt.getPriority(),dt.getUserStory().getId(),
+                                    dt.getDueDate(),dt.getProcessingTimeEstimatedInHours(),
+                                    dt.getProcessingTimeRealInHours(), tbID));
+                } catch (Exception e) {
+                    System.out.println("Observer nicht initialisiert");
+                }
             }
         }else{
             DAOTask dt = DAOTaskService.getById(task.getID());
             if (dt != null){
+                boolean responce = false;
+                boolean responceTL = false;
                 if(task.getTbID() > 0
                         && (dt.getTaskList() == null
                         || task.getTbID() != dt.getTaskList().getTaskBoard().getId())){
-                    DAOTaskService.updateTaskBoardIdById(dt.getId(), task.getTbID());
-                    DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), 0);
+                    responceTL = responceTL || DAOTaskService.updateTaskBoardIdById(dt.getId(), task.getTbID());
+                    responceTL = responceTL ||DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), 0);
                 } else if (task.getTbID() == -1 && dt.getTaskList() != null){
-                    DAOTaskService.updateTaskListById(dt.getId(),null);
-                    DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), 0);
+                    responceTL = responceTL ||DAOTaskService.updateTaskListById(dt.getId(),null);
+                    responceTL = responceTL ||DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), 0);
                 }
                 if (!dt.getDescription().equals(task.getDescription()))
-                    DAOTaskService.updateDescriptonById(task.getID(),task.getDescription());
+                    responce = responce ||DAOTaskService.updateDescriptonById(task.getID(),task.getDescription());
                 if (dt.getUserStory().getId() != task.getUserStoryID())
-                    DAOTaskService.updateUserStoryById(task.getID(),task.getUserStoryID());
+                    responce = responce ||DAOTaskService.updateUserStoryById(task.getID(),task.getUserStoryID());
                 if (dt.getPriority() != task.getPriorityAsInt())
-                    DAOTaskService.updatePriorityById(task.getID(), task.getPriorityAsInt());
+                    responce = responce ||DAOTaskService.updatePriorityById(task.getID(), task.getPriorityAsInt());
                 if(!Objects.equals(dt.getDueDate(), task.getDueDateAsString()))
-                    DAOTaskService.updateDueDateById(task.getID(), task.getDueDateAsString());
+                    responce = responce ||DAOTaskService.updateDueDateById(task.getID(), task.getDueDateAsString());
                 if(dt.getProcessingTimeEstimatedInHours() != task.getTimeNeededG())
-                    DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), task.getTimeNeededG());
+                    responce = responce ||DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), task.getTimeNeededG());
                 if(dt.isDone()!= task.isDone()){
-                    if (task.isDone()) DAOTaskService.setDoneById(task.getID());
-                    else DAOTaskService.setUnDoneById(task.getID());
+                    if (task.isDone()) responce = responce ||DAOTaskService.setDoneById(task.getID());
+                    else responce = responce ||DAOTaskService.setUnDoneById(task.getID());
+                }
+                if (responce && !responceTL) {
+                    try {
+                        dt = DAOTaskService.getById(task.getID());
+                        int tbID = dt.getTaskList() == null ? -1 : dt.getTaskList().getTaskBoard().getId();
+                        observer.sendToTaskGroup(0,
+                                new Task(dt.getId(),dt.getDescription(),dt.getPriority(),dt.getUserStory().getId(),
+                                        dt.getDueDate(),dt.getProcessingTimeEstimatedInHours(),
+                                        dt.getProcessingTimeRealInHours(), tbID));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("Observer nicht initialisiert");
+                    }
+                }
+                else if (responceTL){
+                    try {
+                        dt = DAOTaskService.getById(task.getID());
+                        int tbID = dt.getTaskList() == null ? -1 : dt.getTaskList().getTaskBoard().getId();
+                        observer.sendToTaskListGroup(0,
+                                new Task(dt.getId(),dt.getDescription(),dt.getPriority(),dt.getUserStory().getId(),
+                                        dt.getDueDate(),dt.getProcessingTimeEstimatedInHours(),
+                                        dt.getProcessingTimeRealInHours(), tbID));
+                    } catch (Exception e) {
+                        System.out.println("Observer nicht initialisiert");
+                    }
                 }
             } else throw new Exception("DB Task not found");
         }
@@ -121,8 +166,22 @@ public class TaskService {
      * @throws Exception Invalid taskID
      */
     public void deleteTask(int taskID) throws Exception{
-        if(taskID == -1) throw new Exception("not valid TaskID");
-        DAOTaskService.deleteById(taskID);
+        if (taskID == -1) throw new Exception("not valid TaskID");
+        DAOTask dt = DAOTaskService.getById(taskID);
+        if (dt == null) throw new Exception("Task not found");
+        int tbID = dt.getTaskList() == null ? -1 : dt.getTaskList().getTaskBoard().getId();
+        Task temp = new Task(dt.getId(),dt.getDescription(),dt.getPriority(),dt.getUserStory().getId(),
+                dt.getDueDate(),dt.getProcessingTimeEstimatedInHours(),
+                dt.getProcessingTimeRealInHours(), tbID);
+        boolean responce = DAOTaskService.deleteById(taskID);
+        if (responce) {
+            try {
+                observer.sendToTaskGroup(0, temp);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Observer nicht initialisiert");
+            }
+        }
     }
 
 
@@ -182,18 +241,32 @@ public class TaskService {
 
     public  void setTaskList(int tID, int tlID) throws Exception {
         if (tID <= 0) throw new Exception("Null TID");
-        if (tlID <= -1) throw new Exception("Null tlID");
+        if (tlID < -1) throw new Exception("Null tlID");
         DAOTask dt = DAOTaskService.getById(tID);
         if (dt == null) throw new Exception("Task not Found");
+
         DAOTaskList list = null;
         if (tlID != 0) {
             list = DAOTaskListService.getById(tlID);
             if (list == null) throw new Exception("TaskList not Found");
         }
+
         if (list == null || list.getSequence() != 5)
             DAOTaskService.updateProcessingTimeRealInHoursById(dt.getId(), 0);
-        DAOTaskService.updateTaskListById(dt.getId(), list);
-        DAOTask t = DAOTaskService.getById(tID);
+
+        boolean responce = false || DAOTaskService.updateTaskListById(dt.getId(), list);
+        dt = DAOTaskService.getById(tID);
+        if (responce) {
+            try {
+                int tbID = dt.getTaskList() == null ? -1 : dt.getTaskList().getTaskBoard().getId();
+                observer.sendToTaskListGroup(0,
+                        new Task(dt.getId(),dt.getDescription(),dt.getPriority(),dt.getUserStory().getId(),
+                                dt.getDueDate(),dt.getProcessingTimeEstimatedInHours(),
+                                dt.getProcessingTimeRealInHours(), tbID));
+            } catch (Exception e) {
+                System.out.println("Observer nicht initialisiert");
+            }
+        }
     }
 
     public void setRealTimeAufwand(int tID, double time) throws Exception {
@@ -201,8 +274,20 @@ public class TaskService {
         if (time < 0) throw new Exception("Invalid Time");
         DAOTask dt = DAOTaskService.getById(tID);
         if (dt == null) throw new Exception("Task not Found");
-        if(dt.getProcessingTimeRealInHours() != time)
-            DAOTaskService.updateProcessingTimeRealInHoursById(dt.getId(), time);
+        if(dt.getProcessingTimeRealInHours() != time) {
+            boolean responce = DAOTaskService.updateProcessingTimeRealInHoursById(dt.getId(), time);
+            if (responce) {
+                try {
+                    int tbID = dt.getTaskList() == null ? -1 : dt.getTaskList().getTaskBoard().getId();
+                    observer.sendToTaskGroup(2,
+                            new Task(dt.getId(),dt.getDescription(),dt.getPriority(),dt.getUserStory().getId(),
+                                    dt.getDueDate(),dt.getProcessingTimeEstimatedInHours(),
+                                    time, tbID));
+                } catch (Exception e) {
+                    System.out.println("Observer nicht initialisiert");
+                }
+            }
+        }
     }
 
     public  List<Double> getAllAnforderungenG(){
@@ -257,7 +342,21 @@ public class TaskService {
             DAOUser du = DAOUserService.getById(id);
             dul.add(du);
         }
-        DAOTaskService.updateUsersById(tid, dul);
+        boolean responce = DAOTaskService.updateUsersById(tid, dul);
+        if (responce) {
+            try {
+                DAOTask dt = DAOTaskService.getWithUsersById(tid);
+                List<User> ul = new LinkedList<User>();
+                dt.getUsers().forEach(du ->{
+                    User toAdd = new User(du.getName(),du.getId(), null, du.getAuthorization().getAuthorization());
+                    ul.add(toAdd);
+                });
+                observer.sendToTaskGroup(3,
+                        new TaskXUser(dt.getId(), ul));
+            } catch (Exception e) {
+                System.out.println("Observer nicht initialisiert");
+            }
+        }
     }
 
     /* Author: Henry van Rooyen

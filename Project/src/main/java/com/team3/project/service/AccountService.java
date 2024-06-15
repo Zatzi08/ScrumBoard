@@ -2,11 +2,14 @@ package com.team3.project.service;
 
 import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.Profile;
+import com.team3.project.Classes.Task;
 import com.team3.project.Classes.User;
 import com.team3.project.DAO.DAORole;
 import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOAccountService;
 import com.team3.project.DAOService.DAOUserService;
+import com.team3.project.Websocket.WebsocketObserver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -18,6 +21,8 @@ import java.util.stream.Collectors;
 @Service
 public class AccountService {
 
+    @Autowired
+    private WebsocketObserver observer;
     private final String MasterID = "EAIFPH8746531";
 
     /* Author: Henry Lewis Freyschmidt
@@ -73,7 +78,18 @@ public class AccountService {
         if( email == null || email.isEmpty()) throw new Exception("Null Email");
         if( passwort == null || passwort.isEmpty()) throw new Exception("Null Passwort");
         if( username == null || username.isEmpty()) throw new Exception("Null Username");
-        return DAOUserService.createByEMail(email,passwort, username,null,null,null,null, null, null, false);
+        boolean responce = DAOUserService.createByEMail(email,passwort, username,null,null,
+                null,null, null, null, false);;
+        if (responce) {
+            try {
+                List<DAOUser> dul = DAOUserService.getAll();
+                DAOUser du = dul.get(dul.size()-1);
+                observer.sendToUserGroup(1,new User(du.getName(),du.getId(),null,du.getAuthorization().getAuthorization()));
+            } catch (Exception e) {
+                System.out.println("Observer nicht initialisiert");
+            }
+        }
+        return responce;
     }
 
 
@@ -162,7 +178,17 @@ public class AccountService {
         if (profile.getPrivatDesc() == null || profile.getPrivatDesc().isEmpty()) throw new Exception("Null pDes");
         DAOUser user = DAOUserService.getBySessionId(sessionId);
         if (user == null) throw new Exception("User not found");
-        DAOUserService.updateByEMail(user.getEmail(), profile.getUname(),profile.getPrivatDesc(), profile.getWorkDesc(), user.getRoles());
+        boolean responce = DAOUserService.updateByEMail(user.getEmail(), profile.getUname(),profile.getPrivatDesc(), profile.getWorkDesc(), user.getRoles());
+        if (responce) {
+            try {
+                user = DAOUserService.getBySessionId(sessionId);
+                observer.sendToProfileByID(1,
+                        new Profile(user.getId(), user.getName(), user.getEmail(), user.getPrivatDescription(),
+                                user.getWorkDescription(), null, user.getAuthorization().getAuthorization()));
+            } catch (Exception e) {
+                System.out.println("Observer nicht initialisiert");
+            }
+        }
     }
 
     /* Author: Lucas Krüger
@@ -243,6 +269,15 @@ public class AccountService {
         if (auth <= 0 || auth > 4) throw new Exception("Invalid Auth");
         DAOUser du = DAOUserService.getById(usID);
         if (du == null) throw new Exception("User not Found");
-        DAOUserService.updateAuthorizationById(du.getId(),auth);
+        boolean responce = DAOUserService.updateAuthorizationById(du.getId(),auth);
+        if (responce) {
+            try {
+                observer.sendToProfileByID(1,
+                        new Profile(du.getId(), du.getName(), du.getEmail(), du.getPrivatDescription(),
+                                du.getWorkDescription(), null, auth));
+            } catch (Exception e) {
+                System.out.println("Observer nicht initialisiert");
+            }
+        }
     }
 }

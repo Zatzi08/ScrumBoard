@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 @Getter
 @Setter
-public class Profile extends dataClasses {
+public class Profile extends dataClasses implements observable {
     private String uname;
     private String email;
     private String privatDesc;
@@ -43,5 +43,15 @@ public class Profile extends dataClasses {
         json += "\",\"auth\":\""+ this.getAuthorization();
         json += "\"}";
         return json;
+    }
+
+    @Override
+    public Integer getUSID_P() {
+        return null;
+    }
+
+    @Override
+    public Integer getTBID_P() {
+        return null;
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class User extends dataClasses {
+public class User extends dataClasses implements observable {
     private String name;
     private List<Enumerations.Role> roles; // TODO: Roles (plural) sollte eigentlich ne Liste sein
     private int authorization; //von der DB gestellt
@@ -33,5 +33,15 @@ public class User extends dataClasses {
         json += "\",\"authorization\":\""+this.getAuthorization();
         json += "\"}";
         return json;
+    }
+
+    @Override
+    public Integer getUSID_P() {
+        return null;
+    }
+
+    @Override
+    public Integer getTBID_P() {
+        return null;
     }
 }

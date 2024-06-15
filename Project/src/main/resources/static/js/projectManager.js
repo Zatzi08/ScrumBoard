@@ -305,9 +305,9 @@ function toggleRolesEditMenu() {
 
 
 
-    window.onclick = function(event) {
-        var rolesMenu = document.getElementById("roleOverlay");
-        if (event.target == rolesMenu) {
-            rolesMenu.style.display = "none";
-        }
+window.onclick = function(event) {
+    var rolesMenu = document.getElementById("roleOverlay");
+    if (event.target == rolesMenu) {
+        rolesMenu.style.display = "none";
     }
+}

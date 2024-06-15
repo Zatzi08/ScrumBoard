@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class UserStory extends dataClasses implements parseable {
+public class UserStory extends dataClasses implements observable {
     private String name;
     private String description;
     private Priority priority;
@@ -64,5 +64,15 @@ public class UserStory extends dataClasses implements parseable {
         json += "\",\"prio\":\"" + this.getPriorityAsInt();
         json += "\"}";
         return json;
+    }
+
+    @Override
+    public Integer getUSID_P() {
+        return this.getID();
+    }
+
+    @Override
+    public Integer getTBID_P() {
+        return null;
     }
 }

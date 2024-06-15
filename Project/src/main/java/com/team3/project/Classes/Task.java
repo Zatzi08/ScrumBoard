@@ -1,6 +1,7 @@
 package com.team3.project.Classes;
 
 import com.team3.project.Classes.Enumerations.Priority;
+import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOTaskBoardService;
 import com.team3.project.DAOService.DAOTaskService;
@@ -18,7 +19,7 @@ import java.util.List;
 // Definiert Datentyp
 @Getter
 @Setter
-public class Task extends dataClasses implements parseable{
+public class Task extends dataClasses implements observable {
     private String description;
     private Priority priority;
     private int userStoryID;
@@ -122,16 +123,28 @@ public class Task extends dataClasses implements parseable{
     }
 
     public String toJSON() {
+        DAOTask dt = DAOTaskService.getById(this.getID());
+        int tlID = dt != null ? dt.getTaskList().getId() : -1;
         String json = "{";
         json += "\"id\":\""+ this.getID();
         json += "\",\"desc\":\""+ this.getDescription();
         json += "\",\"userStoryID\":\""+ this.getUserStoryID();
         json += "\",\"tbID\":\""+ this.getTbID();
-        json += "\",\"tlID\":\""+ DAOTaskService.getById(this.getID()).getTaskList().getId();
+        json += "\",\"tlID\":\""+ tlID;
         json += "\",\"dueDate\":\""+ this.getDueDateAsString();
         json += "\",\"timeNeededG\":\""+ this.getTimeNeededG();
         json += "\",\"timeNeededA\":\""+ this.getTimeNeededA();
         json += "\"}";
         return json;
+    }
+
+    @Override
+    public Integer getUSID_P() {
+        return this.getUserStoryID();
+    }
+
+    @Override
+    public Integer getTBID_P() {
+        return this.getTbID();
     }
 }

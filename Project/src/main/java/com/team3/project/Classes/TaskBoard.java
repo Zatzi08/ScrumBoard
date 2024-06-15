@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class TaskBoard extends dataClasses {
+public class TaskBoard extends dataClasses implements observable {
     String name;
     List<TaskList> taskListList;
 
@@ -19,7 +19,20 @@ public class TaskBoard extends dataClasses {
     }
 
     public String toJSON() {
-        System.out.println("HAHA! Musst du erst implementieren!");
-        return "";
+        String json = "{";
+        json += "\"id\":\""+ this.getID();
+        json += "\",\"name\":\""+ this.getName();
+        json += "\"}";
+        return json;
+    }
+
+    @Override
+    public Integer getUSID_P() {
+        return null;
+    }
+
+    @Override
+    public Integer getTBID_P() {
+        return this.getID();
     }
 }

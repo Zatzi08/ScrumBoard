@@ -66,13 +66,7 @@ public class UserStoryService {
                 try{
                     List<DAOUserStory> dusl = DAOUserStoryService.getAll();
                     DAOUserStory dus = dusl.get(dusl.size()-1);
-                    observer.sendToProjectManager(0, new UserStory(dus.getName(), dus.getDescription(), dus.getPriority(), dus.getId()));
-                } catch (Exception e){
-                    System.out.println("Observer nicht initialisiert");
-                }
-            } else {
-                try{
-                    observer.sendToProjectManager(4, null);
+                    observer.sendToUserStoryGroup(0, new UserStory(dus.getName(), dus.getDescription(), dus.getPriority(), dus.getId()));
                 } catch (Exception e){
                     System.out.println("Observer nicht initialisiert");
                 }
@@ -90,15 +84,14 @@ public class UserStoryService {
 
                 if (responce){
                     try{
-                        List<DAOUserStory> dusl = DAOUserStoryService.getAll();
-                        dus = dusl.get(dusl.size()-1);
-                        observer.sendToProjectManager(2, new UserStory(dus.getName(), dus.getDescription(), dus.getPriority(), dus.getId()));
+                        dus = DAOUserStoryService.getById(userStory.getID());
+                        observer.sendToUserStoryGroup(2, new UserStory(dus.getName(), dus.getDescription(), dus.getPriority(), dus.getId()));
                     } catch (Exception e){
                         System.out.println("Observer nicht initialisiert");
                     }
                 } else {
                     try{
-                        observer.sendToProjectManager(4, null);
+                        observer.sendToUserStoryGroup(4, null);
                     } catch (Exception e){
                         System.out.println("Observer nicht initialisiert");
                     }
@@ -153,9 +146,9 @@ public class UserStoryService {
                 if (responce) {
                     try {
                         observer.sendToTaskGroup(1,
-                                new Task(dt.getId(), dt.getDescription(), dt.getPriority(), dt.getUserStory().getId(), dt.getDueDate(),
-                                        dt.getProcessingTimeEstimatedInHours(), dt.getProcessingTimeRealInHours(),
-                                        dt.getTaskList().getTaskBoard().getId()));
+                                new Task(dt.getId(), dt.getDescription(), dt.getPriority(), dt.getUserStory().getId(),
+                                        dt.getDueDate(), dt.getProcessingTimeEstimatedInHours(),
+                                        dt.getProcessingTimeRealInHours(), dt.getTaskList().getTaskBoard().getId()));
                     } catch (Exception e) {
                         System.out.println("Observer nicht initialisiert");
                     }
@@ -165,7 +158,7 @@ public class UserStoryService {
         boolean responce = DAOUserStoryService.deleteById(uid);
         if (responce) {
             try {
-                observer.sendToProjectManager(1,
+                observer.sendToUserStoryGroup(1,
                         new UserStory(dus.getName(), dus.getDescription(), dus.getPriority(), dus.getId()));
             } catch (Exception e) {
                 System.out.println("Observer nicht initialisiert");
