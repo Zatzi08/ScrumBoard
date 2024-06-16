@@ -23,14 +23,14 @@
   <button type="button" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
   <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
   <button class = "reiterBtn">Kalender </button>
-  <button class = "reiterBtn" style="margin-left: auto; margin-right: 0;"><a href="/">Abmelden</a></button>
+  <button class = "reiterBtn" id = "logoutBtn" onclick="location.href='/'">Abmelden</button>
 </div>
 
 <div id="outerProjectManagerContainer">
   <div id="Hi">
-    <button class="selectBtn" id="selectUserstory" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" onmouseover = "hover('selectUserstory')" onmouseleave="hoverLeave('selectUserstory')" title="Wechsel Ansicht zu Userstories">Userstories</button>
+    <button class="selectBtn" id="selectUserstory" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" title="Wechsel Ansicht zu Userstories">Userstories</button>
     <span class="userStoryTaskTrenner">|</span>
-    <button class="selectBtn" id="selectTasks" th:Sid="${sessionID}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
+    <button class="selectBtn" id="selectTasks" th:Sid="${sessionID}" onclick="SwitchToTasks(this.getAttribute('Sid'))"  title="Wechsel Ansicht zu Tasks">Tasks</button>
     <span class="userStoryTaskTrenner">|</span>
     <button class="selectBtn" id="selectUser" style= "border-bottom: 1px solid #ffffff" title = "Wechsel zur Nutzeransicht">Nutzer</button>
     <button class="addUserStoryBtn" title="Erstelle und Bearbeite die Rollen" onclick="toggleRolesEditMenu()"><i class="fa fa-user" style = "margin-right: 5px"></i>Rollen bearbeiten</button>
@@ -68,17 +68,36 @@
 
 <div id = "roleOverlay" style = "display:none">
 <div class = "editMenu"  id = "editRolesMenu">
-  <label id = "roleTitle" >  Rollen bearbeiten und erstellen <i class = "fa fa-pencil"></i>
+  <label class = "roleTitle" >  Rollen bearbeiten und erstellen <i class = "fa fa-pencil"></i>
     <span class="closeToggleEdit" onclick="toggleRolesEditMenu()">&times;
     </span>
   </label>
   <div class="editRoles-content">
-      <button id = "editRolesBtn"><i class="fa fa-plus-circle" style = "font-size: 25px"></i></button>
+    <select class = "filterRolesDropdown" name = "filter"id="cars" title="Nach Rechten Filtern">
+      <option value="0">Kein Filter</option>
+      <option value="1">Nutzer</option>
+      <option value="2">Manager</option>
+      <option value="3">Project Owner</option>
+      <option value="4">Admin</option>
+    </select>
+      <button id = "editRolesBtn"><i class="fa fa-plus-circle" style = "font-size: 25px" onclick = "toggleRoleNameMenu()"></i></button>
       <ul>
-        <li id = "visualRole" style = "margin-left: 2px">Rolle 1 <i class="fa fa-edit"  id = "editRoleBtn" style = "margin-left: 82%"></i><span id = "deleteRoleBtn">&times;</span></li>
+        <li class = "visualRole" style = "margin-left: 2px">Rolle 1 <i class="fa fa-edit"  id = "editRoleBtn" style = "margin-left: 82%"></i><span id = "deleteRoleBtn">&times;</span></li>
       </ul>
   </div>
 </div>
+</div>
+
+<div id = "roleOverlay2" style = "display:none;z-index:3" >
+  <div id = "editRoleNameMenu" style ="z-index:4">
+    <label class = "roleTitle" >  Rolle erstellen <i class = "fa fa-pencil"></i>
+      <span class="closeToggleEdit" onclick = "toggleRoleNameMenu()">&times;</span></label>
+    <div class="editRolesName-content">
+      <input id = "roleNameInput" placeholder = "Namen der Rolle eingeben">
+      <button id = "roleNameBtn">Bestätigen</button>
+    </div>
+
+  </div>
 </div>
 
 <script src="/js/vendor/jquery.js"></script>

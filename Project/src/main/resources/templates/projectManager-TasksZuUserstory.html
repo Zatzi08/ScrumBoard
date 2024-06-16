@@ -23,7 +23,7 @@
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
     <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
     <button class = "reiterBtn">Kalender </button>
-    <button class = "reiterBtn" style="margin-left: auto; margin-right: 0;"><a href="/">Abmelden</a></button>
+    <button class = "reiterBtn" id = "logoutBtn" onclick="location.href='/'">Abmelden</button>
 </div>
 
 <div id="outerProjectManagerContainer">

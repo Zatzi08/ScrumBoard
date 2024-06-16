@@ -63,12 +63,12 @@ function highlightPriorityButton(buttonId) {
     });
 }
 
-function hover(buttonId){
-    document.getElementById(buttonId).style.color = "#ba55d3";
-}
-function hoverLeave(buttonId) {
-    document.getElementById(buttonId).style.color = "#fff";
-}
+//function hover(buttonId){
+//    document.getElementById(buttonId).style.color = "#ba55d3";
+//}
+//function hoverLeave(buttonId) {
+//    document.getElementById(buttonId).style.color = "#fff";
+//}
 
 document.addEventListener('DOMContentLoaded', function () {
     const rows = document.querySelectorAll('.userTaskTable tbody tr');
@@ -225,8 +225,9 @@ function toggleEditBox(id,storyId, name, description, prio){
 
 var checkList = document.getElementById('list1');
 checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
-    if (checkList.classList.contains('visible'))
+    if (checkList.classList.contains('visible')) {
         checkList.classList.remove('visible');
+    }
     else
         checkList.classList.add('visible');
 }
@@ -303,11 +304,20 @@ function toggleRolesEditMenu() {
     }
 }
 
+function toggleRoleNameMenu(){
+    var rolesNameMenu = document.getElementById("roleOverlay2");
+    if(rolesNameMenu.style.display == "none") {
+        rolesNameMenu.style.display = "block";
+    } else {
+        rolesNameMenu.style.display = "none";
+    }
+}
 
 
 window.onclick = function(event) {
-    var rolesMenu = document.getElementById("roleOverlay");
-    if (event.target == rolesMenu) {
-        rolesMenu.style.display = "none";
+    var rolesMenu = document.getElementById("editRolesMenu");
+    var rolesOverlay = document.getElementById("roleOverlay");
+    if (event.target != rolesMenu) {
+        rolesOverlay.style.display = "none";
     }
 }

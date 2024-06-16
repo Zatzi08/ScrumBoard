@@ -49,3 +49,12 @@ body {
     border-bottom-color: #ba55d3;
     color: #ba55d3;
 }
+
+#logoutBtn{
+    margin-left: auto;
+    margin-right: 0;
+    color:white;
+}
+#logoutBtn:hover{
+    color: #ba55d3;
+}

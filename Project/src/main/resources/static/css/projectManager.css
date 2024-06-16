@@ -128,6 +128,10 @@
     height: 20px;
 }
 
+.selectBtn:hover{
+    color: #ba55d3;
+}
+
 #outerProjectManagerContainer{
     position: relative;
     display: flow-root;
@@ -388,8 +392,47 @@ hr {
 
 }
 
-#roleOverlay{
-    display: none;
+#editRoleNameMenu{
+    width: 50vh;
+    display: inherit;
+    position: fixed;
+    z-index: 5;
+    height: 250px;
+    background-color: rgb(46, 46, 61);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    overflow: auto;
+    z-index: 1000;
+    top: 50dvh;
+    left: 50dvw;
+    transform: translate(-50%, -50%);
+
+}
+
+#roleNameInput{
+    position: relative;
+    background-color: #283d48;
+    width: 100%;
+    color: white;
+    border-radius: 8px;
+    margin-right: 50%;
+    margin-top: 10%;
+}
+
+#roleNameBtn{
+    margin-top: 15%;
+    margin-left: 36%;
+    background-color: #7F7F9F;
+    padding: 5px;
+    border-radius: 8px;
+}
+#roleNameBtn:hover{
+    background-color: #606080;
+}
+
+#roleOverlay, #roleOverlay2{
+    display: block;
     position: fixed;
     z-index: 1;
     top:0;
@@ -399,7 +442,7 @@ hr {
 
 }
 
-.editRoles-content{
+.editRoles-content, .editRolesName-content{
     display: inline-block;
     overflow: hidden;
     width:100%;
@@ -410,9 +453,10 @@ hr {
     display: inline-block;
     height: auto;
     border-radius: 15px;
-    margin-left: 95%;
     color: #E6AF2E;
     margin-top:1px;
+    float:right;
+    margin-right:1px;
 }
 
 #editRolesBtn:hover{
@@ -421,7 +465,23 @@ hr {
     0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
-#roleTitle{
+.editRoles-content select{
+    display: inline-block;
+    width: auto;
+    height:25px;
+    font-size: 15px;
+    background-color: #4F4F69;
+    color: white;
+    border-radius: 8px;
+    float:left;
+    border-color:#1b2947;
+}
+
+.filterRolesDropdown option{
+
+}
+
+.roleTitle{
     color: white;
     border-bottom: 1px solid #ffffff;
     margin-bottom: 20px;
@@ -429,7 +489,7 @@ hr {
     width:100%
 }
 
-#visualRole{
+.visualRole{
     display: block;
     background-color: #0d1525;
     border-radius: 8px;
@@ -471,6 +531,7 @@ ul{list-style-type: none;}
     font-family: Roboto;
     border: 1px solid black;
     margin: 1%;
+    margin-right:3px;
 
 }
 
