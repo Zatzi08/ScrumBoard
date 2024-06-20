@@ -39,7 +39,7 @@ public class WebsocketObserver {
 
     public void sendToProfileByID(int messageTyp, observable object) {
         sendToUserGroup(messageTyp,object);
-        service.sendMessage("profile"+object.getID(), messageTyp, object);
+        service.sendMessage("Pr/user"+object.getID(), messageTyp, object);
     }
 
     public void sendToUSzTByUSID(int messageTyp, observable object){
@@ -60,7 +60,7 @@ public class WebsocketObserver {
     public void sendToTaskBoardByID(int messageTyp, observable object){
         Integer tbID = object.getTBID_P();
         if (tbID != null){
-            service.sendMessage("/Board" + tbID, messageTyp, object);
+            service.sendMessage("TB/board" + tbID, messageTyp, object);
         }
     }
 
@@ -77,6 +77,6 @@ public class WebsocketObserver {
 
     public void sendToTaskListGroup(int messageTyp, observable object){
         if (messageTyp == 0) sendToTaskGroup(messageTyp,object);
-        sendToTaskBoardByID(messageTyp, object);
+        else sendToTaskBoardByID(messageTyp, object);
     }
 }

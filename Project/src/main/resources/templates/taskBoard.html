@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     </head>
     <body>
+    <input type="hidden" id="data" th:tbID="${Board.getID()}">
     <!--
            Author: Zana Salih Hama
            Revisited: /
@@ -158,5 +159,13 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script type="module" src="/js/myChart.js"></script>
         <script src="/js/myChart.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+        <script src="/js/webSockets/websocket.js"></script>
+        <script src="/js/webSockets/WS_TB.js"></script>
+        <script type="application/javascript">
+            window.onbeforeunload = disconnect();
+            window.onload = connect();
+        </script>
     </body>
 </html>
