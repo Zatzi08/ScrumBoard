@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class Role extends dataClasses {
     private String name;
+    private int auth;
 
     public Role(int ID, String name) {
         super(ID);
@@ -14,6 +15,8 @@ public class Role extends dataClasses {
     }
 
     public String toJSON() {
+        // TODO: implement toJSON
+        System.out.println("Role toJSON muss noch implementiert werden");
         String json = "{";
         json += "}";
         return json;

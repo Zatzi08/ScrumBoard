@@ -288,6 +288,45 @@ function setUsersOfTask(sessionID, tid, uIDs){
     })
 }
 
+function setRollsOfTask(sessionID, tid, rIDs){
+    let url = "setRoleToTask?tID="+ tid
+
+    return  fetch(url, {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionID': sessionID
+        },
+        body: JSON.stringify(rIDs)
+    }).then(r =>{
+        if (!r.ok){
+            document.location.reload()
+        }
+        return r
+    })
+}
+
+function saveRole(sessionID, rid, rName, auth){
+    let url = "saveRole"
+
+    return  fetch(url, {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionID': sessionID
+        },
+        body: JSON.stringify({
+            "id":rid,
+            "name": rName,
+            "auth": auth
+        })
+    }).then(r =>{
+        document.location.reload()
+    })
+}
+
 // Zusätzliche Funktionen
 function getRollen(){
     var list = document
