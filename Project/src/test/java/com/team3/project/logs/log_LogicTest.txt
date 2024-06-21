@@ -2759,4 +2759,63 @@ Fail: wrong Authorization
 pass: falseLogik-Test-editTaskWithPriority
 Test ID: Logic.T23
 Date: 09/06/24 13:08:48
+pass = trueBack-End-Tests:
+
+Logik-Test-createUserStory
+Test ID: Logic.T1
+Date: 21/06/24 11:23:31
+pass: trueBack-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 21/06/24 11:46:43
+pass: trueBack-End-Tests:
+
+Logik-Test-createProfile
+Test ID: Logic.T3
+Date: 21/06/24 11:50:48
+pass: trueBack-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 21/06/24 11:55:04
+pass = trueBack-End-Tests:
+
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 21/06/24 11:57:52
+pass = true
+Back-End-Tests:
+
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 21/06/24 12:09:20
+pass = true
+Back-End-Tests:
+
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 21/06/24 12:18:04
+pass = true
+Back-End-Tests:
+
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 21/06/24 12:31:05
+pass = true
+Back-End-Tests:
+
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 21/06/24 12:37:49
+Back-End-Tests:
+
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 21/06/24 12:38:35
+Back-End-Tests:
+
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 21/06/24 12:39:31
 pass = true
