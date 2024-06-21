@@ -165,4 +165,34 @@ public class ProfileTests extends BaseLogicTest {
         }
         pw.append(String.format("pass = %b",pass));
     }
+
+    @Test
+        /*  Test ID: Logic.T18
+         *  Author: Henry Lewis Freyschmidt
+         *  Zweck: alle Profile ausgeben P4.B1
+         */
+    void getAllProfiles() throws Exception{
+        //Arrange
+        pw.append("Logik-Test-getAllProfiles\nTest ID: Logic.T18\n" + "Date: " + formatter.format(date) + '\n');
+        AccountService aservice = new AccountService();
+
+        //Act
+        aservice.register("DaveT18", "daveT18@gmail.com", "T18");
+        aservice.register("Dave1T18", "dave1T18@gmail.com", "T18");
+        aservice.register("Dave2T18", "dave2T18@gmail.com", "T18");
+
+        //Assert
+        try{
+            List <Profile> profiles = aservice.getAllProfiles();
+            Assertions.assertEquals("DaveT18", profiles.get(0).getUname());
+            Assertions.assertEquals("Dave1T18", profiles.get(1).getUname());
+            Assertions.assertEquals("Dave2T18", profiles.get(2).getUname());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: did not return all Users\n");
+            throw new AssertionError(e);
+        }
+
+        pw.append(String.format("pass = %b", pass));
+    }
 }
