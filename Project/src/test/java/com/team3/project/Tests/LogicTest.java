@@ -17,7 +17,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-
 public class LogicTest extends BaseLogicTest{
 
     private static PrintWriter pw;
@@ -35,12 +34,12 @@ public class LogicTest extends BaseLogicTest{
 
     @BeforeEach
     public void beforeTest(){
-        before();
+        BaseLogicTest.wipeDb(true);
     }
 
     @AfterEach
     public void afterTest(){
-        after();
+        BaseLogicTest.wipeDb(true);
     }
 
 
@@ -186,7 +185,7 @@ public class LogicTest extends BaseLogicTest{
         }catch (Exception e){
             e.printStackTrace();
         }
-
+        sessionID = "";
         try{
             sessionID = wservice.getSessionID("dave@gmail.com");
         }catch (Exception e){
@@ -605,11 +604,9 @@ public class LogicTest extends BaseLogicTest{
         }
 
 
-        /*
         try{
             count_correct_exception_checks++;
-            tfailure.setUserStoryID(usid);
-            tfailure.setdueDate("2010-10-10 10:10"); //Date in der Vergangenheit soll exception thrown
+            tfailure.setTimeNeededA(-1); //timeNeeded kann nicht negativ sein
             tservice.saveTask(tfailure);
         }catch (Exception e){
             count_correct_exceptions++;
@@ -617,27 +614,11 @@ public class LogicTest extends BaseLogicTest{
 
         try{
             count_correct_exception_checks++;
-            tfailure.setdueDate("2030-10-10 10:10);
-            tfailure.settimeNeededA(-1); //timeNeeded kann nicht negativ sein
+            tfailure.setTimeNeededA(10);
+            tfailure.setTimeNeededG(-1); // timeNeeded kann nicht negativ sein
             tservice.saveTask(tfailure);
         }catch (Exception e){
             count_correct_exceptions++;
-        }
-
-        try{
-            count_correct_exception_checks++;
-            tfailure.settimeNeededA(10);
-            tfailure.settimeNeededG(-1); // timeNeeded kann nicht negativ sein
-            tservice.saveTask(tfailure);
-        }catch (Exception e){
-            count_correct_exceptions++;
-        }
-        */
-
-        try{
-            uservice.deleteUserStoryAndLinkedTasks(u1.getID());
-        }catch (Exception e){
-            e.printStackTrace();
         }
 
         if(count_correct_exceptions != count_correct_exception_checks){
@@ -1422,7 +1403,7 @@ public class LogicTest extends BaseLogicTest{
         }catch (Exception e){
             e.printStackTrace();
         }
-        List<DAOUser> users = DAOUserService.getAllPlusRoles();
+        List<DAOUser> users = DAOUserService.getAllWithRoles();
         List<Integer> uIDs = new LinkedList<>();
         for(DAOUser daoUser: users){
             uIDs.add(daoUser.getId());
