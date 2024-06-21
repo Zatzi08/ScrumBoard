@@ -353,9 +353,8 @@ hr {
     margin-left: 10%;
     padding: 10px;
 }
-
-#tbDeleteBtn{background-color: #A23615; }
-#tbNotDeleteBtn{background-color: #50772C}
+#tbDeleteBtn{background-color: #A23615; padding:2px 2px 2px; margin-left:30px}
+#tbNotDeleteBtn{background-color: #50772C; padding:2px 2px 2px; margin-right:30px;}
 
 #tbDeleteBtn:hover{background-color: #6C240F;}
 
