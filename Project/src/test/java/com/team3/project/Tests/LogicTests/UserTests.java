@@ -1,24 +1,36 @@
 package com.team3.project.Tests.LogicTests;
 
-import com.team3.project.Classes.Account;
-import com.team3.project.Classes.Enumerations;
-import com.team3.project.Classes.User;
 import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.Tests.BaseClassesForTests.BaseLogicTest;
 import com.team3.project.service.AccountService;
 import com.team3.project.service.WebSessionService;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(MockitoExtension.class)
 public class UserTests extends BaseLogicTest {
     private static PrintWriter pw;
     private static Date date;
     private static SimpleDateFormat formatter;
     private boolean pass = true;
+
+    @Mock
+    private DAOUserService daoUserService;
+    @Mock
+    private WebSessionService webSessionServiceMock;
+    @InjectMocks
+    private AccountService accountService;
+
     @BeforeAll
     public static void setupTest(){
         setup();
@@ -42,55 +54,50 @@ public class UserTests extends BaseLogicTest {
         /*  Test ID: Logic.T9
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: Registration A2.B1
+         *  Edit: Mockito hinzugefügt - Henry van Rooyen
          */
-    void register() throws Exception{
+    void register_registerNewUser_CreatesNewUserObject() throws Exception{
         //Arrange
-        pw.append("Logik-Test-register\nTest ID: Logic.T9\n" + "Date: " + formatter.format(date)+ '\n');
-        AccountService aservice = new AccountService();
+        pw.append("Logik-Test-register\nTest ID: Logic.T9\n" + "Date: ")
+                .append(formatter.format(date))
+                .append(String.valueOf('\n'));
         int count_correct_exceptions = 0;
-        int count_correct_exception_checks = 0;
-        int userID = -1;
+        AtomicInteger count_correct_exception_checks = new AtomicInteger();
+        final int userID;
+        final String userName = "Dave";
+        final String email = "dave@gmail.com";
+        final String passwort = "123";
+
+        //Exception cases
+        assertThrows(Exception.class, () -> {
+            count_correct_exception_checks.getAndIncrement();
+            accountService.register(null, email, passwort);
+        });
+        count_correct_exceptions++;
+
+        assertThrows(Exception.class, () -> {
+            count_correct_exception_checks.getAndIncrement();
+            accountService.register(userName, null, passwort);
+        });
+        count_correct_exceptions++;
+
+        assertThrows(Exception.class, () -> {
+            count_correct_exception_checks.getAndIncrement();
+            accountService.register(userName, email, null);
+        });
+        count_correct_exceptions++;
 
         //Act
-        //Exception cases
-        try{
-            count_correct_exception_checks++;
-            aservice.register(null,"dave@gmail.com", "123");
-        }catch (Exception e){
-            count_correct_exceptions++;
-        }
-
-        try{
-            count_correct_exception_checks++;
-            aservice.register("Dave",null, "123");
-        }catch (Exception e){
-            count_correct_exceptions++;
-        }
-
-        try{
-            count_correct_exception_checks++;
-            aservice.register("Dave","dave@gmail.com", null);
-        }catch (Exception e){
-            count_correct_exceptions++;
-        }
-
-        //functional case
-        aservice.register("Dave","dave@gmail.com", "123");
-        userID = DAOUserService.getIdByMail("dave@gmail.com");
+        accountService.register(userName, email, passwort);
+        userID = daoUserService.getIdByMail(email);
 
         //Assert
-        try{
-            Assertions.assertEquals("Dave", DAOUserService.getById(userID).getName());
-        }catch (AssertionError e){
-            pass = false;
-            pw.append("Fail: User was not registered\n");
-            throw new AssertionError(e);
-        }
-        if(count_correct_exceptions != count_correct_exception_checks){
+        assertEquals(userName, daoUserService.getById(userID).getName());
+
+        if (count_correct_exceptions != count_correct_exception_checks.get()) {
             pass = false;
             pw.append("Fail: wrong Exception-Handling\n");
         }
-
         pw.append(String.format("pass = %b", pass));
     }
 
@@ -101,7 +108,6 @@ public class UserTests extends BaseLogicTest {
          */
     void login() throws Exception{
         //Arrange
-        pw.append("Logik-Test-login\nTest ID: Logic.T10\n" + "Date: " + formatter.format(date)+ '\n');
         AccountService aservice = new AccountService();
         int count_correct_exceptions = 0;
         int count_correct_exception_checks = 0;
@@ -127,19 +133,16 @@ public class UserTests extends BaseLogicTest {
 
         //Assert
         try{
-            Assertions.assertEquals(true, aservice.login("dave@net.de", "111"));
+            assertTrue(aservice.login("dave@net.de", "111"));
         }catch (AssertionError | Exception e){
             e.printStackTrace();
             pass = false;
-            pw.append("Fail: existent Email not found\n");
             throw new AssertionError(e);
         }
 
         if(count_correct_exceptions != count_correct_exception_checks){
             pass = false;
-            pw.append("Fail: wrong Exception-Handling\n");
         }
-        pw.append(String.format("pass = %b",pass));
     }
 
     @Test
@@ -149,7 +152,6 @@ public class UserTests extends BaseLogicTest {
          */
     void authority() throws Exception{
         //Arrange
-        pw.append("Logik-Test-authority\nTest ID: Logic.T11\n" + "Date: " + formatter.format(date)+ '\n');
         AccountService aservice = new AccountService();
         WebSessionService wservice = new WebSessionService();
         String sessionID = null;
@@ -160,15 +162,12 @@ public class UserTests extends BaseLogicTest {
 
         //Assert
         try{
-            Assertions.assertEquals(1, aservice.getAuthority(sessionID));
+            assertEquals(1, aservice.getAuthority(sessionID));
         }catch (AssertionError | Exception e){
             e.printStackTrace();
-            pw.append("Fail: User created with wrong authority\n");
             pass = false;
             throw new AssertionError(e);
         }
-
-        pw.append(String.format("pass = %b",pass));
     }
 
     @Test
@@ -178,7 +177,6 @@ public class UserTests extends BaseLogicTest {
          */
     void changeAuthority() throws Exception{
         //Arrange
-        pw.append("Logik-Test-changeAuthority\nTest ID: Logic.T12\n" + "Date: " + formatter.format(date) + '\n');
         AccountService aservice = new AccountService();
         WebSessionService wservice = new WebSessionService();
         int count_correct_exceptions = 0;
@@ -221,14 +219,11 @@ public class UserTests extends BaseLogicTest {
             Assertions.assertNotEquals(oldAuthority, aservice.getAuthority(sessionID));
         }catch (Exception | AssertionError e){
             pass = false;
-            pw.append("Fail: Authority was not changed\n");
             throw new AssertionError(e);
         }
 
         if (count_correct_exceptions != count_correct_exception_checks) {
             pass = false;
-            pw.append("Fail: wrong Exception-Handling\n");
         }
-        pw.append(String.format("pass = %b\n", pass));
     }
 }

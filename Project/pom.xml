@@ -45,7 +45,7 @@
             <artifactId>spring-context-support</artifactId>
             <version>5.2.8.RELEASE</version>
         </dependency>
-                <!--db dependencys-->
+                <!--db dependencies-->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -81,14 +81,41 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
+
+        <!-- Mockito -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-messaging</artifactId>
         </dependency>
+
+        <!-- Mockito JUnit 5 Integration -->
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
             <version>1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.11.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>5.7.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+            <version>3.2.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
@@ -97,7 +124,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <!--das brauch ich(marvin) damit es bei mir funktioniert. wenn du das hier siehst hab ich das ausversehn hochgeladen. enfern das selbst oder sag mir das ich das weg machen soll-->
+            <!--das brauch ich(marvin) damit es bei mir funktioniert. wenn du das hier siehst <,hab ich das ausversehn hochgeladen. enfern das selbst oder sag mir das ich das weg machen soll-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
