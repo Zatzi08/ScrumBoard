@@ -248,11 +248,18 @@ async function saveTaskWithUserList(sessionID) {
     let r = await saveTask(sessionID, id)
     if (r.status !== 400){
         let lis = document.getElementById('usersAuswahlID').children;
-        let list = []
+        let Ulist = []
         for (let li of lis) {
             if (li.children[0].checked) list.push(li.id.substring(1))
         }
-        await setUsersOfTask(sessionID, id, list)
+
+        lis = document.getElementById('rollsAuswahlID').children;
+        let Rlist = []
+        for (let li of lis) {
+            if (li.children[0].checked) list.push(li.id.substring(1))
+        }
+        await setUsersOfTask(sessionID, id, Ulist)
+        await setRollsOfTask(sessionID, id, Rlist)
     }
     document.location.reload()
 }

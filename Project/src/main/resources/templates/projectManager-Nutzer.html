@@ -73,7 +73,7 @@
     </span>
   </label>
   <div class="editRoles-content">
-    <select class = "filterRolesDropdown" name = "filter"id="cars" title="Nach Rechten Filtern">
+    <select class = "filterRolesDropdown"  title="Nach Rechten Filtern">
       <option value="0">Kein Filter</option>
       <option value="1">Nutzer</option>
       <option value="2">Manager</option>
@@ -94,6 +94,14 @@
       <span class="closeToggleEdit" onclick = "toggleRoleNameMenu()">&times;</span></label>
     <div class="editRolesName-content">
       <input id = "roleNameInput" placeholder = "Namen der Rolle eingeben">
+      <div id = "rightsForRoles">
+        <select class = "chooseRightsRolesDropdown" th:Sid="${sessionID}" title="Auswahl der Rolle">
+          <option id="RRole:1" value="1" >Nutzer</option>
+          <option id="RRole:2" value="2" >Manager</option>
+          <option id="RRole:3" value="3" >Project Owner</option>
+          <option id="RRole:4" value="4" >Admin</option>
+        </select>
+      </div>
       <button id = "roleNameBtn">Bestätigen</button>
     </div>
 

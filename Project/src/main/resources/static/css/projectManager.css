@@ -393,7 +393,7 @@ hr {
 }
 
 #editRoleNameMenu{
-    width: 50vh;
+    width: 70vh;
     display: inherit;
     position: fixed;
     z-index: 5;
@@ -417,15 +417,24 @@ hr {
     color: white;
     border-radius: 8px;
     margin-right: 50%;
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 #roleNameBtn{
-    margin-top: 15%;
+    margin-top: 18px;
     margin-left: 36%;
-    background-color: #7F7F9F;
+    background-color: #7E7E9E;
     padding: 5px;
     border-radius: 8px;
+    margin-right: 50%;
+}
+#rightsForRoles select{
+    border-radius: 8px;
+    margin-top: 15px;
+    background-color: #283d48;
+    color: white;
+    height: 30px;
+    user-select: none;
 }
 #roleNameBtn:hover{
     background-color: #606080;
@@ -477,9 +486,6 @@ hr {
     border-color:#1b2947;
 }
 
-.filterRolesDropdown option{
-
-}
 
 .roleTitle{
     color: white;

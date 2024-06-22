@@ -259,7 +259,7 @@ public class TaskService {
         if (responce) {
             try {
                 int tbID = dt.getTaskList() == null ? -1 : dt.getTaskList().getTaskBoard().getId();
-                observer.sendToTaskListGroup(0,
+                observer.sendToTaskListGroup(3,
                         new Task(dt.getId(),dt.getDescription(),dt.getPriority(),dt.getUserStory().getId(),
                                 dt.getDueDate(),dt.getProcessingTimeEstimatedInHours(),
                                 dt.getProcessingTimeRealInHours(), tbID));
