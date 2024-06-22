@@ -131,7 +131,7 @@
             <i class = "fa fa-clock" style="margin-right:10px;" title="Name des Taskboards ändern"></i> <label style = "color: #d1d1d1; border-bottom: 2px solid #d1d1d1;display: inline; width:100%" > Gebe die Bearbeitungszeit der Task an</label>
             <input type = "number" min="0" max="1000" step="0.5" form = "taskFertigForm" id = "taskFertigInput" placeholder="Deine Bearbeitungszeit">
             <input type="hidden" id="taskID">
-            <button type="button" th:sID="${sessionID}"  id = "taskFertigBtn" onclick="setTaskTime(this.getAttribute('sID'));" >Bestätigen</button>
+            <button type="button" th:sID="${sessionID}"  id = "taskFertigBtn" onclick="setTime(this.getAttribute('sID'));" >Bestätigen</button>
         </form>
     </div>
 

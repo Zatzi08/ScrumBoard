@@ -28,7 +28,7 @@ function ping(message) {
         });
 }
 
-function ForceSync(sync) {
+async function ForceSync(sync) {
     if (sync) {
         disconnect();
         document.location.reload();
