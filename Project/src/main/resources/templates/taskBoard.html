@@ -131,16 +131,16 @@
             <i class = "fa fa-clock" style="margin-right:10px;" title="Name des Taskboards ändern"></i> <label style = "color: #d1d1d1; border-bottom: 2px solid #d1d1d1;display: inline; width:100%" > Gebe die Bearbeitungszeit der Task an</label>
             <input type = "number" min="0" max="1000" step="0.5" form = "taskFertigForm" id = "taskFertigInput" placeholder="Deine Bearbeitungszeit">
             <input type="hidden" id="taskID">
-            <button type="button" th:sID="${sessionID}"  id = "taskFertigBtn" onclick="setTaskTime(this.getAttribute('sID'));" >Bestätigen</button>
+            <button type="button" th:sID="${sessionID}"  id = "taskFertigBtn" onclick="setTime(this.getAttribute('sID'));" >Bestätigen</button>
         </form>
     </div>
 
     <div th:if="${authority == 2 || authority == 4}" id = "popupTBDelete">
-        <form id = "tBDeleteForm" style = "height:150px; width:45%">
+        <form id = "tBDeleteForm" style = "height:150px; width:50%">
             <i class = "fa fa-exclamation-triangle" style="margin-right:10px;" title="Task Board löschen"></i> <label style = "color: #d1d1d1; border-bottom: 2px solid #d1d1d1;display: inline; width:100%" > Task Board löschen</label>
             <label style = "margin-top:10px; color:white">Achtung! Sie sind grade dabei, ihr Task Board endgültig zu löschen. Dabei gehen alle Daten des ausgewählten Task-Boards verloren. Fortfahren?</label>
 
-            <button type="button" th:sID="${sessionID}"  id = "tbDeleteBtn" class = "inline" style = "float:left">Löschen</button>
+            <button type="button" th:sID="${sessionID}"  id = "tbDeleteBtn" class = "inline">Löschen</button>
             <button type="button" th:sID="${sessionID}"  id = "tbNotDeleteBtn" class = "inline" style = "float:right">Behalten</button>
 
 

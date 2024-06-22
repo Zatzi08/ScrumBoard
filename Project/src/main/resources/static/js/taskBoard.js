@@ -256,6 +256,7 @@ function deleteButton(button) {
 }
 
 function changeTBNamePopUp(id){
+    can_sync = false
     var TBNamePopup = document.getElementById(id);
     TBNamePopup.style.display = "block";
 }
@@ -266,18 +267,22 @@ window.onclick = function(event) {
     var fertigPopup = document.getElementById("popupTaskFertig");
     if (event.target == TBNamePopup) {
         TBNamePopup.style.display = "none";
+        can_sync = true
     }
 
     else if (event.target == fertigPopup) {
         fertigPopup.style.display = "none";
+        can_sync = true
     }
 
     else if (event.target == TBCreatePopup) {
         TBCreatePopup.style.display = "none";
+        can_sync = true
     }
 }
 
 function openPopup(){
+    can_sync = false
     var fertigPopup = document.getElementById("popupTaskFertig");
     fertigPopup.style.display = "block";
 }
@@ -286,6 +291,7 @@ var TBdelete = false;
 
 
 function deleteTBPopup(button, sessionID, TBID){
+    can_sync = false
     let deleteTBPopup = document.getElementById("popupTBDelete")
     deleteTBPopup.style.display = "block";
     document.getElementById('tbNotDeleteBtn').addEventListener("click", function() {
@@ -297,7 +303,7 @@ function deleteTBPopup(button, sessionID, TBID){
         deleteTaskBoard(button, sessionID, TBID)
         deleteTBPopup.style.display = "none";
     });
-
+    can_sync = true
     TBdelete = false;
 }
 
@@ -315,6 +321,7 @@ async function deleteTaskBoard(button, sessionID, TBID) {
 function changeTBName(sessionID, tbID) {
     let name = document.getElementById('changeTBNameInput').value;
     saveTaskBoard(sessionID, tbID, name);
+    can_sync = true
     let id = 'Name' + tbID;
     document.getElementById(id).innerText = name;
 }
@@ -379,6 +386,7 @@ function closePopup(){
 
     popupChange.style.display = "none";
     popupFertig.style.display = "none";
+    can_sync = true
 }
 
 function openAssignedUsers(NutzerList){
@@ -429,6 +437,12 @@ function closeOverlay2() {
 }
 
 function randomizeAssignedUsersColour(id){
-    var selected = document.getElementById(id)
+    var selected = document.querySelector(id)
     selected.style.backgroundColor = generateColors(1)[0]
+}
+
+function setTime(sessionID){
+    setTaskTime(sessionID)
+    can_sync = true
+    //TODO: Hier close Popup
 }
