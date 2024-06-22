@@ -136,11 +136,11 @@
     </div>
 
     <div th:if="${authority == 2 || authority == 4}" id = "popupTBDelete">
-        <form id = "tBDeleteForm" style = "height:150px; width:50%">
+        <form id = "tBDeleteForm" style = "height: auto; width:50%">
             <i class = "fa fa-exclamation-triangle" style="margin-right:10px;" title="Task Board löschen"></i> <label style = "color: #d1d1d1; border-bottom: 2px solid #d1d1d1;display: inline; width:100%" > Task Board löschen</label>
             <label style = "margin-top:10px; color:white">Achtung! Sie sind grade dabei, ihr Task Board endgültig zu löschen. Dabei gehen alle Daten des ausgewählten Task-Boards verloren. Fortfahren?</label>
 
-            <button type="button" th:sID="${sessionID}"  id = "tbDeleteBtn" class = "inline" style = "float:left">Löschen</button>
+            <button type="button" th:sID="${sessionID}"  id = "tbDeleteBtn" class = "inline">Löschen</button>
             <button type="button" th:sID="${sessionID}"  id = "tbNotDeleteBtn" class = "inline" style = "float:right">Behalten</button>
 
 

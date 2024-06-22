@@ -429,6 +429,6 @@ function closeOverlay2() {
 }
 
 function randomizeAssignedUsersColour(id){
-    var selected = document.getElementById(id)
+    var selected = document.querySelector(id)
     selected.style.backgroundColor = generateColors(1)[0]
 }
