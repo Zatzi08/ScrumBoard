@@ -723,3 +723,18 @@ hr{
 #editMenu-priorityDropAlignment{
     display: inline-flex;
 }
+
+#filterDropdown{
+    height: 20px;
+    width: auto;
+    float: right;
+    border-radius: 15px;
+    position: relative;
+    line-height: 1;
+    font-size: 13px;
+    margin-right: 12px;
+}
+
+select{
+    margin: 0 0 0;
+}

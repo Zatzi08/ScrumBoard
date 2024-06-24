@@ -40,7 +40,19 @@
             <table class="userTaskTable">
                 <thead id="userTaskTableHead">
                     <tr>
-                        <th id = "tableHeader" style="cursor: default">Userstories <button type="button" id="visAllTasks" th:unless="${Storys.isEmpty()}" th:est="${Storys.get(0).getAnforderungenG()}" th:real="${Storys.get(0).getAnforderungenA()}" th:names="${TNames}" onclick="visualisationOfAllTimes(this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('names'))" title="Schätzungstracker für alle Tasks"><i class="fa-solid fa-chart-bar" style="color: white"></i></button></th>
+                        <th id = "tableHeader" style="cursor: default; padding: 1% 1% 1% 12%;">Userstories
+                            <div id="moin" style="display: inline">
+                                <button type="button" id="visAllTasks" th:unless="${Storys.isEmpty()}" th:est="${Storys.get(0).getAnforderungenG()}" th:real="${Storys.get(0).getAnforderungenA()}" th:names="${TNames}" onclick="visualisationOfAllTimes(this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('names'))" title="Schätzungstracker für alle Tasks"><i class="fa-solid fa-chart-bar" style="color: white; margin-top: 3.7px;"></i></button>
+                                <select id = "filterDropdown" th:Sid="${sessionID}" title="Filter">
+                                    <option id="Filter:0" value="0">Keine Filter</option>
+                                    <option disabled>—————————</option>
+                                    <option id="Filter:1" value="1" >Priorität - Low</option>
+                                    <option id="Filer:2" value="2" >Priorität - Normal</option>
+                                    <option id="Filer:3" value="3" >Priorität - High</option>
+                                    <option id="Filer:4" value="4" >Priorität - Urgent</option>
+                                </select>
+                            </div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody id="userTaskTableBody">
@@ -53,7 +65,7 @@
                             <br/>
                             <i class="fa-solid fa-file-lines" id="iContent1"></i><label class="iContent-Label" style="margin-left: 14.7px; font-size: 16px">Titel</label>
                             <label class = "userTaskTableBody-Content" th:text = "${item.name}" title="Titel der User-Story">Name</label>
-                            <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label">Priorität</label><label class = "userTaskTableBody-Content" th:text = "${item.priority}" title="Priorität der User-Story">Priorität</label>
+                            <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label">Priorität</label><label id="userTaskTableBody-ContentPriority" class = "userTaskTableBody-Content" th:text = "${item.priority}" title="Priorität der User-Story">Priorität</label>
                             <p class="userTaskTableBody-Border"></p>
                             <i class = "fa-solid fa-bars" id="iContent3"></i><label class="iContent-Label">Beschreibung</label><label class = "userTaskTableBody-Content" title="Beschreibung der User-Story" th:text="${item.description}">Beschreibung</label>
                         </th>
@@ -115,6 +127,40 @@
     <script type="application/javascript">
         window.onbeforeunload = disconnect();
         window.onload = connect();
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterDropdown = document.getElementById('filterDropdown');
+            filterDropdown.addEventListener('change', filterTable);
+
+            function filterTable() {
+                const priority = filterDropdown.value;
+                const rows = document.querySelectorAll('#userTaskTableBody tr');
+                rows.forEach(row => {
+                    const priorityCell = row.querySelector('#userTaskTableBody-ContentPriority');
+                    if (priority === "0" || (priorityCell && priorityCell.textContent.trim() === getPriorityText(priority))) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            }
+
+            function getPriorityText(priority) {
+                switch (priority) {
+                    case "1":
+                        return "low";
+                    case "2":
+                        return "normal";
+                    case "3":
+                        return "high";
+                    case "4":
+                        return "urgent"
+                    default:
+                        return "";
+                }
+            }
+        });
     </script>
 </body>
 </html>

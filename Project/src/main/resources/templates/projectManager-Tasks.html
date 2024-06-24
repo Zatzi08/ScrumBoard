@@ -40,7 +40,21 @@
             <table class="userTaskTable">
                 <thead id="userTaskTableHead">
                 <tr>
-                    <th id = "tableHeader" style="cursor: default">Tasks</th>
+                    <th id = "tableHeader" style="cursor: default; padding: 1% 1% 1% 12%;">Tasks
+                        <div id="moin" style="display: inline">
+                            <select id = "filterDropdown" th:Sid="${sessionID}" title="Filter">
+                                <option id="Filter:0" value="0">Keine Filter</option>
+                                <option disabled>—————————</option>
+                                <option id="Filter:1" value="1" >Priorität - Low</option>
+                                <option id="Filer:2" value="2" >Priorität - Normal</option>
+                                <option id="Filer:3" value="3" >Priorität - High</option>
+                                <option id="Filer:4" value="4" >Priorität - Urgent</option>
+                                <option disabled>—————————</option>
+                                <option id="Filter:5" value="5">Erledigt</option>
+                                <option id="Filter:6" value="6">Nicht Erledigt</option>
+                            </select>
+                        </div>
+                    </th>
                 </tr>
                 </thead>
                 <tbody id="userTaskTableBody">
@@ -56,7 +70,7 @@
                         </div>
                         <br/>
                         <i class="fa-solid fa-people-group" id="iContent4"></i><label class="iContent-Label" style="margin-left: 8px; font-size: 16px">Rolle</label><label class="userTaskTableBody-Content" title="Rolle">Rolle</label>
-                        <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label">Priorität</label><label class="userTaskTableBody-Content" th:text = "${item.priority}" title="Priorität der Task">Priorität</label>
+                        <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label">Priorität</label><label id="userTaskTableBody-ContentPriority" class="userTaskTableBody-Content" th:text = "${item.priority}" title="Priorität der Task">Priorität</label>
                         <p class="userTaskTableBody-Border"></p>
                         <i class = "fa-solid fa-bars" id="iContent3"></i><label class="iContent-Label">Beschreibung</label><label  class="userTaskTableBody-Content" th:text = "${item.description}" title="Beschreibung der Task">Beschreibung</label>
                         <div id="userTaskTableBody-BottomAlignment">
@@ -94,7 +108,7 @@
                 <div id="list1" class="dropdown-check-list">
                     <button type="button" onclick="" class="anchor">Nutzer zuweisen</button>
                     <ul id="usersAuswahlID" class="items">
-                        <li th:each="nutzer : ${User}" th:id="@{N{id}(id = ${nutzer.getID()})}" ><input  type="checkbox" th:text="${nutzer.getUname()}" /> </li>
+                        <li th:each="nutzer : ${User}" th:id="@{N{id}(id = ${nutzer.getID()})}" ><input type="checkbox" th:text="${nutzer.getUname()}"/></li>
                     </ul>
                 </div>
             </div>
@@ -129,6 +143,10 @@
 <script src="/js/communication.js"></script>
 <script type = "text/javascript" src="/js/setup.js"></script>
 <script type = "text/javascript" src="/js/projectManager.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="/js/myChart.js"></script>
+<script src="/js/myChart.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
 <script src="/js/webSockets/websocket.js"></script>
@@ -136,6 +154,51 @@
 <script type="application/javascript">
     window.onbeforeunload = disconnect();
     window.onload = connect();
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterDropdown = document.getElementById('filterDropdown');
+        filterDropdown.addEventListener('change', filterTable);
+
+        function filterTable() {
+            const filterValue = filterDropdown.value;
+            const rows = document.querySelectorAll('#userTaskTableBody tr');
+            rows.forEach(row => {
+                const priorityCell = row.querySelector('#userTaskTableBody-ContentPriority');
+                var isDone = row.querySelector('#userTaskTableBody-TaskDone') !== null;
+
+                let showRow = false;
+                switch(filterValue){
+                    case "0":
+                        showRow = true; // Show all
+                        break;
+                    case "1":
+                        if (priorityCell.textContent.trim().toLowerCase() === 'low') showRow = true;
+                        break;
+                    case "2":
+                        if (priorityCell.textContent.trim().toLowerCase() === 'normal') showRow = true;
+                        break;
+                    case "3":
+                        if (priorityCell.textContent.trim().toLowerCase() === 'high') showRow = true;
+                        break;
+                    case "4":
+                        if (priorityCell.textContent.trim().toLowerCase() === 'urgent') showRow = true;
+                        break;
+                    case "5":
+                        if (isDone) showRow = true;
+                        break;
+                    case "6":
+                        if (!isDone) showRow = true;
+                        break;
+                    default:
+                        showRow = true;
+                        break;
+                }
+
+                row.style.display = showRow ? "" : "none";
+            });
+        }
+    });
 </script>
 </body>
 </html>

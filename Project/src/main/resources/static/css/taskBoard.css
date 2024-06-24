@@ -111,7 +111,8 @@
     border-top-right-radius: 0;
     text-align: center;
     background-color: #295266;
-    color: white
+    color: white;
+    cursor: unset;
 }
 .columnTable th,
 .columnTable td {
