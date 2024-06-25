@@ -8,10 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class WebsocketObserver {
 
-    // 11h wasted
-    // just Refactor den Controller mit @SendTo
-    // oder finde raus woher du den MessageChannel bekommst
-
     @Autowired
     private WebsocketService service;
 

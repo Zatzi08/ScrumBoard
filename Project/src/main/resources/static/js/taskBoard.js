@@ -385,8 +385,9 @@ function randomizeAssignedUsersColour(min, max){
     return`rgb(${ranValues[0]}, ${ranValues[1]}, ${ranValues[2]})`
 }
 
-function setTime(sessionID){
-    setTaskTime(sessionID)
+function setTime(element,sessionID){
+    setTaskTime(sessionID);
+    element.style.display = 'unset';
     can_sync = true
     //TODO: Hier close Popup
 }

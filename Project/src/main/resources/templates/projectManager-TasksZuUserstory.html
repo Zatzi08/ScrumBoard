@@ -43,6 +43,7 @@
                     <th id="A" th:USID="${Story.getID()}" style="padding: 1% 1% 1% 12%;">
                         <label th:text="@{Tasks zur Story {name}(name=${Story.getName()})}" id="userTaskTableHeadLabel"></label>
                         <div id="moin" style="display: inline">
+                            <button type="button" id="visAllTasks" th:est="${Story.getAnforderungenG()}" th:real="${Story.getAnforderungenA()}" th:names="${Story.getTNames()}" onclick="visualisationOfAllTimes(this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('names'))" title="Schätzungstracker für alle Tasks"><i class="fa-solid fa-chart-bar" style="color: white; margin-top: 3.7px;"></i></button>
                             <select id = "filterDropdown" th:Sid="${sessionID}" title="Filter">
                                 <option id="Filter:0" value="0">Keine Filter</option>
                                 <option disabled>—————————</option>
@@ -135,7 +136,12 @@
     </div>
 </div>
 
-
+<div id = "visEstimateTracker">
+    <div id = "visEstimateTracker-graph">
+        <canvas id = "myChart2"></canvas>
+    </div>
+    <label id="percentageDifferenceText"></label>
+</div>
 <script src="/js/vendor/jquery.js"></script>
 <script src="/js/vendor/what-input.js"></script>
 <script src="/js/vendor/foundation.js"></script>
@@ -143,6 +149,10 @@
 <script src="/js/communication.js"></script>
 <script type = "text/javascript" src="/js/setup.js"></script>
 <script type = "text/javascript" src="/js/projectManager.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="/js/myChart.js"></script>
+<script src="/js/myChart.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
 <script src="/js/webSockets/websocket.js"></script>
@@ -152,6 +162,10 @@
     window.onload = connect();
 </script>
 <script>
+    if (JSON.parse(document.getElementById('visAllTasks').getAttribute('names')).length === 0){
+        document.getElementById('visAllTasks').remove()
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         const filterDropdown = document.getElementById('filterDropdown');
         filterDropdown.addEventListener('change', filterTable);
