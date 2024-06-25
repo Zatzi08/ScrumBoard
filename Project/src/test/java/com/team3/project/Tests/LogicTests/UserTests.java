@@ -8,6 +8,7 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.PrintWriter;
@@ -26,8 +27,8 @@ public class UserTests extends BaseLogicTest {
 
     @Mock
     private DAOUserService daoUserService;
-    @Mock
-    private WebSessionService webSessionServiceMock;
+    @Spy
+    private WebSessionService webSessionService;
     @InjectMocks
     private AccountService accountService;
 
@@ -56,7 +57,7 @@ public class UserTests extends BaseLogicTest {
          *  Zweck: Registration A2.B1
          *  Edit: Mockito hinzugefügt - Henry van Rooyen
          */
-    void register_registerNewUser_CreatesNewUserObject() throws Exception{
+    void register_registerNewUser_createsNewUserObject() throws Exception{
         //Arrange
         pw.append("Logik-Test-register\nTest ID: Logic.T9\n" + "Date: ")
                 .append(formatter.format(date))
@@ -92,7 +93,13 @@ public class UserTests extends BaseLogicTest {
         userID = daoUserService.getIdByMail(email);
 
         //Assert
-        assertEquals(userName, daoUserService.getById(userID).getName());
+        try{
+            assertEquals(userName, daoUserService.getById(userID).getName());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: User not registered\n");
+            throw new AssertionError(e);
+        }
 
         if (count_correct_exceptions != count_correct_exception_checks.get()) {
             pass = false;
@@ -106,42 +113,44 @@ public class UserTests extends BaseLogicTest {
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: Login  A3.B1
          */
-    void login() throws Exception{
+    void login_userLogInToSystem_changeViewToProjectmanager() throws Exception{
         //Arrange
-        AccountService aservice = new AccountService();
+        pw.append("Logik-Test-login\nTest ID: Logic.T10\n" + "Date: ")
+                .append(formatter.format(date))
+                .append(String.valueOf('\n'));
+        AtomicInteger count_correct_exception_checks = new AtomicInteger();
         int count_correct_exceptions = 0;
-        int count_correct_exception_checks = 0;
+        final String username = "Dave";
+        final String email = "dave@net.de";
+        final String passwort = "1234";
+
+        //Exception cases
+        assertThrows(Exception.class, () -> {
+            count_correct_exception_checks.getAndIncrement();
+            accountService.login(null, passwort);
+        });
+        count_correct_exceptions++;
+        assertThrows(Exception.class,()->{
+            count_correct_exception_checks.getAndIncrement();
+            accountService.login(email, null);
+        });
 
         //Act
-        //Exception cases
-        try{
-            count_correct_exception_checks++;
-            aservice.login(null, "111");
-        }catch (Exception e){
-            count_correct_exceptions++;
-        }
-
-        try{
-            count_correct_exception_checks++;
-            aservice.login("dave@net.de", null);
-        }catch (Exception e){
-            count_correct_exceptions++;
-        }
-
-        //functional case
-        aservice.register("Dave", "dave@net.de", "111");
+        accountService.register(username, email, passwort);
 
         //Assert
         try{
-            assertTrue(aservice.login("dave@net.de", "111"));
+            assertTrue(accountService.login(email, passwort));
         }catch (AssertionError | Exception e){
             e.printStackTrace();
             pass = false;
+            pw.append("Fail: existent user could not login\n");
             throw new AssertionError(e);
         }
 
-        if(count_correct_exceptions != count_correct_exception_checks){
+        if(count_correct_exceptions != count_correct_exception_checks.get()){
             pass = false;
+            pw.append("Fail: wrong Exception-Handling\n");
         }
     }
 
@@ -150,22 +159,27 @@ public class UserTests extends BaseLogicTest {
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: initiale reelle Rechte Zuweisung
          */
-    void authority() throws Exception{
+    void authority_UserDefaultAuthority_userAuthorityIs1() throws Exception{
         //Arrange
-        AccountService aservice = new AccountService();
-        WebSessionService wservice = new WebSessionService();
+        pw.append("Logik-Test-authority\nTest ID: Logic.T11\n" + "Date: ")
+                .append(formatter.format(date))
+                .append(String.valueOf('\n'));
         String sessionID = null;
+        final String username = "Dave";
+        final String email = "dave@gmail.com";
+        final String passwort = "1234";
 
         //Act
-        aservice.register("Dave","dave@gmail.com", "123");
-        sessionID = wservice.getSessionID("dave@gmail.com");
+        accountService.register(username,email, passwort);
+        sessionID = webSessionService.getSessionID("dave@gmail.com");
 
         //Assert
         try{
-            assertEquals(1, aservice.getAuthority(sessionID));
+            assertEquals(1, accountService.getAuthority(sessionID));
         }catch (AssertionError | Exception e){
             e.printStackTrace();
             pass = false;
+            pw.append("Fail: wrong default Authority\n");
             throw new AssertionError(e);
         }
     }
@@ -175,55 +189,60 @@ public class UserTests extends BaseLogicTest {
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: reelle Rechte ändern R1.B2
          */
-    void changeAuthority() throws Exception{
+    void setAuthority_changeUsersAuthority_setUsersAuthorityToCertainValue() throws Exception{
         //Arrange
-        AccountService aservice = new AccountService();
-        WebSessionService wservice = new WebSessionService();
         int count_correct_exceptions = 0;
-        int count_correct_exception_checks = 0;
-        String sessionID = null;
-        int oldAuthority = -10;
-        int uID = -1;
+        AtomicInteger count_correct_exception_checks = new AtomicInteger();
+        String sessionID;
+        int oldAuthority;
+        int uID;
+        final int newAuthority = 3;
+        final String username = "Dave";
+        final String email = "dave@test.com";
+        final String passwort ="1234";
+        final int invalidUID = -10;
+        final int nonexistentUID = 1289342;
+        final int failAuthority = -10;
+        final int defaultAuthority = 1;
+        int finalUID;
 
         //Act
-        //functional case
-        aservice.register("Dave", "dave@test.com", "123");
-        uID = DAOUserService.getIdByMail("dave@test.com");
-        sessionID = wservice.getSessionID("dave@test.com");
-        oldAuthority = aservice.getAuthority(sessionID);
-        aservice.setAuthority(uID, 3);
+        accountService.register(username, email, passwort);
+        uID = DAOUserService.getIdByMail(email);
+        finalUID = uID;
+        sessionID = webSessionService.getSessionID(email);
+        oldAuthority = accountService.getAuthority(sessionID);
+        accountService.setAuthority(uID, newAuthority);
+
         //Exception cases
-        try{
-            count_correct_exception_checks++;
-            aservice.setAuthority(-10,1);
-        }catch (Exception e){
-            count_correct_exceptions++;
-        }
-
-        try{
-            count_correct_exception_checks++;
-            aservice.setAuthority(uID,-10);
-        }catch (Exception e){
-            count_correct_exceptions++;
-        }
-
-        try{
-            count_correct_exception_checks++;
-            aservice.setAuthority(1028823,-10);
-        }catch (Exception e){
-            count_correct_exceptions++;
-        }
+        assertThrows(Exception.class, () ->{
+            count_correct_exception_checks.getAndIncrement();
+            accountService.setAuthority(invalidUID, defaultAuthority);
+        });
+        count_correct_exceptions++;
+        assertThrows(Exception.class, () ->{
+            count_correct_exception_checks.getAndIncrement();
+            accountService.setAuthority(finalUID, failAuthority);
+        });
+        count_correct_exceptions++;
+        assertThrows(Exception.class, () ->{
+            count_correct_exception_checks.getAndIncrement();
+            accountService.setAuthority(nonexistentUID, defaultAuthority);
+        });
+        count_correct_exceptions++;
 
         //Assert
         try{
-            Assertions.assertNotEquals(oldAuthority, aservice.getAuthority(sessionID));
+            assertNotEquals(oldAuthority, accountService.getAuthority(sessionID));
         }catch (Exception | AssertionError e){
             pass = false;
+            pw.append("Fail: Authority was not changed\n");
             throw new AssertionError(e);
         }
 
-        if (count_correct_exceptions != count_correct_exception_checks) {
+        if (count_correct_exceptions != count_correct_exception_checks.get()) {
             pass = false;
+            pw.append("Fail: wrong Exception-Handling\n");
         }
     }
 }
