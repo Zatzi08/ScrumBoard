@@ -194,6 +194,7 @@ public class WebController {
                 ModelAndView modelAndView = new ModelAndView("projectManager");
                 modelAndView.addObject("Storys", presentationToLogic.userStoryService.getAllUserStorys())
                         .addObject("TNames", presentationToLogic.taskService.getAllName())
+                        .addObject("authority", presentationToLogic.accountService.getAuthority(sessionID))
                         .addObject("sessionID", sessionID);
                 return modelAndView;
             }

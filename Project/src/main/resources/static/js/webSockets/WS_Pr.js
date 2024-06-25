@@ -6,6 +6,7 @@ stompClient.onConnect = (frame) => {
     stompClient.subscribe('/topic/Pr/user'+id, (r) => {
         let message = JSON.parse(r.body);
         console.log(message.body);
-        ForceSync(true)
+        sync_tries++
+        ForceSync(can_sync)
     });
 };

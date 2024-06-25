@@ -10,12 +10,14 @@ stompClient.onConnect = (frame) => {
                 if (message.ResponceTyp === '1') {
                     SwitchToTasks(document.getElementById('selectUserstory').getAttribute('Sid'));
                 } else {
-                    ForceSync(true)
+                    sync_tries++;
+                    ForceSync(can_sync)
                 }
             } else if (message.objectTyp === 'class com.team3.project.Classes.Task'){
                 id = 'T' + message.object.id
                 if (document.getElementById(id) !== null || message.ResponceTyp === '0'){
-                    ForceSync(true)
+                    sync_tries++;
+                    ForceSync(can_sync)
                 }
             }
         }

@@ -33,7 +33,7 @@
         <button class="selectBtn" id="selectTasks" th:Sid="${sessionID}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks">Tasks</button>
         <span class="userStoryTaskTrenner">|</span>
         <button class="selectBtn" id="selectUser" th:Sid="${sessionID}" onclick="SwitchToUsers(this.getAttribute('Sid'))" title = "Wechsel zur Nutzeransicht">Nutzer</button>
-        <button class="addUserStoryBtn" title="Füge eine Userstory hinzu" onclick="toggleEditBox('addUserStoryBtn', -1)"><i class="fa fa-plus" style="margin-right: 10px"></i>Userstory erstellen</button>
+        <button class="addUserStoryBtn" th:if="${authority == 3 || authority == 4}" title="Füge eine Userstory hinzu" onclick="toggleEditBox('addUserStoryBtn', -1)"><i class="fa fa-plus" style="margin-right: 10px"></i>Userstory erstellen</button>
     </div>
         <div id="innerProjectManagerContainer">
         <div class="wrapper">
@@ -47,7 +47,7 @@
                     <tr th:each="item : ${Storys}" th:USid="${item.ID}" th:Sid="${sessionID}"  ondblclick="SwitchToTasksbyUSID(this.getAttribute('Sid'), this.getAttribute('USid'))">
                         <th style="cursor: alias" title="Doppelklick, um auf Tasks zur Userstory zu gelangen">
                             <div class="buttonBox">
-                                <button id="Btn1" title="Bearbeiten" th:sname="${item.name}" th:sdescription="${item.description}" th:sid="${item.ID}" th:prio="${item.getPriorityAsInt()}" onclick="toggleEditBox('editBtn', this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'), this.getAttribute('prio'));" ><i class="fa fa-edit"></i></button>
+                                <button id="Btn1" th:if="${authority == 3 || authority == 4}" title="Bearbeiten" th:sname="${item.name}" th:sdescription="${item.description}" th:sid="${item.ID}" th:prio="${item.getPriorityAsInt()}" onclick="toggleEditBox('editBtn', this.getAttribute('sid'), this.getAttribute('sname'), this.getAttribute('sdescription'), this.getAttribute('prio'));" ><i class="fa fa-edit"></i></button>
                                 <button id="Btn2" th:USid="${item.ID}" th:Sid="${sessionID}" onclick="deleteUS(this.getAttribute('USid'),this.getAttribute('Sid'))" title="Löschen">&times;</button>
                             </div>
                             <br/>
@@ -71,7 +71,7 @@
            Grund: /
            User-ID/Task-ID: U3.F1, U4.F1, U5.F1, U5.F2
 -->
-<div class = "editMenu" style="width: 560px; height: 340px;">
+<div th:if="${authority == 3 || authority == 4}" class = "editMenu" style="width: 560px; height: 340px;">
     <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
     <span id="closeToggleEdit" class="closeToggleEdit" onclick="toggleEditMenu()">&times;</span>
     <div class="editMenu-content">
