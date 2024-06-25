@@ -43,6 +43,13 @@ public class TaskBoardTest extends BaseDBTest {
 
     String TBname = "TestBoard";
     String TaskDes1 = "TestTask";
+    List<String> defaultTaskLists = Arrays.asList(
+        "Tasks", 
+        "In Bearbeitung", 
+        "Unter Review", 
+        "Unter Test", 
+        "Fertig"
+        );
 
     @Test
     /* Author: Marvin Prüger
@@ -59,7 +66,7 @@ public class TaskBoardTest extends BaseDBTest {
             printWriterAddFailure("Taskbord was not created");
             throw new AssertionError(e);
         }
-        List<String> names = Arrays.asList("freie Tasks", "Tasks in Bearbeitung", "Tasks unter Review", "Tasks unter Test", "fertiggestellte Tasks");
+        List<String> names = defaultTaskLists;
         try {
             DAOTaskBoardService.getWithTaskListsById(DAOTaskBoardService.getByName(TBname).getId()).getTaskLists().stream().forEach(tasklist->{
                 assertTrue(names.contains(tasklist.getName()));
@@ -88,7 +95,7 @@ public class TaskBoardTest extends BaseDBTest {
         }
         try {
             assertEquals(DAOTaskBoardService.getWithTaskListsWithTasksById(DAOTaskBoardService.getByName(TBname).getId())
-                .getTaskLists().stream().filter(tasklist->tasklist.getName().equals("freie Tasks"))
+                .getTaskLists().stream().filter(tasklist->tasklist.getName().equals(defaultTaskLists.get(0)))
                 .findFirst().orElse(null).getTasks().get(0).getDescription(),TaskDes1);
         } catch (Exception e) {
             printWriterAddFailure("task was not added to TB");
@@ -96,9 +103,9 @@ public class TaskBoardTest extends BaseDBTest {
         }
         try {
             assertTrue(DAOTaskService.updateTaskListById(DAOTaskService.getByDescription(TaskDes1).getId(), DAOTaskBoardService.getWithTaskListsById(DAOTaskBoardService.getByName(TBname).getId())
-                .getTaskLists().stream().filter(tasklist->tasklist.getName().equals("Tasks in Bearbeitung")).findFirst().orElse(null)));
+                .getTaskLists().stream().filter(tasklist->tasklist.getName().equals(defaultTaskLists.get(1))).findFirst().orElse(null)));
             assertEquals(DAOTaskBoardService.getWithTaskListsWithTasksById(DAOTaskBoardService.getByName(TBname).getId())
-                .getTaskLists().stream().filter(tasklist->tasklist.getName().equals("Tasks in Bearbeitung"))
+                .getTaskLists().stream().filter(tasklist->tasklist.getName().equals(defaultTaskLists.get(1)))
                 .findFirst().orElse(null).getTasks().get(0).getDescription(),TaskDes1);
         } catch (Exception e) {
             printWriterAddFailure("task was not moved");

@@ -11,6 +11,14 @@ import com.team3.project.DAO.DAOTaskList;
 import io.micrometer.common.lang.Nullable;
 
 public class DAOTaskListService {
+    static List<String> defaultTaskLists = Arrays.asList(
+       "Tasks", 
+            "In Bearbeitung", 
+            "Unter Review", 
+            "Unter Test", 
+            "Fertig"
+        );
+    
     //gets
     /* Author: Tom-Malte Seep
      * Revisited: /
@@ -88,7 +96,6 @@ public class DAOTaskListService {
      * UserStory/Task-ID:
      */
     static boolean createDefaultsForTaskBoardByTaskBoardName(String name) {
-        List<String> defaultTaskLists = Arrays.asList("freie Tasks", "Tasks in Bearbeitung", "Tasks unter Review", "Tasks unter Test", "fertiggestellte Tasks");
         String joinOnAttributeName = "taskLists";
         DAOTaskBoard daoTaskBoard = DAOService.getLeftJoinByID(DAOTaskBoardService.getByName(name).getId(), DAOTaskBoard.class, joinOnAttributeName);
         for (String defaultTaskName : defaultTaskLists) {

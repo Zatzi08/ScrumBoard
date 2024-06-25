@@ -347,7 +347,7 @@ public class DAOTaskService {
         //check if "freie Tasks" exists
         String joinOnAttributeName = "taskList";
         DAOTask daoTask = DAOService.getLeftJoinByID(id, DAOTask.class, joinOnAttributeName);
-        String daoTaskListName = "freie Tasks";
+        String daoTaskListName = DAOTaskListService.defaultTaskLists.get(0);
         try {
             DAOTaskBoard daoTaskBoard = DAOTaskBoardService.getWithTaskListsById(taskBoardId);
             List<DAOTaskList> daoTaskListsOfDaoTaskBoard = daoTaskBoard.getTaskLists();
