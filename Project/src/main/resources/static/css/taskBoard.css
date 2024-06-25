@@ -111,7 +111,8 @@
     border-top-right-radius: 0;
     text-align: center;
     background-color: #295266;
-    color: white
+    color: white;
+    cursor: unset;
 }
 .columnTable th,
 .columnTable td {
@@ -469,6 +470,7 @@ hr {
     line-height: 26px;
     text-align: center;
     cursor: pointer;
+    margin-right: 5px;
 }
 
 #assignedUsers{

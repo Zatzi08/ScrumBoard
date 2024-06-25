@@ -40,7 +40,21 @@
             <table class="userTaskTable">
                 <thead id="userTaskTableHead">
                 <tr>
-                    <th id="A" th:text="@{Tasks zur Story {name}(name=${Story.getName()})}" th:USID="${Story.getID()}"></th>
+                    <th id="A" th:text="@{Tasks zur Story {name}(name=${Story.getName()})}" th:USID="${Story.getID()}" style="padding: 1% 1% 1% 12%;">
+                        <div id="moin" style="display: inline">
+                            <select id = "filterDropdown" th:Sid="${sessionID}" title="Filter">
+                                <option id="Filter:0" value="0">Keine Filter</option>
+                                <option disabled>—————————</option>
+                                <option id="Filter:1" value="1" >Priorität - Low</option>
+                                <option id="Filer:2" value="2" >Priorität - Normal</option>
+                                <option id="Filer:3" value="3" >Priorität - High</option>
+                                <option id="Filer:4" value="4" >Priorität - Urgent</option>
+                                <option disabled>—————————</option>
+                                <option id="Filter:5" value="5">Erledigt</option>
+                                <option id="Filter:6" value="6">Nicht Erledigt</option>
+                            </select>
+                        </div>
+                    </th>
                 </tr>
                 </thead>
                 <tbody id="userTaskTableBody">
@@ -135,6 +149,51 @@
 <script type="application/javascript">
     window.onbeforeunload = disconnect();
     window.onload = connect();
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterDropdown = document.getElementById('filterDropdown');
+        filterDropdown.addEventListener('change', filterTable);
+
+        function filterTable() {
+            const filterValue = filterDropdown.value;
+            const rows = document.querySelectorAll('#userTaskTableBody tr');
+            rows.forEach(row => {
+                const priorityCell = row.querySelector('#userTaskTableBody-ContentPriority');
+                var isDone = row.querySelector('#userTaskTableBody-TaskDone') !== null;
+
+                let showRow = false;
+                switch(filterValue){
+                    case "0":
+                        showRow = true; // Show all
+                        break;
+                    case "1":
+                        if (priorityCell.textContent.trim().toLowerCase() === 'low') showRow = true;
+                        break;
+                    case "2":
+                        if (priorityCell.textContent.trim().toLowerCase() === 'normal') showRow = true;
+                        break;
+                    case "3":
+                        if (priorityCell.textContent.trim().toLowerCase() === 'high') showRow = true;
+                        break;
+                    case "4":
+                        if (priorityCell.textContent.trim().toLowerCase() === 'urgent') showRow = true;
+                        break;
+                    case "5":
+                        if (isDone) showRow = true;
+                        break;
+                    case "6":
+                        if (!isDone) showRow = true;
+                        break;
+                    default:
+                        showRow = true;
+                        break;
+                }
+
+                row.style.display = showRow ? "" : "none";
+            });
+        }
+    });
 </script>
 </body>
 </html>
