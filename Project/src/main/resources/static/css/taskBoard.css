@@ -543,3 +543,7 @@ hr {
         width: 88dvw;
     }
 }
+
+#tableContentLabel-vis{
+    display: none
+}

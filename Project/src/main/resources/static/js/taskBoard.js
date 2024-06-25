@@ -37,6 +37,17 @@ function toggleZoomedTaskCard(id) {
     }
 }
 
+function visButton(row) {
+    const targetContainer = row.currentTarget;
+    console.log(targetContainer)
+    let column = targetContainer.id
+    if (parseInt(column) % 5 === 0) {
+        targetContainer.style.display = "unset"
+    } else {
+        targetContainer.style.display = "none"
+    }
+}
+
 function closeOverlay() {
     var overlay = document.querySelector('.overlay');
     var zoomedTaskCard = document.querySelector('#zoomedTaskCard');
@@ -54,34 +65,34 @@ function toggleVis(percentageDifference, absNum, numType) {
     var vis = document.querySelector('#visEstimateTracker');
     var overlay = document.querySelector('.overlay');
 
-    if (vis) {
-        if (vis.style.display === "block") {
-            vis.style.display = "none";
-            if (overlay) {
-                overlay.remove();
-                overlay.removeEventListener('click', toggleVis);
-                destroyMyChart();
-            }
-        } else {
-            vis.style.display = "block";
-            if (!overlay) {
-                overlay = document.createElement('div');
-                overlay.classList.add('overlay');
-                document.body.appendChild(overlay);
-                switch (numType){
-                    case 0:
-                        document.getElementById('percentageDifferenceText').innerText = `Deine Bearbeitungszeit entspricht genau der Schätzung!`;
-                        break;
-                    case 1:
-                        document.getElementById('percentageDifferenceText').innerText = `Der Mehraufwand gegenüber der geschätzten Bearbeitungszeit beträgt ${absNum}h!`;
-                        break;
-                    case 2:
-                        document.getElementById('percentageDifferenceText').innerText = `Deine reale Bearbeitungszeit weicht zu ${percentageDifference}% von der geschätzten ab. Dies entspricht ${absNum}h!`;
-                        break;
+        if (vis) {
+            if (vis.style.display === "block") {
+                vis.style.display = "none";
+                if (overlay) {
+                    overlay.remove();
+                    overlay.removeEventListener('click', toggleVis);
+                    destroyMyChart();
                 }
-                overlay.addEventListener('click', toggleVis);
+            } else {
+                vis.style.display = "block";
+                if (!overlay) {
+                    overlay = document.createElement('div');
+                    overlay.classList.add('overlay');
+                    document.body.appendChild(overlay);
+                    switch (numType){
+                        case 0:
+                            document.getElementById('percentageDifferenceText').innerText = `Deine Bearbeitungszeit entspricht genau der Schätzung!`;
+                            break;
+                        case 1:
+                            document.getElementById('percentageDifferenceText').innerText = `Der Mehraufwand gegenüber der geschätzten Bearbeitungszeit beträgt ${absNum}h!`;
+                            break;
+                        case 2:
+                            document.getElementById('percentageDifferenceText').innerText = `Deine reale Bearbeitungszeit weicht zu ${percentageDifference}% von der geschätzten ab. Dies entspricht ${absNum}h!`;
+                            break;
+                    }
+                    overlay.addEventListener('click', toggleVis);
+                }
             }
-        }
     } else {
         console.error("Das Element mit der Klasse 'vis' wurde nicht gefunden.");
     }
@@ -175,81 +186,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
-
-/*
-document.addEventListener('DOMContentLoaded', function() {
-    function enableButtonEdit() {
-        const headerButtons = document.querySelectorAll('.outerContainer-HeaderBtn');
-
-        headerButtons.forEach(button => {
-            button.addEventListener('dblclick', function(event) {
-                const currentText = button.textContent.trim();
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.value = currentText;
-                input.style.width = button.offsetWidth + 'px';
-                input.style.height = button.offsetHeight + 'px';
-                input.style.fontFamily = window.getComputedStyle(button).fontFamily;
-                input.style.fontSize = window.getComputedStyle(button).fontSize;
-                input.style.padding = '2px';
-                input.style.margin = '0';
-                input.style.border = '1px solid #ccc';
-                input.style.borderRadius = '3px';
-                input.style.boxSizing = 'border-box';
-                input.style.display = 'inline';
-
-                input.addEventListener('keyup', function(e) {
-                    if (e.key === 'Enter') {
-                        button.textContent = input.value.trim();
-                        input.replaceWith(button);
-                    }
-                });
-
-                input.addEventListener('blur', function() {
-                    button.textContent = input.value.trim();
-                    input.replaceWith(button);
-                });
-
-                button.replaceWith(input);
-                input.focus();
-            });
-        });
-    }
-
-    enableButtonEdit();
-});
-
-function addHeaderButton(text) {
-
-    var newButton = document.createElement('button');
-    newButton.className = 'outerContainer-HeaderBtn';
-    newButton.style.position = 'relative';
-    newButton.ondblclick = function() {
-        this.contentEditable = true;
-    };
-    newButton.style.marginRight = '5px';
-
-
-    var buttonText = document.createElement('span');
-    buttonText.innerText = text;
-
-
-    var deleteBtn = document.createElement('span');
-    deleteBtn.className = 'delete-btn';
-    deleteBtn.innerHTML = '&times;';
-    deleteBtn.onclick = function() {
-        deleteButton(newButton);
-    };
-    deleteBtn.setAttribute('contenteditable', 'false');
-
-
-    newButton.appendChild(buttonText);
-    newButton.appendChild(deleteBtn);
-
-    var addButton = document.getElementById('outerContainer-HeaderBtnAdd');
-    addButton.parentNode.insertBefore(newButton, addButton);
-}
- */
 
 function deleteButton(button) {
     button.parentNode.removeChild(button);
@@ -351,7 +287,10 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
         circle.classList.add('zoomedTaskCard-userCircle');
          circle.id = 'N' + nutzer.id;
          circle.appendChild(document.createTextNode(nutzer.name.charAt(0).toUpperCase()));
+        circle.style.backgroundColor = randomizeAssignedUsersColour(0, 255)
          label.appendChild(circle);
+
+
 
      })
     if (NutzerList.length > 5){
@@ -436,9 +375,14 @@ function closeOverlay2() {
     }
 }
 
-function randomizeAssignedUsersColour(id){
-    var selected = document.querySelector(id)
-    selected.style.backgroundColor = generateColors(1)[0]
+function randomizeAssignedUsersColour(min, max){
+    const ranValues = []
+
+    for(let i=0; i<3; i++){
+        let ranNum = Math.random() * (max - min) + min;
+        ranValues.push(ranNum)
+    }
+    return`rgb(${ranValues[0]}, ${ranValues[1]}, ${ranValues[2]})`
 }
 
 function setTime(sessionID){

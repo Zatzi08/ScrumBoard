@@ -40,7 +40,8 @@
             <table class="userTaskTable">
                 <thead id="userTaskTableHead">
                 <tr>
-                    <th id="A" th:text="@{Tasks zur Story {name}(name=${Story.getName()})}" th:USID="${Story.getID()}" style="padding: 1% 1% 1% 12%;">
+                    <th id="A" th:USID="${Story.getID()}" style="padding: 1% 1% 1% 12%;">
+                        <label th:text="@{Tasks zur Story {name}(name=${Story.getName()})}" id="userTaskTableHeadLabel"></label>
                         <div id="moin" style="display: inline">
                             <select id = "filterDropdown" th:Sid="${sessionID}" title="Filter">
                                 <option id="Filter:0" value="0">Keine Filter</option>
