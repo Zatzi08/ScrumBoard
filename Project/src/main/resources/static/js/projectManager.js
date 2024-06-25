@@ -7,8 +7,8 @@
 */
 
 function toggleEditMenu(id) {
-    var editMenu = document.querySelector('.editMenu');
-    var overlay = document.querySelector('.overlay');
+    const editMenu = document.querySelector('.editMenu');
+    let overlay = document.querySelector('.overlay');
     can_sync = false
     if (editMenu) {
         if (editMenu.style.display === "block") {
@@ -129,17 +129,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-function deleteTableRow() {
-    var row = document.querySelector('.userTaskTable tbody tr');
-    if (row) {
-        row.remove();
-    }
-
-    function taskToUS(){
-
-    }
-}
-
 function toggleEditBoxT(id, TId, description, usID, dueDate, timeG, tbID, prio, names){
     toggleEditMenu(id);
     document.getElementById("inputDesc").textContent = description;
@@ -200,12 +189,12 @@ function toggleEditBoxT(id, TId, description, usID, dueDate, timeG, tbID, prio, 
 
 function toggleEditBox(id,storyId, name, description, prio){
     toggleEditMenu(id);
-    if (name != undefined){
+    if (name !== undefined){
         document.getElementById("inputName").textContent = name;
     } else {
         document.getElementById("inputName").value = '';
     }
-    if (description != undefined){
+    if (description !== undefined){
         document.getElementById("inputDesc").textContent = description;
     } else {
         document.getElementById("inputDesc").value = '';
@@ -232,7 +221,7 @@ function toggleEditBox(id,storyId, name, description, prio){
 }
 
 
-var checkList = document.getElementById('list1');
+const checkList = document.getElementById('list1');
 checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
     if (checkList.classList.contains('visible')) {
         checkList.classList.remove('visible');
@@ -246,9 +235,9 @@ function visualisationOfAllTimes(est, real, names){
     real = JSON.parse(real)
     names = names.replaceAll("'", '"')
     names = JSON.parse(names)
-    est.forEach((e) => console.log(e))
-    real.forEach((e)=> console.log(e))
-    names.forEach((e)=> console.log(e))
+    // est.forEach((e) => console.log(e))
+    // real.forEach((e)=> console.log(e))
+    // names.forEach((e)=> console.log(e))
     visualisationOfAllTime(est, real, names)
 }
 
@@ -275,8 +264,8 @@ async function saveTaskWithUserList(sessionID) {
 }
 
 function toggleVisAllTasks(percentageDifference, absNum, numType){
-    var vis = document.querySelector('#visEstimateTracker');
-    var overlay = document.querySelector('.overlay');
+    const vis = document.querySelector('#visEstimateTracker');
+    let overlay = document.querySelector('.overlay');
     if (vis) {
         if (vis.style.display === "block") {
             vis.style.display = "none";
@@ -313,8 +302,8 @@ function toggleVisAllTasks(percentageDifference, absNum, numType){
 
 
 function toggleRolesEditMenu() {
-    var rolesMenu = document.getElementById("roleOverlay");
-    if(rolesMenu.style.display == "none") {
+    const rolesMenu = document.getElementById("roleOverlay");
+    if(rolesMenu.style.display === "none") {
         rolesMenu.style.display = "block";
     } else {
         rolesMenu.style.display = "none";
@@ -322,8 +311,8 @@ function toggleRolesEditMenu() {
 }
 
 function toggleRoleNameMenu(){
-    var rolesNameMenu = document.getElementById("roleOverlay2");
-    if(rolesNameMenu.style.display == "none") {
+    const rolesNameMenu = document.getElementById("roleOverlay2");
+    if(rolesNameMenu.style.display === "none") {
         rolesNameMenu.style.display = "block";
     } else {
         rolesNameMenu.style.display = "none";
@@ -332,9 +321,9 @@ function toggleRoleNameMenu(){
 
 
 window.onclick = function(event) {
-    var rolesMenu = document.getElementById("editRolesMenu");
-    var rolesOverlay = document.getElementById("roleOverlay");
-    if (event.target != rolesMenu) {
+    const rolesMenu = document.getElementById("editRolesMenu");
+    const rolesOverlay = document.getElementById("roleOverlay");
+    if (event.target !== rolesMenu) {
         rolesOverlay.style.display = "none";
     }
 }

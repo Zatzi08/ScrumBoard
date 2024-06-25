@@ -12,9 +12,9 @@ function toggleEditBox(storyId, name, description){
     document.getElementById("editId").value = storyId;
 }
 
-function toggleZoomedTaskCard(id) {
-    var editMenu = document.querySelector('#zoomedTaskCard');
-    var overlay = document.querySelector('.overlay');
+function toggleZoomedTaskCard() {
+    const editMenu = document.querySelector('#zoomedTaskCard');
+    let overlay = document.querySelector('.overlay');
 
     if (editMenu) {
         if (editMenu.style.display === "block") {
@@ -37,20 +37,9 @@ function toggleZoomedTaskCard(id) {
     }
 }
 
-function visButton(row) {
-    const targetContainer = row.currentTarget;
-    console.log(targetContainer)
-    let column = targetContainer.id
-    if (parseInt(column) % 5 === 0) {
-        targetContainer.style.display = "unset"
-    } else {
-        targetContainer.style.display = "none"
-    }
-}
-
 function closeOverlay() {
-    var overlay = document.querySelector('.overlay');
-    var zoomedTaskCard = document.querySelector('#zoomedTaskCard');
+    const overlay = document.querySelector('.overlay');
+    const zoomedTaskCard = document.querySelector('#zoomedTaskCard');
 
     if (zoomedTaskCard.style.display === "block") {
         zoomedTaskCard.style.display = "none";
@@ -62,10 +51,10 @@ function closeOverlay() {
 }
 
 function toggleVis(percentageDifference, absNum, numType) {
-    var vis = document.querySelector('#visEstimateTracker');
-    var overlay = document.querySelector('.overlay');
+    const vis = document.querySelector('#visEstimateTracker');
+    let overlay = document.querySelector('.overlay');
 
-        if (vis) {
+    if (vis) {
             if (vis.style.display === "block") {
                 vis.style.display = "none";
                 if (overlay) {
@@ -193,25 +182,25 @@ function deleteButton(button) {
 
 function changeTBNamePopUp(id){
     can_sync = false
-    var TBNamePopup = document.getElementById(id);
+    const TBNamePopup = document.getElementById(id);
     TBNamePopup.style.display = "block";
 }
 
 window.onclick = function(event) {
-    var TBNamePopup = document.getElementById("popupChangeTBName");
-    var TBCreatePopup = document.getElementById("popupCreateTB");
-    var fertigPopup = document.getElementById("popupTaskFertig");
-    if (event.target == TBNamePopup) {
+    const TBNamePopup = document.getElementById("popupChangeTBName");
+    const TBCreatePopup = document.getElementById("popupCreateTB");
+    const fertigPopup = document.getElementById("popupTaskFertig");
+    if (event.target === TBNamePopup) {
         TBNamePopup.style.display = "none";
         can_sync = true
     }
 
-    else if (event.target == fertigPopup) {
+    else if (event.target === fertigPopup) {
         fertigPopup.style.display = "none";
         can_sync = true
     }
 
-    else if (event.target == TBCreatePopup) {
+    else if (event.target === TBCreatePopup) {
         TBCreatePopup.style.display = "none";
         can_sync = true
     }
@@ -219,11 +208,11 @@ window.onclick = function(event) {
 
 function openPopup(){
     can_sync = false
-    var fertigPopup = document.getElementById("popupTaskFertig");
+    const fertigPopup = document.getElementById("popupTaskFertig");
     fertigPopup.style.display = "block";
 }
 
-var TBdelete = false;
+let TBdelete = false;
 
 
 function deleteTBPopup(button, sessionID, TBID){
@@ -264,8 +253,8 @@ function changeTBName(sessionID, tbID) {
 
 async function addTaskBoard(sessionID) {
     let name = document.getElementById('createTBNameInput').value;
-    let num = await saveTaskBoard(sessionID, -1, name);
     console.log('Hi')
+    console.log(sessionID)
     document.location.reload()
 }
 
@@ -280,10 +269,10 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
     document.getElementById('zoomedTaskCard-deadline').innerText = DueDate
     document.getElementById('zoomedTaskCard-role').innerText;
     NutzerList = parseUser(NutzerList)
-    var label = document.getElementById("zoomedTaskCard-assignedUsers");
+    const label = document.getElementById("zoomedTaskCard-assignedUsers");
     label.innerHTML = ""
     NutzerList.slice(0, 5).forEach((nutzer)=>{
-        var circle = document.createElement("button");
+        const circle = document.createElement("button");
         circle.classList.add('zoomedTaskCard-userCircle');
          circle.id = 'N' + nutzer.id;
          circle.appendChild(document.createTextNode(nutzer.name.charAt(0).toUpperCase()));
@@ -297,16 +286,14 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
         var moreUsersCircle = document.createElement("button");
         moreUsersCircle.classList.add('zoomedTaskCard-userCircle');
         moreUsersCircle.classList.add('#zoomedTaskCard-userCircle');
-        var leftUsers = (NutzerList.length)-5;
-        var moreUsersText = (leftUsers.toString()).concat('+');
+        const leftUsers = (NutzerList.length) - 5;
+        const moreUsersText = (leftUsers.toString()).concat('+');
         moreUsersCircle.appendChild(document.createTextNode(moreUsersText));
         label.appendChild(moreUsersCircle);
     }
     moreUsersCircle.onclick = function (){ openAssignedUsers(NutzerList)
     };
 }
-
-
 
 function parseUser(a){
     let list = []
@@ -329,13 +316,13 @@ function closePopup(){
 }
 
 function openAssignedUsers(NutzerList){
-    var assignedUsers = document.querySelector('#assignedUsers');
-    var overlay2 = document.querySelector('.overlay2');
+    const assignedUsers = document.querySelector('#assignedUsers');
+    let overlay2 = document.querySelector('.overlay2');
 
-    var ul = document.getElementById("assignedUsersList");
+    const ul = document.getElementById("assignedUsersList");
     ul.innerHTML = ""
     NutzerList.forEach((nutzer)=> {
-        var li = document.createElement("li");
+        const li = document.createElement("li");
         li.id = 'N' + nutzer.id;
         li.appendChild(document.createTextNode(nutzer.name));
         ul.appendChild(li);
@@ -361,8 +348,8 @@ function openAssignedUsers(NutzerList){
 }
 
 function closeOverlay2() {
-    var overlay2 = document.querySelector('.overlay2');
-    var assignedUsers = document.querySelector('#assignedUsers');
+    const overlay2 = document.querySelector('.overlay2');
+    const assignedUsers = document.querySelector('#assignedUsers');
 
     if (assignedUsers.style.display === "block") {
         assignedUsers.style.display = "none";

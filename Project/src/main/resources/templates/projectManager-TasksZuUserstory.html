@@ -118,7 +118,7 @@
             <label style="margin-top: 15px">Abgabefrist</label>
             <input type="datetime-local" id="inputDate" class="inputEdit" placeholder="Abgabefrist">
             <label style="margin-top: 15px">Geschätzte Zeit in Stunden</label>
-            <input type = "number" min="0" max="1000" step="0.5" id = "inputTimeNeeded" class="inputEdit" placeholder="Geschätzte Zeit">
+            <input type = "number" min="0" max="1000" step="0.25" id = "inputTimeNeeded" class="inputEdit" placeholder="Geschätzte Zeit">
             <label style="margin-top: 15px">Task zu einer User-Story zuweisen</label>
             <select class="dropdownTask" id="USDropdown">
                 <option id="USDropDown:-1" value="-1" selected = "selected">Wähle zugehörige User-Story</option>
@@ -175,7 +175,7 @@
             const rows = document.querySelectorAll('#userTaskTableBody tr');
             rows.forEach(row => {
                 const priorityCell = row.querySelector('#userTaskTableBody-ContentPriority');
-                var isDone = row.querySelector('#userTaskTableBody-TaskDone') !== null;
+                const isDone = row.querySelector('#userTaskTableBody-TaskDone') !== null;
 
                 let showRow = false;
                 switch(filterValue){
