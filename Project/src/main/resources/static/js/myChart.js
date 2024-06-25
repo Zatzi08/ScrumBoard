@@ -6,7 +6,7 @@ function visualisationOfTaskTime(estTime, realTime){
 
     const percentageDifference = Number(((Math.abs(estTime - realTime) / estTime) * 100).toFixed(2));
     const absDiff = estTime-realTime;
-    const numType = absDiff == 0 ? 0 : (absDiff < 0 ? 1 : 2)
+    const numType = absDiff === 0 ? 0 : (absDiff < 0 ? 1 : 2)
 
     myChart = new Chart(ctx, {
         type: 'bar',

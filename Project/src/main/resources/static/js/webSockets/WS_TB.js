@@ -1,4 +1,3 @@
-let can_sync = true
 
 stompClient.onConnect = (frame) => {
     console.log('Connected: ' + frame);
@@ -7,6 +6,7 @@ stompClient.onConnect = (frame) => {
     stompClient.subscribe('/topic/TB/board'+id, async (r) => {
         let message = JSON.parse(r.body);
         console.log(message.body);
+        sync_tries++;
         await ForceSync(can_sync)
     });
 };

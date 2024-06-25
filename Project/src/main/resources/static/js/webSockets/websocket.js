@@ -28,6 +28,16 @@ function ping(message) {
         });
 }
 
+let can_sync = true
+let sync_tries = 0
+
+function try_sync(){
+    if (sync_tries > 0){
+        ForceSync(can_sync)
+    }
+}
+setInterval(try_sync, 1000);
+
 async function ForceSync(sync) {
     if (sync) {
         disconnect();

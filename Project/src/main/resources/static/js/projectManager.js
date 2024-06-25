@@ -9,13 +9,14 @@
 function toggleEditMenu(id) {
     var editMenu = document.querySelector('.editMenu');
     var overlay = document.querySelector('.overlay');
-
+    can_sync = false
     if (editMenu) {
         if (editMenu.style.display === "block") {
             editMenu.style.display = "none";
             if (overlay) {
                 overlay.remove();
                 overlay.removeEventListener('click', toggleEditMenu);
+                can_sync = true;
             }
         } else {
             editMenu.style.display = "block";
@@ -199,8 +200,16 @@ function toggleEditBoxT(id, TId, description, usID, dueDate, timeG, tbID, prio, 
 
 function toggleEditBox(id,storyId, name, description, prio){
     toggleEditMenu(id);
-    document.getElementById("inputName").textContent = name;
-    document.getElementById("inputDesc").textContent = description;
+    if (name != undefined){
+        document.getElementById("inputName").textContent = name;
+    } else {
+        document.getElementById("inputName").value = '';
+    }
+    if (description != undefined){
+        document.getElementById("inputDesc").textContent = description;
+    } else {
+        document.getElementById("inputDesc").value = '';
+    }
     if (storyId !== undefined){
         document.getElementById("editId").value = storyId;
     } else {
@@ -250,16 +259,17 @@ async function saveTaskWithUserList(sessionID) {
         let lis = document.getElementById('usersAuswahlID').children;
         let Ulist = []
         for (let li of lis) {
-            if (li.children[0].checked) list.push(li.id.substring(1))
+            if (li.children[0].checked) Ulist.push(li.id.substring(1))
         }
-
+        /*
         lis = document.getElementById('rollsAuswahlID').children;
         let Rlist = []
         for (let li of lis) {
-            if (li.children[0].checked) list.push(li.id.substring(1))
+            if (li.children[0].checked) Rlist.push(li.id.substring(1))
         }
+        */
         await setUsersOfTask(sessionID, id, Ulist)
-        await setRollsOfTask(sessionID, id, Rlist)
+        //await setRollsOfTask(sessionID, id, Rlist)
     }
     document.location.reload()
 }
