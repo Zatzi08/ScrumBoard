@@ -42,7 +42,7 @@
                 <tr>
                     <th id = "tableHeader" style="cursor: default; padding: 1% 1% 1% 12%;">Tasks
                         <div id="moin" style="display: inline">
-                            <button th:unless="${Tasks.isEmpty() || Names.isEmpty()}" type="button" id="visAllTasks" th:est="${AufwandG}" th:real="${AufwandA}" th:names="${Names}" onclick="visualisationOfAllTimes(this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('names'))" title="Schätzungstracker für alle Tasks"><i class="fa-solid fa-chart-bar" style="color: white; margin-top: 3.7px;"></i></button>
+                            <button th:unless="${Tasks == null || Tasks.isEmpty() || Names.isEmpty()}" type="button" id="visAllTasks" th:est="${AufwandG}" th:real="${AufwandA}" th:names="${Names}" onclick="visualisationOfAllTimes(this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('names'))" title="Schätzungstracker für alle Tasks"><i class="fa-solid fa-chart-bar" style="color: white; margin-top: 3.7px;"></i></button>
                             <select id = "filterDropdown" th:Sid="${sessionID}" title="Filter">
                                 <option id="Filter:0" value="0">Keine Filter</option>
                                 <option disabled>—————————</option>
