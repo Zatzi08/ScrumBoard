@@ -1,10 +1,11 @@
-/*
-* Author: Paula Krasnovska
-* Revisited: /
-* Funktion: Toggeln des Bearbeitungsmenü, Zuweisung von Attributen für Thymeleaf
-* Grund: /
-* User-Story/Task-ID: U3.F1, U4.F1
-*/
+function hover(id){
+    document.getElementById(id).style.borderColor = "#ba55d3";
+}
+
+function hoverLeave(id) {
+    document.getElementById(id).style.borderColor = "#fff";
+}
+
 function toggleEditBox(storyId, name, description){
     EditBox();
     document.getElementById("inputName").textContent = name;

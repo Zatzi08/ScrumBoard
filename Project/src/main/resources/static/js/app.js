@@ -19,21 +19,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const rmCheck = document.getElementById("rememberMe"),
         emailInput = document.querySelector(".Input[name='EMail']");
 
-    if (localStorage.checkbox && localStorage.checkbox !== "") {
-        rmCheck.setAttribute("checked", "checked");
-        emailInput.value = localStorage.username;
-    } else {
-        rmCheck.removeAttribute("checked");
-        emailInput.value = "";
+    if (rmCheck && emailInput) {
+        if (localStorage.checkbox && localStorage.checkbox !== "") {
+            rmCheck.checked = true;
+            emailInput.value = localStorage.username;
+        } else {
+            rmCheck.checked = false;
+            emailInput.value = "";
+        }
+
+        rmCheck.addEventListener('change', function () {
+            lsRememberMe();
+        });
+
+        emailInput.addEventListener('input', function () {
+            lsRememberMe();
+        });
     }
-
-    rmCheck.addEventListener('change', function () {
-        lsRememberMe();
-    });
-
-    emailInput.addEventListener('input', function () {
-        lsRememberMe();
-    });
 
     function lsRememberMe() {
         if (rmCheck.checked && emailInput.value !== "") {

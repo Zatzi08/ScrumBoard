@@ -11,204 +11,189 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-<!--
-       Author: Zana Salih Hama
-       Revisited: /
-       Funktion: Reiter zur Übersicht aller Seiten[-optionen]
-       Grund: Übersichtlichkeit
-       User-ID/Task-ID: /
-    -->
-<div class="Reiter">
-    <button class="reiterBtn" onmouseover = "hover('reiterBtn')" onmouseleave="hoverLeave('reiterBtn')" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
-    <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
-    <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
-    <button class = "reiterBtn">Kalender </button>
-    <button class = "reiterBtn" id = "logoutBtn" onclick="location.href='/'">Abmelden</button>
-</div>
-
-<div id="outerProjectManagerContainer">
-    <div id="Hi">
-        <button class="selectBtn" id="selectUserstory" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" onmouseover = "hover('selectUserstory')" onmouseleave="hoverLeave('selectUserstory')" title="Wechsel Ansicht zu Userstories">Userstories</button>
-        <span class="userStoryTaskTrenner">|</span>
-        <button class="selectBtn" id="selectTasks" th:Sid="${sessionID}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover('selectTasks')" onmouseleave="hoverLeave('selectTasks')" title="Wechsel Ansicht zu Tasks" style= "border-bottom: 1px solid #ffffff">Tasks</button>
-        <span class="userStoryTaskTrenner">|</span>
-        <button class="selectBtn" id="selectUser" th:Sid="${sessionID}" onclick="SwitchToUsers(this.getAttribute('Sid'))" title = "Wechsel zur Nutzeransicht">Nutzer</button>
-        <button class="addUserStoryBtn" title="Füge eine Task hinzu" onclick="toggleEditBoxT('addUserStoryBtn')"><i class="fa fa-plus" style="margin-right: 10px"></i>Task erstellen</button>
+    <div class="Reiter">
+        <button class="reiterBtn" onmouseover = "hover(this.id)" onmouseleave="hoverLeave(this.id)" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
+        <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
+        <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
+        <button class = "reiterBtn" id = "logoutBtn" onclick="location.href='/'">Abmelden</button>
     </div>
-    <div id="innerProjectManagerContainer">
-        <div class="wrapper">
-            <table class="userTaskTable">
-                <thead id="userTaskTableHead">
-                <tr>
-                    <th id="A" th:USID="${Story.getID()}" style="padding: 1% 1% 1% 12%;">
-                        <label th:text="@{Tasks zur Story {name}(name=${Story.getName()})}" id="userTaskTableHeadLabel"></label>
-                        <div id="moin" style="display: inline">
-                            <button type="button" id="visAllTasks" th:est="${Story.getAnforderungenG()}" th:real="${Story.getAnforderungenA()}" th:names="${Story.getTNames()}" onclick="visualisationOfAllTimes(this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('names'))" title="Schätzungstracker für alle Tasks"><i class="fa-solid fa-chart-bar" style="color: white; margin-top: 3.7px;"></i></button>
-                            <select id = "filterDropdown" th:Sid="${sessionID}" title="Filter">
-                                <option id="Filter:0" value="0">Keine Filter</option>
-                                <option disabled>—————————</option>
-                                <option id="Filter:1" value="1" >Priorität - Low</option>
-                                <option id="Filer:2" value="2" >Priorität - Normal</option>
-                                <option id="Filer:3" value="3" >Priorität - High</option>
-                                <option id="Filer:4" value="4" >Priorität - Urgent</option>
-                                <option disabled>—————————</option>
-                                <option id="Filter:5" value="5">Erledigt</option>
-                                <option id="Filter:6" value="6">Nicht Erledigt</option>
-                            </select>
-                        </div>
-                    </th>
-                </tr>
-                </thead>
-                <tbody id="userTaskTableBody">
-                <tr th:each="item : ${Tasks}" th:id="@{T{id}(id=${item.getID()})}" >
-                    <th>
-                        <label class="userTaskTable-ContentStoryBoard" th:text="${item.getUserStory().getName()}" title="Referenz zur entsprechenden User-Story">Story</label>
-                        <span class="userTaskTable-ContentStoryBoard">/</span>
-                        <label class="userTaskTable-ContentStoryBoard" th:text="${item.getTaskBoardNameOfTask()}" title="Referenz zum entsprechenden Taskboard">Board</label>
-                        <div class="buttonBox">
-                            <button id="Btn1" title="Bearbeiten" style="margin-left: 90%" th:USID="${item.userStoryID}"  th:description="${item.description}" th:Tid="${item.ID}" th:dueDate="${item.getDueDateAsString()}" th:timeG="${item.getTimeNeededG()}" th:tbID="${item.getTbID()}" th:prio="${item.getPriorityAsInt()}" th:names="${item.getUserAsJSON()}"
-                                onclick="toggleEditBoxT('editBtn', this.getAttribute('Tid'), this.getAttribute('description'), this.getAttribute('USID'), this.getAttribute('dueDate'), this.getAttribute('timeG'), this.getAttribute('tbID'), this.getAttribute('prio'), this.getAttribute('names'));" ><i class="fa fa-edit"></i></button>
-                            <button id="Btn2" th:Tid="${item.ID}" th:Sid="${sessionID}" onclick="deleteT(this.getAttribute('Tid'),this.getAttribute('Sid'))" title="Löschen">&times;</button>
-                        </div>
-                        <!-- <label th:text = "${item.name}">Name</label> -->
-                        <br/>
-                        <i class="fa-solid fa-people-group" id="iContent4"></i><label class="iContent-Label" style="margin-left: 8px; font-size: 16px">Rolle</label><label title="Rolle" class="userTaskTableBody-Content">Rolle</label>
-                        <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label">Priorität</label><label th:text = "${item.priority}" title="Priorität der Task" class="userTaskTableBody-Content">Priorität</label>
-                        <p class="userTaskTableBody-Border"></p>
-                        <i class = "fa-solid fa-bars" id="iContent3"></i><label class="iContent-Label">Beschreibung</label><label class="userTaskTableBody-Content" th:text = "${item.description}" title="Beschreibung der Task">Beschreibung</label>
-                        <div id="userTaskTableBody-BottomAlignment">
-                            <span id="userTaskTableBody-TaskDone" th:if="${item.isDone()}"> <i class="fa fa-check-square"></i> Erledigt</span>
-                            <label class = "userTaskTableContentSubdate" th:text="${item.getDueDateAsPresentable()}" title="Frist der Task">Abgabedatum</label>
-                        </div>
-                    </th>
-                </tr>
-                </tbody>
-            </table>
+
+    <div id="outerProjectManagerContainer">
+        <div id="Hi">
+            <button class="selectBtn" id="selectUserstory" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" onmouseover = "hover(this.id)" onmouseleave="hoverLeave(this.id)" title="Wechsel Ansicht zu Userstories">Userstories</button>
+            <span class="userStoryTaskTrenner">|</span>
+            <button class="selectBtn" id="selectTasks" th:Sid="${sessionID}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover(this.id)" onmouseleave="hoverLeave(this.id)" title="Wechsel Ansicht zu Tasks" style= "border-bottom: 1px solid #ffffff">Tasks</button>
+            <span class="userStoryTaskTrenner">|</span>
+            <button class="selectBtn" id="selectUser" th:Sid="${sessionID}" onclick="SwitchToUsers(this.getAttribute('Sid'))" title = "Wechsel zur Nutzeransicht" onmouseover = "hover(this.id)" onmouseleave="hoverLeave(this.id)">Nutzer</button>
+            <button class="addUserStoryBtn" title="Füge eine Task hinzu" onclick="toggleEditBoxT('addUserStoryBtn')"><i class="fa fa-plus" style="margin-right: 10px"></i>Task erstellen</button>
+        </div>
+        <div id="innerProjectManagerContainer">
+            <div class="wrapper">
+                <table class="userTaskTable">
+                    <thead id="userTaskTableHead">
+                    <tr>
+                        <th id="A" th:USID="${Story.getID()}" style="padding: 1% 1% 1% 12%;">
+                            <label th:text="@{Tasks zur Story {name}(name=${Story.getName()})}" id="userTaskTableHeadLabel"></label>
+                            <div id="moin" style="display: inline">
+                                <button type="button" id="visAllTasks" th:est="${Story.getAnforderungenG()}" th:real="${Story.getAnforderungenA()}" th:names="${Story.getTNames()}" onclick="visualisationOfAllTimes(this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('names'))" title="Schätzungstracker für alle Tasks"><i class="fa-solid fa-chart-bar" style="color: white; margin-top: 3.7px;"></i></button>
+                                <select id = "filterDropdown" th:Sid="${sessionID}" title="Filter">
+                                    <option id="Filter:0" value="0">Keine Filter</option>
+                                    <option disabled>—————————</option>
+                                    <option id="Filter:1" value="1" >Priorität - Low</option>
+                                    <option id="Filer:2" value="2" >Priorität - Normal</option>
+                                    <option id="Filer:3" value="3" >Priorität - High</option>
+                                    <option id="Filer:4" value="4" >Priorität - Urgent</option>
+                                    <option disabled>—————————</option>
+                                    <option id="Filter:5" value="5">Erledigt</option>
+                                    <option id="Filter:6" value="6">Nicht Erledigt</option>
+                                </select>
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody id="userTaskTableBody">
+                    <tr th:each="item : ${Tasks}" th:id="@{T{id}(id=${item.getID()})}" >
+                        <th>
+                            <label class="userTaskTable-ContentStoryBoard" th:text="${item.getUserStory().getName()}" title="Referenz zur entsprechenden User-Story">Story</label>
+                            <span class="userTaskTable-ContentStoryBoard">/</span>
+                            <label class="userTaskTable-ContentStoryBoard" th:text="${item.getTaskBoardNameOfTask()}" title="Referenz zum entsprechenden Taskboard">Board</label>
+                            <div class="buttonBox">
+                                <button id="Btn1" title="Bearbeiten" style="margin-left: 90%" th:USID="${item.userStoryID}"  th:description="${item.description}" th:Tid="${item.ID}" th:dueDate="${item.getDueDateAsString()}" th:timeG="${item.getTimeNeededG()}" th:tbID="${item.getTbID()}" th:prio="${item.getPriorityAsInt()}" th:names="${item.getUserAsJSON()}"
+                                    onclick="toggleEditBoxT('editBtn', this.getAttribute('Tid'), this.getAttribute('description'), this.getAttribute('USID'), this.getAttribute('dueDate'), this.getAttribute('timeG'), this.getAttribute('tbID'), this.getAttribute('prio'), this.getAttribute('names'));" ><i class="fa fa-edit"></i></button>
+                                <button id="Btn2" th:Tid="${item.ID}" th:Sid="${sessionID}" onclick="deleteT(this.getAttribute('Tid'),this.getAttribute('Sid'))" title="Löschen">&times;</button>
+                            </div>
+                            <br/>
+                            <i class="fa-solid fa-people-group" id="iContent4"></i><label class="iContent-Label" style="margin-left: 8px; font-size: 16px">Rolle</label><label title="Rolle" class="userTaskTableBody-Content">Rolle</label>
+                            <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label">Priorität</label><label th:text = "${item.priority}" title="Priorität der Task" class="userTaskTableBody-Content">Priorität</label>
+                            <p class="userTaskTableBody-Border"></p>
+                            <i class = "fa-solid fa-bars" id="iContent3"></i><label class="iContent-Label">Beschreibung</label><label class="userTaskTableBody-Content" th:text = "${item.description}" title="Beschreibung der Task">Beschreibung</label>
+                            <div id="userTaskTableBody-BottomAlignment">
+                                <span id="userTaskTableBody-TaskDone" th:if="${item.isDone()}"> <i class="fa fa-check-square"></i> Erledigt</span>
+                                <label class = "userTaskTableContentSubdate" th:text="${item.getDueDateAsPresentable()}" title="Frist der Task">Abgabedatum</label>
+                            </div>
+                        </th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
-<!--
-           Author: Zana Salih Hama
-           Revisited: /
-           Funktion: Bearbeitungs-/Erstellungsfenster für User-Stories
-           Grund: /
-           User-ID/Task-ID: U3.F1, U4.F1, U5.F1, U5.F2
--->
-<div class = "editMenu" style="height: 581px;">
-    <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
-    <span id="closeToggleEdit" class="closeToggleEdit" onclick="toggleEditMenu()">&times;</span>
-    <div class="editMenu-content">
-        <form class="form" id="editForm" autocomplete="off" name="Story">
-            <textarea id="inputDesc" class="inputEdit" required placeholder="Eine passende Beschreibung eingeben" name="description" form="editForm"></textarea>
-            <label>Priorität</label>
-            <div id="editMenu-priorityDropAlignment">
-                <button type="button" class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: #f76c5e" name="urgent" form="editForm">Urgent</button>
-                <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: #f68e5f" name="high" form="editForm">High</button>
-                <button type="button" class="inputEditPrio" id="inputPrioNormal" onclick="highlightPriorityButton('inputPrioNormal')" style="background-color: #f5dd90" name="normal" form="editForm">Normal</button>
-                <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: #9EC5E5" name="low" form="editForm">Low</button>
-
-                <div id="list1" class="dropdown-check-list">
-                    <button type="button" onclick="" class="anchor" style="width: 265px; margin-left: 12px;">Nutzer zuweisen</button>
-                    <ul id="usersAuswahlID" class="items" style="margin-top: 33px; margin-right: 44px; float: unset; width: 261px;">
-                        <li th:each="nutzer : ${User}" th:id="@{N{id}(id = ${nutzer.getID()})}" ><input  type="checkbox" th:text="${nutzer.getUname()}" /> </li>
-                    </ul>
+    <div class = "editMenu" style="height: 550px;">
+        <label style="color: white; border-bottom: 1px solid #ffffff; margin-bottom: 20px">Bearbeitungsmenü</label>
+        <span id="closeToggleEdit" class="closeToggleEdit" onclick="toggleEditMenu()">&times;</span>
+        <div class="editMenu-content">
+            <form class="form" id="editForm" autocomplete="off" name="Story">
+                <textarea id="inputDesc" class="inputEdit" required placeholder="Eine passende Beschreibung eingeben" name="description" form="editForm"></textarea>
+                <label>Priorität</label>
+                <div id="editMenu-priorityDropAlignment">
+                    <button type="button" class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: #f76c5e" name="urgent" form="editForm">Urgent</button>
+                    <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: #f68e5f" name="high" form="editForm">High</button>
+                    <button type="button" class="inputEditPrio" id="inputPrioNormal" onclick="highlightPriorityButton('inputPrioNormal')" style="background-color: #f5dd90" name="normal" form="editForm">Normal</button>
+                    <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: #9EC5E5" name="low" form="editForm">Low</button>
+                    <div id="list1" class="dropdown-check-list">
+                        <button type="button" onclick="" class="anchor" style="width: 265px; margin-left: 12px;">Nutzer zuweisen</button>
+                        <ul id="usersAuswahlID" class="items" style="margin-top: 33px; margin-right: 44px; float: unset; width: 261px;">
+                            <li th:each="nutzer : ${User}" th:id="@{N{id}(id = ${nutzer.getID()})}" ><input  type="checkbox" th:text="${nutzer.getUname()}" /> </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <label style="margin-top: 15px">Abgabefrist</label>
-            <input type="datetime-local" id="inputDate" class="inputEdit" placeholder="Abgabefrist">
-            <label style="margin-top: 15px">Geschätzte Zeit in Stunden</label>
-            <input type = "number" min="0" max="1000" step="0.25" id = "inputTimeNeeded" class="inputEdit" placeholder="Geschätzte Zeit">
-            <label style="margin-top: 15px">Task zu einer User-Story zuweisen</label>
-            <select class="dropdownTask" id="USDropdown">
-                <option id="USDropDown:-1" value="-1" selected = "selected">Wähle zugehörige User-Story</option>
-                <option th:each="US : ${UserStory}" th:id="@{USDropdown:{id}(id=${US.ID})}" th:value="${US.ID}" th:text="${US.name}"></option>
-            </select>
-            <label>Task zu einem Task-Board zuweisen</label>
-            <select class="dropdownTask" id="TBDropdown">
-                <option id="TBDropDown:-1" value="-1" selected = "selected">Wähle zugehöriges Task-Board</option>
-                <option th:each="TB : ${TaskBoard}" th:id="@{TBDropdown:{id}(id=${TB.getID()})}" th:value="${TB.getID()}" th:text="${TB.getName()}"></option>
-            </select>
-            <input type="hidden" id = "editId" name="id" value="-1">
-            <input type="hidden" id = "editPrio" name="priority" value="1">
-            <button type="button" th:sessionID="${sessionID}" onclick="saveTaskWithUserList(this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
-        </form>
+                <label style="margin-top: 15px">Abgabefrist</label>
+                <input type="datetime-local" id="inputDate" class="inputEdit" placeholder="Abgabefrist">
+                <label style="margin-top: 15px">Geschätzte Zeit in Stunden</label>
+                <input type = "number" min="0" max="1000" step="0.25" id = "inputTimeNeeded" class="inputEdit" placeholder="Geschätzte Zeit">
+                <label style="margin-top: 15px">Task zu einer User-Story zuweisen</label>
+                <select class="dropdownTask" id="USDropdown">
+                    <option id="USDropDown:-1" value="-1" selected = "selected">Wähle zugehörige User-Story</option>
+                    <option th:each="US : ${UserStory}" th:id="@{USDropdown:{id}(id=${US.ID})}" th:value="${US.ID}" th:text="${US.name}"></option>
+                </select>
+                <label style="margin-top: 15px">Task zu einem Task-Board zuweisen</label>
+                <select class="dropdownTask" id="TBDropdown">
+                    <option id="TBDropDown:-1" value="-1" selected = "selected">Wähle zugehöriges Task-Board</option>
+                    <option th:each="TB : ${TaskBoard}" th:id="@{TBDropdown:{id}(id=${TB.getID()})}" th:value="${TB.getID()}" th:text="${TB.getName()}"></option>
+                </select>
+                <input type="hidden" id = "editId" name="id" value="-1">
+                <input type="hidden" id = "editPrio" name="priority" value="1">
+                <button type="button" th:sessionID="${sessionID}" onclick="saveTaskWithUserList(this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
+            </form>
+        </div>
     </div>
-</div>
 
-<div id = "visEstimateTracker">
-    <div id = "visEstimateTracker-graph">
-        <canvas id = "myChart2"></canvas>
+    <div id = "visEstimateTracker">
+        <div id = "visEstimateTracker-graph">
+            <canvas id = "myChart2"></canvas>
+        </div>
+        <label id="percentageDifferenceText"></label>
     </div>
-    <label id="percentageDifferenceText"></label>
-</div>
-<script src="/js/vendor/jquery.js"></script>
-<script src="/js/vendor/what-input.js"></script>
-<script src="/js/vendor/foundation.js"></script>
-<script src="/js/app.js"></script>
-<script src="/js/communication.js"></script>
-<script type = "text/javascript" src="/js/setup.js"></script>
-<script type = "text/javascript" src="/js/projectManager.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script type="module" src="/js/myChart.js"></script>
-<script src="/js/myChart.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
-<script src="/js/webSockets/websocket.js"></script>
-<script src="/js/webSockets/WS_PM_TzUS.js"></script>
-<script type="application/javascript">
-    window.onbeforeunload = disconnect();
-    window.onload = connect();
-</script>
-<script>
-    if (JSON.parse(document.getElementById('visAllTasks').getAttribute('names')).length === 0){
-        document.getElementById('visAllTasks').remove()
-    }
+    <script src="/js/vendor/jquery.js"></script>
+    <script src="/js/vendor/what-input.js"></script>
+    <script src="/js/vendor/foundation.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/communication.js"></script>
+    <script type = "text/javascript" src="/js/setup.js"></script>
+    <script type = "text/javascript" src="/js/projectManager.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="/js/myChart.js"></script>
+    <script src="/js/myChart.js"></script>
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const filterDropdown = document.getElementById('filterDropdown');
-        filterDropdown.addEventListener('change', filterTable);
-
-        function filterTable() {
-            const filterValue = filterDropdown.value;
-            const rows = document.querySelectorAll('#userTaskTableBody tr');
-            rows.forEach(row => {
-                const priorityCell = row.querySelector('#userTaskTableBody-ContentPriority');
-                const isDone = row.querySelector('#userTaskTableBody-TaskDone') !== null;
-
-                let showRow = false;
-                switch(filterValue){
-                    case "0":
-                        showRow = true; // Show all
-                        break;
-                    case "1":
-                        if (priorityCell.textContent.trim().toLowerCase() === 'low') showRow = true;
-                        break;
-                    case "2":
-                        if (priorityCell.textContent.trim().toLowerCase() === 'normal') showRow = true;
-                        break;
-                    case "3":
-                        if (priorityCell.textContent.trim().toLowerCase() === 'high') showRow = true;
-                        break;
-                    case "4":
-                        if (priorityCell.textContent.trim().toLowerCase() === 'urgent') showRow = true;
-                        break;
-                    case "5":
-                        if (isDone) showRow = true;
-                        break;
-                    case "6":
-                        if (!isDone) showRow = true;
-                        break;
-                    default:
-                        showRow = true;
-                        break;
-                }
-
-                row.style.display = showRow ? "" : "none";
-            });
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+    <script src="/js/webSockets/websocket.js"></script>
+    <script src="/js/webSockets/WS_PM_TzUS.js"></script>
+    <script type="application/javascript">
+        window.onbeforeunload = disconnect();
+        window.onload = connect();
+    </script>
+    <script>
+        // Filter
+        if (JSON.parse(document.getElementById('visAllTasks').getAttribute('names')).length === 0){
+            document.getElementById('visAllTasks').remove()
         }
-    });
-</script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterDropdown = document.getElementById('filterDropdown');
+            filterDropdown.addEventListener('change', filterTable);
+
+            function filterTable() {
+                const filterValue = filterDropdown.value;
+                const rows = document.querySelectorAll('#userTaskTableBody tr');
+                rows.forEach(row => {
+                    const priorityCell = row.querySelector('#userTaskTableBody-ContentPriority');
+                    const isDone = row.querySelector('#userTaskTableBody-TaskDone') !== null;
+
+                    let showRow = false;
+                    switch(filterValue){
+                        case "0":
+                            showRow = true; // Show all
+                            break;
+                        case "1":
+                            if (priorityCell.textContent.trim().toLowerCase() === 'low') showRow = true;
+                            break;
+                        case "2":
+                            if (priorityCell.textContent.trim().toLowerCase() === 'normal') showRow = true;
+                            break;
+                        case "3":
+                            if (priorityCell.textContent.trim().toLowerCase() === 'high') showRow = true;
+                            break;
+                        case "4":
+                            if (priorityCell.textContent.trim().toLowerCase() === 'urgent') showRow = true;
+                            break;
+                        case "5":
+                            if (isDone) showRow = true;
+                            break;
+                        case "6":
+                            if (!isDone) showRow = true;
+                            break;
+                        default:
+                            showRow = true;
+                            break;
+                    }
+
+                    row.style.display = showRow ? "" : "none";
+                });
+            }
+        });
+    </script>
 </body>
 </html>

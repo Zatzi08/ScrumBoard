@@ -33,7 +33,7 @@
     font-size: 14px;
     margin-left: 41%;
     display: block;
-    margin-top: 7%;
+    margin-top: 4%;
 }
 
 #editMenu-saveEditBtn:hover{
@@ -743,4 +743,8 @@ select{
     width: auto;
     color: white;
     display: contents;
+}
+
+input[type="datetime-local"] {
+    color-scheme: dark;
 }

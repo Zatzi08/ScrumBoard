@@ -1,10 +1,10 @@
-/*
-* Author: Zana Salih Hama
-* Revisited: /
-* Funktion: Toggeln des Bearbeitungsmenü'
-* Grund: /
-* User-Story/Task-ID: U3.F1, U4.F1
-*/
+function hover(id){
+    document.getElementById(id).style.borderColor = "#ba55d3";
+}
+
+function hoverLeave(id) {
+    document.getElementById(id).style.borderColor = "#fff";
+}
 
 function toggleEditMenu(id) {
     const editMenu = document.querySelector('.editMenu');
@@ -31,7 +31,7 @@ function toggleEditMenu(id) {
         console.error("Das Element mit der Klasse 'editMenu' wurde nicht gefunden.");
     }
     console.log(id);
-    if(id === 'addUserStoryBtn'){
+    if (id === 'addUserStoryBtn'){
         console.log('Userstory erstellen');
         document.querySelector('.editMenu label').textContent = "Erstellen";
     } else {
@@ -39,13 +39,6 @@ function toggleEditMenu(id) {
     }
 }
 
-/*
-* Author: Zana Salih Hama
-* Revisited: /
-* Funktion: Highlighten der Prioritätsbuttons im Bearbeitungsfenster bei Auswahl
-* Grund: Benutzerfreundlichkeit
-* User-ID/Task-ID: /
-*/
 function highlightPriorityButton(buttonId) {
     const priorityButtons = document.querySelectorAll('.inputEditPrio');
     switch (buttonId){
@@ -63,13 +56,6 @@ function highlightPriorityButton(buttonId) {
         }
     });
 }
-
-//function hover(buttonId){
-//    document.getElementById(buttonId).style.color = "#ba55d3";
-//}
-//function hoverLeave(buttonId) {
-//    document.getElementById(buttonId).style.color = "#fff";
-//}
 
 document.addEventListener('DOMContentLoaded', function () {
     const rows = document.querySelectorAll('.userTaskTable tbody tr');
@@ -220,7 +206,6 @@ function toggleEditBox(id,storyId, name, description, prio){
     }
 }
 
-
 const checkList = document.getElementById('list1');
 checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
     if (checkList.classList.contains('visible')) {
@@ -282,13 +267,13 @@ function toggleVisAllTasks(percentageDifference, absNum, numType){
                 document.body.appendChild(overlay);
                 switch (numType){
                     case 0:
-                        document.getElementById('percentageDifferenceText').innerText = `Die Summe der geschätzten und realen Bearbeitungszeit stimmen überein!`;
+                        document.getElementById('percentageDifferenceText').innerText = `Die Summe der geschätzten und realen Bearbeitungszeit[-en] stimmen überein!`;
                         break;
                     case 1:
-                        document.getElementById('percentageDifferenceText').innerText = `Der insgesamte Mehraufwand gegenüber der Summe der geschätzten Bearbeitungszeiten beträgt ${absNum}h!`;
+                        document.getElementById('percentageDifferenceText').innerText = `Der insgesamte Mehraufwand gegenüber der Summe der geschätzten Bearbeitungszeit[-en] beträgt ${absNum}h!`;
                         break;
                     case 2:
-                        document.getElementById('percentageDifferenceText').innerText = `Die Summe der realen Bearbeitungszeiten weicht zu ${percentageDifference}% von der geschätzten ab. Dies entspricht ${absNum}h!`;
+                        document.getElementById('percentageDifferenceText').innerText = `Die Summe der realen Bearbeitungszeit[-en] weicht zu ${percentageDifference}% von der geschätzten ab. Dies entspricht ${absNum}h!`;
                         break;
                 }
                 overlay.addEventListener('click', toggleVisAllTasks);
@@ -299,7 +284,6 @@ function toggleVisAllTasks(percentageDifference, absNum, numType){
     }
 
     }
-
 
 function toggleRolesEditMenu() {
     const rolesMenu = document.getElementById("roleOverlay");
@@ -318,7 +302,6 @@ function toggleRoleNameMenu(){
         rolesNameMenu.style.display = "none";
     }
 }
-
 
 window.onclick = function(event) {
     const rolesMenu = document.getElementById("editRolesMenu");

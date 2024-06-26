@@ -1,42 +1,33 @@
 <!doctype html>
 <html class="no-js" lang="en" dir="ltr">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="/css/foundation.css">
     <link rel="stylesheet" href="/css/app.css">
-  </head>
-
-  <!--
-  Author: Pair Programming: Zana Salih Hama, Paula Krasnovska
-  Revisited: /
-  Funktion: Register Page
-  Grund: /
-  User-ID/Task-ID: A2.F1
-  -->
-  <div id="primaryContainer"></div>
-
-  <body>
+</head>
+<body>
+    <div id="primaryContainer"></div>
     <div class="loginBackground">
-      <div class="secondaryContainer">
-        <label id = "headerLogin">Registrieren</label>
-      <form action="/Register" autocomplete="off" method="post">
-        <label id="registerLabel"></label>
-          <input type="text" required placeholder="Account-Name" class = "Input" name="Username">
-          <input type="email" required placeholder="Email" class = "Input" name="EMail">
-          <input type="password" required placeholder="Passwort" class = "Input" name="Passwort">
-          <button id="loginButton" type="submit">Registrieren</button>
-          <p id = "yesAccount"> Du besitzt doch einen Account?
+        <div class="secondaryContainer">
+            <label id = "headerLogin">Registrieren</label>
+            <form action="/Register" autocomplete="off" method="post">
+                <label id="registerLabel"></label>
+                <input type="text" required placeholder="Account-Name" class = "Input" name="Username">
+                <input type="email" required placeholder="Email" class = "Input" name="EMail">
+                <input type="password" required placeholder="Passwort" class = "Input" name="Passwort">
+                <button id="loginButton" type="submit">Registrieren</button>
+            </form>
+            <p id = "yesAccount"> Du besitzt doch einen Account?
             <a href="/">Hier anmelden!</a></p>
-        </form>
-      </div>
+        </div>
     </div>
 
     <script src="../static/js/vendor/jquery.js"></script>
     <script src="../static/js/vendor/what-input.js"></script>
     <script src="../static/js/vendor/foundation.js"></script>
     <script src="../static/js/app.js"></script>
-  </body>
+</body>
 </html>
