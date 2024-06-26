@@ -1,12 +1,3 @@
-/*Das main setup für die eigentliche Seite, nach dem der Login erfolgt ist.*/
-
-/*
-  Author:  Zana Salih Hama,
-  Revisited: /
-  Funktion: Hintergrund für Project Managers
-  Grund: /
-  User-ID/Task-ID: U1.F1
-*/
 body {
     background-color: #23262f;
     color: #ffffff;
@@ -16,22 +7,12 @@ body {
     background-attachment: fixed;
 }
 
-/*
-  Author:  Zana Salih Hama, Paula Krasnovska
-  Revisited: /
-  Funktion: Reiter und Buttons für Reiter
-  Grund: /
-  User-ID/Task-ID: U1.F1
-*/
 .Reiter {
     display: flex;
     background-color: rgba(16, 22, 58, 0.6);
     height: 30%;
     width: 100%;
 }
-
-/*.container {margin-top: 20px;}*/
-
 
 .reiterBtn {
     display: inline-block;

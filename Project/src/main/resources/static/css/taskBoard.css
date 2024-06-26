@@ -57,7 +57,7 @@
     background-color: #46425e;
     cursor: pointer;
 }
-/*#38618C*/
+
 #outerContainer{
     background-color: #211f2b;
     border-bottom: 10px;
@@ -231,12 +231,10 @@ hr {
 
 .zoomedTaskCard-content{
     color: #d1d1d1;
-    /* display: inline-table; */
     width: 86%;
     background: #282435;
     border-radius: 10px;
     text-align: center;
-    /* height: 3dvh; */
 }
 
 .zoomedTaskCard-Header{
@@ -507,8 +505,6 @@ hr {
     flex-wrap: wrap;
     align-content: center;
     vertical-align: middle;
-    /* justify-content: center; */
-    /* margin-left: 0.7%; */
 }
 
 #outerContainer-HeaderAlignmentInner{

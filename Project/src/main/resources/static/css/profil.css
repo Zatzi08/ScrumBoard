@@ -5,9 +5,7 @@
     width: 96%;
     background-image: linear-gradient(to bottom right, #23262f, #26375d);
     border-radius: 15px;
-    /* max-height: fit-content; */
     overflow-y: scroll;
-    /* scroll-padding-bottom: 22%; */
 }
 
 #profilInhalt{
@@ -143,7 +141,6 @@
     color: #a8a398;
     margin-top: 20px;
     overflow-wrap: break-word;
-    /* text-align: justify; */
     hyphens: auto;
 }
 
