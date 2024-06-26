@@ -189,14 +189,8 @@ function changeTBNamePopUp(id){
 window.onclick = function(event) {
     const TBNamePopup = document.getElementById("popupChangeTBName");
     const TBCreatePopup = document.getElementById("popupCreateTB");
-    const fertigPopup = document.getElementById("popupTaskFertig");
     if (event.target === TBNamePopup) {
         TBNamePopup.style.display = "none";
-        can_sync = true
-    }
-
-    else if (event.target === fertigPopup) {
-        fertigPopup.style.display = "none";
         can_sync = true
     }
 
