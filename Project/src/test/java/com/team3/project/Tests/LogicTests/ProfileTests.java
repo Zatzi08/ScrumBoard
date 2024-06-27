@@ -1,26 +1,36 @@
 package com.team3.project.Tests.LogicTests;
 
-import com.team3.project.Classes.Enumerations;
 import com.team3.project.Classes.Profile;
-import com.team3.project.DAOService.DAOAccountService;
-import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.Tests.BaseClassesForTests.BaseLogicTest;
 import com.team3.project.service.AccountService;
 import com.team3.project.service.WebSessionService;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(MockitoExtension.class)
 public class ProfileTests extends BaseLogicTest {
     private static PrintWriter pw;
     private static Date date;
     private static SimpleDateFormat formatter;
     private boolean pass = true;
+
+    @Spy
+    private AccountService accountService;
+
+    @Spy
+    private WebSessionService webSessionService;
+
     @BeforeAll
-    public static void setupTest(){
+    public static void setupTest() {
         setup();
         pw = printWriter;
         formatter = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
@@ -29,11 +39,12 @@ public class ProfileTests extends BaseLogicTest {
 
     @BeforeEach
     @AfterEach
-    public void emptyDB(){
+    public void emptyDB() {
         BaseLogicTest.wipeDb(true);
     }
+
     @AfterAll
-    public static void closeWriter(){
+    public static void closeWriter() {
         pw.close();
         tearDown();
     }
@@ -41,158 +52,110 @@ public class ProfileTests extends BaseLogicTest {
     @Test
         /*  Test ID: Logic.T3
          *  Author: Henry Lewis Freyschmidt
+         *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: Profile erstellen P1.B1
          */
-    void createProfile() throws Exception{
-        //Arrange
-        pw.append("Logik-Test-createProfile\nTest ID: Logic.T3\n" + "Date: " + formatter.format(date)+ '\n');
-        AccountService aservice = new AccountService();
-        WebSessionService wservice = new WebSessionService();
-        String sessionID = "";
-        String sessionID_fail = "";
-        Profile profile = new Profile(0,"Dave", "dave@gmail.com", "Manager","slow thinker" ,null, 1);
-        Profile profile_fail = new Profile(0,"Exception", "fail@gmail.com", "Manager","slow thinker" ,null, 1);
-        int count_correct_exceptions = 0;
-        int count_correct_exception_checks = 0;
+    void createProfile() throws Exception {
+        // Arrange
+        pw.append("Logik-Test-createProfile\nTest ID: Logic.T3\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
+        Profile profile = new Profile(0, "Dave", "dave@gmail.com", "Manager", "slow thinker", null, 1);
+        Profile profileFail = new Profile(0, "Exception", "fail@gmail.com", "Manager", "slow thinker", null, 1);
 
-        //Act
-        //Exception-cases
-        aservice.register("Exception","fail@gmail.com", "123");
-        sessionID_fail = wservice.getSessionID("fail@gmail.com");
-        try{
-            count_correct_exception_checks++;
-            aservice.getProfileByID(null);
-        }catch (Exception e){
-            count_correct_exceptions++;
-        }
+        // Act
+        accountService.register("Exception", "fail@gmail.com", "123");
+        String sessionIDFail = webSessionService.getSessionID("fail@gmail.com");
 
-        try{
-            count_correct_exception_checks++;
-            aservice.getProfileByID("-1");
-        }catch (Exception e){
-            count_correct_exceptions++;
-        }
+        // Functional case
+        accountService.register("Dave", "dave@gmail.com", "123");
+        String sessionID = webSessionService.getSessionID("dave@gmail.com");
+        accountService.savePublicData(sessionID, profile);
 
-        try{
-            count_correct_exception_checks++;
-            aservice.savePublicData(null, profile_fail);
-        }catch (Exception e){
-            count_correct_exceptions++;
-        }
+        // Assert
+        assertThrows(Exception.class, () -> accountService.getProfileByID(null));
+        assertThrows(Exception.class, () -> accountService.getProfileByID("-1"));
+        assertThrows(Exception.class, () -> accountService.savePublicData(null, profileFail));
+        assertThrows(Exception.class, () -> accountService.savePublicData("Fake-sessionID", profileFail));
 
-        try{
-            count_correct_exception_checks++;
-            aservice.savePublicData("Fake-sessionID", profile_fail);
-        }catch (Exception e){
-            count_correct_exceptions++;
-        }
+        profileFail.setUname(null);
+        assertThrows(Exception.class, () -> accountService.savePublicData(sessionIDFail, profileFail));
 
-        try{
-            count_correct_exception_checks++;
-            profile_fail.setUname(null);
-            aservice.savePublicData(sessionID_fail, profile_fail);
-        }catch (Exception e){
-            count_correct_exceptions++;
-        }
+        profileFail.setUname("Dave");
+        profileFail.setWorkDesc(null);
+        assertThrows(Exception.class, () -> accountService.savePublicData(sessionIDFail, profileFail));
 
-        try{
-            count_correct_exception_checks++;
-            profile_fail.setUname("Dave");
-            profile_fail.setWorkDesc(null);
-            aservice.savePublicData(sessionID_fail, profile_fail);
-        }catch (Exception e){
-            count_correct_exceptions++;
-        }
+        profileFail.setWorkDesc("working");
+        profileFail.setPrivatDesc(null);
+        assertThrows(Exception.class, () -> accountService.savePublicData(sessionIDFail, profileFail));
 
-        try{
-            count_correct_exception_checks++;
-            profile_fail.setWorkDesc("working");
-            profile_fail.setPrivatDesc(null);
-            aservice.savePublicData(sessionID_fail, profile_fail);
-        }catch (Exception e){
-            count_correct_exceptions++;
-        }
-
-        //functional case
-        aservice.register("Dave","dave@gmail.com", "123");
-        sessionID = wservice.getSessionID("dave@gmail.com");
-        aservice.savePublicData(sessionID, profile);
-
-        //Assert
-        try{
-            Assertions.assertNotNull(aservice.getProfileByID(sessionID));
+        try {
+        assertDoesNotThrow(() -> assertNotNull(accountService.getProfileByID(sessionID)));
         }catch(AssertionError | Exception e){
             pw.append("Fail: existent User-Profile not found\n");
             pass = false;
             throw new AssertionError(e);
         }
 
-        if(count_correct_exception_checks != count_correct_exceptions){
-            pass = false;
-            pw.append("Fail: Wrong Exception-Handling\n");
-        }
         pw.append(String.format("pass: %b", pass));
     }
 
     @Test
         /*  Test ID: Logic.T4
          *  Author: Henry Lewis Freyschmidt
+         *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: Profile aktualisieren P2.B1
          */
     void updateProfile() throws Exception{
-        //Arrange
-        pw.append("Logik-Test-updateUserStory\nTest ID: Logic.T4\n" + "Date: " + formatter.format(date)+ '\n');
-        AccountService aservice = new AccountService();
-        WebSessionService wservice = new WebSessionService();
-        Profile profile = new Profile(0,"Dave", "dave@gmx.de","netter Dave", "arbeitender Dave", null, 1);
-        String newdescription = "böse";
-        String sessionID = null;
+        // Arrange
+        pw.append("Logik-Test-updateUserStory\nTest ID: Logic.T4\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
+        Profile profile = new Profile(0, "Dave", "dave@gmx.de", "netter Dave", "arbeitender Dave", null, 1);
+        final String newDescription = "böse";
 
-        //Act
-        aservice.register("Dave", "dave@gmx.de", "passw");
-        sessionID = wservice.getSessionID("dave@gmx.de");
-        aservice.savePublicData(sessionID,profile);
-        profile.setPrivatDesc(newdescription);
-        aservice.savePublicData(sessionID,profile);
+        // Act
+        accountService.register("Dave", "dave@gmx.de", "passw");
+        String sessionID = webSessionService.getSessionID("dave@gmx.de");
+        accountService.savePublicData(sessionID, profile);
+        profile.setPrivatDesc(newDescription);
+        accountService.savePublicData(sessionID, profile);
 
-        //Assert
-        try{
-            Assertions.assertEquals(aservice.getProfileByEmail("dave@gmx.de").getPrivatDesc(), newdescription);
+        // Assert
+        try {
+        assertDoesNotThrow(() -> assertEquals(newDescription, accountService.getProfileByEmail("dave@gmx.de").getPrivatDesc()));
         }catch (AssertionError | Exception e){
             pw.append("Fail: User-Profile was not updated\n");
             pass = false;
             throw new AssertionError(e);
         }
-        pw.append(String.format("pass = %b",pass));
+        pw.append(String.format("pass = %b", pass));
     }
 
     @Test
         /*  Test ID: Logic.T18
          *  Author: Henry Lewis Freyschmidt
+         *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: alle Profile ausgeben P4.B1
          */
     void getAllProfiles() throws Exception{
-        //Arrange
-        pw.append("Logik-Test-getAllProfiles\nTest ID: Logic.T18\n" + "Date: " + formatter.format(date) + '\n');
-        AccountService aservice = new AccountService();
+        // Arrange
+        pw.append("Logik-Test-getAllProfiles\nTest ID: Logic.T18\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
 
-        //Act
-        aservice.register("DaveT18", "daveT18@gmail.com", "T18");
-        aservice.register("Dave1T18", "dave1T18@gmail.com", "T18");
-        aservice.register("Dave2T18", "dave2T18@gmail.com", "T18");
+        // Act
+        accountService.register("DaveT18", "daveT18@gmail.com", "T18");
+        accountService.register("Dave1T18", "dave1T18@gmail.com", "T18");
+        accountService.register("Dave2T18", "dave2T18@gmail.com", "T18");
 
-        //Assert
-        try{
-            List <Profile> profiles = aservice.getAllProfiles();
-            Assertions.assertEquals("DaveT18", profiles.get(0).getUname());
-            Assertions.assertEquals("Dave1T18", profiles.get(1).getUname());
-            Assertions.assertEquals("Dave2T18", profiles.get(2).getUname());
+        // Assert
+        try {
+            List<Profile> profiles = accountService.getAllProfiles();
+            assertAll(
+                    () -> assertEquals("DaveT18", profiles.get(0).getUname()),
+                    () -> assertEquals("Dave1T18", profiles.get(1).getUname()),
+                    () -> assertEquals("Dave2T18", profiles.get(2).getUname())
+            );
         }catch (AssertionError e){
-            pass = false;
-            pw.append("Fail: did not return all Users\n");
-            throw new AssertionError(e);
-        }
-
+        pass = false;
+        pw.append("Fail: did not return all Users\n");
+        throw new AssertionError(e);
+    }
         pw.append(String.format("pass = %b", pass));
     }
 }
