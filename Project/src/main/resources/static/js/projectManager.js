@@ -206,13 +206,22 @@ function toggleEditBox(id,storyId, name, description, prio){
     }
 }
 
-const checkList = document.getElementById('list1');
-checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
-    if (checkList.classList.contains('visible')) {
-        checkList.classList.remove('visible');
+var nutzerList = document.getElementById('list1');
+nutzerList.getElementsByClassName('anchor')[0].onclick = function(evt) {
+    if (nutzerList.classList.contains('visible')) {
+        nutzerList.classList.remove('visible');
     }
     else
-        checkList.classList.add('visible');
+        nutzerList.classList.add('visible');
+}
+
+var roleList = document.getElementById('roleTaskDropdown');
+roleList.getElementsByClassName("chooseRoleTaskBtn")[0].onclick = function(evt) {
+    if (roleList.classList.contains('visible')) {
+        roleList.classList.remove('visible');
+    }
+    else
+        roleList.classList.add('visible');
 }
 
 function visualisationOfAllTimes(est, real, names){
@@ -249,8 +258,8 @@ async function saveTaskWithUserList(sessionID) {
 }
 
 function toggleVisAllTasks(percentageDifference, absNum, numType){
-    const vis = document.querySelector('#visEstimateTracker');
-    let overlay = document.querySelector('.overlay');
+    var vis = document.querySelector('#visEstimateTracker');
+    var overlay = document.querySelector('.overlay');
     if (vis) {
         if (vis.style.display === "block") {
             vis.style.display = "none";
@@ -285,6 +294,7 @@ function toggleVisAllTasks(percentageDifference, absNum, numType){
 
     }
 
+
 function toggleRolesEditMenu() {
     const rolesMenu = document.getElementById("roleOverlay");
     if(rolesMenu.style.display === "none") {
@@ -303,10 +313,37 @@ function toggleRoleNameMenu(){
     }
 }
 
+
 window.onclick = function(event) {
-    const rolesMenu = document.getElementById("editRolesMenu");
-    const rolesOverlay = document.getElementById("roleOverlay");
-    if (event.target !== rolesMenu) {
-        rolesOverlay.style.display = "none";
+    var roleEditMenu = document.getElementById("editRolesMenu");
+    var roleEditMenu2 = document.getElementById("editRoleNameMenu");
+    var rolesOverlay = document.getElementById("roleOverlay");
+    var rolesOverlay2 = document.getElementById("roleOverlay2");
+    var userDropdown = document.getElementById("list1");
+    var roleDropdown = document.getElementById("roleTaskDropdown");
+    var userAuswahl = document.getElementById("usersAuswahlID");
+    var roleAuswahl = document.getElementById("roleTaskList");
+    var editOverlay = document.getElementsByClassName("editmenu");
+    var debug = document.getElementById("debug");
+    if (event.target == editOverlay) {
+        userAuswahl.style.display = "none";
+        debug.style.display= "block";
+
     }
+    else if (event.target == editOverlay){
+        roleAuswahl.style.display = "none";
+        debug.style.display= "block";
+
+    }
+    if (event.target == rolesOverlay) {
+        rolesOverlay.style.display = "none";
+        debug.style.display = "block";
+    }
+    else if (event.target == rolesOverlay2 && event.target != roleEditMenu2){
+        rolesOverlay2.style.display = "none";
+        debug.style.display = "block";
+    }
+}
+window.onclick = function(event) {
+
 }
