@@ -104,25 +104,26 @@ public class TaskService {
                         && (dt.getTaskList() == null
                         || task.getTbID() != dt.getTaskList().getTaskBoard().getId())){
                     responceTL = responceTL || DAOTaskService.updateTaskBoardIdById(dt.getId(), task.getTbID());
-                    responceTL = responceTL ||DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), 0);
+                    responceTL = responceTL || DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), 0);
                 } else if (task.getTbID() == -1 && dt.getTaskList() != null){
-                    responceTL = responceTL ||DAOTaskService.updateTaskListById(dt.getId(),null);
-                    responceTL = responceTL ||DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), 0);
+                    responceTL = responceTL || DAOTaskService.updateTaskListById(dt.getId(),null);
+                    responceTL = responceTL || DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), 0);
                 }
                 if (!dt.getDescription().equals(task.getDescription()))
-                    responce = responce ||DAOTaskService.updateDescriptonById(task.getID(),task.getDescription());
+                    responce = responce || DAOTaskService.updateDescriptonById(task.getID(),task.getDescription());
                 if (dt.getUserStory().getId() != task.getUserStoryID())
-                    responce = responce ||DAOTaskService.updateUserStoryById(task.getID(),task.getUserStoryID());
+                    responce = responce || DAOTaskService.updateUserStoryById(task.getID(),task.getUserStoryID());
                 if (dt.getPriority() != task.getPriorityAsInt())
-                    responce = responce ||DAOTaskService.updatePriorityById(task.getID(), task.getPriorityAsInt());
+                    responce = responce || DAOTaskService.updatePriorityById(task.getID(), task.getPriorityAsInt());
                 if(!Objects.equals(dt.getDueDate(), task.getDueDateAsString()))
-                    responce = responce ||DAOTaskService.updateDueDateById(task.getID(), task.getDueDateAsString());
+                    responce = responce || DAOTaskService.updateDueDateById(task.getID(), task.getDueDateAsString());
                 if(dt.getProcessingTimeEstimatedInHours() != task.getTimeNeededG())
-                    responce = responce ||DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), task.getTimeNeededG());
+                    responce = responce || DAOTaskService.updateProcessingTimeEstimatedInHoursById(task.getID(), task.getTimeNeededG());
                 if(dt.isDone()!= task.isDone()){
-                    if (task.isDone()) responce = responce ||DAOTaskService.setDoneById(task.getID());
-                    else responce = responce ||DAOTaskService.setUnDoneById(task.getID());
+                    if (task.isDone()) responce = responce || DAOTaskService.setDoneById(task.getID());
+                    else responce = responce || DAOTaskService.setUnDoneById(task.getID());
                 }
+
                 if (responce && !responceTL) {
                     try {
                         dt = DAOTaskService.getById(task.getID());
@@ -132,7 +133,6 @@ public class TaskService {
                                         dt.getDueDate(),dt.getProcessingTimeEstimatedInHours(),
                                         dt.getProcessingTimeRealInHours(), tbID));
                     } catch (Exception e) {
-                        e.printStackTrace();
                         System.out.println("Observer nicht initialisiert");
                     }
                 }
