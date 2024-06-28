@@ -1,36 +1,28 @@
 <!doctype html>
 <html class="no-js" lang="en" dir="ltr">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="/css/foundation.css">
     <link rel="stylesheet" href="/css/app.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
-  </head>
-    <body>
-    <!--
-      Author: Pair Programming: Zana Salih Hama, Paula Krasnovska
-      Revisited: /
-      Funktion: Login Page
-      Grund: /
-      User-ID/Task-ID: A3.F1
-    -->
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
+</head>
+<body>
     <div id="primaryContainer"></div>
-
     <div class="loginBackground">
         <div class="secondaryContainer">
-            <label id = "headerLogin">Login</label>
+            <label id="headerLogin">Login</label>
             <div id="container-content">
-                <form action="\Login" method="post" autocomplete="on" id="containerForm">
-                    <input type="email" required placeholder="E-Mail" class = "Input" name="EMail">
-                    <input type="password" required placeholder="Passwort" class = "Input" name="Passwort">
-                    <input type="checkbox" value="lsRememberMe" id="rememberMe" style="margin-left: 11%;" onclick="lsRememberMe()"> <label for="rememberMe" style="position: relative; display: inline; top: -0.5%;margin-left: -1px;">Remember me</label>
+                <form action="/Login" method="post" autocomplete="on" id="containerForm">
+                    <input type="email" required placeholder="E-Mail" class="Input" name="EMail">
+                    <input type="password" required placeholder="Passwort" class="Input" name="Passwort">
+                    <input type="checkbox" value="lsRememberMe" id="rememberMe" style="margin-left: 11%;">
+                    <label for="rememberMe" style="position: relative; display: inline; top: -0.5%;margin-left: -1px;">Remember me</label>
                     <a href="/PasswortForgotPage" id="passwortForgot">Passwort vergessen?</a>
                     <button id="loginButton" type="submit">Login</button>
-                    <label id = "noAccount"> Kein Account? <a href="/RegisterPage">Hier Registrieren!</a></label>
+                    <label id="noAccount"> Kein Account? <a href="/RegisterPage">Hier Registrieren!</a></label>
                 </form>
             </div>
         </div>
@@ -40,5 +32,6 @@
     <script src="/js/vendor/what-input.js"></script>
     <script src="/js/vendor/foundation.js"></script>
     <script src="/js/app.js"></script>
-  </body>
+    <script> </script>
+</body>
 </html>

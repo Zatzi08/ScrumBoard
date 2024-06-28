@@ -193,7 +193,7 @@ public class WebController {
             if (presentationToLogic.webSessionService.verify(sessionID)) {
                 ModelAndView modelAndView = new ModelAndView("projectManager");
                 modelAndView.addObject("Storys", presentationToLogic.userStoryService.getAllUserStorys())
-                        .addObject("TNames", presentationToLogic.taskService.getAllName())
+                        //.addObject("TNames", presentationToLogic.taskService.getAllName())
                         .addObject("authority", presentationToLogic.accountService.getAuthority(sessionID))
                         .addObject("sessionID", sessionID);
                 return modelAndView;
@@ -370,7 +370,10 @@ public class WebController {
                         .addObject("UserStory", presentationToLogic.userStoryService.getAllUserStorys())
                         .addObject("sessionID", sessionID)
                         .addObject("User", presentationToLogic.accountService.getAllProfiles())
-                        .addObject("TaskBoard", presentationToLogic.taskBoardService.getAllTaskBoards());
+                        .addObject("TaskBoard", presentationToLogic.taskBoardService.getAllTaskBoards())
+                        .addObject("Names", presentationToLogic.taskService.getAllName())
+                        .addObject("AufwandA", presentationToLogic.taskService.getAllAnforderungenA())
+                        .addObject("AufwandG", presentationToLogic.taskService.getAllAnforderungenG());
             }
         } catch (Exception e){
             return error(e);

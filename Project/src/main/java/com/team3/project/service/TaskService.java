@@ -12,7 +12,6 @@ import com.team3.project.Websocket.WebsocketObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -291,11 +290,13 @@ public class TaskService {
     }
 
     public  List<Double> getAllAnforderungenG(){
-        List<DAOTask> dtl =DAOTaskService.getAll();
+        List<DAOTask> dtl = DAOTaskService.getAll();
         List<Double> AnforderungenG = new LinkedList<Double>();
         for (DAOTask dt : dtl){
-            double g = dt.getProcessingTimeEstimatedInHours();
-            AnforderungenG.add(g);
+            if (dt.getTaskList().getId() % 5 == 0){
+                double g = dt.getProcessingTimeEstimatedInHours();
+                AnforderungenG.add(g);
+            }
         }
         return AnforderungenG;
     }
@@ -304,8 +305,10 @@ public class TaskService {
         List<DAOTask> dtl =DAOTaskService.getAll();
         List<Double> AnforderungenA = new LinkedList<Double>();
         for (DAOTask dt : dtl){
-            double g = dt.getProcessingTimeRealInHours();
-            AnforderungenA.add(g);
+            if (dt.getTaskList().getId() % 5 == 0) {
+                double g = dt.getProcessingTimeRealInHours();
+                AnforderungenA.add(g);
+            }
         }
         return AnforderungenA;
     }
@@ -313,9 +316,9 @@ public class TaskService {
     public List<String> getAllName(){
         List<String> name = new LinkedList<String>();
         List<DAOTask> dtl = DAOTaskService.getAll();
-        if (!dtl.isEmpty()) {
-            for (DAOTask t : dtl) {
-                String toAdd = "'" + t.getDescription() + "'";
+        for (DAOTask dt : dtl) {
+            if (dt.getTaskList().getId() % 5 == 0){
+                String toAdd = "'" + dt.getDescription() + "'";
                 name.add(toAdd);
             }
         }

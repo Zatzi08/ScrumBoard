@@ -11,56 +11,49 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-<input type="hidden" id="data" th:uID="${User.getID()}">
-<!--
-       Author: Zana Salih Hama
-       Revisited: /
-       Funktion: Reiter zur Übersicht aller Seiten[-optionen]
-       Grund: Übersichtlichkeit
-       User-ID/Task-ID: /
-    -->
-<div class="Reiter">
-    <button type="button" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" class="reiterBtn" >Projekt Manager</button>
-    <button class = "reiterBtn" onmouseover="hover()" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Profil </button>
-    <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
-    <button class = "reiterBtn">Kalender </button>
-    <button class = "reiterBtn" id = "logoutBtn" onclick="location.href='/'">Abmelden</button>
-</div>
+    <input type="hidden" id="data" th:uID="${User.getID()}">
 
-<div id = "profilContainer">
-    <div id = "profilInhalt">
-        <button th:if="${own}" class = "fa fa-edit" title = "Bearbeite das Profil" th:uname="${User.uname}" th:udesc="${User.privatDesc}" th:projectdesc="${User.workDesc}" onclick="toggleProfilMenü(this.getAttribute('uname'), this.getAttribute('projectdesc'), this.getAttribute('udesc'))"></button>
-        <label th:text = "${User.uname}" id = "profilName">Benutzername </label>
-        <label class = "profileText" >Deine Aufgabe im Projekt</label>
-        <label th:text="${User.workDesc}" id = "profilProjektBeschreibung"> Projektbeschreibung </label>
-        <label class = "profileText" >Deine Rollen </label>
-        <ul>
-            <li></li>
-        </ul> <!-- Könnte das als Liste realisiert werden, danke LK -->
-        <label class = "profileText" >Deine persönliche Beschreibung</label>
-        <label th:text = "${User.privatDesc}" id = "profilPersoBeschreibung"> Persönliche Beschreibung </label>
+    <div class="Reiter">
+        <button type="button" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" class="reiterBtn" >Projekt Manager</button>
+        <button class = "reiterBtn" onmouseover="hover()" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Profil </button>
+        <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
+        <button class = "reiterBtn" id = "logoutBtn" onclick="location.href='/'">Abmelden</button>
     </div>
-</div>
 
-<div th:if="${own}" id = "profilEditMenü" style="display: none;">
-<form id = "profilForm" autocomplete="off">
-    <label style = "color:#ffffff; font-size: 15px; border-bottom: 2px solid #dcdcdc; width:100%"><i class = "fa fa-pencil" style = "font-size: calc(1dvw + 1dvh); margin-right:15px"></i>Profil bearbeiten</label>
-    <label class = "labelProfil">Benutzername</label>
-    <textarea id="inputName" class = "profilInput" form = "profilForm" placeholder = "Benutzername bearbeiten" name = benutzername></textarea>
-    <label class = "labelProfil">Projektbezogene Beschreibung</label>
-    <textarea id="inputWDesc" class = "profilInput" form = "profilForm" placeholder = "Projektbezogene Beschreibung bearbeiten" name = projektBeschreibung></textarea>
-    <label class = "labelProfil">Persönliche Beschreibung</label>
-    <textarea id="inputPDesc" class = "profilInput" form = "profilForm" placeholder = "Persönliche Beschreibung bearbeiten" name = persoBeschreibung></textarea>
-    <label class = "labelProfil">Rollen auswählen</label>
-    <div id="list1" class="dropdown-check-list">
-        <button type="button" onclick="" class="anchor"> Rollen auswählen <i class = "fa fa-sort-down" style = "margin-left: 10px"></i></button>
-        <ul id="usersAuswahlID" class="items">
-            <li ><input  type="checkbox" /> </li>
-        </ul>
+    <div id = "profilContainer">
+        <div id = "profilInhalt">
+            <button th:if="${own}" class = "fa fa-edit" title = "Bearbeite das Profil" th:uname="${User.uname}" th:udesc="${User.privatDesc}" th:projectdesc="${User.workDesc}" onclick="toggleProfilMenu(this.getAttribute('uname'), this.getAttribute('projectdesc'), this.getAttribute('udesc'))"></button>
+            <label th:text = "${User.uname}" id = "profilName">Benutzername </label>
+            <label class = "profileText" >Deine Aufgabe im Projekt</label>
+            <label th:text="${User.workDesc}" id = "profilProjektBeschreibung"> Projektbeschreibung </label>
+            <label class = "profileText" >Deine Rollen </label>
+            <ul>
+                <li></li>
+            </ul>
+            <label class = "profileText" >Deine persönliche Beschreibung</label>
+            <label th:text = "${User.privatDesc}" id = "profilPersoBeschreibung"> Persönliche Beschreibung </label>
+        </div>
     </div>
-    <button type = "button" title = "Speichern der Änderungen" th:sessionID="${sessionID}" onclick="saveProfile(this.getAttribute('sessionID'))" id = "profilEditBtn">Speichern</button>
-</form>
-</div>
+
+    <div th:if="${own}" id = "profilEditMenü" style="display: none;">
+        <form id = "profilForm" autocomplete="off">
+            <label style = "color:#ffffff; font-size: 15px; border-bottom: 2px solid #dcdcdc; width:100%"><i class = "fa fa-pencil" style = "font-size: calc(1dvw + 1dvh); margin-right:15px"></i>Profil bearbeiten</label>
+            <label class = "labelProfil">Benutzername</label>
+            <textarea id="inputName" class = "profilInput" form = "profilForm" placeholder = "Benutzername bearbeiten" name = benutzername></textarea>
+            <label class = "labelProfil">Projektbezogene Beschreibung</label>
+            <textarea id="inputWDesc" class = "profilInput" form = "profilForm" placeholder = "Projektbezogene Beschreibung bearbeiten" name = projektBeschreibung></textarea>
+            <label class = "labelProfil">Persönliche Beschreibung</label>
+            <textarea id="inputPDesc" class = "profilInput" form = "profilForm" placeholder = "Persönliche Beschreibung bearbeiten" name = persoBeschreibung></textarea>
+            <label class = "labelProfil">Rollen auswählen</label>
+            <div id="roleDropdown" class="roleDropdown">
+                <button type="button" onclick="" class="setRolesBtn"> Rollen auswählen</button>
+                <ul id="usersAuswahlID" class="roles">
+                    <li ><input  type="checkbox" /> </li>
+                </ul>
+            </div>
+            <button type = "button" title = "Speichern der Änderungen" th:sessionID="${sessionID}" onclick="saveProfile(this.getAttribute('sessionID'))" id = "profilEditBtn">Speichern</button>
+        </form>
+    </div>
 
     <script src="/js/vendor/jquery.js"></script>
     <script src="/js/vendor/what-input.js"></script>

@@ -1,11 +1,10 @@
-function toggleProfilMenü(uname, workDesc, priDesc){
-    var profilBtn = document.getElementById("profilEditBtn");
-    var profilMenü = document.getElementById("profilEditMenü");
+function toggleProfilMenu(uname, workDesc, priDesc){
+    const profilMenu = document.getElementById("profilEditMenü");
 
-    if(profilMenü.style.display == "none") {
-        profilMenü.style.display = "block";
+    if(profilMenu.style.display === "none") {
+        profilMenu.style.display = "block";
     } else {
-        profilMenü.style.display = "none";
+        profilMenu.style.display = "none";
     }
 
     document.getElementById('inputName').value = uname
@@ -18,9 +17,18 @@ function toggleProfilMenü(uname, workDesc, priDesc){
     // document.getElementById('inputWDesc').placeholder = workDesc
 }
 
+var rolesList = document.getElementById('roleDropdown');
+rolesList.getElementsByClassName('setRolesBtn')[0].onclick = function(evt) {
+    if (rolesList.classList.contains('visible')) {
+        rolesList.classList.remove('visible');
+    }
+    else
+        rolesList.classList.add('visible');
+}
+
 window.onclick = function(event) {
-    var profilPopup = document.getElementById("profilEditMenü");
-    if (event.target == profilPopup) {
+    const profilPopup = document.getElementById("profilEditMenü");
+    if (event.target === profilPopup) {
         profilPopup.style.display = "none";
     }
 }

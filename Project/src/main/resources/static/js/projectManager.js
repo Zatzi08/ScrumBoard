@@ -1,14 +1,14 @@
-/*
-* Author: Zana Salih Hama
-* Revisited: /
-* Funktion: Toggeln des Bearbeitungsmenü'
-* Grund: /
-* User-Story/Task-ID: U3.F1, U4.F1
-*/
+function hover(id){
+    document.getElementById(id).style.borderColor = "#ba55d3";
+}
+
+function hoverLeave(id) {
+    document.getElementById(id).style.borderColor = "#fff";
+}
 
 function toggleEditMenu(id) {
-    var editMenu = document.querySelector('.editMenu');
-    var overlay = document.querySelector('.overlay');
+    const editMenu = document.querySelector('.editMenu');
+    let overlay = document.querySelector('.overlay');
     can_sync = false
     if (editMenu) {
         if (editMenu.style.display === "block") {
@@ -31,7 +31,7 @@ function toggleEditMenu(id) {
         console.error("Das Element mit der Klasse 'editMenu' wurde nicht gefunden.");
     }
     console.log(id);
-    if(id === 'addUserStoryBtn'){
+    if (id === 'addUserStoryBtn'){
         console.log('Userstory erstellen');
         document.querySelector('.editMenu label').textContent = "Erstellen";
     } else {
@@ -39,13 +39,6 @@ function toggleEditMenu(id) {
     }
 }
 
-/*
-* Author: Zana Salih Hama
-* Revisited: /
-* Funktion: Highlighten der Prioritätsbuttons im Bearbeitungsfenster bei Auswahl
-* Grund: Benutzerfreundlichkeit
-* User-ID/Task-ID: /
-*/
 function highlightPriorityButton(buttonId) {
     const priorityButtons = document.querySelectorAll('.inputEditPrio');
     switch (buttonId){
@@ -63,13 +56,6 @@ function highlightPriorityButton(buttonId) {
         }
     });
 }
-
-//function hover(buttonId){
-//    document.getElementById(buttonId).style.color = "#ba55d3";
-//}
-//function hoverLeave(buttonId) {
-//    document.getElementById(buttonId).style.color = "#fff";
-//}
 
 document.addEventListener('DOMContentLoaded', function () {
     const rows = document.querySelectorAll('.userTaskTable tbody tr');
@@ -128,17 +114,6 @@ document.addEventListener('DOMContentLoaded', function () {
         this.classList.remove('dragging');
     }
 });
-
-function deleteTableRow() {
-    var row = document.querySelector('.userTaskTable tbody tr');
-    if (row) {
-        row.remove();
-    }
-
-    function taskToUS(){
-
-    }
-}
 
 function toggleEditBoxT(id, TId, description, usID, dueDate, timeG, tbID, prio, names){
     toggleEditMenu(id);
@@ -200,12 +175,12 @@ function toggleEditBoxT(id, TId, description, usID, dueDate, timeG, tbID, prio, 
 
 function toggleEditBox(id,storyId, name, description, prio){
     toggleEditMenu(id);
-    if (name != undefined){
+    if (name !== undefined){
         document.getElementById("inputName").textContent = name;
     } else {
         document.getElementById("inputName").value = '';
     }
-    if (description != undefined){
+    if (description !== undefined){
         document.getElementById("inputDesc").textContent = description;
     } else {
         document.getElementById("inputDesc").value = '';
@@ -231,14 +206,22 @@ function toggleEditBox(id,storyId, name, description, prio){
     }
 }
 
-
-var checkList = document.getElementById('list1');
-checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
-    if (checkList.classList.contains('visible')) {
-        checkList.classList.remove('visible');
+var nutzerList = document.getElementById('list1');
+nutzerList.getElementsByClassName('anchor')[0].onclick = function(evt) {
+    if (nutzerList.classList.contains('visible')) {
+        nutzerList.classList.remove('visible');
     }
     else
-        checkList.classList.add('visible');
+        nutzerList.classList.add('visible');
+}
+
+var roleList = document.getElementById('roleTaskDropdown');
+roleList.getElementsByClassName("chooseRoleTaskBtn")[0].onclick = function(evt) {
+    if (roleList.classList.contains('visible')) {
+        roleList.classList.remove('visible');
+    }
+    else
+        roleList.classList.add('visible');
 }
 
 function visualisationOfAllTimes(est, real, names){
@@ -246,9 +229,9 @@ function visualisationOfAllTimes(est, real, names){
     real = JSON.parse(real)
     names = names.replaceAll("'", '"')
     names = JSON.parse(names)
-    est.forEach((e) => console.log(e))
-    real.forEach((e)=> console.log(e))
-    names.forEach((e)=> console.log(e))
+    // est.forEach((e) => console.log(e))
+    // real.forEach((e)=> console.log(e))
+    // names.forEach((e)=> console.log(e))
     visualisationOfAllTime(est, real, names)
 }
 
@@ -293,13 +276,13 @@ function toggleVisAllTasks(percentageDifference, absNum, numType){
                 document.body.appendChild(overlay);
                 switch (numType){
                     case 0:
-                        document.getElementById('percentageDifferenceText').innerText = `Die Summe der geschätzten und realen Bearbeitungszeit stimmen überein!`;
+                        document.getElementById('percentageDifferenceText').innerText = `Die Summe der geschätzten und realen Bearbeitungszeit[-en] stimmen überein!`;
                         break;
                     case 1:
-                        document.getElementById('percentageDifferenceText').innerText = `Der insgesamte Mehraufwand gegenüber der Summe der geschätzten Bearbeitungszeiten beträgt ${absNum}h!`;
+                        document.getElementById('percentageDifferenceText').innerText = `Der insgesamte Mehraufwand gegenüber der Summe der geschätzten Bearbeitungszeit[-en] beträgt ${absNum}h!`;
                         break;
                     case 2:
-                        document.getElementById('percentageDifferenceText').innerText = `Die Summe der realen Bearbeitungszeiten weicht zu ${percentageDifference}% von der geschätzten ab. Dies entspricht ${absNum}h!`;
+                        document.getElementById('percentageDifferenceText').innerText = `Die Summe der realen Bearbeitungszeit[-en] weicht zu ${percentageDifference}% von der geschätzten ab. Dies entspricht ${absNum}h!`;
                         break;
                 }
                 overlay.addEventListener('click', toggleVisAllTasks);
@@ -313,8 +296,8 @@ function toggleVisAllTasks(percentageDifference, absNum, numType){
 
 
 function toggleRolesEditMenu() {
-    var rolesMenu = document.getElementById("roleOverlay");
-    if(rolesMenu.style.display == "none") {
+    const rolesMenu = document.getElementById("roleOverlay");
+    if(rolesMenu.style.display === "none") {
         rolesMenu.style.display = "block";
     } else {
         rolesMenu.style.display = "none";
@@ -322,8 +305,8 @@ function toggleRolesEditMenu() {
 }
 
 function toggleRoleNameMenu(){
-    var rolesNameMenu = document.getElementById("roleOverlay2");
-    if(rolesNameMenu.style.display == "none") {
+    const rolesNameMenu = document.getElementById("roleOverlay2");
+    if(rolesNameMenu.style.display === "none") {
         rolesNameMenu.style.display = "block";
     } else {
         rolesNameMenu.style.display = "none";
@@ -332,9 +315,35 @@ function toggleRoleNameMenu(){
 
 
 window.onclick = function(event) {
-    var rolesMenu = document.getElementById("editRolesMenu");
+    var roleEditMenu = document.getElementById("editRolesMenu");
+    var roleEditMenu2 = document.getElementById("editRoleNameMenu");
     var rolesOverlay = document.getElementById("roleOverlay");
-    if (event.target != rolesMenu) {
-        rolesOverlay.style.display = "none";
+    var rolesOverlay2 = document.getElementById("roleOverlay2");
+    var userDropdown = document.getElementById("list1");
+    var roleDropdown = document.getElementById("roleTaskDropdown");
+    var userAuswahl = document.getElementById("usersAuswahlID");
+    var roleAuswahl = document.getElementById("roleTaskList");
+    var editOverlay = document.getElementsByClassName("editmenu");
+    var debug = document.getElementById("debug");
+    if (event.target == editOverlay) {
+        userAuswahl.style.display = "none";
+        debug.style.display= "block";
+
     }
+    else if (event.target == editOverlay){
+        roleAuswahl.style.display = "none";
+        debug.style.display= "block";
+
+    }
+    if (event.target == rolesOverlay) {
+        rolesOverlay.style.display = "none";
+        debug.style.display = "block";
+    }
+    else if (event.target == rolesOverlay2 && event.target != roleEditMenu2){
+        rolesOverlay2.style.display = "none";
+        debug.style.display = "block";
+    }
+}
+window.onclick = function(event) {
+
 }
