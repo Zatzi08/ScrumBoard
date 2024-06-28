@@ -1,10 +1,11 @@
-/*
-* Author: Paula Krasnovska
-* Revisited: /
-* Funktion: Toggeln des Bearbeitungsmenü, Zuweisung von Attributen für Thymeleaf
-* Grund: /
-* User-Story/Task-ID: U3.F1, U4.F1
-*/
+function hover(id){
+    document.getElementById(id).style.borderColor = "#ba55d3";
+}
+
+function hoverLeave(id) {
+    document.getElementById(id).style.borderColor = "#fff";
+}
+
 function toggleEditBox(storyId, name, description){
     EditBox();
     document.getElementById("inputName").textContent = name;
@@ -189,14 +190,8 @@ function changeTBNamePopUp(id){
 window.onclick = function(event) {
     const TBNamePopup = document.getElementById("popupChangeTBName");
     const TBCreatePopup = document.getElementById("popupCreateTB");
-    const fertigPopup = document.getElementById("popupTaskFertig");
     if (event.target === TBNamePopup) {
         TBNamePopup.style.display = "none";
-        can_sync = true
-    }
-
-    else if (event.target === fertigPopup) {
-        fertigPopup.style.display = "none";
         can_sync = true
     }
 

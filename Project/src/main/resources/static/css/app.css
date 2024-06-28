@@ -1,12 +1,3 @@
-/*Author: Pair Programming: Zana Salih Hama, Paula Krasnovska*/
-
-/**
-Revisited: PK, unterschiedliche ids zu einer Klasse zusammengefügt
-Funktion: Login Hintergrund
-Grund: /
-User-ID/Task-ID: A3.F1
-**/
-
 .loginBackground{
 display: flex;
 align-items: center;
@@ -42,13 +33,6 @@ background-image: repeating-linear-gradient(135deg, hsla(280, 0%, 67%, 0.06) 0px
   box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-/**
-Revisited: /
-Funktion: Button zur Login-Bestätigung
-Grund: /
-User-ID/Task-ID: A3.F1
-**/
-
 #loginButton{
   display: block;
   position: relative;
@@ -71,13 +55,6 @@ User-ID/Task-ID: A3.F1
   cursor: pointer;  
 }
 
-/**
-Revisited: /
-Funktion: Eingabe der Login- und Registrierungsdaten
-Grund: /
-User-ID/Task-ID: A3.F1
-**/
-
 .Input{
   margin-bottom: 7%;
   margin-left: 37px;
@@ -93,12 +70,7 @@ User-ID/Task-ID: A3.F1
 .Input:focus{
   background:#0f315c;
 }
-/**
-Revisited: /
-Funktion: Pk: Passwort zurücksetzen Buttons
-Grund: Benutzerfreundlichkeit
-User-ID/Task-ID:
-**/
+
 #noAccount{
   position: relative;
   margin-left: 78px;
@@ -113,6 +85,7 @@ User-ID/Task-ID:
   bottom: 0;
   margin-top: 34px;
 }
+
 #forgotP{margin-left:65px;}
 a{color:#103563;}
 
@@ -137,13 +110,6 @@ a{color:#103563;}
   background-color: rgb(12, 29, 49);
   cursor: pointer;
 }
-
-/**
-Revisited: /
-Funktion: Bestätigung des neuen Passworts mit Button
-Grund: Benutzerfreundlichkeit
-User-ID/Task-ID:
-**/
 
 #newPasswortBtn{
   display: block;
@@ -172,14 +138,6 @@ User-ID/Task-ID:
   font-size: large;
   font-weight: bold;
 }
-
-/**
-Author:Paula Krasnovska
-Revisited: /
-Funktion: Bestätigung des Emailversandts
-Grund: Benutzerfreundlichkeit
-User-ID/Task-ID:
-**/
 
 #emailGesendetPopup{
   width: 200px;

@@ -1,41 +1,32 @@
 <!doctype html>
 <html class="no-js" lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>neues Passwort</title>
     <link rel="stylesheet" href="/css/foundation.css">
     <link rel="stylesheet" href="/css/app.css">
-  </head>
+</head>
 <body>
-<!--
-  Author: Pair Programming: Zana Salih Hama, Paula Krasnovska
-  Revisited: /
-  Funktion: Passwortänderung Page
-  Grund: Benutzerfreundlichkeitf
-  User-ID/Task-ID: /
--->
-
-<div id="primaryContainer" style="height: 350px"></div>
-
-  <div class="loginBackground">
-    <div class="secondaryContainer">
-        <label id = "headerLogin">Passwort ändern</label>
-      <form action="/neuesPasswort" method="post" autocomplete="off">
-        <input required placeholder="Sicherheitscode" th:value="${Code}" class = "Input" name = "Sicherheitscode">
-        <input type="password" required placeholder="Passwort ändern" class = "Input" name="Passwort">
-        <input type="hidden" name="EMail" th:value="${Mail}">
-        <button id="newPasswortBtn" type="submit">Ändern</button>
-      <p id = "yesAccount"> Du besitzt doch einen Account?
-        <a href="/RegisterPage">Hier anmelden! </a></p>
-     </form>
+    <div id="primaryContainer" style="height: 350px"></div>
+    <div class="loginBackground">
+        <div class="secondaryContainer">
+            <label id = "headerLogin">Passwort ändern</label>
+            <form action="/neuesPasswort" method="post" autocomplete="off">
+                <input required placeholder="Sicherheitscode" th:value="${Code}" class = "Input" name = "Sicherheitscode">
+                <input type="password" required placeholder="Passwort ändern" class = "Input" name="Passwort">
+                <input type="hidden" name="EMail" th:value="${Mail}">
+                <button id="newPasswortBtn" type="submit">Ändern</button>
+            </form>
+            <p id = "yesAccount"> Du besitzt doch einen Account?
+            <a href="/RegisterPage">Hier anmelden! </a></p>
+        </div>
     </div>
-</div>
 
     <script src="/js/vendor/jquery.js"></script>
     <script src="/js/vendor/what-input.js"></script>
     <script src="/js/vendor/foundation.js"></script>
     <script src="/js/app.js"></script>
-  </body>
+</body>
 </html>

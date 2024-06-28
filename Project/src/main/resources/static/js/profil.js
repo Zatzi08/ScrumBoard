@@ -17,6 +17,15 @@ function toggleProfilMenu(uname, workDesc, priDesc){
     // document.getElementById('inputWDesc').placeholder = workDesc
 }
 
+var rolesList = document.getElementById('roleDropdown');
+rolesList.getElementsByClassName('setRolesBtn')[0].onclick = function(evt) {
+    if (rolesList.classList.contains('visible')) {
+        rolesList.classList.remove('visible');
+    }
+    else
+        rolesList.classList.add('visible');
+}
+
 window.onclick = function(event) {
     const profilPopup = document.getElementById("profilEditMenü");
     if (event.target === profilPopup) {
