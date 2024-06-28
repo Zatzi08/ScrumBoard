@@ -160,18 +160,18 @@
     background: rgba(0,0,0,0);
 }
 
-.dropdown-check-list {
+.roleDropdown {
     display: inline-block;
     /*display: inline-flex;*/
     align-items: center;
     justify-content: center;
     right:0;
-    width: 70%;
+    width: 95%;
     height:50px;
     margin-left:3%;
 }
 
-.dropdown-check-list .anchor {
+.setRolesBtn {
     position: relative;
     cursor: pointer;
     display: inline-flex;
@@ -190,7 +190,7 @@
     float: right;
 }
 
-.dropdown-check-list ul.items {
+.roles {
     position: relative;
     padding: 2px;
     display: none;
@@ -198,19 +198,17 @@
     border-top: none;
     z-index: 1;
     background-color: #23353f;
-    width: -webkit-fill-available;
+    width: 100%;
+    margin-top:50px;
     height: 150px;
     border-radius: 8px;
     margin-left: -100%;
     float: right;
     left: 2px;
+
 }
 
-.dropdown-check-list ul.items li {
-    list-style: none;
-}
-
-.dropdown-check-list.visible .items {
+.roleDropdown.visible .roles {
     display: block;
 }
 

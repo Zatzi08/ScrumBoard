@@ -114,6 +114,15 @@
                 </select>
                 <input type="hidden" id = "editId" name="id" value="-1">
                 <input type="hidden" id = "editPrio" name="priority" value="1">
+                <label>Rolle für die Task festlegen</label>
+                <div id="roleTaskDropdown" class = "dropdown-check-list">
+                    <button type="button" class = "chooseRoleTaskBtn" style = "width:100%">
+                        <label style = "font-size: 12px;margin-right: 80%;width: 80%;color: #afafaf;">Rolle auswählen</label>
+                    </button>
+                    <ul id="roleTaskList" class="items" style="margin-top:7%; width:100%">
+                        <li><input  type="checkbox"/> </li>
+                    </ul>
+                </div>
                 <button type="button" th:sessionID="${sessionID}" onclick="saveTaskWithUserList(this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
             </form>
         </div>

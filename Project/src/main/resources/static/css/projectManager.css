@@ -466,7 +466,7 @@ hr {
     0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 
-.editRoles-content select{
+.filterRolesDropdown {
     display: inline-block;
     width: auto;
     height:25px;
@@ -476,6 +476,7 @@ hr {
     border-radius: 8px;
     float:left;
     border-color:#1b2947;
+    margin-bottom:12px;
 }
 
 
@@ -550,7 +551,7 @@ ul{list-style-type: none;}
     margin-left: 30%;
 }
 
-.dropdown-check-list .anchor {
+.anchor, .chooseRoleTaskBtn {
     position: relative;
     cursor: pointer;
     display: inline-flex;
@@ -583,16 +584,21 @@ ul{list-style-type: none;}
     margin-left: -100%;
     float: right;
     left: 2px;
+    overflow:auto;
 }
 
-.dropdown-check-list ul.items li {
-    list-style: none;
-}
+.dropdown-check-list ul.items li, #chooseRoleTaskBtn ul.items li {list-style: none;}
 
 
-.dropdown-check-list.visible .items {
-    display: block;
+
+.dropdown-check-list.visible .items, #chooseRoleTaskBtn.visible .items {display: block;}
+
+#roleTaskDropdown{
+    width:100%;
+    height:auto;
+    margin-left:0;
 }
+
 
 #Hi{
     border: solid #374c5e;

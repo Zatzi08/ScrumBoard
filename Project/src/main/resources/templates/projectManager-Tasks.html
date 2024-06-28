@@ -114,6 +114,15 @@
                     <option id="TBDropDown:-1" value="-1" selected = "selected">Wähle zugehöriges Task-Board</option>
                     <option th:each="TB : ${TaskBoard}" th:id="@{TBDropdown:{id}(id=${TB.getID()})}" th:value="${TB.getID()}" th:text="${TB.getName()}"></option>
                 </select>
+                <label>Rolle für die Task festlegen</label>
+                <div id="roleTaskDropdown" class = "dropdown-check-list">
+                    <button type="button" class = "chooseRoleTaskBtn" style = "width:100%">
+                        <label style = "font-size: 12px;margin-right: 80%;width: 80%;color: #afafaf;">Rolle auswählen</label>
+                    </button>
+                    <ul id="roleTaskList" class="items" style="margin-top:7%; width:100%">
+                        <li><input  type="checkbox"/> </li>
+                    </ul>
+                </div>
                 <button type="button" th:sessionID="${sessionID}" onclick="saveTaskWithUserList(this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
             </form>
         </div>
@@ -125,6 +134,8 @@
         </div>
         <label id="percentageDifferenceText"></label>
     </div>
+
+    <div id = "debug" style = "width:500px; background-color: red; display:none">Debug jaaa</div>
 
     <script src="/js/vendor/jquery.js"></script>
     <script src="/js/vendor/what-input.js"></script>
@@ -143,6 +154,25 @@
     <script type="application/javascript">
         window.onbeforeunload = disconnect();
         window.onload = connect();
+
+        window.onclick = function(event) {
+            var userDropdown = document.getElementById("list1");
+            var roleDropdown = document.getElementById("roleTaskDropdown");
+            var userAuswahl = document.getElementById("usersAuswahlID");
+            var roleAuswahl = document.getElementById("roleTaskList");
+            var editOverlay = document.getElementsByClassName("editmenu");
+            var debug = document.getElementById("debug");
+            if (event.target == editOverlay) {
+                userAuswahl.style.display = "none";
+                debug.style.display= "block";
+
+            }
+            else if (event.target == editOverlay){
+                roleAuswahl.style.display = "none";
+                debug.style.display= "block";
+
+            }
+        }
     </script>
     <script>
         // Filter
@@ -189,6 +219,8 @@
                 });
             }
         });
+
+
     </script>
 </body>
 </html>
