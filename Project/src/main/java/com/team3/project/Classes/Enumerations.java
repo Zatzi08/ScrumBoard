@@ -1,9 +1,11 @@
 package com.team3.project.Classes;
 
+import jakarta.annotation.Nonnull;
+
 public class Enumerations {
 
     // default Priority = low
-    public enum Priority {low, normal, high, urgent;}
+    public enum Priority {low, normal, high, urgent}
     /*Legende:
      * Nutzer = 1
      * Manager = 2
@@ -13,6 +15,19 @@ public class Enumerations {
     public enum Role {admin, ProductOwner, Manager, Nutzer}
     public enum ResponceTyp {newItem, deletedItem, changedPrimitivParam, changedConplexParam, ERROR}
 
+    /* Author: Henry van Rooyen
+     * Revisited: /
+     * Function: HelperFunction -> converts authorization from role to int
+     * UserStory/Task-ID: R2.B1 & B2
+     */
+    public static int getAuthorizationFromRoleAsInt(@Nonnull final Role role){
+        return switch (role) {
+            case admin -> 4;
+            case ProductOwner -> 3;
+            case Manager -> 2;
+            case Nutzer -> 1;
+        };
+    }
     /* Author: Lucas Krüger
      * Revisited: /
      * Funktion: Typumwandlung

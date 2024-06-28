@@ -5,6 +5,7 @@ import com.team3.project.Classes.User;
 import com.team3.project.Classes.Role;
 import com.team3.project.DAO.DAORole;
 import com.team3.project.DAOService.DAORoleService;
+import jakarta.annotation.Nonnull;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -55,58 +56,58 @@ public class RoleService {
         //DAORoleService.changeAuthority(uID,newAuthority);
     }
 
+    /* Author: Henry L. Freyschmidt
+     * Revisited: 27.6 by Henry van Rooyen
+     * Function: gets all visualRoles based on role
+     * UserStory/Task-ID: R2.B1
+     */
     /**
      * gets all visual Roles of a real Role
      * @param role - real Role
-     * @return Linked List of visual Roles
-     * @throws Exception Null Param
+     * @return List of visual Roles
      */
-    public LinkedList<Role> getAllRolesByRole(Enumerations.Role role)throws Exception{
-        if(role == null) throw new Exception("Null Role");
-        // return DAORoleService.getAllRolesByRole(role);
-        return null;
+    public List<DAORole> getAllVisualRolesByRole(@Nonnull final Enumerations.Role role){
+        return DAORoleService.getByAuthorization(getAuthorizationFromRoleAsInt(role));
     }
 
+    /* Author: Henry L. Freyschmidt
+     * Revisited: 27.6 by Henry van Rooyen
+     * Function: creates a visualRole based on role
+     * UserStory/Task-ID: R2.B2
+     */
     /**
      * create new visual Roles connected to a real Role
      * @param role - real Role
      * @param newRoleName - Name of new visual Role
      * @throws Exception Null or Empty Params
      */
-    public void createVisualRole(String newRoleName, Enumerations.Role role) throws Exception{
-        if(newRoleName == null) throw new Exception("Null new RoleName");
+    public void createVisualRole(@Nonnull final String newRoleName, @Nonnull final Enumerations.Role role) throws Exception{
         if(newRoleName.isEmpty()) throw new Exception("Empty new RoleName");
-        if(role == null) throw new Exception("Null Role");
-        //DAORoleService.createVisualRole(newRoleName, role);
+        DAORoleService.create(newRoleName, getAuthorizationFromRoleAsInt(role));
     }
 
-    /**
-     * delete visual Roles
-     * @param role - real Role
-     * @param roleName - Name of visual Role
-     * @throws Exception Null or Empty Params
+    /* Author: Henry L. Freyschmidt
+     * Revisited: 28.6 by Henry van Rooyen
+     * Function: deletes visualRole based on id
+     * UserStory/Task-ID: R2.B2
      */
-    public void deleteVisualRole(String roleName, Enumerations.Role role) throws Exception{
-        if(roleName == null) throw new Exception("Null new RoleName");
-        if(roleName.isEmpty()) throw new Exception("Empty new RoleName");
-        if(role == null) throw new Exception("Null Role");
-        //DAORoleService.deleteVisualRole(newRoleName, role);
+    /**
+     * delete visual Role
+     * @param id - role id
+     */
+    public void deleteVisualRoleById(int id){
+        DAORoleService.deleteById(id);
     }
 
     /**
      * change visual Roles Name
-     * @param role - real Role
-     * @param roleName - current visual Roles Name
+     * @param id - role id
      * @param newRoleName - new Name of visual Role
      * @throws Exception Null or Empty Params
      */
-    public void changeVisualRoleName(String roleName, String newRoleName, Enumerations.Role role) throws  Exception{
-        if(roleName == null) throw new Exception("Null current Role Name");
-        if(roleName.isEmpty()) throw new Exception("Empty Role Name");
-        if(newRoleName == null) throw new Exception("Null new Role Name");
+    public void changeVisualRoleName(int id, @Nonnull final String newRoleName) throws  Exception{
         if(newRoleName.isEmpty()) throw new Exception("Empty new Role Name");
-        if(role == null) throw new Exception("Null Role");
-        //DAORoleService.changeVisualRole(roleName, newRoleName, role);
+        DAORoleService.updateNameById(id, newRoleName);
     }
 
     /**
@@ -126,6 +127,13 @@ public class RoleService {
 
     }
 
-
+    /* Author: Henry van Rooyen
+     * Revisited: /
+     * Function: helperFunction -> converts authorization form role to int
+     * UserStory/Task-ID: R2.B1 & B2
+     */
+    public int getAuthorizationFromRoleAsInt(@Nonnull final Enumerations.Role role){
+        return Enumerations.getAuthorizationFromRoleAsInt(role);
+    }
 
 }
