@@ -75,7 +75,7 @@ public class TaskService {
     public void saveTask(Task task) throws Exception{
         if (task == null) throw new Exception("Task not found");
         if (task.getDescription() == null ) throw new Exception("null description");
-        if(task.getUserStoryID() == -1) throw new Exception("invalid UserStory-ID");
+        if(task.getUserStoryID() <= -1) throw new Exception("invalid UserStory-ID");
         if(task.getID() == -1){
             boolean responce = false;
             if(task.getTbID() < 0){
