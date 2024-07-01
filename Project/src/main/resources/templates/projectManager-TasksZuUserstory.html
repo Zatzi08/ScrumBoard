@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projektmanager-ZuUserStory</title>
+    <title>Tasks zur Userstory | Projektmanager</title>
     <link rel="stylesheet" href="/css/foundation.css">
     <link rel="stylesheet" href="/css/projectManager.css">
     <link rel="stylesheet" href="/css/setup.css">
+    <link rel="icon" type="image/ico" href="/img/favicon.ico"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
@@ -32,21 +33,25 @@
                 <table class="userTaskTable">
                     <thead id="userTaskTableHead">
                     <tr>
-                        <th id="A" th:USID="${Story.getID()}" style="padding: 1% 1% 1% 12%;">
+                        <th id="A" th:USID="${Story.getID()}" style="padding: 1% 1% 1% 25%;">
                             <label th:text="@{Tasks zur Story {name}(name=${Story.getName()})}" id="userTaskTableHeadLabel"></label>
                             <div id="moin" style="display: inline">
-                                <button type="button" id="visAllTasks" th:est="${Story.getAnforderungenG()}" th:real="${Story.getAnforderungenA()}" th:names="${Story.getTNames()}" onclick="visualisationOfAllTimes(this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('names'))" title="Schätzungstracker für alle Tasks"><i class="fa-solid fa-chart-bar" style="color: white; margin-top: 3.7px;"></i></button>
+                                <button type="button" id="visAllTasks" th:est="${Story.getAnforderungenG()}" th:real="${Story.getAnforderungenA()}" th:names="${Story.getTNames()}" onclick="visualisationOfAllTimes(this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('names'))" title="Schätzungstracker für alle Tasks"><i class="fa-solid fa-chart-bar" style="color: white; margin-top: 3.4px;"></i></button>
                                 <select id = "filterDropdown" th:Sid="${sessionID}" title="Filter">
                                     <option id="Filter:0" value="0">Keine Filter</option>
-                                    <option disabled>—————————</option>
+                                    <option disabled>————————</option>
                                     <option id="Filter:1" value="1" >Priorität - Low</option>
                                     <option id="Filer:2" value="2" >Priorität - Normal</option>
                                     <option id="Filer:3" value="3" >Priorität - High</option>
                                     <option id="Filer:4" value="4" >Priorität - Urgent</option>
-                                    <option disabled>—————————</option>
+                                    <option disabled>————————</option>
                                     <option id="Filter:5" value="5">Erledigt</option>
                                     <option id="Filter:6" value="6">Nicht Erledigt</option>
                                 </select>
+                                <div class="search-container">
+                                    <input type="search" placeholder="Suchen..." id="sucheInput" title="Suche nach Beschreibung"/>
+                                    <button type="button" id="clearButton" onclick="clearSearch()" title="Eingabe löschen">×</button>
+                                </div>
                             </div>
                         </th>
                     </tr>
@@ -64,9 +69,9 @@
                             </div>
                             <br/>
                             <i class="fa-solid fa-people-group" id="iContent4"></i><label class="iContent-Label" style="margin-left: 8px; font-size: 16px">Rolle</label><label title="Rolle" class="userTaskTableBody-Content">Rolle</label>
-                            <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label">Priorität</label><label th:text = "${item.priority}" title="Priorität der Task" class="userTaskTableBody-Content">Priorität</label>
+                            <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label">Priorität</label><label th:text = "${item.priority}" title="Priorität der Task" class="userTaskTableBody-Content" id="userTaskTableBody-ContentPriority">Priorität</label>
                             <p class="userTaskTableBody-Border"></p>
-                            <i class = "fa-solid fa-bars" id="iContent3"></i><label class="iContent-Label">Beschreibung</label><label class="userTaskTableBody-Content" th:text = "${item.description}" title="Beschreibung der Task">Beschreibung</label>
+                            <i class = "fa-solid fa-bars" id="iContent3"></i><label class="iContent-Label">Beschreibung</label><label class="userTaskTableBody-Content" id="userTaskTableBody-ContentDescription" th:text = "${item.description}" title="Beschreibung der Task">Beschreibung</label>
                             <div id="userTaskTableBody-BottomAlignment">
                                 <span id="userTaskTableBody-TaskDone" th:if="${item.isDone()}"> <i class="fa fa-check-square"></i> Erledigt</span>
                                 <label class = "userTaskTableContentSubdate" th:text="${item.getDueDateAsPresentable()}" title="Frist der Task">Abgabedatum</label>
@@ -114,7 +119,7 @@
                 </select>
                 <input type="hidden" id = "editId" name="id" value="-1">
                 <input type="hidden" id = "editPrio" name="priority" value="1">
-                <label>Rolle für die Task festlegen</label>
+                <label style="margin-top: 15px;">Rolle für die Task festlegen</label>
                 <div id="roleTaskDropdown" class = "dropdown-check-list">
                     <button type="button" class = "chooseRoleTaskBtn" style = "width:100%">
                         <label style = "font-size: 12px;margin-right: 80%;width: 80%;color: #afafaf;">Rolle auswählen</label>
@@ -156,10 +161,6 @@
     </script>
     <script>
         // Filter
-        if (JSON.parse(document.getElementById('visAllTasks').getAttribute('names')).length === 0){
-            document.getElementById('visAllTasks').remove()
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
             const filterDropdown = document.getElementById('filterDropdown');
             filterDropdown.addEventListener('change', filterTable);
@@ -203,6 +204,30 @@
                 });
             }
         });
+    </script>
+    <script>
+        document.getElementById('sucheInput').addEventListener('input', function () {
+            filterTasks();
+        });
+
+        function clearSearch() {
+            document.getElementById('sucheInput').value = '';
+            filterTasks();
+        }
+
+        function filterTasks() {
+            const filter = document.getElementById('sucheInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#userTaskTableBody tr');
+
+            rows.forEach(row => {
+                const description = row.querySelector('#userTaskTableBody-ContentDescription').textContent.toLowerCase();
+                if (description.includes(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
     </script>
 </body>
 </html>

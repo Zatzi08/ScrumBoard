@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projektmanager-Nutzer</title>
+    <title>Nutzer | Projektmanager</title>
     <link rel="stylesheet" href="/css/foundation.css">
     <link rel="stylesheet" href="/css/projectManager.css">
     <link rel="stylesheet" href="/css/setup.css">
+    <link rel="icon" type="image/ico" href="/img/favicon.ico"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
@@ -60,7 +61,7 @@
 
     <div id = "roleOverlay" style = "display:none">
         <div class = "editMenu"  id = "editRolesMenu">
-            <label class = "roleTitle" >  Rollen bearbeiten und erstellen <i class = "fa fa-pencil"></i><span class="closeToggleEdit" onclick="toggleRolesEditMenu()">&times;</span></label>
+            <label class = "roleTitle"><i class = "fa fa-pencil"></i> Rollen bearbeiten und erstellen<span class="closeToggleEdit" onclick="toggleRolesEditMenu()">&times;</span></label>
             <div class="editRoles-content">
                 <select class = "filterRolesDropdown"  title="Nach Rechten Filtern">
                     <option value="0">Kein Filter</option>
@@ -79,7 +80,7 @@
 
     <div id = "roleOverlay2" style = "display:none;z-index:3" >
         <div id = "editRoleNameMenu" style ="z-index:4">
-            <label class = "roleTitle" >  Rolle erstellen <i class = "fa fa-pencil"></i><span class="closeToggleEdit" onclick = "toggleRoleNameMenu()">&times;</span></label>
+            <label class = "roleTitle" ><i class = "fa fa-pencil"></i> Rolle erstellen <span class="closeToggleEdit" onclick = "toggleRoleNameMenu()">&times;</span></label>
             <div class="editRolesName-content">
                 <input id = "roleNameInput" placeholder = "Namen der Rolle eingeben">
                 <div id = "rightsForRoles">
