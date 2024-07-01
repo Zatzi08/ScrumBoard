@@ -131,7 +131,7 @@ public class AccountService {
         if(daoUserList != null){
             User toAdd;
             for(DAOUser daoUser : daoUserList){
-                toAdd = new User(daoUser.getName(),daoUser.getId(), convertDaoRolesToEnumRoles(daoUser.getRoles())  , daoUser.getAuthorization().getAuthorization());
+                toAdd = new User(daoUser.getName(),daoUser.getId(), RoleService.toRoleList(daoUser.getRoles()), daoUser.getAuthorization().getAuthorization());
                 list.add(toAdd);
             }
         }
@@ -182,9 +182,10 @@ public class AccountService {
         if (responce) {
             try {
                 user = DAOUserService.getBySessionId(sessionId);
+                user = DAOUserService.getWithRolesById(user.getId());
                 observer.sendToProfileByID(1,
                         new Profile(user.getId(), user.getName(), user.getEmail(), user.getPrivatDescription(),
-                                user.getWorkDescription(), null, user.getAuthorization().getAuthorization()));
+                                user.getWorkDescription(), RoleService.toRoleList(user.getRoles()), user.getAuthorization().getAuthorization()));
             } catch (Exception e) {
                 System.out.println("Observer nicht initialisiert");
             }
@@ -205,9 +206,10 @@ public class AccountService {
      */
     public Profile getProfileByEmail(String email) throws Exception {
         if (email == null || email.isEmpty()) throw new Exception("Null EMail");
-        DAOUser user = DAOUserService.getById(DAOUserService.getIdByMail(email));
+        DAOUser user = DAOUserService.getWithRolesById(DAOUserService.getIdByMail(email));
         if (user == null) throw new Exception("User not found");
-        return new Profile(user.getId(),user.getName(),user.getEmail(), user.getPrivatDescription(), user.getWorkDescription(), null, user.getAuthorization().getAuthorization());
+
+        return new Profile(user.getId(),user.getName(),user.getEmail(), user.getPrivatDescription(), user.getWorkDescription(), RoleService.toRoleList(user.getRoles()), user.getAuthorization().getAuthorization());
     }
 
     /* Author: Lucas Krüger
@@ -225,8 +227,9 @@ public class AccountService {
     public Profile getProfileByID(String sessionId) throws Exception {
         if (sessionId == null || sessionId.isEmpty()) throw new Exception("Null ID");
         DAOUser user = DAOUserService.getBySessionId(sessionId);
+        user = DAOUserService.getWithRolesById(user.getId());
         if (user == null) throw new Exception("User not found");
-        return new Profile(user.getId(), user.getName(),user.getEmail(), user.getPrivatDescription(), user.getWorkDescription(), null, user.getAuthorization().getAuthorization());
+        return new Profile(user.getId(), user.getName(),user.getEmail(), user.getPrivatDescription(), user.getWorkDescription(), RoleService.toRoleList(user.getRoles()), user.getAuthorization().getAuthorization());
     }
 
     /* Author: Lucas Krüger
@@ -257,7 +260,7 @@ public class AccountService {
         if(daoUserList != null){
             Profile toAdd;
             for(DAOUser daoUser : daoUserList){
-                toAdd = new Profile(daoUser.getId(),daoUser.getName(),daoUser.getEmail(),daoUser.getPrivatDescription(),daoUser.getWorkDescription(),null, daoUser.getAuthorization().getAuthorization());
+                toAdd = new Profile(daoUser.getId(),daoUser.getName(),daoUser.getEmail(),daoUser.getPrivatDescription(),daoUser.getWorkDescription(),RoleService.toRoleList(daoUser.getRoles()), daoUser.getAuthorization().getAuthorization());
                 list.add(toAdd);
             }
         }
@@ -267,14 +270,14 @@ public class AccountService {
     public void setAuthority(int usID, int auth) throws Exception {
         if (usID < 0) throw new Exception("Null USID");
         if (auth <= 0 || auth > 4) throw new Exception("Invalid Auth");
-        DAOUser du = DAOUserService.getById(usID);
+        DAOUser du = DAOUserService.getWithRolesById(usID);
         if (du == null) throw new Exception("User not Found");
         boolean responce = DAOUserService.updateAuthorizationById(du.getId(),auth);
         if (responce) {
             try {
                 observer.sendToProfileByID(1,
                         new Profile(du.getId(), du.getName(), du.getEmail(), du.getPrivatDescription(),
-                                du.getWorkDescription(), null, auth));
+                                du.getWorkDescription(), RoleService.toRoleList(du.getRoles()), auth));
             } catch (Exception e) {
                 System.out.println("Observer nicht initialisiert");
             }

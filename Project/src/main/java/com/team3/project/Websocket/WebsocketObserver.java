@@ -1,9 +1,16 @@
 package com.team3.project.Websocket;
 
+import com.team3.project.Classes.Role;
 import com.team3.project.Classes.UserStory;
 import com.team3.project.Classes.observable;
+import com.team3.project.DAO.DAORole;
+import com.team3.project.DAO.DAOUser;
+import com.team3.project.DAOService.DAORoleService;
+import com.team3.project.DAOService.DAOUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class WebsocketObserver {
@@ -74,5 +81,16 @@ public class WebsocketObserver {
     public void sendToTaskListGroup(int messageTyp, observable object){
         if (messageTyp == 0) sendToTaskGroup(messageTyp,object);
         else sendToTaskBoardByID(messageTyp, object);
+    }
+
+    public void sendToRoleGroup(int messageTyp, Role role) {
+        List<DAOUser> dul = DAOUserService.getAllWithRoles();
+        DAORole dr = DAORoleService.getByID(role.getID());
+        for (DAOUser du : dul){
+            if (du.getRoles().contains(dr)){
+                sendToProfileByID(du.getId(), role);
+            }
+        }
+        service.sendMessage("PM-N", messageTyp, role);
     }
 }

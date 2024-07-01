@@ -4,13 +4,11 @@ import com.team3.project.Classes.*;
 import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskList;
 import com.team3.project.DAO.DAOUser;
-import com.team3.project.DAOService.DAOTaskListService;
-import com.team3.project.DAOService.DAOTaskService;
-import com.team3.project.DAOService.DAOUserService;
-import com.team3.project.DAOService.DAOUserStoryService;
+import com.team3.project.DAOService.*;
 import com.team3.project.Websocket.WebsocketObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.team3.project.DAO.DAORole;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -351,7 +349,7 @@ public class TaskService {
                 DAOTask dt = DAOTaskService.getWithUsersById(tid);
                 List<User> ul = new LinkedList<User>();
                 dt.getUsers().forEach(du ->{
-                    User toAdd = new User(du.getName(),du.getId(), null, du.getAuthorization().getAuthorization());
+                    User toAdd = new User(du.getName(),du.getId(), RoleService.toRoleList(du.getRoles()), du.getAuthorization().getAuthorization());
                     ul.add(toAdd);
                 });
                 observer.sendToTaskGroup(3,

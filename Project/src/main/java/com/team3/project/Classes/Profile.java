@@ -3,6 +3,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.LinkedList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -11,10 +12,10 @@ public class Profile extends dataClasses implements observable {
     private String email;
     private String privatDesc;
     private String workDesc;
-    private LinkedList<Role> roles;
+    private List<Role> roles;
     private int authorization; //von der DB gestellt
 
-    public Profile(int id, String uname,String email, String privatDesc, String workDesc, LinkedList<Role> roles, int authorization){
+    public Profile(int id, String uname,String email, String privatDesc, String workDesc, List<Role> roles, int authorization){
         super(id);
         this.uname = uname;
         this.email = email;

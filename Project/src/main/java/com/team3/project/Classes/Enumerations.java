@@ -1,7 +1,9 @@
 package com.team3.project.Classes;
 
 import jakarta.annotation.Nonnull;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Enumerations {
 
     // default Priority = low
@@ -14,6 +16,16 @@ public class Enumerations {
      */
     public enum Role {admin, ProductOwner, Manager, Nutzer}
     public enum ResponceTyp {newItem, deletedItem, changedPrimitivParam, changedConplexParam, ERROR}
+
+    public static Role getRoleFromInt(int role){
+        return switch (role) {
+            case 4 -> Role.admin;
+            case 3 -> Role.ProductOwner;
+            case 2 -> Role.Manager;
+            default -> Role.Nutzer;
+        };
+    }
+
 
     /* Author: Henry van Rooyen
      * Revisited: /

@@ -5,6 +5,8 @@ import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOTaskBoardService;
 import com.team3.project.DAOService.DAOTaskService;
+import com.team3.project.DAOService.DAOUserService;
+import com.team3.project.service.RoleService;
 import com.team3.project.service.UserStoryService;
 import lombok.*;
 
@@ -104,7 +106,7 @@ public class Task extends dataClasses implements observable {
         List<DAOUser> dul = DAOTaskService.getWithUsersById(this.getID()).getUsers();
         List<User> list = new LinkedList<User>();
         for (DAOUser u : dul){
-            User toAdd = new User(u.getName(),u.getId(),new LinkedList<Enumerations.Role>(),u.getAuthorization().getAuthorization());
+            User toAdd = new User(u.getName(),u.getId(), RoleService.toRoleList(u.getRoles()),u.getAuthorization().getAuthorization());
             list.add(toAdd);
         }
         return list;
@@ -115,7 +117,8 @@ public class Task extends dataClasses implements observable {
         List<String> list = new LinkedList<String>();
         if (!dul.isEmpty()) {
             for (DAOUser u : dul) {
-                User toAdd = new User(u.getName(), u.getId(), new LinkedList<Enumerations.Role>(), u.getAuthorization().getAuthorization());
+                u = DAOUserService.getWithRolesById(u.getId());
+                User toAdd = new User(u.getName(), u.getId(), RoleService.toRoleList(u.getRoles()), u.getAuthorization().getAuthorization());
                 list.add(toAdd.toJSON());
             }
         }

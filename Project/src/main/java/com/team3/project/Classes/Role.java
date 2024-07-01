@@ -5,9 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Role extends dataClasses {
+public class Role extends dataClasses implements observable{
     private String name;
-    private int auth;
+    private Enumerations.Role auth;
 
     public Role(int ID, String name) {
         super(ID);
@@ -15,10 +15,21 @@ public class Role extends dataClasses {
     }
 
     public String toJSON() {
-        // TODO: implement toJSON
         System.out.println("Role toJSON muss noch implementiert werden");
         String json = "{";
+        json += "\"id\":\""+this.getID();
+        json += "\",\"name\":\""+this.getName();
         json += "}";
         return json;
+    }
+
+    @Override
+    public Integer getUSID_P() {
+        return null;
+    }
+
+    @Override
+    public Integer getTBID_P() {
+        return null;
     }
 }

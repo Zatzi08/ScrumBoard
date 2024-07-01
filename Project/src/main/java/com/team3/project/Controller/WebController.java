@@ -1,9 +1,6 @@
 package com.team3.project.Controller;
 
-import com.team3.project.Classes.Profile;
-import com.team3.project.Classes.Task;
-import com.team3.project.Classes.TaskBoard;
-import com.team3.project.Classes.UserStory;
+import com.team3.project.Classes.*;
 import com.team3.project.DAOService.DAOAccountService;
 import com.team3.project.DAOService.DAOTaskBoardService;
 import com.team3.project.DAOService.DAOUserService;
@@ -15,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -345,6 +343,7 @@ public class WebController {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 return new ModelAndView("projectManager-Nutzer")
                         .addObject("User", presentationToLogic.accountService.getAllProfiles())
+                        .addObject("Roles", presentationToLogic.roleService.getAllVisualRoles())
                         .addObject("sessionID", sessionID)
                         .addObject("auth",presentationToLogic.accountService.getAuthority(sessionID));
             }
@@ -664,6 +663,72 @@ public class WebController {
         }
         return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
     }
+
+    @RequestMapping(value = "/setVisRoleOfUser", method = RequestMethod.POST)
+    private ResponseEntity<HttpStatus> setVisRoleOfUser(@RequestHeader(value = "sessionID") String sessionID,
+                                                        @RequestBody LinkedList<Role> roleList,
+                                                        @RequestParam(value = "uID") int uID){
+        try {
+            if (presentationToLogic.webSessionService.verify(sessionID)){
+                presentationToLogic.roleService.addRolesToUser(uID, roleList);
+                return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
+    }
+
+    @RequestMapping(value = "/saveVisRole", method = RequestMethod.POST)
+    private ResponseEntity<HttpStatus> saveVisRole(@RequestHeader(value = "sessionID") String sessionID,
+                                                   @RequestBody Role role,
+                                                   @RequestParam(value = "auth") int auth){
+        try {
+            if (presentationToLogic.webSessionService.verify(sessionID)  && (presentationToLogic.accountService.getAuthority(sessionID) == 4 || presentationToLogic.accountService.getAuthority(sessionID) == 3)){
+                if (role.getID() == -1) presentationToLogic.roleService.createVisualRole(role.getName(), presentationToLogic.roleService.getRoleByInt(auth));
+                else presentationToLogic.roleService.changeVisualRoleName(role.getID(), role.getName());
+                return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
+    }
+
+    @RequestMapping(value = "/deleteVisRole", method = RequestMethod.POST)
+    private ResponseEntity<HttpStatus> deleteRole(@RequestHeader(value = "sessionID") String sessionID,
+                                                  @RequestBody Role role ){
+        try {
+            if (presentationToLogic.webSessionService.verify(sessionID) && (presentationToLogic.accountService.getAuthority(sessionID) == 4 || presentationToLogic.accountService.getAuthority(sessionID) == 3)){
+                presentationToLogic.roleService.deleteVisualRoleById(role.getID());
+                return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
+    }
+
+    /*
+    @RequestMapping(value = "/setVisRoleToTask", method = RequestMethod.POST)
+    private ResponseEntity<HttpStatus> setVisRoleToTask(@RequestHeader(value = "sessionID") String sessionID,
+                                                        @RequestBody Role role,
+                                                        @RequestParam(value = "tID", required = true) int tID){
+        try {
+            if (presentationToLogic.webSessionService.verify(sessionID)){
+                presentationToLogic.taskService.setVisRole(role, tID);
+                return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<HttpStatus>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
+    }
+    */
 
     /* Author: Lucas Krüger
      * Revisited:

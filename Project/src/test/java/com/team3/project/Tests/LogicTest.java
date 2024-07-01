@@ -1280,7 +1280,7 @@ public class LogicTest extends BaseLogicTest{
         }
 
         try{
-            rservice.saveVisualRole(visualRole, user, role);
+            rservice.addVisualRole(visualRole, user, role);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -1310,7 +1310,7 @@ public class LogicTest extends BaseLogicTest{
         Role failVisualRole = null;
         try{
             count_correct_exception_checks++;
-            rservice.saveVisualRole(visualRole, user,role);
+            rservice.addVisualRole(visualRole, user,role);
         }catch (Exception e){
             count_correct_exceptions++;
         }
@@ -1319,7 +1319,7 @@ public class LogicTest extends BaseLogicTest{
             count_correct_exception_checks++;
             failVisualRole = new Role(-10, null);
             failVisualRole.setName("Fail");
-            rservice.saveVisualRole(failVisualRole, user,role);
+            rservice.addVisualRole(failVisualRole, user,role);
         }catch (Exception e){
             count_correct_exceptions++;
         }
@@ -1327,7 +1327,7 @@ public class LogicTest extends BaseLogicTest{
         try{
             count_correct_exception_checks++;
             failVisualRole.setName("");
-            rservice.saveVisualRole(failVisualRole, user,role);
+            rservice.addVisualRole(failVisualRole, user,role);
         }catch (Exception e){
             count_correct_exceptions++;
         }
@@ -1335,7 +1335,7 @@ public class LogicTest extends BaseLogicTest{
         try{
             count_correct_exception_checks++;
             failVisualRole.setName("Fail");
-            rservice.saveVisualRole(visualRole, null,role);
+            rservice.addVisualRole(visualRole, null,role);
         }catch (Exception e){
             count_correct_exceptions++;
         }
@@ -1343,14 +1343,14 @@ public class LogicTest extends BaseLogicTest{
         try{
             count_correct_exception_checks++;
 
-            rservice.saveVisualRole(null, new User("daveT17", -1, null, 1),role);
+            rservice.addVisualRole(null, new User("daveT17", -1, null, 1),role);
         }catch (Exception e){
             count_correct_exceptions++;
         }
 
         try{
             count_correct_exception_checks++;
-            rservice.saveVisualRole(visualRole, user,null);
+            rservice.addVisualRole(visualRole, user,null);
         }catch (Exception e){
             count_correct_exceptions++;
         }

@@ -308,7 +308,7 @@ function setRollsOfTask(sessionID, tid, rIDs){
 }
 
 function saveRole(sessionID, rid, rName, auth){
-    let url = "saveRole"
+    let url = "saveVisRole?auth=" + auth;
 
     return  fetch(url, {
         method: 'POST',
@@ -320,10 +320,47 @@ function saveRole(sessionID, rid, rName, auth){
         body: JSON.stringify({
             "id":rid,
             "name": rName,
-            "auth": auth
         })
     }).then(r =>{
         document.location.reload()
+    })
+}
+
+function deleteRole(sessionID, rID, rName){
+    let url = "deleteVisRole";
+
+    return  fetch(url, {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionID': sessionID
+        },
+        body: JSON.stringify({
+            "id": rid,
+            "name": rName,
+        })
+    }).then(r =>{
+        document.location.reload()
+    })
+}
+
+function setRollsOfUser(sessionID, uId, roles){
+    let url = "setVisRoleOfUser?uID=" + uId;
+
+    return  fetch(url, {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json',
+            'sessionID': sessionID
+        },
+        body: JSON.stringify(roles)
+    }).then(r =>{
+        if (!r.ok){
+            document.location.reload()
+        }
+        return r
     })
 }
 

@@ -1,5 +1,6 @@
 package com.team3.project.Facede;
 
+import com.team3.project.Classes.Enumerations;
 import com.team3.project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,10 @@ public class PresentationToLogic {
     public WebSessionService webSessionService;
     @Autowired
     public TaskBoardService taskBoardService;
+    @Autowired
+    public RoleService roleService;
+    @Autowired
+    public Enumerations enumerations;
 
     public PresentationToLogic init_facade(){
         this.taskService = new TaskService();
@@ -23,6 +28,7 @@ public class PresentationToLogic {
         this.accountService = new AccountService();
         this.taskBoardService = new TaskBoardService();
         this.webSessionService = new WebSessionService();
+        this.roleService = new RoleService();
         return this;
     }
 }
