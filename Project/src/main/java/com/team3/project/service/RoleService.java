@@ -161,7 +161,7 @@ public class RoleService {
         DAOUser du = DAOUserService.getWithAuthorizationById(uID);
         if (du == null) throw new Exception("User not found");
         DAORole dr = DAORoleService.getByID(visualRole.getID());
-        if (du == null) throw new Exception("User not found");
+        if (dr == null) throw new Exception("Visual Role not found");
         if (du.getAuthorization().getAuthorization() != dr.getAuthorizations().get(0).getAuthorization()) throw new Exception("Mismatching Authorisation");
         boolean responce = DAOUserService.updateAddRoleById(du.getId(), dr);
         if (responce) {
