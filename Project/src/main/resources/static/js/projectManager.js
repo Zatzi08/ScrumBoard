@@ -322,6 +322,7 @@ function toggleRolesEditMenu() {
 function toggleRoleNameMenu(id = -1, auth = 1, name = ""){
     const rolesNameMenu = document.getElementById("roleOverlay2");
     if(rolesNameMenu.style.display === "none") {
+        can_sync = false
         rolesNameMenu.style.display = "block";
         if (id !== -1){
             document.getElementById('rightsForRoles').style.display = "none"
@@ -332,6 +333,7 @@ function toggleRoleNameMenu(id = -1, auth = 1, name = ""){
         document.getElementById('rightsForRoles').children[0].value = auth
         document.getElementById('roleNameInput').value = name
     } else {
+        can_sync = true
         rolesNameMenu.style.display = "none";
     }
 }
@@ -365,6 +367,7 @@ window.onclick = function(event) {
     else if (event.target == rolesOverlay2 && event.target != roleEditMenu2){
         rolesOverlay2.style.display = "none";
         debug.style.display = "block";
+        can_sync = true
     }
 }
 
