@@ -378,3 +378,15 @@ function saveRoleB(sessionID){
     saveRole(sessionID, id, name, auth)
     can_sync = true
 }
+
+function filterRole(selected) {
+    let authority = selected.value
+    let roleList = document.getElementById("roleList").getElementsByTagName("li");
+    for (var i = 0; i < roleList.length; i++) {
+        if (authority === "0") {
+            roleList[i].style.display = "block";
+        } else if (roleList[i].getAttribute("auth") !== authority) {
+            roleList[i].style.display = "none";
+        }
+    }
+}
