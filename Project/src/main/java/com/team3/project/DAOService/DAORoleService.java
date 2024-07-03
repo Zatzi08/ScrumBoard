@@ -83,6 +83,11 @@ public class DAORoleService {
     public static List<DAORole> getByAuthorization(DAOAuthorization authorization) {
         return getByAuthorization(authorization.getAuthorization());
     }
+
+    static DAORole getWithAuthorizationById(int id) {
+        String joinOnAttributeName = "authorizations";
+        return DAOService.getLeftJoinByID(id, DAORole.class, joinOnAttributeName);
+    }
     
     /* Author: Tom-Malte Seep
      * Revisited: 

@@ -87,7 +87,13 @@ public class DAOUserService {
      */
     public static DAOUser getWithRolesById(int id) {
         String joinAttributeName = "roles";
-        return DAOService.getLeftJoinByID(id, DAOUser.class, joinAttributeName);
+        DAOUser user = DAOService.getLeftJoinByID(id, DAOUser.class, joinAttributeName);
+        List<DAORole> roles = new ArrayList<>();
+        user.getRoles().forEach(role -> {
+            roles.add(DAORoleService.getWithAuthorizationById(role.getId()));
+        });
+        user.setRoles(roles);
+        return user;
     }
 
     /* Author: Tom-Malte Seep
