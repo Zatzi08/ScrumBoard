@@ -166,7 +166,7 @@ function toggleEditBoxT(id, TId, description, usID, dueDate, timeG, tbID, prio, 
         li.children[0].checked = false
     }
 
-    names = parseUser(names)
+    names = JSON.parse(names);
     names.forEach((name) =>{
         id = 'N'+name.id
         document.getElementById(id).children[0].checked = true;

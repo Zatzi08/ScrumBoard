@@ -30,8 +30,8 @@ public class User extends dataClasses implements observable {
         String json = "{";
         json += "\"id\":\""+this.getID();
         json += "\",\"name\":\""+this.getName();
-        json += "\"roles\":\""+ this.roleListAsJson();
-        json += "\",\"authorization\":\""+this.getAuthorization();
+        json += "\",\"roles\":"+ this.roleListAsJson();
+        json += ",\"authorization\":\""+this.getAuthorization();
         json += "\"}";
         return json;
     }

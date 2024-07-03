@@ -15,11 +15,10 @@ public class Role extends dataClasses implements observable{
     }
 
     public String toJSON() {
-        System.out.println("Role toJSON muss noch implementiert werden");
         String json = "{";
         json += "\"id\":\""+this.getID();
         json += "\",\"name\":\""+this.getName();
-        json += "}";
+        json += "\"}";
         return json;
     }
 

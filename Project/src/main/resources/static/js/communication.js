@@ -378,14 +378,3 @@ function getRollen(){
     // TODO: integrate
     return null
 }
-
-function parseUser(a){
-    let list = []
-    while (a !== "]" && a !== "[]"){
-        let user = a.substring(a.indexOf('{'), end = (a.indexOf('}') + 1)).replaceAll("'", '"')
-        a = a.substring(a.indexOf('}') + 1)
-        let ju = JSON.parse(user);
-        list.push(ju)
-    }
-    return list
-}

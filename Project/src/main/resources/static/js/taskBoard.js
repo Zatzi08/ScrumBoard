@@ -263,7 +263,7 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
     document.getElementById('zoomedTaskCard-workedTime').innerText = realTime;
     document.getElementById('zoomedTaskCard-deadline').innerText = DueDate
     document.getElementById('zoomedTaskCard-role').innerText;
-    NutzerList = parseUser(NutzerList)
+    NutzerList = JSON.parse(NutzerList)
     const label = document.getElementById("zoomedTaskCard-assignedUsers");
     label.innerHTML = ""
     NutzerList.slice(0, 5).forEach((nutzer)=>{
@@ -288,17 +288,6 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
     }
     moreUsersCircle.onclick = function (){ openAssignedUsers(NutzerList)
     };
-}
-
-function parseUser(a){
-    let list = []
-    while (a !== "]" && a !== "[]"){
-        let user = a.substring(a.indexOf('{'), end = (a.indexOf('}') + 1)).replaceAll("'", '"')
-        a = a.substring(a.indexOf('}') + 1)
-        let ju = JSON.parse(user);
-        list.push(ju)
-    }
-    return list
 }
 
 function closePopup(){
