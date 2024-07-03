@@ -17,7 +17,7 @@ public class DAOAccountService {
      * @return         true if account creation was successfull
      */
     public static boolean create(String email, String password) {
-        String hashedPassword = DAOStartService.hash(password);
+        String hashedPassword = DAOUserService.hash(password);
         if (!checkMail(email)) {
             try {
                 DAOService.persist(new DAOAccount(email, hashedPassword));
@@ -45,7 +45,7 @@ public class DAOAccountService {
      * @return         true if update was successful
      */
     public static boolean updatePassword(String email, String password) {
-        String hashedPassword = DAOStartService.hash(password);
+        String hashedPassword = DAOUserService.hash(password);
         String parameterName = "email";
         DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
         if (account != null) {
@@ -101,7 +101,7 @@ public class DAOAccountService {
      * @return          true if account exists and has the password
      */
     public static boolean checkLogin(String email, String password) {
-        String hashedPassword = DAOStartService.hash(password);
+        String hashedPassword = DAOUserService.hash(password);
         String parameterName = "email";
         DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
         return (account != null && account.getPassword().equals(hashedPassword)) ? true : false;
