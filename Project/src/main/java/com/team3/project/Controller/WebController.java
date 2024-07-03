@@ -283,6 +283,7 @@ public class WebController {
                 Profile user = presentationToLogic.accountService.getProfileByID(sessionID);
                 return new ModelAndView("profil")
                         .addObject("User" , user)
+                        .addObject("Roles", presentationToLogic.roleService.getAllVisualRoles())
                         .addObject("sessionID", sessionID)
                         .addObject("own", true);
             }
@@ -306,6 +307,7 @@ public class WebController {
             if (presentationToLogic.webSessionService.verify(sessionID)){
                 Profile user = presentationToLogic.accountService.getProfileByEmail(email);
                 return new ModelAndView("profil")
+                        .addObject("Roles", presentationToLogic.roleService.getAllVisualRoles())
                         .addObject("User", user)
                         .addObject("sessionID", sessionID)
                         .addObject("own", false);
@@ -375,6 +377,7 @@ public class WebController {
                         .addObject("AufwandG", presentationToLogic.taskService.getAllAnforderungenG());
             }
         } catch (Exception e){
+            e.printStackTrace();
             return error(e);
         }
         return index();

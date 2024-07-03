@@ -74,9 +74,10 @@
                     <button id = "editRolesBtn"><i class="fa fa-plus-circle" style = "font-size: 23px" onclick = "toggleRoleNameMenu()"></i></button>
                 </div>
                 <ul>
-                    <li class = "visualRole">Rolle 1
-                        <div id="visualRoleRight">
-                            <i class="fa fa-edit" id = "editRoleBtn"></i>
+                    <li th:each="item : ${Roles}" class = "visualRole">
+                        <label th:text="${item.getName()}"></label>
+                        <div class="visualRoleRight">
+                            <i class="fa fa-edit"></i>
                             <i class="fa-solid fa-x"></i>
                         </div>
                     </li>
