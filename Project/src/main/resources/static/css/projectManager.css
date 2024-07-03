@@ -343,8 +343,14 @@ hr {
 
 }
 
+.dropdownTask option{
+    background-color: #F9FBF2;
+    color:black;
+}
+
 .dropdownTask option:hover{
-    background-color: #3a5865;
+    background-color: #D7E2EA;
+    color:black;
 }
 
 .dropdownTask:focus{
@@ -531,7 +537,7 @@ ul{list-style-type: none;}
     width: fit-content;
     height: 30px;
     border-radius: 10px;
-    background-color: #407FA0;
+    background-color: #7ab2cf;
     color: black;
     font-family: Roboto;
     border: 1px solid black;
@@ -744,6 +750,8 @@ hr{
 
 select{
     margin: 0 0 0;
+    color:black;
+    background-color: white;
 }
 
 #userTaskTableHeadLabel{

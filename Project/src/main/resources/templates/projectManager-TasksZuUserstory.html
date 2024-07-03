@@ -90,7 +90,7 @@
         <div class="editMenu-content">
             <form class="form" id="editForm" autocomplete="off" name="Story">
                 <textarea id="inputDesc" class="inputEdit" required placeholder="Eine passende Beschreibung eingeben" name="description" form="editForm"></textarea>
-                <label style="margin-top: 15px;">Priorität</label>
+                <label>Priorität</label>
                 <div id="editMenu-priorityDropAlignment">
                     <button type="button" class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: #f76c5e" name="urgent" form="editForm">Urgent</button>
                     <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: #f68e5f" name="high" form="editForm">High</button>
@@ -119,15 +119,11 @@
                 </select>
                 <input type="hidden" id = "editId" name="id" value="-1">
                 <input type="hidden" id = "editPrio" name="priority" value="1">
-                <label style="margin-top: 15px;">Rolle für die Task festlegen</label>
-                <div id="roleTaskDropdown" class = "dropdown-check-list">
-                    <button type="button" class = "chooseRoleTaskBtn" style = "width:100%">
-                        <label style = "font-size: 12px;margin-right: 80%;width: 80%;color: #afafaf;">Rolle auswählen</label>
-                    </button>
-                    <ul id="roleTaskList" class="items" style="margin-top:7%; width:100%">
-                        <li><input  type="checkbox"/> </li>
-                    </ul>
-                </div>
+                <label style="margin-top: 15px">Rolle für die Task festlegen</label>
+                <select class="dropdownTask" id="RoleDropdown">
+                    <option value="-1" selected = "selected">Wähle eine Rolle</option>
+                    <option></option>
+                </select>
                 <button type="button" th:sessionID="${sessionID}" onclick="saveTaskWithUserList(this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
             </form>
         </div>
@@ -161,6 +157,10 @@
     </script>
     <script>
         // Filter
+        if (JSON.parse(document.getElementById('visAllTasks').getAttribute('names')).length === 0){
+            document.getElementById('visAllTasks').remove()
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const filterDropdown = document.getElementById('filterDropdown');
             filterDropdown.addEventListener('change', filterTable);

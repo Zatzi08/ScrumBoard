@@ -119,15 +119,11 @@
                     <option id="TBDropDown:-1" value="-1" selected = "selected">Wähle zugehöriges Task-Board</option>
                     <option th:each="TB : ${TaskBoard}" th:id="@{TBDropdown:{id}(id=${TB.getID()})}" th:value="${TB.getID()}" th:text="${TB.getName()}"></option>
                 </select>
-                <label style="margin-top: 15px;">Rolle für die Task festlegen</label>
-                <div id="roleTaskDropdown" class = "dropdown-check-list">
-                    <button type="button" class = "chooseRoleTaskBtn" style = "width:100%">
-                        <label style = "font-size: 12px;margin-right: 80%;width: 80%;color: #afafaf;">Rolle auswählen</label>
-                    </button>
-                    <ul id="roleTaskList" class="items" style="margin-top:7%; width:100%">
-                        <li><input  type="checkbox"/> </li>
-                    </ul>
-                </div>
+                <label style="margin-top: 15px">Rolle für die Task festlegen</label>
+                <select class="dropdownTask" id="RoleDropdown">
+                    <option value="-1" selected = "selected">Wähle eine Rolle</option>
+                    <option></option>
+                </select>
                 <button type="button" th:sessionID="${sessionID}" onclick="saveTaskWithUserList(this.getAttribute('sessionID'))" id="editMenu-saveEditBtn">Speichern</button>
             </form>
         </div>
