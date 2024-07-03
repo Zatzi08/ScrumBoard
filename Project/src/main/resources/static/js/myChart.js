@@ -136,7 +136,7 @@ function visualisationOfAllTime(estTime, realTime, names) {
                 },
                 title: {
                     display: true,
-                    text: 'Geschätzte Zeit vs Reale Zeit',
+                    text: 'Geschätzte Zeit vs Reale Zeit [in Stunden]',
                     color: '#b6b6b6',
                     padding: {
                         top: 10,

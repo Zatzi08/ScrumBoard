@@ -35,8 +35,8 @@
                     <tr>
                         <th id = "tableHeader" style="cursor: default; padding: 1% 1% 1% 25%;">Tasks
                             <div id="moin" style="display: inline">
-                                <button th:unless="${Tasks == null || Tasks.isEmpty() || Names.isEmpty()}" type="button" id="visAllTasks" th:est="${AufwandG}" th:real="${AufwandA}" th:names="${Names}" onclick="visualisationOfAllTimes(this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('names'))" title="Schätzungstracker für alle Tasks"><i class="fa-solid fa-chart-bar" style="color: white; margin-top: 3.4px;"></i></button>
-                                <select id = "filterDropdown" th:Sid="${sessionID}" title="Filter">
+                                <button style="cursor: pointer" th:unless="${Tasks == null || Tasks.isEmpty() || Names.isEmpty()}" type="button" id="visAllTasks" th:est="${AufwandG}" th:real="${AufwandA}" th:names="${Names}" onclick="visualisationOfAllTimes(this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('names'))" title="Schätzungstracker für alle Tasks"><i class="fa-solid fa-chart-bar" style="color: white; margin-top: 3.4px;"></i></button>
+                                <select style="cursor: pointer" id = "filterDropdown" th:Sid="${sessionID}" title="Filter">
                                     <option id="Filter:0" value="0">Keine Filter</option>
                                     <option disabled>————————</option>
                                     <option id="Filter:1" value="1" >Priorität - Low</option>
@@ -48,6 +48,7 @@
                                     <option id="Filter:6" value="6">Nicht Erledigt</option>
                                 </select>
                                 <div class="search-container">
+                                    <i class="fa-solid fa-magnifying-glass" style="color: grey"></i>
                                     <input type="search" placeholder="Suchen..." id="sucheInput" title="Suche nach Beschreibung"/>
                                     <button type="button" id="clearButton" onclick="clearSearch()" title="Eingabe löschen">×</button>
                                 </div>
@@ -67,7 +68,6 @@
                                 <button id="Btn2" th:Tid="${item.ID}" th:Sid="${sessionID}" onclick="deleteT(this.getAttribute('Tid'),this.getAttribute('Sid'))" title="Löschen">&times;</button>
                             </div>
                             <br/>
-                            <i class="fa-solid fa-people-group" id="iContent4"></i><label class="iContent-Label" style="margin-left: 8px; font-size: 16px">Rolle</label><label class="userTaskTableBody-Content" title="Rolle">Rolle</label>
                             <i class="fa-solid fa-circle-exclamation" id="iContent2"></i><label class="iContent-Label">Priorität</label><label id="userTaskTableBody-ContentPriority" class="userTaskTableBody-Content" th:text = "${item.priority}" title="Priorität der Task">Priorität</label>
                             <p class="userTaskTableBody-Border"></p>
                             <i class = "fa-solid fa-bars" id="iContent3"></i><label class="iContent-Label">Beschreibung</label><label  class="userTaskTableBody-Content" id="userTaskTableBody-ContentDescription" th:text = "${item.description}" title="Beschreibung der Task">Beschreibung</label>
@@ -89,7 +89,7 @@
         <div class="editMenu-content">
             <form class="form" id="editForm" autocomplete="off" name="Story">
                 <textarea id="inputDesc" class="inputEdit" required placeholder="Eine passende Beschreibung eingeben" name="description" form="editForm"></textarea>
-                <label>Priorität</label>
+                <label style="margin-top: 15px;">Priorität</label>
                 <div id="PrioUserAlignment">
                     <button type="button" class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: #f76c5e" name="urgent" form="editForm">Urgent</button>
                     <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: #f68e5f" name="high" form="editForm">High</button>
@@ -97,7 +97,7 @@
                     <button type="button" class="inputEditPrio" id="inputPrioLow" onclick="highlightPriorityButton('inputPrioLow')" style="background-color: #9EC5E5" name="low" form="editForm">Low</button>
 
                     <div id="list1" class="dropdown-check-list">
-                        <button type="button" onclick="" class="anchor">Nutzer zuweisen</button>
+                        <button type="button" onclick="" id ="Lol" class="anchor">Nutzer zuweisen</button>
                         <ul id="usersAuswahlID" class="items">
                             <li th:each="nutzer : ${User}" th:id="@{N{id}(id = ${nutzer.getID()})}" ><input type="checkbox" th:text="${nutzer.getUname()}"/></li>
                         </ul>

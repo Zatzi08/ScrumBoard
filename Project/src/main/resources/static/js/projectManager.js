@@ -206,16 +206,31 @@ function toggleEditBox(id,storyId, name, description, prio){
     }
 }
 
-var nutzerList = document.getElementById('list1');
-nutzerList.getElementsByClassName('anchor')[0].onclick = function(evt) {
-    if (nutzerList.classList.contains('visible')) {
-        nutzerList.classList.remove('visible');
-    }
-    else
-        nutzerList.classList.add('visible');
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const nutzerList = document.getElementById('list1');
+    const anchor = nutzerList.getElementsByClassName('anchor')[0];
 
-var roleList = document.getElementById('roleTaskDropdown');
+    anchor.onclick = function(evt) {
+        nutzerList.classList.toggle('visible');
+    };
+
+    document.addEventListener('click', function(evt) {
+        let targetElement = evt.target;
+
+        do {
+            if (targetElement === anchor || targetElement === nutzerList) {
+                return;
+            }
+            targetElement = targetElement.parentNode;
+        } while (targetElement);
+
+        if (nutzerList.classList.contains('visible')) {
+            nutzerList.classList.remove('visible');
+        }
+    });
+});
+
+const roleList = document.getElementById('roleTaskDropdown');
 roleList.getElementsByClassName("chooseRoleTaskBtn")[0].onclick = function(evt) {
     if (roleList.classList.contains('visible')) {
         roleList.classList.remove('visible');

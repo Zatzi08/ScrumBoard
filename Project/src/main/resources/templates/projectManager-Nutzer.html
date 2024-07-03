@@ -61,26 +61,33 @@
 
     <div id = "roleOverlay" style = "display:none">
         <div class = "editMenu"  id = "editRolesMenu">
-            <label class = "roleTitle"><i class = "fa fa-pencil"></i> Rollen bearbeiten und erstellen<span class="closeToggleEdit" onclick="toggleRolesEditMenu()">&times;</span></label>
+            <label class = "roleTitle"><i class = "fa fa-pencil" style="margin-right: 5px;"></i> Rollen bearbeiten und erstellen</label><span class="closeToggleEdit" onclick="toggleRolesEditMenu()">&times;</span>
             <div class="editRoles-content">
-                <select class = "filterRolesDropdown"  title="Nach Rechten Filtern">
-                    <option value="0">Kein Filter</option>
-                    <option value="1">Nutzer</option>
-                    <option value="2">Manager</option>
-                    <option value="3">Project Owner</option>
-                    <option value="4">Admin</option>
-                </select>
-                <button id = "editRolesBtn"><i class="fa fa-plus-circle" style = "font-size: 25px" onclick = "toggleRoleNameMenu()"></i></button>
+                <div id="roleAlignment">
+                    <select class = "filterRolesDropdown"  title="Nach Rechten Filtern">
+                        <option value="0">Kein Filter</option>
+                        <option value="1">Nutzer</option>
+                        <option value="2">Manager</option>
+                        <option value="3">Project Owner</option>
+                        <option value="4">Admin</option>
+                    </select>
+                    <button id = "editRolesBtn"><i class="fa fa-plus-circle" style = "font-size: 23px" onclick = "toggleRoleNameMenu()"></i></button>
+                </div>
                 <ul>
-                    <li class = "visualRole" style = "margin-left: 2px">Rolle 1 <i class="fa fa-edit"  id = "editRoleBtn" style = "margin-left: 82%"></i><span id = "deleteRoleBtn">&times;</span></li>
+                    <li class = "visualRole">Rolle 1
+                        <div id="visualRoleRight">
+                            <i class="fa fa-edit" id = "editRoleBtn"></i>
+                            <i class="fa-solid fa-x"></i>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <div id = "roleOverlay2" style = "display:none;z-index:3" >
+    <div id = "roleOverlay2" style = "display:none;z-index:3">
         <div id = "editRoleNameMenu" style ="z-index:4">
-            <label class = "roleTitle" ><i class = "fa fa-pencil"></i> Rolle erstellen <span class="closeToggleEdit" onclick = "toggleRoleNameMenu()">&times;</span></label>
+            <label class = "roleTitle" ><i class = "fa fa-pencil" style="margin-right: 5px;"></i> Rolle erstellen <span class="closeToggleEdit" onclick = "toggleRoleNameMenu()">&times;</span></label>
             <div class="editRolesName-content">
                 <input id = "roleNameInput" placeholder = "Namen der Rolle eingeben">
                 <div id = "rightsForRoles">

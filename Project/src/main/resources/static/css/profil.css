@@ -82,6 +82,7 @@
     left: 50dvw;
     transform: translate(-50%, -50%);
     position: fixed;
+    overflow: auto;
 }
 
 .profilInput{
@@ -199,13 +200,13 @@
     z-index: 1;
     background-color: #23353f;
     width: 100%;
-    margin-top:50px;
+    margin-top: 50px;
     height: 150px;
     border-radius: 8px;
     margin-left: -100%;
     float: right;
     left: 2px;
-
+    overflow: auto;
 }
 
 .roleDropdown.visible .roles {
