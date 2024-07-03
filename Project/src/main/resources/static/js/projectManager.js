@@ -319,10 +319,18 @@ function toggleRolesEditMenu() {
     }
 }
 
-function toggleRoleNameMenu(){
+function toggleRoleNameMenu(id = -1, auth = 1, name = ""){
     const rolesNameMenu = document.getElementById("roleOverlay2");
     if(rolesNameMenu.style.display === "none") {
         rolesNameMenu.style.display = "block";
+        if (id !== -1){
+            document.getElementById('rightsForRoles').style.display = "none"
+        } else {
+            document.getElementById('rightsForRoles').style.display = "block"
+        }
+        document.getElementById('rightsForRolesID').value = id
+        document.getElementById('rightsForRoles').children[0].value = auth
+        document.getElementById('roleNameInput').value = name
     } else {
         rolesNameMenu.style.display = "none";
     }
@@ -359,6 +367,11 @@ window.onclick = function(event) {
         debug.style.display = "block";
     }
 }
-window.onclick = function(event) {
 
+function saveRoleB(sessionID){
+    let auth = document.getElementById('rightsForRoles').children[0].value
+    let id = document.getElementById('rightsForRolesID').value
+    let name = document.getElementById('roleNameInput').value
+    saveRole(sessionID, id, name, auth)
+    can_sync = true
 }

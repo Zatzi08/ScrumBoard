@@ -326,7 +326,7 @@ function saveRole(sessionID, rid, rName, auth){
     })
 }
 
-function deleteRole(sessionID, rID, rName){
+function deleteRole(sessionID, rID, rName = ""){
     let url = "deleteVisRole";
 
     return  fetch(url, {
@@ -337,7 +337,7 @@ function deleteRole(sessionID, rID, rName){
             'sessionID': sessionID
         },
         body: JSON.stringify({
-            "id": rid,
+            "id": rID,
             "name": rName,
         })
     }).then(r =>{
