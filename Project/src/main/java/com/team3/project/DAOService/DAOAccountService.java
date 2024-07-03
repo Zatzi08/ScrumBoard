@@ -17,9 +17,10 @@ public class DAOAccountService {
      * @return         true if account creation was successfull
      */
     public static boolean create(String email, String password) {
+        String hashedPassword = DAOStartService.hash(password);
         if (!checkMail(email)) {
             try {
-                DAOService.persist(new DAOAccount(email, password));
+                DAOService.persist(new DAOAccount(email, hashedPassword));
                 DAOUser user = DAOUserService.getByMail(email);
                 user.setAuthorization(DAOAuthorizationService.getByAuthorization(1));
                 DAOService.merge(user);
@@ -44,10 +45,11 @@ public class DAOAccountService {
      * @return         true if update was successful
      */
     public static boolean updatePassword(String email, String password) {
+        String hashedPassword = DAOStartService.hash(password);
         String parameterName = "email";
         DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
         if (account != null) {
-            account.setPassword(password);
+            account.setPassword(hashedPassword);
             return DAOService.merge(account);
         }
         return false; //no entry
@@ -99,8 +101,9 @@ public class DAOAccountService {
      * @return          true if account exists and has the password
      */
     public static boolean checkLogin(String email, String password) {
+        String hashedPassword = DAOStartService.hash(password);
         String parameterName = "email";
         DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
-        return (account != null && account.getPassword().equals(password)) ? true : false;
+        return (account != null && account.getPassword().equals(hashedPassword)) ? true : false;
     }
 }

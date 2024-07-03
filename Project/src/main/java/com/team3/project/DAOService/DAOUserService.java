@@ -1,5 +1,8 @@
 package com.team3.project.DAOService;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -173,13 +176,14 @@ public class DAOUserService {
         if (authorization != null) {
             daoAuthorization = DAOAuthorizationService.getByAuthorization(authorization.getAuthorization());
         }
+        String hashedPassword = DAOUserService.hash(password);
         if (newSessionId) {
             String createdSessionId = (sessionId != null) ? sessionId : createSessionId();
             String createdSessionDate = (sessionDate != null) ? sessionDate : createSessionDate();
-            return DAOService.merge(new DAOUser(email, password, name, privatDescription, workDescription, DAOAuthorizationService.filterRolesByAuthorization(daoAuthorization, roles), 
+            return DAOService.merge(new DAOUser(email, hashedPassword, name, privatDescription, workDescription, DAOAuthorizationService.filterRolesByAuthorization(daoAuthorization, roles), 
                                                   createdSessionId, createdSessionDate, daoAuthorization));
         }
-        return DAOService.merge(new DAOUser(email, password, name, privatDescription, workDescription, roles, daoAuthorization));
+        return DAOService.merge(new DAOUser(email, hashedPassword, name, privatDescription, workDescription, roles, daoAuthorization));
     }
 
     /* Author: Tom-Malte Seep
@@ -195,7 +199,8 @@ public class DAOUserService {
         if (authorization > 0) {
             daoAuthorization = DAOAuthorizationService.getByAuthorization(authorization);
         }
-        return createByEMail(email, password, name, privatDescription, workDescription, roles, daoAuthorization, sessionId, sessionDate, newSessionId);
+        String hashedPassword = DAOUserService.hash(password);
+        return createByEMail(email, hashedPassword, name, privatDescription, workDescription, roles, daoAuthorization, sessionId, sessionDate, newSessionId);
     }
 
     //updates
@@ -542,5 +547,30 @@ public class DAOUserService {
      */
     private static String createSessionDate() {
         return LocalDate.now().toString();
+    }
+
+    static String hash(String password) {
+        if (password == null) {
+            return null;
+        }
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedhash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            StringBuilder hexString = new StringBuilder(2 * encodedhash.length);
+            for (int i = 0; i < encodedhash.length; i++) {
+                String hex = Integer.toHexString(0xff & encodedhash[i]);
+                if(hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+
+        return null;
     }
 }
