@@ -253,7 +253,7 @@ async function addTaskBoard(sessionID) {
     document.location.reload()
 }
 
-function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime,prio ,DueDate, NutzerList){
+function toggleZoomedTaskCardforTask(sessionID, USName, TBName, TaskDesc, estTime, realTime,prio ,DueDate, NutzerList){
     toggleZoomedTaskCard()
     document.getElementById('zoomedTaskCard-US').innerText = USName;
     document.getElementById('zoomedTaskCard-taskBoard').innerText = TBName;
@@ -269,13 +269,15 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
     NutzerList.slice(0, 5).forEach((nutzer)=>{
         const circle = document.createElement("button");
         circle.classList.add('zoomedTaskCard-userCircle');
-         circle.id = 'N' + nutzer.id;
-         circle.appendChild(document.createTextNode(nutzer.name.charAt(0).toUpperCase()));
+        let but = "SwitchToOtherProfile(" + sessionID + ", " + nutzer.email + ")";
+        circle.addEventListener("click", function(event){
+            SwitchToOtherProfile(sessionID, nutzer.email)
+        });
+        circle.title = nutzer.name
+        circle.id = 'N' + nutzer.id;
+        circle.appendChild(document.createTextNode(nutzer.name.charAt(0).toUpperCase()));
         circle.style.backgroundColor = randomizeAssignedUsersColour(0, 255)
-         label.appendChild(circle);
-
-
-
+        label.appendChild(circle);
      })
     if (NutzerList.length > 5){
         var moreUsersCircle = document.createElement("button");

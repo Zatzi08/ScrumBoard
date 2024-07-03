@@ -75,7 +75,7 @@
                 </div>
                 <ul>
                     <li th:each="item : ${Roles}" th:auth="${item.getAuth()}" class = "visualRole">
-                        <label class="roleLabel" th:text="${item.getName()}">giiii</label>
+                        <label class="roleLabel" th:text="${item.getName()}"></label>
                         <div class="visualRoleRight">
                             <i class="fa fa-edit"></i>
                             <i class="fa-solid fa-x"></i>
