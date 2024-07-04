@@ -241,8 +241,7 @@ public class DAOUserService {
             if (authorization != null) {
                 daoAuthorization = DAOAuthorizationService.getByAuthorization(authorization.getAuthorization());
             }
-            List<String> joinOnAttributeNames = Arrays.asList("authorization", "roles");
-            DAOUser user = DAOService.getSingleLeftJoinsById(id, DAOUser.class, joinOnAttributeNames);
+            DAOUser user = getWithRolesById(id);
             if (user != null) {
                 if (newSessionId) {
                     String createdSessionId = (sessionId != null) ? sessionId : createSessionId();
@@ -413,9 +412,11 @@ public class DAOUserService {
      * UserStory/Task-ID: R5.D2, R1.D3
      */
     public static boolean updateRolesById(int id, List<DAORole> roles) {
-        List<String> joinOnAttributeNames = Arrays.asList("authorization", "roles");
-        DAOUser daoUser = DAOService.getSingleLeftJoinsById(id, DAOUser.class, joinOnAttributeNames);
+        DAOUser daoUser = getWithRolesById(id);
         if (daoUser != null) {
+            daoUser.setRoles(roles);
+            return DAOService.merge(daoUser);
+            /*
             boolean addrole = false;
             for (DAORole daoRole : roles) {
                 if (DAORoleService.checkAuthorizationById(daoRole.getId(), daoUser.getAuthorization())) {
@@ -424,6 +425,7 @@ public class DAOUserService {
                 }
             }
             return addrole && DAOService.merge(daoUser);
+            */
         }
         return false;
     }
@@ -435,12 +437,16 @@ public class DAOUserService {
      * UserStory/Task-ID: R5.D2, R1.D3
      */
     public static boolean updateAddRoleById(int id, DAORole role) {
-        List<String> joinOnAttributeNames = Arrays.asList("authorization", "roles");
-        DAOUser daoUser = DAOService.getSingleLeftJoinsById(id, DAOUser.class, joinOnAttributeNames);
-        if (DAORoleService.checkAuthorizationById(role.getId(), daoUser.getAuthorization()) && daoUser != null) {
-            daoUser.getRoles().add(role);
-            return DAOService.merge(daoUser);
-        }
+        DAOUser daoUser = getWithRolesById(id);
+        if (daoUser != null) {
+            boolean addRole = false;
+            if (DAORoleService.checkAuthorizationById(role.getId(), daoUser.getAuthorization())) {
+                daoUser.getRoles().add(role);
+                addRole = true;
+            }
+            return addRole && DAOService.merge(daoUser);
+            }
+        
         return false;
     }
 
