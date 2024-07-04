@@ -666,7 +666,7 @@ public class WebController {
         }
         return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
     }
-
+/*
     @RequestMapping(value = "/setVisRoleOfUser", method = RequestMethod.POST)
     private ResponseEntity<HttpStatus> setVisRoleOfUser(@RequestHeader(value = "sessionID") String sessionID,
                                                         @RequestBody LinkedList<Role> roleList,
@@ -682,7 +682,7 @@ public class WebController {
         }
         return new ResponseEntity<HttpStatus>(HttpStatus.FORBIDDEN);
     }
-
+*/
     @RequestMapping(value = "/saveVisRole", method = RequestMethod.POST)
     private ResponseEntity<HttpStatus> saveVisRole(@RequestHeader(value = "sessionID") String sessionID,
                                                    @RequestBody Role role,

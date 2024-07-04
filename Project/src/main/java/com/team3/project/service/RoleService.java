@@ -214,4 +214,12 @@ public class RoleService {
         }
         return rl;
     }
+
+    public static List<DAORole> toRoleList_DAO(List<Role> roles) {
+        List<DAORole> rl = new LinkedList<DAORole>();
+        for (Role r : roles){
+            rl.add(DAORoleService.getByID(r.getID()));
+        }
+        return rl;
+    }
 }

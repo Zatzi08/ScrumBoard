@@ -248,8 +248,8 @@ function changeTBName(sessionID, tbID) {
 
 async function addTaskBoard(sessionID) {
     let name = document.getElementById('createTBNameInput').value;
-    console.log('Hi')
-    console.log(sessionID)
+    await saveTaskBoard(sessionID, -1, name)
+    can_sync = true
     document.location.reload()
 }
 

@@ -136,7 +136,7 @@ function saveProfile(sessionID) {
     let pdescription = document.getElementById('inputPDesc').value;
     let wdescription = document.getElementById('inputWDesc').value;
     let email = "";
-    // roles = getRoles();
+    let roles = getRoles();
 
     fetch('/saveUserData' ,{
         method: 'Post',
@@ -150,7 +150,7 @@ function saveProfile(sessionID) {
             'email': email,
             'privatDesc': pdescription,
             'workDesc': wdescription,
-            'roles': null
+            'roles': roles
         })
     }).then(r => {
         if (r.ok) {
@@ -365,16 +365,17 @@ function setRollsOfUser(sessionID, uId, roles){
 }
 
 // Zusätzliche Funktionen
-function getRollen(){
+function getRoles(){
     var list = document
-        .getElementById('roleList')
-        .getElementsByClassName("li");
-    let a = new NodeList();
+        .getElementById('usersAuswahlID')
+        .getElementsByTagName("li");
+    let a = [];
 
-    for (let l in list){
-        let toAdd = l.getAttribute("rID")
-        a.add(toAdd)
+    for (let l of list){
+        if (l.children[0].checked){
+            let toAdd = {id: l.children[0].getAttribute("rID"), name:""}
+            a.push(toAdd)
+        }
     }
-    // TODO: integrate
-    return null
+    return a
 }
