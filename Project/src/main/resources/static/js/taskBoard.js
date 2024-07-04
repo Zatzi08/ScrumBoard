@@ -362,5 +362,4 @@ function setTime(element,sessionID){
     setTaskTime(sessionID);
     element.style.display = 'unset';
     can_sync = true
-    //TODO: Hier close Popup
 }
