@@ -71,14 +71,14 @@
                         <option value="3">Project Owner</option>
                         <option value="4">Admin</option>
                     </select>
-                    <button id = "editRolesBtn"><i class="fa fa-plus-circle" style = "font-size: 23px" onclick = "toggleRoleNameMenu()"></i></button>
+                    <button id = "editRolesBtn"><i class="fa fa-plus-circle" style = "font-size: 23px" onclick = "toggleRoleNameMenu()" title = "Rolle erstellen"></i></button>
                 </div>
                 <ul id="roleList" >
                     <li th:each="item : ${Roles}" th:auth="${item.getAuth().ordinal()+1}" class = "visualRole">
                         <label class="roleLabel" th:text="${item.getName()}"></label>
                         <div class="visualRoleRight">
-                            <i th:RID="${item.getID()}" th:auth="${item.getAuth().ordinal()+1}" th:name="${item.getName()}"  class="fa fa-edit" onclick="toggleRoleNameMenu(this.getAttribute('RID'), this.getAttribute('auth'), this.getAttribute('name'))"></i>
-                            <i th:RID="${item.getID()}" th:Sid="${sessionID}" onclick="deleteRole(this.getAttribute('Sid'), this.getAttribute('RID'))" class="fa-solid fa-x"></i>
+                            <i th:RID="${item.getID()}" th:auth="${item.getAuth().ordinal()+1}" th:name="${item.getName()}"  class="fa fa-edit" onclick="toggleRoleNameMenu(this.getAttribute('RID'), this.getAttribute('auth'), this.getAttribute('name'))" title = "Rolle bearbeiten"></i>
+                            <i th:RID="${item.getID()}" th:Sid="${sessionID}" onclick="deleteRole(this.getAttribute('Sid'), this.getAttribute('RID'))" class="fa-solid fa-x", title = "Rolle löschen"></i>
                         </div>
                     </li>
                 </ul>

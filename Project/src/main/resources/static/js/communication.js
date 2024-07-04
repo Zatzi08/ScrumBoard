@@ -138,25 +138,30 @@ function saveProfile(sessionID) {
     let email = "";
     let roles = getRoles();
 
-    fetch('/saveUserData' ,{
-        method: 'Post',
-        cache: 'no-cache',
-        headers:{
-            'Content-Type': 'application/json',
-            'sessionID': sessionID
-        },
-        body: JSON.stringify({
-            'uname': name,
-            'email': email,
-            'privatDesc': pdescription,
-            'workDesc': wdescription,
-            'roles': roles
-        })
-    }).then(r => {
-        if (r.ok) {
-            location.reload();
-        }
-    });
+    if (name == "" ||pdescription == "" || wdescription == ""){
+        alert("Bitte fülle alle Eingabefelder aus!");
+    }
+    else{
+        fetch('/saveUserData' ,{
+            method: 'Post',
+            cache: 'no-cache',
+            headers:{
+                'Content-Type': 'application/json',
+                'sessionID': sessionID
+            },
+            body: JSON.stringify({
+                'uname': name,
+                'email': email,
+                'privatDesc': pdescription,
+                'workDesc': wdescription,
+                'roles': roles
+            })
+        }).then(r => {
+            if (r.ok) {
+                location.reload();
+            }
+        });
+    }
 
 }
 

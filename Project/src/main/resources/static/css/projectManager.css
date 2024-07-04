@@ -422,8 +422,8 @@ hr {
 }
 
 #roleNameBtn{
-    margin-top: 25px;
-    margin-left: 40%;
+    margin-top: 40px;
+    margin-left: 42%;
     background-color: #7E7E9E;
     padding: 5px;
     font-size: 14px;
@@ -518,11 +518,9 @@ ul{list-style-type: none;}
     position: relative;
     margin-right: 2%;
 }
-#deleteRoleBtn:hover{
+.fa-edit:hover, .fa-solid:hover{
     color: grey;
-}
-#editRoleBtn:hover {
-    color: grey;
+    cursor:pointer;
 }
 
 #userRights{

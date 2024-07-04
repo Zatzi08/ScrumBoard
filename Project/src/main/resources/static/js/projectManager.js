@@ -383,10 +383,12 @@ function filterRole(selected) {
     let authority = selected.value
     let roleList = document.getElementById("roleList").getElementsByTagName("li");
     for (var i = 0; i < roleList.length; i++) {
-        if (authority === "0") {
-            roleList[i].style.display = "block";
-        } else if (roleList[i].getAttribute("auth") !== authority) {
+        if (roleList[i].getAttribute("auth") !== authority && roleList[i].getAttribute("auth") !== 0) {
             roleList[i].style.display = "none";
         }
+        else{
+            roleList[i].style.display = "block"
+        }
+
     }
 }

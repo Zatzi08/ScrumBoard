@@ -25,14 +25,14 @@
         <div id = "profilInhalt">
             <button th:if="${own}" class = "fa fa-edit" title = "Bearbeite das Profil" th:uname="${User.uname}" th:udesc="${User.privatDesc}" th:projectdesc="${User.workDesc}" onclick="toggleProfilMenu(this.getAttribute('uname'), this.getAttribute('projectdesc'), this.getAttribute('udesc'))"></button>
             <label th:text = "${User.uname}" id = "profilName">Benutzername </label>
-            <label class = "profileText" >Deine Aufgabe im Projekt</label>
-            <label th:text="${User.workDesc}" id = "profilProjektBeschreibung"> Projektbeschreibung </label>
-            <label class = "profileText" >Deine Rollen </label>
+            <label class = "profileText" >Deine Aufgabe im Projekt <i class = "fa fa-suitcase"></i></label>
+            <label th:text="${User.workDesc}" class = "profilInhalt"> Projektbeschreibung </label>
+            <label class = "profileText" >Deine Rollen <i class = "fa fa-users"></i></label>
             <ul>
-                <li th:each="item : ${User.getRoles()}" th:text="${item.getName()}"></li>
+                <li class = "profilInhalt"th:each="item : ${Roles}" th:text="${item.getName()}"></li>
             </ul>
-            <label class = "profileText" >Deine persönliche Beschreibung</label>
-            <label th:text = "${User.privatDesc}" id = "profilPersoBeschreibung"> Persönliche Beschreibung </label>
+            <label class = "profileText" >Deine persönliche Beschreibung <i class = "fa fa-user"></i></label>
+            <label th:text = "${User.privatDesc}" class = "profilInhalt"> Persönliche Beschreibung </label>
         </div>
     </div>
 
@@ -48,8 +48,8 @@
             <label class = "labelProfil">Rollen auswählen</label>
             <div id="roleDropdown" class="roleDropdown">
                 <button type="button" onclick="" class="setRolesBtn"> Rollen auswählen</button>
-                <ul id="usersAuswahlID" class="roles">
-                    <li th:each="item : ${Roles}"><input th:rID="${item.getID()}" th:text="${item.getName()}" type="checkbox" /> </li>
+                <ul id="usersAuswahlID" class="roles"style = "color:white">
+                    <li th:each="item : ${Roles}"><input th:rID="${item.getID()}" th:text="${item.getName()}" type="checkbox" style = "color:white"/> </li>
                 </ul>
             </div>
             <button type = "button" title = "Speichern der Änderungen" th:sessionID="${sessionID}" onclick="saveProfile(this.getAttribute('sessionID'))" id = "profilEditBtn">Speichern</button>

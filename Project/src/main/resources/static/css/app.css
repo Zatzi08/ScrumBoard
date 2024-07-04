@@ -1,10 +1,10 @@
-.loginBackground{
-display: flex;
-align-items: center;
-justify-content: center;
-width: 100%;
-min-height: 100vh;
-background-image: repeating-linear-gradient(135deg, hsla(280, 0%, 67%, 0.06) 0px, hsla(280, 0%, 67%, 0.06) 1px, transparent 1px, transparent 96px), repeating-linear-gradient(45deg, hsla(280, 0%, 67%, 0.06) 0px, hsla(280, 0%, 67%, 0.06) 1px, transparent 1px, transparent 96px), repeating-linear-gradient(45deg, hsla(280, 0%, 67%, 0.09) 0px, hsla(280, 0%, 67%, 0.09) 1px, transparent 1px, transparent 12px), repeating-linear-gradient(135deg, hsla(280, 0%, 67%, 0.09) 0px, hsla(280, 0%, 67%, 0.09) 1px, transparent 1px, transparent 12px), linear-gradient(135deg, hsl(226, 47%, 26%), hsl(226, 47%, 26%));
+.loginBackground {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  background-image: repeating-linear-gradient(90deg, hsla(312,0%,73%,0.05) 0px, hsla(312,0%,73%,0.05) 1px,transparent 1px, transparent 104px),repeating-linear-gradient(0deg, hsla(312,0%,73%,0.05) 0px, hsla(312,0%,73%,0.05) 1px,transparent 1px, transparent 104px),repeating-linear-gradient(0deg, hsla(312,0%,73%,0.07) 0px, hsla(312,0%,73%,0.07) 1px,transparent 1px, transparent 26px),repeating-linear-gradient(90deg, hsla(312,0%,73%,0.07) 0px, hsla(312,0%,73%,0.07) 1px,transparent 1px, transparent 26px),linear-gradient(135deg, rgb(42,50,110),rgb(42,50,110));
 }
 
 #primaryContainer{
