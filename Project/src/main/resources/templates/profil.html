@@ -16,7 +16,7 @@
 
     <div class="Reiter">
         <button type="button" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" class="reiterBtn" >Projekt Manager</button>
-        <button class = "reiterBtn" onmouseover="hover()" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Profil </button>
+        <button class = "reiterBtn" onmouseover="hover(this.id)" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" onmouseleave="hoverLeave(this.id)" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Profil </button>
         <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
         <button class = "reiterBtn" id = "logoutBtn" onclick="location.href='/'">Abmelden</button>
     </div>

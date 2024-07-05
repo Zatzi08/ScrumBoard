@@ -207,37 +207,46 @@ function toggleEditBox(id,storyId, name, description, prio){
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Nuterliste
     const nutzerList = document.getElementById('list1');
-    const anchor = nutzerList.getElementsByClassName('anchor')[0];
-
-    anchor.onclick = function(evt) {
-        nutzerList.classList.toggle('visible');
-    };
-
-    document.addEventListener('click', function(evt) {
-        let targetElement = evt.target;
-
-        do {
-            if (targetElement === anchor || targetElement === nutzerList) {
-                return;
-            }
-            targetElement = targetElement.parentNode;
-        } while (targetElement);
-
-        if (nutzerList.classList.contains('visible')) {
-            nutzerList.classList.remove('visible');
+    if (nutzerList) {
+        const anchor = nutzerList.getElementsByClassName('anchor')[0];
+        if (anchor) {
+            anchor.onclick = function(evt) {
+                nutzerList.classList.toggle('visible');
+            };
         }
-    });
-});
 
-const roleList = document.getElementById('roleTaskDropdown');
-roleList.getElementsByClassName("chooseRoleTaskBtn")[0].onclick = function(evt) {
-    if (roleList.classList.contains('visible')) {
-        roleList.classList.remove('visible');
+        document.addEventListener('click', function(evt) {
+            let targetElement = evt.target;
+
+            do {
+                if (targetElement === anchor || targetElement === nutzerList) {
+                    return;
+                }
+                targetElement = targetElement.parentNode;
+            } while (targetElement);
+
+            if (nutzerList.classList.contains('visible')) {
+                nutzerList.classList.remove('visible');
+            }
+        });
     }
-    else
-        roleList.classList.add('visible');
-}
+
+    const roleList = document.getElementById('roleTaskDropdown');
+    if (roleList) {
+        const chooseRoleTaskBtn = roleList.getElementsByClassName("chooseRoleTaskBtn")[0];
+        if (chooseRoleTaskBtn) {
+            chooseRoleTaskBtn.onclick = function(evt) {
+                if (roleList.classList.contains('visible')) {
+                    roleList.classList.remove('visible');
+                } else {
+                    roleList.classList.add('visible');
+                }
+            };
+        }
+    }
+});
 
 function visualisationOfAllTimes(est, real, names){
     est = JSON.parse(est)
