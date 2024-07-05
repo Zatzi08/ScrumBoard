@@ -125,7 +125,6 @@ public class TaskBoardTests extends BaseLogicTest {
         DAOTask daoTask;
         String taskBoardName1 = "TaskBoard1T16B2";
         String taskBoardName2 = "TaskBoard2T16B2";
-        final int nonexistentTBID = 103782342;
         int tb1ID;
         int tb2ID;
 
