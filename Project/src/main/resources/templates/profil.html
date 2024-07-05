@@ -24,14 +24,14 @@
     <div id = "profilContainer">
         <div id = "profilInhalt">
             <button th:if="${own}" class = "fa fa-edit" title = "Bearbeite das Profil" th:uname="${User.uname}" th:udesc="${User.privatDesc}" th:projectdesc="${User.workDesc}" onclick="toggleProfilMenu(this.getAttribute('uname'), this.getAttribute('projectdesc'), this.getAttribute('udesc'))"></button>
-            <label th:text = "${User.uname}" id = "profilName">Benutzername </label>
-            <label class = "profileText" >Deine Aufgabe im Projekt <i class = "fa fa-suitcase"></i></label>
+            <label th:text = "${User.uname}" id = "profilName">Benutzername</label>
+            <label class = "profileText"><i class = "fa fa-suitcase" style="margin-right: 10px"></i>Deine Aufgabe im Projekt</label>
             <label th:text="${User.workDesc}" class = "profilInhalt"> Projektbeschreibung </label>
-            <label class = "profileText" >Deine Rollen <i class = "fa fa-users"></i></label>
+            <label class = "profileText"><i class = "fa fa-users" style="margin-right: 10px"></i>Deine Rollen</label>
             <ul>
                 <li class = "profilInhalt" th:each="item : ${User.getRoles()}" th:text="${item.getName()}"></li>
             </ul>
-            <label class = "profileText" >Deine persönliche Beschreibung <i class = "fa fa-user"></i></label>
+            <label class = "profileText"><i class="fa fa-university" aria-hidden="true" style="margin-right: 10px"></i>Deine persönliche Beschreibung</label>
             <label th:text = "${User.privatDesc}" class = "profilInhalt"> Persönliche Beschreibung </label>
         </div>
     </div>
