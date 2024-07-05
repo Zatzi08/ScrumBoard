@@ -316,7 +316,7 @@ public class DAOUserService {
      * @param roles             roles
      * @return                  true if update was successfull
      */
-    public static boolean updateByEMail(String email, String name, String privatDescription, String workDescription, List<DAORole> roles) {
+    public static boolean updateByEMail(String email, @Nullable String name, @Nullable String privatDescription, @Nullable String workDescription, @Nullable List<DAORole> roles) {
         return updateById(getIdByMail(email), name, privatDescription, workDescription, roles, null, null, null, false);
     }
     
@@ -337,7 +337,7 @@ public class DAOUserService {
      * @param newSessionId      is creating a new sessionId
      * @return                  true if update was successfull
      */
-    public static boolean updateByEMail(String email, String name, String privatDescription, String workDescription, List<DAORole> roles,
+    public static boolean updateByEMail(String email, @Nullable String name, @Nullable String privatDescription, @Nullable String workDescription, @Nullable List<DAORole> roles,
                                         String sessionId, String sessionDate, boolean newSessionId) {
         return updateById(getIdByMail(email), name, privatDescription, workDescription, roles, null, null, null, newSessionId);
     }
@@ -414,7 +414,7 @@ public class DAOUserService {
     public static boolean updateRolesById(int id, List<DAORole> roles) {
         DAOUser daoUser = getWithRolesById(id);
         if (daoUser != null) {
-            daoUser.setRoles(roles);
+            daoUser.setRoles(DAOAuthorizationService.filterRolesByAuthorization(daoUser.getAuthorization(), roles));
             return DAOService.merge(daoUser);
             /*
             boolean addrole = false;

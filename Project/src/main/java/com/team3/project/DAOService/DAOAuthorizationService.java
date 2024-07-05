@@ -74,7 +74,7 @@ public class DAOAuthorizationService {
     static List<DAORole> filterRolesByAuthorization(DAOAuthorization authorization, List<DAORole> roles) {
         String joinOnAttributeName = "roles";
         DAOAuthorization daoAuthorization = DAOService.getLeftJoinByID(authorization.getId(), DAOAuthorization.class, joinOnAttributeName);
-        if (daoAuthorization != null) {
+        if (daoAuthorization != null && roles != null) {
             return daoAuthorization.getRoles().stream().filter(sDaoRole -> roles.stream().map(DAORole::getName).collect(Collectors.toList()).contains(sDaoRole.getName())).toList();
         }
         return null;
