@@ -283,7 +283,7 @@ public class WebController {
                 Profile user = presentationToLogic.accountService.getProfileByID(sessionID);
                 return new ModelAndView("profil")
                         .addObject("User" , user)
-                        .addObject("Roles", presentationToLogic.roleService.getAllVisualRoles())
+                        .addObject("Roles", presentationToLogic.roleService.getAllVisualRolesByRoleOfUserBySession(sessionID))
                         .addObject("sessionID", sessionID)
                         .addObject("own", true);
             }

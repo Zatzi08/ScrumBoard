@@ -29,7 +29,7 @@
             <label th:text="${User.workDesc}" class = "profilInhalt"> Projektbeschreibung </label>
             <label class = "profileText" >Deine Rollen <i class = "fa fa-users"></i></label>
             <ul>
-                <li class = "profilInhalt"th:each="item : ${Roles}" th:text="${item.getName()}"></li>
+                <li class = "profilInhalt" th:each="item : ${User.getRoles()}" th:text="${item.getName()}"></li>
             </ul>
             <label class = "profileText" >Deine persönliche Beschreibung <i class = "fa fa-user"></i></label>
             <label th:text = "${User.privatDesc}" class = "profilInhalt"> Persönliche Beschreibung </label>
