@@ -222,4 +222,10 @@ public class RoleService {
         }
         return rl;
     }
+
+    public Object getAllVisualRolesByRoleOfUserBySession(String sessionID) throws Exception {
+        DAOUser du = DAOUserService.getBySessionId(sessionID);
+        if (du == null) throw new Exception("User not found");
+        return toRoleList(DAORoleService.getByAuthorization(du.getAuthorization().getAuthorization()));
+    }
 }
