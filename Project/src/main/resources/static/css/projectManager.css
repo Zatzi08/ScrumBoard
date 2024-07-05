@@ -391,21 +391,16 @@ hr {
 }
 
 #editRoleNameMenu{
-    width: 70vh;
     display: inherit;
     position: fixed;
-    z-index: 5;
-    height: 250px;
     background-color: rgb(46, 46, 61);
     color: white;
     padding: 20px;
     border-radius: 10px;
     overflow: auto;
-    z-index: 1000;
     top: 50dvh;
     left: 50dvw;
     transform: translate(-50%, -50%);
-
 }
 
 #roleNameInput{
@@ -571,11 +566,10 @@ ul{list-style-type: none;}
     border-radius: 8px;
     font-size: 12px;
     box-shadow: white;
-    /* padding: .75rem 1rem; */
     height: 32px;
     align-items: center;
     justify-content: center;
-    width: 252px;
+    width: 272px;
     margin-left: -108%;
     float: right;
 }
@@ -588,7 +582,7 @@ ul{list-style-type: none;}
     border-top: none;
     z-index: 1;
     background-color: #23353f;
-    width: -webkit-fill-available;
+    width: 272px;
     height: 150px;
     border-radius: 8px;
     margin-left: -100%;

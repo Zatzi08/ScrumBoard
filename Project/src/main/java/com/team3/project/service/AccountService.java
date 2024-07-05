@@ -274,6 +274,7 @@ public class AccountService {
         DAOUser du = DAOUserService.getWithRolesById(usID);
         if (du == null) throw new Exception("User not Found");
         boolean responce = DAOUserService.updateAuthorizationById(du.getId(),auth);
+        DAOUserService.updateRolesById(du.getId(), new LinkedList<DAORole>() );
         if (responce) {
             try {
                 observer.sendToProfileByID(1,

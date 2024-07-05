@@ -52,14 +52,14 @@ public class UserTests extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T9
+        /*  Test ID: Logic.User1
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: Registration A2.B1
          *  Edit: Mockito hinzugefügt - Henry van Rooyen
          */
     void register_registerNewUser_createsNewUserObject() throws Exception{
         //Arrange
-        pw.append("Logik-Test-register\nTest ID: Logic.T9\n" + "Date: ")
+        pw.append("Logik-Test-register\nTest ID: Logic.User1\n" + "Date: ")
                 .append(formatter.format(date))
                 .append(String.valueOf('\n'));
         int count_correct_exceptions = 0;
@@ -109,13 +109,13 @@ public class UserTests extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T10
+        /*  Test ID: Logic.User2
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: Login  A3.B1
          */
     void login_userLogInToSystem_changeViewToProjectmanager() throws Exception{
         //Arrange
-        pw.append("Logik-Test-login\nTest ID: Logic.T10\n" + "Date: ")
+        pw.append("Logik-Test-login\nTest ID: Logic.User2\n" + "Date: ")
                 .append(formatter.format(date))
                 .append(String.valueOf('\n'));
         AtomicInteger count_correct_exception_checks = new AtomicInteger();
@@ -155,13 +155,13 @@ public class UserTests extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T11
+        /*  Test ID: Logic.User3
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: initiale reelle Rechte Zuweisung
          */
     void authority_UserDefaultAuthority_userAuthorityIs1() throws Exception{
         //Arrange
-        pw.append("Logik-Test-authority\nTest ID: Logic.T11\n" + "Date: ")
+        pw.append("Logik-Test-authority\nTest ID: Logic.User3\n" + "Date: ")
                 .append(formatter.format(date))
                 .append(String.valueOf('\n'));
         String sessionID = null;
@@ -185,12 +185,15 @@ public class UserTests extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T12
+        /*  Test ID: Logic.User4
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: reelle Rechte ändern R1.B2
          */
     void setAuthority_changeUsersAuthority_setUsersAuthorityToCertainValue() throws Exception{
         //Arrange
+        pw.append("Logik-Test-setAuthority\nTest ID: Logic.User4\n" + "Date: ")
+                .append(formatter.format(date))
+                .append(String.valueOf('\n'));
         int count_correct_exceptions = 0;
         AtomicInteger count_correct_exception_checks = new AtomicInteger();
         String sessionID;

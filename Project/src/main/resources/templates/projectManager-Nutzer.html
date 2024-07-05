@@ -87,7 +87,7 @@
     </div>
 
     <div th:if = "${auth>2}" id = "roleOverlay2" style = "display:none;z-index:3">
-        <div id = "editRoleNameMenu" style ="z-index:4">
+        <div id = "editRoleNameMenu">
             <label class = "roleTitle" ><i class = "fa fa-pencil" style="margin-right: 5px;"></i> Rolle erstellen <span class="closeToggleEdit" onclick = "toggleRoleNameMenu()">&times;</span></label>
             <div class="editRolesName-content">
                 <input id = "roleNameInput" placeholder = "Namen der Rolle eingeben">

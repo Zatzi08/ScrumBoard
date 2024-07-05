@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,16 +51,16 @@ public class ProfileTests extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T3
+        /*  Test ID: Logic.Profile1
          *  Author: Henry Lewis Freyschmidt
          *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: Profile erstellen P1.B1
          */
-    void createProfile() throws Exception {
+    void createProfile_saveProfileDataOfUser_writeProfileDataOfUserObjectInDataBase() throws Exception {
         // Arrange
-        pw.append("Logik-Test-createProfile\nTest ID: Logic.T3\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
-        Profile profile = new Profile(0, "Dave", "dave@gmail.com", "Manager", "slow thinker", null, 1);
-        Profile profileFail = new Profile(0, "Exception", "fail@gmail.com", "Manager", "slow thinker", null, 1);
+        pw.append("Logik-Test-createProfile\nTest ID: Logic.Profile1\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
+        Profile profile = new Profile(0, "Dave", "dave@gmail.com", "Manager", "slow thinker", new LinkedList<>(), 1);
+        Profile profileFail = new Profile(0, "Exception", "fail@gmail.com", "Manager", "slow thinker", new LinkedList<>(), 1);
 
         // Act
         accountService.register("Exception", "fail@gmail.com", "123");
@@ -99,22 +100,22 @@ public class ProfileTests extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T4
+        /*  Test ID: Logic.Profile2
          *  Author: Henry Lewis Freyschmidt
          *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: Profile aktualisieren P2.B1
          */
-    void updateProfile() throws Exception{
+    void updateProfile_saveProfileDataOfUser_overwriteProfileDataOfUserObjectInDatabase() throws Exception{
         // Arrange
-        pw.append("Logik-Test-updateUserStory\nTest ID: Logic.T4\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
-        Profile profile = new Profile(0, "Dave", "dave@gmx.de", "netter Dave", "arbeitender Dave", null, 1);
+        pw.append("Logik-Test-updateUserStory\nTest ID: Logic.Profile2\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
+        Profile profile = new Profile(0, "Dave", "dave@gmx.de", "netter Dave", "arbeitender Dave", new LinkedList<>(), 1);
         final String newDescription = "böse";
-
-        // Act
         accountService.register("Dave", "dave@gmx.de", "passw");
         String sessionID = webSessionService.getSessionID("dave@gmx.de");
         accountService.savePublicData(sessionID, profile);
         profile.setPrivatDesc(newDescription);
+
+        // Act
         accountService.savePublicData(sessionID, profile);
 
         // Assert
@@ -129,14 +130,14 @@ public class ProfileTests extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T18
+        /*  Test ID: Logic.Profile3
          *  Author: Henry Lewis Freyschmidt
          *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: alle Profile ausgeben P4.B1
          */
-    void getAllProfiles() throws Exception{
+    void getAllProfiles_getListOfAllProfiles_recieveListOfAllProfileObjectFromDatabase() throws Exception{
         // Arrange
-        pw.append("Logik-Test-getAllProfiles\nTest ID: Logic.T18\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
+        pw.append("Logik-Test-getAllProfiles\nTest ID: Logic.Profile3\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
 
         // Act
         accountService.register("DaveT18", "daveT18@gmail.com", "T18");

@@ -63,14 +63,14 @@ class TaskTest extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T6
+        /*  Test ID: Logic.Task1
          *  Author: Henry Lewis Freyschmidt
          *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: Task erstellen T3.B1
          */
-    void createTask() throws Exception {
+    void createTask_createTaskObject_createTaskEntryInDatabase() throws Exception {
         // Arrange
-        pw.append("Logik-Test-createTask\nTest ID: Logic.T6\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
+        pw.append("Logik-Test-createTask\nTest ID: Logic.Task1\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
         UserStory userStory = new UserStory("Story1", "Blah1", 1, -1);
         userStoryService.saveUserStory(userStory);
         userStory = userStoryService.getUserStoryByName(userStory.getName());
@@ -91,14 +91,14 @@ class TaskTest extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T7
+        /*  Test ID: Logic.Task2
          *  Author: Henry Lewis Freyschmidt
          *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: Task editieren T4.B1
          */
-    void editTask() throws Exception {
+    void editTask_updateValuesOfTaskObject_changeValuesOfTaskEntryInDatabase() throws Exception {
         // Arrange
-        pw.append("Logik-Test-editTask\nTest ID: Logic.T7\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
+        pw.append("Logik-Test-editTask\nTest ID: Logic.Task2\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
         UserStory userStory = new UserStory("UStory1", "blaBla1", 1, -1);
         Task task = new Task(-1, "Task1", 0, -1, "2030-10-10 10:10", 10, 20, -1);
         Task task_fail = new Task(1023426785, "Failure", 1, userStory.getID(),"2024-05-20 10:10", 10, 20, -1);
@@ -128,14 +128,14 @@ class TaskTest extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T8
+        /*  Test ID: Logic.Task3
          *  Author: Henry Lewis Freyschmidt
          *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: Task löschen T5.B1
          */
-    void deleteTask() throws Exception {
+    void deleteTask_deleteTaskObject_deleteTaskEntryOutOfDatabase() throws Exception {
         // Arrange
-        pw.append("Logik-Test-deleteTask\nTest ID: Logic.T8\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
+        pw.append("Logik-Test-deleteTask\nTest ID: Logic.Task3\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
         UserStory userStory = new UserStory("StoryName", "BlahBlah", 1, -1);
         userStoryService.saveUserStory(userStory);
         userStory = userStoryService.getUserStoryByName(userStory.getName());
@@ -168,15 +168,14 @@ class TaskTest extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T19
+        /*  Test ID: Logic.Task4
          *  Author: Henry Lewis Freyschmidt
          *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: Task-Erweiterung um zugeteilten Nutzern  T8
          */
-        //TODO: löse Problem: Assert wird erfüllt, wenn beim debuggen man in die Methode DAOTaskService.getById(task.getID()) in Zeile 1450 hineingeht
-    void TaskWithUsers() throws Exception {
+    void taskWithUsers_linkUserObjectToTaskObject_createLinkBetweenUserObjectAndTaskObjectInDatabase() throws Exception {
         // Arrange
-        pw.append("Logik-Test-TaskWithUsers\nTest ID: Logic.T19\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
+        pw.append("Logik-Test-taskWithUsers\nTest ID: Logic.Task4\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
         UserStory userStory = new UserStory("UserStoryT8", "T19T8", 2, -1);
         List<Integer> uIDs = new LinkedList<>();
         List<DAOUser> users;
@@ -215,14 +214,14 @@ class TaskTest extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T22
+        /*  Test ID: Logic.Task5
          *  Author: Henry Lewis Freyschmidt
          *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: erstelle eine Task mit einer Priorität T7.B4
          */
-    void createTaskWithPriority() throws Exception{
+    void createTaskWithPriority_createTaskObjectWithAttributePriority_writeTaskEntryWithPriorityInDatabase() throws Exception{
         //Arrange
-        pw.append("Logik-Test-createTaskWithPriority\nTest ID: Logic.T22\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
+        pw.append("Logik-Test-createTaskWithPriority\nTest ID: Logic.Task5\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
         UserStory userStory = new UserStory("UserStoryT7B4", "T7B4", 1, -1);
         Task task;
 
@@ -246,14 +245,14 @@ class TaskTest extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T23
+        /*  Test ID: Logic.Task6
          *  Author: Henry Lewis Freyschmidt
          *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: verändern der Priorität eine Task mit T7.B2
          */
-    void editTaskWithPriority() throws Exception{
+    void editTaskWithPriority_changePriorityOfTaskObject_overwritePrirorityOfTaskEntryInDatabase() throws Exception{
         //Arrange
-        pw.append("Logik-Test-editTaskWithPriority\nTest ID: Logic.T23\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
+        pw.append("Logik-Test-editTaskWithPriority\nTest ID: Logic.Task6\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
         UserStory userStory = new UserStory("UserStoryT7B2", "T7B2", 1, -1);
         Task task;
 
@@ -279,14 +278,14 @@ class TaskTest extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T24
+        /*  Test ID: Logic.Task7
          *  Author: Henry Lewis Freyschmidt
          *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: erstelle eine Task mit einer Schätzung T10.B3
          */
-    void createTaskWithEstimate() throws Exception{
+    void createTaskWithEstimate_createTaskObjectWithEstimate_writeTaskEntryWithEstimateInDatabase() throws Exception{
         //Arrange
-        pw.append("Logik-Test-createTaskWithEstimate\nTest ID: Logic.T24\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
+        pw.append("Logik-Test-createTaskWithEstimate\nTest ID: Logic.Task7\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
         UserStory userStory = new UserStory("UserStoryT10B3", "T10B3", 1, -1);
         Task task;
 
@@ -310,14 +309,14 @@ class TaskTest extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T25
+        /*  Test ID: Logic.Task8
          *  Author: Henry Lewis Freyschmidt
          *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: verändern der Schätzung eine Task mit T10.B2
          */
-    void editTaskWithEstimate() throws Exception{
+    void editTaskWithEstimate_changeEstimateOfTaskObject_overwriteEstimateOfTaskEntryInDataBase() throws Exception{
         //Arrange
-        pw.append("Logik-Test-editTaskWithEstimate\nTest ID: Logic.T25\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
+        pw.append("Logik-Test-editTaskWithEstimate\nTest ID: Logic.Task8\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
         UserStory userStory = new UserStory("UserStoryT10B2", "T10B2", 1, -1);
         Task task;
 
@@ -343,14 +342,14 @@ class TaskTest extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T26
+        /*  Test ID: Logic.Task9
          *  Author: Henry Lewis Freyschmidt
          *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: erstelle eine Task mit einer Abgabefrist T9.B3
          */
-    void createTaskWithDueDate() throws Exception{
+    void createTaskWithDueDate_createTaskObjectWithDueDate_writeTaskEntryWithDueDateInDatabase() throws Exception{
         //Arrange
-        pw.append("Logik-Test-createTaskWithdueDate\nTest ID: Logic.T24\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
+        pw.append("Logik-Test-createTaskWithdueDate\nTest ID: Logic.Task9\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
         UserStory userStory = new UserStory("UserStoryT9B3", "T9B3", 1, -1);
         Task task;
 
@@ -374,14 +373,14 @@ class TaskTest extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T27
+        /*  Test ID: Logic.Task10
          *  Author: Henry Lewis Freyschmidt
          *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: verändern der Abgabefrist einer Task mit T9.B2
          */
-    void editTaskWithDueDate() throws Exception{
+    void editTaskWithDueDate_changeDuDateOfTaskObject_overwriteDueDateOfTaskEntryInDatabase() throws Exception{
         //Arrange
-        pw.append("Logik-Test-editTaskWithDueDate\nTest ID: Logic.T25\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
+        pw.append("Logik-Test-editTaskWithDueDate\nTest ID: Logic.Task10\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
         UserStory userStory = new UserStory("UserStoryT9B2", "T9B2", 1, -1);
         Task task;
 
@@ -409,14 +408,14 @@ class TaskTest extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T28
+        /*  Test ID: Logic.Task11
          *  Author: Henry Lewis Freyschmidt
          *  Revisited: Henry van Rooyen, 27.6
          *  Zweck: verändern der Abgabefrist einer Task mit T11.B2
          */
-    void editTaskWithRealTime() throws Exception{
+    void editTaskWithRealTime_changeRealTimeOfTaskObject_overwriteRealTimeOfTaskEntryInDatabase() throws Exception{
         //Arrange
-        pw.append("Logik-Test-editTaskWithRealTime\nTest ID: Logic.T28\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
+        pw.append("Logik-Test-editTaskWithRealTime\nTest ID: Logic.Task11\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
         UserStory userStory = new UserStory("UserStoryT9B2", "T9B2", 1, -1);
         Task task;
 

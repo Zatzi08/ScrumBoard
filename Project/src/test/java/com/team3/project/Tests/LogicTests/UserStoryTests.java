@@ -27,12 +27,8 @@ public class UserStoryTests extends BaseLogicTest {
     private static SimpleDateFormat formatter;
     private boolean pass = true;
     private UserStory userStory = new UserStory("UserStory", "UserStoryTests", 1, -1);
-    //TODO: in Mock umwandeln (ist das möglich/sinnvoll?)
+
     @Spy
-    private DAOUserStoryService daoUserStoryService;
-    @Mock
-    private WebSessionService webSessionServiceMock;
-    @InjectMocks
     private UserStoryService userStoryService;
     @BeforeAll
     public static void setupTest(){
@@ -54,13 +50,13 @@ public class UserStoryTests extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T1
+        /*  Test ID: Logic.UserStory1
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: erstellen einer User-Story U3.B1
          */
     void saveUserStory_addNewUserStory_createNewUserStoryObjectInDB() throws Exception{
         //Arrange
-        pw.append("Logik-Test-addNewUserStory\nTest ID: Logic.T1\nDate: " + formatter.format(date)+ '\n');
+        pw.append("Logik-Test-addNewUserStory\nTest ID: Logic.UserStory1\nDate: " + formatter.format(date)+ '\n');
         UserStory failUserStory1 = null;
         UserStory failUserStory2 = new UserStory(null, "Failure", 1, -1);
         UserStory failUserStory3 = new UserStory("null", null, 1, -1);
@@ -69,7 +65,6 @@ public class UserStoryTests extends BaseLogicTest {
         int uID;
 
         //Exception-Cases
-
         assertThrows(Exception.class, ()->{
             count_correct_exception_checks.getAndIncrement();
             userStoryService.saveUserStory(failUserStory1);
@@ -107,13 +102,13 @@ public class UserStoryTests extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T2
+        /*  Test ID: Logic.UserStory2
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: ändern einer User-Story U4.B1
          */
     void saveUserStory_updateUserStory_updateChangedValuesOfUserStoryInDB() throws Exception{
         //Arrange
-        pw.append("Logik-Test-updateUserStory\nTest ID: Logic.T2\n" + "Date: " + formatter.format(date)+ '\n');
+        pw.append("Logik-Test-updateUserStory\nTest ID: Logic.UserStory2\n" + "Date: " + formatter.format(date)+ '\n');
         final String newdescription = "Blah";
         int uID;
         final int oldUID = userStory.getID();
@@ -140,14 +135,14 @@ public class UserStoryTests extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T5
+        /*  Test ID: Logic.UserStory3
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: User Story löschen U6.B1
          */
 
     void deleteUserStory_deleteUserStory_deleteUserStoryObjectFromDB() throws Exception{
         //Arrange
-        pw.append("Logik-Test-deleteUserStory\nTest ID: Logic.T5\n" + "Date: " + formatter.format(date)+ '\n');
+        pw.append("Logik-Test-deleteUserStory\nTest ID: Logic.UserStory3\n" + "Date: " + formatter.format(date)+ '\n');
         int uID;
         int count_correct_exceptions = 0;
         AtomicInteger count_correct_exception_checks = new AtomicInteger();

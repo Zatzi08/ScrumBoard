@@ -90,8 +90,8 @@
         <div class="editMenu-content">
             <form class="form" id="editForm" autocomplete="off" name="Story">
                 <textarea id="inputDesc" class="inputEdit" required placeholder="Eine passende Beschreibung eingeben" name="description" form="editForm"></textarea>
-                <label>Priorität</label>
-                <div id="editMenu-priorityDropAlignment">
+                <label style="margin-top: 15px;">Priorität</label>
+                <div id="editMenu-priorityDropAlignment" style="width: min-content;">
                     <button type="button" class="inputEditPrio" id="inputPrioUrgent" onclick="highlightPriorityButton('inputPrioUrgent')" style="background-color: #f76c5e" name="urgent" form="editForm">Urgent</button>
                     <button type="button" class="inputEditPrio" id="inputPrioHigh" onclick="highlightPriorityButton('inputPrioHigh')" style="background-color: #f68e5f" name="high" form="editForm">High</button>
                     <button type="button" class="inputEditPrio" id="inputPrioNormal" onclick="highlightPriorityButton('inputPrioNormal')" style="background-color: #f5dd90" name="normal" form="editForm">Normal</button>
@@ -99,7 +99,7 @@
                     <div id="list1" class="dropdown-check-list">
                         <button type="button" onclick="" class="anchor">Nutzer zuweisen</button>
                         <ul id="usersAuswahlID" class="items">
-                            <li th:each="nutzer : ${User}" th:id="@{N{id}(id = ${nutzer.getID()})}" ><input type="checkbox" th:text="${nutzer.getUname()}" /> </li>
+                            <li th:each="nutzer : ${User}" th:id="@{N{id}(id = ${nutzer.getID()})}"><input type="checkbox" th:text="${nutzer.getUname()}" /> </li>
                         </ul>
                     </div>
                 </div>
