@@ -27,12 +27,8 @@ public class UserStoryTests extends BaseLogicTest {
     private static SimpleDateFormat formatter;
     private boolean pass = true;
     private UserStory userStory = new UserStory("UserStory", "UserStoryTests", 1, -1);
-    //TODO: in Mock umwandeln (ist das möglich/sinnvoll?)
+
     @Spy
-    private DAOUserStoryService daoUserStoryService;
-    @Mock
-    private WebSessionService webSessionServiceMock;
-    @InjectMocks
     private UserStoryService userStoryService;
     @BeforeAll
     public static void setupTest(){
