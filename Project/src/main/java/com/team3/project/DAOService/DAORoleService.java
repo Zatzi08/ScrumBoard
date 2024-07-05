@@ -20,8 +20,8 @@ public class DAORoleService {
      * @return list of DAORoles
      */
     public static List<DAORole> getAll() {
-        List<DAORole> roles = DAOService.getAll(DAORole.class);
-        return roles;
+        List<String> joinOnAttributeName = Arrays.asList("authorizations" /*, users */);
+        return DAOService.getAllLeftJoin(DAORole.class, joinOnAttributeName);
     }
 
     
@@ -82,6 +82,11 @@ public class DAORoleService {
      */
     public static List<DAORole> getByAuthorization(DAOAuthorization authorization) {
         return getByAuthorization(authorization.getAuthorization());
+    }
+
+    static DAORole getWithAuthorizationById(int id) {
+        String joinOnAttributeName = "authorizations";
+        return DAOService.getLeftJoinByID(id, DAORole.class, joinOnAttributeName);
     }
     
     /* Author: Tom-Malte Seep

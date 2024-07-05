@@ -118,7 +118,7 @@ public class Task extends dataClasses implements observable {
         if (!dul.isEmpty()) {
             for (DAOUser u : dul) {
                 u = DAOUserService.getWithRolesById(u.getId());
-                User toAdd = new User(u.getName(), u.getId(), RoleService.toRoleList(u.getRoles()), u.getAuthorization().getAuthorization());
+                Profile toAdd = new Profile(u.getId(), u.getName(), u.getEmail(), u.getPrivatDescription(), u.getWorkDescription(), RoleService.toRoleList(u.getRoles()), u.getAuthorization().getAuthorization());
                 list.add(toAdd.toJSON());
             }
         }

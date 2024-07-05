@@ -1,5 +1,9 @@
 package com.team3.project.DAOService;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import com.team3.project.DAO.DAORole;
 import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskBoard;

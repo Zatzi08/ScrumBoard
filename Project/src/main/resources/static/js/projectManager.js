@@ -166,7 +166,7 @@ function toggleEditBoxT(id, TId, description, usID, dueDate, timeG, tbID, prio, 
         li.children[0].checked = false
     }
 
-    names = parseUser(names)
+    names = JSON.parse(names);
     names.forEach((name) =>{
         id = 'N'+name.id
         document.getElementById(id).children[0].checked = true;
@@ -206,16 +206,31 @@ function toggleEditBox(id,storyId, name, description, prio){
     }
 }
 
-var nutzerList = document.getElementById('list1');
-nutzerList.getElementsByClassName('anchor')[0].onclick = function(evt) {
-    if (nutzerList.classList.contains('visible')) {
-        nutzerList.classList.remove('visible');
-    }
-    else
-        nutzerList.classList.add('visible');
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const nutzerList = document.getElementById('list1');
+    const anchor = nutzerList.getElementsByClassName('anchor')[0];
 
-var roleList = document.getElementById('roleTaskDropdown');
+    anchor.onclick = function(evt) {
+        nutzerList.classList.toggle('visible');
+    };
+
+    document.addEventListener('click', function(evt) {
+        let targetElement = evt.target;
+
+        do {
+            if (targetElement === anchor || targetElement === nutzerList) {
+                return;
+            }
+            targetElement = targetElement.parentNode;
+        } while (targetElement);
+
+        if (nutzerList.classList.contains('visible')) {
+            nutzerList.classList.remove('visible');
+        }
+    });
+});
+
+const roleList = document.getElementById('roleTaskDropdown');
 roleList.getElementsByClassName("chooseRoleTaskBtn")[0].onclick = function(evt) {
     if (roleList.classList.contains('visible')) {
         roleList.classList.remove('visible');
@@ -304,11 +319,21 @@ function toggleRolesEditMenu() {
     }
 }
 
-function toggleRoleNameMenu(){
+function toggleRoleNameMenu(id = -1, auth = 1, name = ""){
     const rolesNameMenu = document.getElementById("roleOverlay2");
     if(rolesNameMenu.style.display === "none") {
+        can_sync = false
         rolesNameMenu.style.display = "block";
+        if (id !== -1){
+            document.getElementById('rightsForRoles').style.display = "none"
+        } else {
+            document.getElementById('rightsForRoles').style.display = "block"
+        }
+        document.getElementById('rightsForRolesID').value = id
+        document.getElementById('rightsForRoles').children[0].value = auth
+        document.getElementById('roleNameInput').value = name
     } else {
+        can_sync = true
         rolesNameMenu.style.display = "none";
     }
 }
@@ -342,8 +367,28 @@ window.onclick = function(event) {
     else if (event.target == rolesOverlay2 && event.target != roleEditMenu2){
         rolesOverlay2.style.display = "none";
         debug.style.display = "block";
+        can_sync = true
     }
 }
-window.onclick = function(event) {
 
+function saveRoleB(sessionID){
+    let auth = document.getElementById('rightsForRoles').children[0].value
+    let id = document.getElementById('rightsForRolesID').value
+    let name = document.getElementById('roleNameInput').value
+    saveRole(sessionID, id, name, auth)
+    can_sync = true
+}
+
+function filterRole(selected) {
+    let authority = selected.value
+    let roleList = document.getElementById("roleList").getElementsByTagName("li");
+    for (var i = 0; i < roleList.length; i++) {
+        if (roleList[i].getAttribute("auth") !== authority && roleList[i].getAttribute("auth") !== 0) {
+            roleList[i].style.display = "none";
+        }
+        else{
+            roleList[i].style.display = "block"
+        }
+
+    }
 }

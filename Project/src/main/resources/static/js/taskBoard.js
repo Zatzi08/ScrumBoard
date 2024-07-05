@@ -248,12 +248,12 @@ function changeTBName(sessionID, tbID) {
 
 async function addTaskBoard(sessionID) {
     let name = document.getElementById('createTBNameInput').value;
-    console.log('Hi')
-    console.log(sessionID)
+    await saveTaskBoard(sessionID, -1, name)
+    can_sync = true
     document.location.reload()
 }
 
-function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime,prio ,DueDate, NutzerList){
+function toggleZoomedTaskCardforTask(sessionID, USName, TBName, TaskDesc, estTime, realTime,prio ,DueDate, NutzerList){
     toggleZoomedTaskCard()
     document.getElementById('zoomedTaskCard-US').innerText = USName;
     document.getElementById('zoomedTaskCard-taskBoard').innerText = TBName;
@@ -263,19 +263,21 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
     document.getElementById('zoomedTaskCard-workedTime').innerText = realTime;
     document.getElementById('zoomedTaskCard-deadline').innerText = DueDate
     document.getElementById('zoomedTaskCard-role').innerText;
-    NutzerList = parseUser(NutzerList)
+    NutzerList = JSON.parse(NutzerList)
     const label = document.getElementById("zoomedTaskCard-assignedUsers");
     label.innerHTML = ""
     NutzerList.slice(0, 5).forEach((nutzer)=>{
         const circle = document.createElement("button");
         circle.classList.add('zoomedTaskCard-userCircle');
-         circle.id = 'N' + nutzer.id;
-         circle.appendChild(document.createTextNode(nutzer.name.charAt(0).toUpperCase()));
+        let but = "SwitchToOtherProfile(" + sessionID + ", " + nutzer.email + ")";
+        circle.addEventListener("click", function(event){
+            SwitchToOtherProfile(sessionID, nutzer.email)
+        });
+        circle.title = nutzer.name
+        circle.id = 'N' + nutzer.id;
+        circle.appendChild(document.createTextNode(nutzer.name.charAt(0).toUpperCase()));
         circle.style.backgroundColor = randomizeAssignedUsersColour(0, 255)
-         label.appendChild(circle);
-
-
-
+        label.appendChild(circle);
      })
     if (NutzerList.length > 5){
         var moreUsersCircle = document.createElement("button");
@@ -288,17 +290,6 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
     }
     moreUsersCircle.onclick = function (){ openAssignedUsers(NutzerList)
     };
-}
-
-function parseUser(a){
-    let list = []
-    while (a !== "]" && a !== "[]"){
-        let user = a.substring(a.indexOf('{'), end = (a.indexOf('}') + 1)).replaceAll("'", '"')
-        a = a.substring(a.indexOf('}') + 1)
-        let ju = JSON.parse(user);
-        list.push(ju)
-    }
-    return list
 }
 
 function closePopup(){
@@ -371,5 +362,4 @@ function setTime(element,sessionID){
     setTaskTime(sessionID);
     element.style.display = 'unset';
     can_sync = true
-    //TODO: Hier close Popup
 }

@@ -136,27 +136,32 @@ function saveProfile(sessionID) {
     let pdescription = document.getElementById('inputPDesc').value;
     let wdescription = document.getElementById('inputWDesc').value;
     let email = "";
-    // roles = getRoles();
+    let roles = getRoles();
 
-    fetch('/saveUserData' ,{
-        method: 'Post',
-        cache: 'no-cache',
-        headers:{
-            'Content-Type': 'application/json',
-            'sessionID': sessionID
-        },
-        body: JSON.stringify({
-            'uname': name,
-            'email': email,
-            'privatDesc': pdescription,
-            'workDesc': wdescription,
-            'roles': null
-        })
-    }).then(r => {
-        if (r.ok) {
-            location.reload();
-        }
-    });
+    if (name == "" ||pdescription == "" || wdescription == ""){
+        alert("Bitte fülle alle Eingabefelder aus!");
+    }
+    else{
+        fetch('/saveUserData' ,{
+            method: 'Post',
+            cache: 'no-cache',
+            headers:{
+                'Content-Type': 'application/json',
+                'sessionID': sessionID
+            },
+            body: JSON.stringify({
+                'uname': name,
+                'email': email,
+                'privatDesc': pdescription,
+                'workDesc': wdescription,
+                'roles': roles
+            })
+        }).then(r => {
+            if (r.ok) {
+                location.reload();
+            }
+        });
+    }
 
 }
 
@@ -326,7 +331,7 @@ function saveRole(sessionID, rid, rName, auth){
     })
 }
 
-function deleteRole(sessionID, rID, rName){
+function deleteRole(sessionID, rID, rName = ""){
     let url = "deleteVisRole";
 
     return  fetch(url, {
@@ -337,7 +342,7 @@ function deleteRole(sessionID, rID, rName){
             'sessionID': sessionID
         },
         body: JSON.stringify({
-            "id": rid,
+            "id": rID,
             "name": rName,
         })
     }).then(r =>{
@@ -365,27 +370,17 @@ function setRollsOfUser(sessionID, uId, roles){
 }
 
 // Zusätzliche Funktionen
-function getRollen(){
+function getRoles(){
     var list = document
-        .getElementById('roleList')
-        .getElementsByClassName("li");
-    let a = new NodeList();
+        .getElementById('usersAuswahlID')
+        .getElementsByTagName("li");
+    let a = [];
 
-    for (let l in list){
-        let toAdd = l.getAttribute("rID")
-        a.add(toAdd)
+    for (let l of list){
+        if (l.children[0].checked){
+            let toAdd = {id: l.children[0].getAttribute("rID"), name:""}
+            a.push(toAdd)
+        }
     }
-    // TODO: integrate
-    return null
-}
-
-function parseUser(a){
-    let list = []
-    while (a !== "]" && a !== "[]"){
-        let user = a.substring(a.indexOf('{'), end = (a.indexOf('}') + 1)).replaceAll("'", '"')
-        a = a.substring(a.indexOf('}') + 1)
-        let ju = JSON.parse(user);
-        list.push(ju)
-    }
-    return list
+    return a
 }

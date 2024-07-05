@@ -40,8 +40,8 @@
                     </tr>
                     </thead>
                     <tbody class="columnTableBody">
-                    <tr th:each="task : ${TaskList.getTasks()}" th:users="${task.getUserAsJSON()}" th:id="@{T{TID}(TID=${task.getID()})}" draggable="true" th:us="${task.getUserStory().getName()}" th:tb="${Board.getName()}" th:desc="${task.getDescription()}" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}" th:pri="${task.getPriority()}" th:due="${task.getDueDateAsPresentable()}"
-                        ondblclick="toggleZoomedTaskCardforTask(this.getAttribute('us'),this.getAttribute('tb'),this.getAttribute('desc'), this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('pri'), this.getAttribute('due'), this.getAttribute('users'))" title="Doppelklicken, um gesamte Task zu sehen">
+                    <tr th:each="task : ${TaskList.getTasks()}" th:sID="${sessionID}" th:users="${task.getUserAsJSON()}" th:id="@{T{TID}(TID=${task.getID()})}" draggable="true" th:us="${task.getUserStory().getName()}" th:tb="${Board.getName()}" th:desc="${task.getDescription()}" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}" th:pri="${task.getPriority()}" th:due="${task.getDueDateAsPresentable()}"
+                        ondblclick="toggleZoomedTaskCardforTask(this.getAttribute('sID'),this.getAttribute('us'),this.getAttribute('tb'),this.getAttribute('desc'), this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('pri'), this.getAttribute('due'), this.getAttribute('users'))" title="Doppelklicken, um gesamte Task zu sehen">
                         <td th:style = "${(task.getPriorityAsInt() == 1) ? 'background-color: #9EC5E5' : ((task.getPriorityAsInt() == 2) ? 'background-color: #f5dd90' : ((task.getPriorityAsInt() == 3) ? 'background-color: #f68e5f' : ((task.getPriorityAsInt() == 4) ? 'background-color: #f76c5e' : 'background-color: rgba(255, 255, 255, 0.66)')))}" >
                             <button class="tableContentLabel" id = "tableContentLabel-vis" th:style="${(!task.isDone()) ? 'display: none' : 'display: unset'}" th:id="@{tableContent-Visualisation:{tID}(tID=${task.getID()})}" title="Schätzungstracker" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}" onclick="visualisationOfTaskTime(this.getAttribute('est'), this.getAttribute('real'))"><i class = "fa-solid fa-chart-bar"></i></button>
                             <label class="tableContentLabel" id="tableContent-UsId" th:text="${task.getUserStory().getName()}" title="Referenz zur entsprechenden User-Sotry">US-ID</label>
@@ -72,7 +72,8 @@
                     <div id="zoomedTaskCard-nutzerDropdown">
                         <i class="fa-regular fa-user" id="zoomedTaskCard-sym7" style = "display:inline"></i> <label class="zoomedTaskCard-symLab" for = "zoomedTaskCard-sym7" style="font-size: 100%;">Zugewiesene Nutzer</label>
                         <div id="zoomedTaskCard-nutzerDropdownAlignment">
-                            <label class="zoomedTaskCard-content" id="zoomedTaskCard-assignedUsers" title="Zugewiesene Nutzer">
+                            <label class="zoomedTaskCard-content" id="zoomedTaskCard-assignedUsers" >
+
                             </label>
                         </div>
                     </div>

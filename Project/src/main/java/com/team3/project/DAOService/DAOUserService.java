@@ -1,5 +1,8 @@
 package com.team3.project.DAOService;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,7 +57,15 @@ public class DAOUserService {
      */
     public static List<DAOUser> getAllWithRoles() {
         String joinAttributeName = "roles";
-        return DAOService.getAllLeftJoin(DAOUser.class, joinAttributeName);
+        List<DAOUser> users = DAOService.getAllLeftJoin(DAOUser.class, joinAttributeName);
+        users.stream().forEach(user -> {
+            List<DAORole> roles = new ArrayList<>();
+            user.getRoles().forEach(role -> {
+                roles.add(DAORoleService.getWithAuthorizationById(role.getId()));
+                user.setRoles(roles);
+            });
+        });
+        return users;
     }
 
     /* Author: Tom-Malte Seep
@@ -84,7 +95,13 @@ public class DAOUserService {
      */
     public static DAOUser getWithRolesById(int id) {
         String joinAttributeName = "roles";
-        return DAOService.getLeftJoinByID(id, DAOUser.class, joinAttributeName);
+        DAOUser user = DAOService.getLeftJoinByID(id, DAOUser.class, joinAttributeName);
+        List<DAORole> roles = new ArrayList<>();
+        user.getRoles().forEach(role -> {
+            roles.add(DAORoleService.getWithAuthorizationById(role.getId()));
+        });
+        user.setRoles(roles);
+        return user;
     }
 
     /* Author: Tom-Malte Seep
@@ -173,13 +190,14 @@ public class DAOUserService {
         if (authorization != null) {
             daoAuthorization = DAOAuthorizationService.getByAuthorization(authorization.getAuthorization());
         }
+        String hashedPassword = DAOUserService.hash(password);
         if (newSessionId) {
             String createdSessionId = (sessionId != null) ? sessionId : createSessionId();
             String createdSessionDate = (sessionDate != null) ? sessionDate : createSessionDate();
-            return DAOService.merge(new DAOUser(email, password, name, privatDescription, workDescription, DAOAuthorizationService.filterRolesByAuthorization(daoAuthorization, roles), 
+            return DAOService.merge(new DAOUser(email, hashedPassword, name, privatDescription, workDescription, DAOAuthorizationService.filterRolesByAuthorization(daoAuthorization, roles), 
                                                   createdSessionId, createdSessionDate, daoAuthorization));
         }
-        return DAOService.merge(new DAOUser(email, password, name, privatDescription, workDescription, roles, daoAuthorization));
+        return DAOService.merge(new DAOUser(email, hashedPassword, name, privatDescription, workDescription, roles, daoAuthorization));
     }
 
     /* Author: Tom-Malte Seep
@@ -195,7 +213,8 @@ public class DAOUserService {
         if (authorization > 0) {
             daoAuthorization = DAOAuthorizationService.getByAuthorization(authorization);
         }
-        return createByEMail(email, password, name, privatDescription, workDescription, roles, daoAuthorization, sessionId, sessionDate, newSessionId);
+        String hashedPassword = DAOUserService.hash(password);
+        return createByEMail(email, hashedPassword, name, privatDescription, workDescription, roles, daoAuthorization, sessionId, sessionDate, newSessionId);
     }
 
     //updates
@@ -222,8 +241,7 @@ public class DAOUserService {
             if (authorization != null) {
                 daoAuthorization = DAOAuthorizationService.getByAuthorization(authorization.getAuthorization());
             }
-            List<String> joinOnAttributeNames = Arrays.asList("authorization", "roles");
-            DAOUser user = DAOService.getSingleLeftJoinsById(id, DAOUser.class, joinOnAttributeNames);
+            DAOUser user = getWithRolesById(id);
             if (user != null) {
                 if (newSessionId) {
                     String createdSessionId = (sessionId != null) ? sessionId : createSessionId();
@@ -394,9 +412,11 @@ public class DAOUserService {
      * UserStory/Task-ID: R5.D2, R1.D3
      */
     public static boolean updateRolesById(int id, List<DAORole> roles) {
-        List<String> joinOnAttributeNames = Arrays.asList("authorization", "roles");
-        DAOUser daoUser = DAOService.getSingleLeftJoinsById(id, DAOUser.class, joinOnAttributeNames);
+        DAOUser daoUser = getWithRolesById(id);
         if (daoUser != null) {
+            daoUser.setRoles(roles);
+            return DAOService.merge(daoUser);
+            /*
             boolean addrole = false;
             for (DAORole daoRole : roles) {
                 if (DAORoleService.checkAuthorizationById(daoRole.getId(), daoUser.getAuthorization())) {
@@ -405,6 +425,7 @@ public class DAOUserService {
                 }
             }
             return addrole && DAOService.merge(daoUser);
+            */
         }
         return false;
     }
@@ -416,12 +437,16 @@ public class DAOUserService {
      * UserStory/Task-ID: R5.D2, R1.D3
      */
     public static boolean updateAddRoleById(int id, DAORole role) {
-        List<String> joinOnAttributeNames = Arrays.asList("authorization", "roles");
-        DAOUser daoUser = DAOService.getSingleLeftJoinsById(id, DAOUser.class, joinOnAttributeNames);
-        if (DAORoleService.checkAuthorizationById(role.getId(), daoUser.getAuthorization()) && daoUser != null) {
-            daoUser.getRoles().add(role);
-            return DAOService.merge(daoUser);
-        }
+        DAOUser daoUser = getWithRolesById(id);
+        if (daoUser != null) {
+            boolean addRole = false;
+            if (DAORoleService.checkAuthorizationById(role.getId(), daoUser.getAuthorization())) {
+                daoUser.getRoles().add(role);
+                addRole = true;
+            }
+            return addRole && DAOService.merge(daoUser);
+            }
+        
         return false;
     }
 
@@ -542,5 +567,30 @@ public class DAOUserService {
      */
     private static String createSessionDate() {
         return LocalDate.now().toString();
+    }
+
+    static String hash(String password) {
+        if (password == null) {
+            return null;
+        }
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedhash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            StringBuilder hexString = new StringBuilder(2 * encodedhash.length);
+            for (int i = 0; i < encodedhash.length; i++) {
+                String hex = Integer.toHexString(0xff & encodedhash[i]);
+                if(hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+
+        return null;
     }
 }

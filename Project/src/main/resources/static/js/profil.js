@@ -10,11 +10,6 @@ function toggleProfilMenu(uname, workDesc, priDesc){
     document.getElementById('inputName').value = uname
     document.getElementById('inputPDesc').value = priDesc
     document.getElementById('inputWDesc').value = workDesc
-
-    // Hier habe ich's getestet und er gibt für priDesc und workDesc in den Placeholdern null aus, kann es aber im profil anzeigen
-    // document.getElementById('inputName').placeholder = uname
-    // document.getElementById('inputPDesc').placeholder = priDesc
-    // document.getElementById('inputWDesc').placeholder = workDesc
 }
 
 var rolesList = document.getElementById('roleDropdown');

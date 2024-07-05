@@ -41,10 +41,10 @@
     cursor:pointer;
 }
 
-#profilProjektBeschreibung, #profilPersoBeschreibung, rolleProfil{
-    color: #e1dbdb;
+.profilInhalt{
+    color:  #a8a398;;
     font-family: Roboto;
-    font-size: calc(1dvw + 1dvh);
+    font-size: calc(0.9dvw + 0.9dvh);
     overflow-wrap: break-word;
     text-align: justify;
     hyphens: auto;
@@ -82,6 +82,7 @@
     left: 50dvw;
     transform: translate(-50%, -50%);
     position: fixed;
+    overflow: auto;
 }
 
 .profilInput{
@@ -138,7 +139,7 @@
 .profileText{
     font-size: calc(1.2dvw + 1.2dvh);
     font-family: "Lucida Console";
-    color: #a8a398;
+    color:#e1dbdb;
     margin-top: 20px;
     overflow-wrap: break-word;
     hyphens: auto;
@@ -199,13 +200,13 @@
     z-index: 1;
     background-color: #23353f;
     width: 100%;
-    margin-top:50px;
+    margin-top: 50px;
     height: 150px;
     border-radius: 8px;
     margin-left: -100%;
     float: right;
     left: 2px;
-
+    overflow: auto;
 }
 
 .roleDropdown.visible .roles {

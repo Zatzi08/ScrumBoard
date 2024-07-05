@@ -3746,7 +3746,6 @@ select {
           appearance: none;
   border: 1px solid #cacaca;
   border-radius: 0;
-  background-color: #fefefe;
   font-family: inherit;
   font-size: 1rem;
   font-weight: normal;
@@ -3771,7 +3770,6 @@ select {
 select:focus {
   outline: none;
   border: 1px solid #8a8a8a;
-  background-color: #fefefe;
   -webkit-box-shadow: 0 0 5px #cacaca;
           box-shadow: 0 0 5px #cacaca;
   -webkit-transition: border-color 0.25s ease-in-out, -webkit-box-shadow 0.5s;

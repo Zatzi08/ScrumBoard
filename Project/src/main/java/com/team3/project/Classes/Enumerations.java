@@ -14,7 +14,7 @@ public class Enumerations {
      * ProductOwner = 3
      * admin = 4
      */
-    public enum Role {admin, ProductOwner, Manager, Nutzer}
+    public enum Role {Nutzer, Manager, ProductOwner, admin}
     public enum ResponceTyp {newItem, deletedItem, changedPrimitivParam, changedConplexParam, ERROR}
 
     public static Role getRoleFromInt(int role){

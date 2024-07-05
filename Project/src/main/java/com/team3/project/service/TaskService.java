@@ -349,7 +349,7 @@ public class TaskService {
                 DAOTask dt = DAOTaskService.getWithUsersById(tid);
                 List<User> ul = new LinkedList<User>();
                 dt.getUsers().forEach(du ->{
-                    User toAdd = new User(du.getName(),du.getId(), RoleService.toRoleList(du.getRoles()), du.getAuthorization().getAuthorization());
+                    User toAdd = new User(du.getName(),du.getId(), RoleService.toRoleList(DAOUserService.getWithRolesById(du.getId()).getRoles()), du.getAuthorization().getAuthorization());
                     ul.add(toAdd);
                 });
                 observer.sendToTaskGroup(3,

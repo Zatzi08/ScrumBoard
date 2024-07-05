@@ -178,7 +178,8 @@ public class AccountService {
         if (profile.getPrivatDesc() == null || profile.getPrivatDesc().isEmpty()) throw new Exception("Null pDes");
         DAOUser user = DAOUserService.getBySessionId(sessionId);
         if (user == null) throw new Exception("User not found");
-        boolean responce = DAOUserService.updateByEMail(user.getEmail(), profile.getUname(),profile.getPrivatDesc(), profile.getWorkDesc(), user.getRoles());
+        boolean responce = DAOUserService.updateByEMail(user.getEmail(), profile.getUname(),profile.getPrivatDesc(), profile.getWorkDesc(), RoleService.toRoleList_DAO(profile.getRoles()));
+        DAOUserService.updateRolesById(user.getId(), RoleService.toRoleList_DAO(profile.getRoles()));
         if (responce) {
             try {
                 user = DAOUserService.getBySessionId(sessionId);
