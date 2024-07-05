@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,6 +33,7 @@ public class TaskBoardTests extends BaseLogicTest {
     private static Date date;
     private static SimpleDateFormat formatter;
     private boolean pass = true;
+    private UserStory userStory = new UserStory("UserStoryT16B2", "T16B2", 1, -1);
 
     @Spy
     private TaskBoardService taskBoardService = new TaskBoardService();
@@ -59,17 +61,16 @@ public class TaskBoardTests extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T21
-         *  Author: Henry Lewis Freyschmidt
-         *  Zweck: erstellen einer Task erweitern um TaskBoardID + Verknüpfung an TaskList T16.B3
-         */
-    void createTaskWithTaskBoardID() throws Exception{
+    /*  Test ID: Logic.TaskBoard1
+     *  Author: Henry Lewis Freyschmidt
+     *  Zweck: erstellen eines TaskBoards
+     */
+    void createTaskBoard_createTaskBoardObject_createEntryOfTaskBoardObjectInDataBase() throws Exception{
         //Arrange
-        pw.append("Logik-Test-createTaskWithTaskBoardID\nTest ID: Logic.T21\n" + "Date: " + formatter.format(date) + '\n');
+        pw.append("Logik-Test-createTaskBoard\nTest ID: Logic.TaskBoard1\n" + "Date: " + formatter.format(date) + '\n');
         String taskBoardName = "TaskBoardT16B3";
         final String taskBoardName_fail1 = null;
         final String taskBoardName_fail2 = "";
-        List<TaskBoard> taskBoards;
         int count_correct_exceptions = 0;
         AtomicInteger count_correct_exception_checks = new AtomicInteger();
 
@@ -87,26 +88,58 @@ public class TaskBoardTests extends BaseLogicTest {
 
         //Act
         taskBoardService.createTaskBoard(taskBoardName);
-        taskBoards = taskBoardService.getAllTaskBoards();
 
         //Assert
-        if (taskBoards != null){ //notwendig, sonst gibt taskBoard.get() ein Error zurück
-            try{
-                Assertions.assertEquals(taskBoardName, taskBoards.get(taskBoards.size()-1).getName());
-            }catch (AssertionError e){
-                pass = false;
-                pw.append("Fail: TaskBoard not created\n");
-                throw new AssertionError(e);
-            }
-        }else{
+        try{
+            Assertions.assertEquals(taskBoardName, taskBoardService.getAllTaskBoards().get(0).getName());
+        }catch (AssertionError e){
             pass = false;
-            pw.append("Fail: TaskBoard not created\n");
+            pw.append("Fail: taskBoard not created\n");
+            throw new AssertionError(e);
         }
 
         if (count_correct_exceptions != count_correct_exception_checks.get()){
             pass = false;
             pw.append("Fail: wrong Exception-Handling\n");
         }
+        pw.append(String.format("pass = %b", pass));
+
+    }
+    @Test
+        /*  Test ID: Logic.TaskBoard2
+         *  Author: Henry Lewis Freyschmidt
+         *  Zweck: erstellen einer Task erweitern um TaskBoardID + Verknüpfung an TaskList T16.B3
+         */
+    void createTaskWithTaskBoardID_createTaskObjectLinkedToTaskBoard_createTaskEntryInDataBaseAndLinkToTaskBoard() throws Exception{
+        //Arrange
+        pw.append("Logik-Test-createTaskWithTaskBoardID\nTest ID: Logic.TaskBoard2\n" + "Date: " + formatter.format(date) + '\n');
+        List<DAOTaskList> taskLists;
+        DAOTaskList daoTaskList = null;
+        String taskBoardName = "TaskBoardT16B3";
+        userStoryService.saveUserStory(userStory);
+        int userStoryID = userStoryService.getUserStoryByName(userStory.getName()).getID();
+        taskBoardService.createTaskBoard(taskBoardName);
+        TaskBoard taskBoard = taskBoardService.getAllTaskBoards().get(0);
+        Task task = new Task(-1, "TaskT16B2", 1, userStoryID, "10-10-2030 10:10", 10, 20, taskBoard.getID());
+        taskLists = DAOTaskListService.getByTaskBoardId(taskBoard.getID());
+        for(DAOTaskList taskListObject : taskLists){
+            if(taskListObject.getSequence() == 1){
+                daoTaskList = taskListObject;
+                break;
+            }
+        }
+        //Act
+        taskService.saveTask(task);
+
+        //Assert
+        DAOTask daoTask = DAOTaskService.getByDescription(task.getDescription());
+        try{
+            Assertions.assertEquals(daoTaskList.getId(), daoTask.getTaskList().getId());
+        }catch (AssertionError e){
+            pass = false;
+            pw.append("Fail: Task not linked to TaskBoard\n");
+        }
+
         pw.append(String.format("pass = %b", pass));
     }
 
@@ -115,11 +148,10 @@ public class TaskBoardTests extends BaseLogicTest {
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: bearbeiten einer Task erweitern um TaskBoardID T16.B2
          */
-    void editTaskBoardIDInTask() throws Exception{
+    void editTaskBoardIDInTask_changeLinkedTaskBoardOfUserObject_changeLinkToTaskBardOfUserObjectInDatabase() throws Exception{
         //Arrange
         pw.append("Logik-Test-editTaskBoardIDInTask\nTest ID: Logic.T20\n" + "Date: " + formatter.format(date) + '\n');
         Task task = new Task(-1, "TaskT16B2", 1, -1, "10-10-2030 10:10", 10, 20, -1);
-        UserStory userStory = new UserStory("UserStoryT16B2", "T16B2", 1, -1);
         DAOTaskList taskList = null;
         List<DAOTaskList> taskLists;
         DAOTask daoTask;

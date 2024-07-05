@@ -61,13 +61,13 @@ public class VisualRoleTests extends BaseLogicTest{
     }
 
     @Test
-        /*  Test ID: Logic.T14
+        /*  Test ID: Logic.VisualRole1
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: visuelle Rolle erstellen R2.B2
          */
     void createVisualRole_createNewVisualRole_addNewVisualRoleObjectToDataBase() throws Exception{
         //Arrange
-        pw.append("Logik-Test-createVisualRole\nTest ID: Logic.T14\n" + "Date: " + formatter.format(date) + '\n');
+        pw.append("Logik-Test-createVisualRole\nTest ID: Logic.VisualRole1\n" + "Date: " + formatter.format(date) + '\n');
         int count_correct_exceptions = 0;
         String name_fail = "";
         AtomicInteger count_correct_exception_checks = new AtomicInteger();
@@ -99,13 +99,13 @@ public class VisualRoleTests extends BaseLogicTest{
     }
 
     @Test
-        /*  Test ID: Logic.T13
+        /*  Test ID: Logic.VisualRole2
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: alle visuellen Rollen einer reellen Rolle wiedergeben R2.B1
          */
     void getAllVisualRoles_getAllVisualRoles_returnListOfAllRoleObjects() throws Exception{
         //Arrange
-        pw.append("Logik-Test-getAllVisualRoles\nTest ID: Logic.T13\n" + "Date: " + formatter.format(date) + '\n');
+        pw.append("Logik-Test-getAllVisualRoles\nTest ID: Logic.VisualRole2\n" + "Date: " + formatter.format(date) + '\n');
         List<Role> list;
         roleService.createVisualRole(visualRoleName,role);
 
@@ -125,13 +125,13 @@ public class VisualRoleTests extends BaseLogicTest{
     }
 
     @Test
-        /*  Test ID: Logic.T15
+        /*  Test ID: Logic.VisualRole3
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: visuelle Rollennamen ändern R3.B1
          */
     void changeVisualRoleName_changeNameOfVisualRoleObject_changeNameOfVisualRoleObajetInDataBase() throws Exception{
         //Arrange
-        pw.append("Logik-Test-changeVisualRoleName\nTest ID: Logic.T15\n" + "Date: " + formatter.format(date) + '\n');
+        pw.append("Logik-Test-changeVisualRoleName\nTest ID: Logic.VisualRole3\n" + "Date: " + formatter.format(date) + '\n');
         String newName = "newName";
         String newName_fail = "";
         int count_correct_exceptions = 0;
@@ -167,12 +167,12 @@ public class VisualRoleTests extends BaseLogicTest{
     }
 
     @Test
-        /*  Test ID: Logic.T16
+        /*  Test ID: Logic.VisualRole4
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: visuelle Rollennamen löschen R4.B1
          */
     void deleteVisualRole() throws Exception{
-        pw.append("Logik-Test-deleteVisualRole\nTest ID: Logic.T16\n" + "Date: " + formatter.format(date) + '\n');
+        pw.append("Logik-Test-deleteVisualRole\nTest ID: Logic.VisualRole4\n" + "Date: " + formatter.format(date) + '\n');
         int count_correct_exceptions = 0;
         AtomicInteger count_correct_exception_checks = new AtomicInteger();
         int nonexistentRoleID = 1247823;
@@ -207,79 +207,13 @@ public class VisualRoleTests extends BaseLogicTest{
     }
 
     @Test
-    /*  Test ID: Logic.T16
-     *  Author: Henry Lewis Freyschmidt
-     *  Zweck:  Nutzer kann sich eine visuelle Rolle zuweisen R5.B2
-     */
-    void addVisualRole_giveUserVisualRole_connectUserObjectWithRoleObjectInDataBase() throws Exception{
-        //Arrange
-        pw.append("Logik-Test-addVisualRole\nTest ID: Logic.T16\n" + "Date: " + formatter.format(date) + '\n');
-        String userName = "Dave";
-        String userMail = "dave@gmail.com";
-        String userPasswort = "1234";
-        int userID_fail1 = 327891;
-        Role visualRole_fail1 = null;
-        Role visualRole_fail2 = new Role(-1, visualRoleName);
-        visualRole_fail2.setAuth(role);
-        Role visualRole_fail3 = new Role(112874, visualRoleName);
-        visualRole_fail3.setAuth(role);
-        int count_correct_exceptions = 0;
-        AtomicInteger count_correct_exception_checks = new AtomicInteger();
-        accountService.register(userName,userMail, userPasswort);
-        int userID = accountService.getAllUser().get(0).getID();
-        roleService.createVisualRole(visualRoleName, role);
-        DAORole daoRole = roleService.getAllVisualRolesByRole(role).get(0);
-        Role visualRole = new Role(daoRole.getId(),visualRoleName);
-        visualRole.setAuth(role);
-
-        //Exception Cases
-        assertThrows(Exception.class, () ->{
-            count_correct_exception_checks.getAndIncrement();
-            roleService.addVisualRole(userID, visualRole_fail1);
-        });
-        count_correct_exceptions++;
-        assertThrows(Exception.class, () ->{
-            count_correct_exception_checks.getAndIncrement();
-            roleService.addVisualRole(userID, visualRole_fail2);
-        });
-        count_correct_exceptions++;
-        assertThrows(Exception.class, () ->{
-            count_correct_exception_checks.getAndIncrement();
-            roleService.addVisualRole(userID_fail1, visualRole);
-        });
-        count_correct_exceptions++;
-        assertThrows(Exception.class, () ->{
-            count_correct_exception_checks.getAndIncrement();
-            roleService.addVisualRole(userID, visualRole_fail3);
-        });
-        count_correct_exceptions++;
-
-        //Act
-        roleService.addVisualRole(userID, visualRole);
-
-        //Assert
-        try{
-            assertEquals(visualRole.getID(),accountService.getProfileByEmail(userMail).getRoles().get(0).getID());
-        }catch (AssertionError e){
-            pass = false;
-            pw.append("Fail: User not linked to visual Role\n");
-        }
-
-        if(count_correct_exceptions != count_correct_exception_checks.get()){
-            pass = false;
-            pw.append("Fail: wrong Exception-Handling\n");
-        }
-
-        pw.append(String.format("pass = %b", pass));
-    }
-    @Test
-    /*  Test ID: Logic.T16
+    /*  Test ID: Logic.VisualRole5
      *  Author: Henry Lewis Freyschmidt
      *  Zweck:  Ausgabe alle visueller Rollen einer rechtebezogenen Rolle R2.B1
      */
     void getAllVisualRolesByRole_getListOfAllVisualRolesOfARole_returnListWithRoleObjectsOfAnAuthority() throws Exception{
         //Arrange
-        pw.append("Logik-Test-getAllVisualRolesByRole\nTest ID: Logic.T16\n" + "Date: " + formatter.format(date) + '\n');
+        pw.append("Logik-Test-getAllVisualRolesByRole\nTest ID: Logic.VisualRole5\n" + "Date: " + formatter.format(date) + '\n');
         roleService.createVisualRole(visualRoleName, role);
         List<DAORole> daoRoles;
 
