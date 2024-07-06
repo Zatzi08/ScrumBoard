@@ -74,7 +74,7 @@
 #profilForm{
     width: 800px;
     height: 564px;
-    background-color: rgb(46, 46, 61);
+    background-color: rgb(40, 47, 59);
     padding: 20px;
     color: black;
     border-radius: 15px;
@@ -88,9 +88,7 @@
 .profilInput{
     display: block;
     width: 95%;
-    height: 30px;
-    border: #606060 solid 1px;
-    background-color: #283d48;
+    background-color: #203139;
     color: #afafaf;
     resize: none;
     border-radius: 10px;
@@ -112,13 +110,15 @@
 
 #profilEditBtn{
     position: relative;
-    height:35px;
-    width:auto;
+    height: 35px;
+    width: auto;
     margin-top: 20px;
     margin-left: 45%;
     background-color: #4b6294;
     border-radius: 10px;
-    color:white;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
 }
 
 #profilEditBtn:hover{
@@ -173,22 +173,16 @@
 }
 
 .setRolesBtn {
-    position: relative;
     cursor: pointer;
-    display: inline-flex;
-    background-color: #283d48;
+    background-color: #203139;
     color: #afafaf;
-    border: #606060 solid 1px;
+    border: grey solid 1px;
     border-radius: 8px;
     font-size: 12px;
     box-shadow: white;
     padding: .75rem 1rem;
     height: 45px;
-    align-items: center;
-    justify-content: center;
     width: 100%;
-    margin-left: -108%;
-    float: right;
 }
 
 .roles {
@@ -197,15 +191,10 @@
     display: none;
     border: 1px solid #ccc;
     border-top: none;
-    z-index: 1;
-    background-color: #23353f;
+    background-color: #203139;
     width: 100%;
-    margin-top: 50px;
     height: 150px;
     border-radius: 8px;
-    margin-left: -100%;
-    float: right;
-    left: 2px;
     overflow: auto;
 }
 
