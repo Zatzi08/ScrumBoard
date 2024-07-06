@@ -23,7 +23,7 @@
     height: 20px;
     background-color: #cccbcb;
     font-size: 14px;
-    margin-left: 41%;
+    margin-left: 43%;
     display: block;
     margin-top: 4%;
 }
@@ -550,10 +550,10 @@ ul{list-style-type: none;}
     display: inline-block;
     align-items: center;
     justify-content: center;
-    right:0;
+    right: 0;
     width: 25%;
-    height:30px;
-    margin-left: 30%;
+    height: 30px;
+    margin-left: 36%;
 }
 
 .anchor, .chooseRoleTaskBtn {
@@ -570,7 +570,7 @@ ul{list-style-type: none;}
     align-items: center;
     justify-content: center;
     width: 272px;
-    margin-left: -108%;
+    margin-left: -105%;
     float: right;
 }
 
@@ -687,11 +687,6 @@ hr{
     padding: 25px;
 }
 
-#PrioUserAlignment{
-    display: inline-flex;
-    width: 500px;
-}
-
 #percentageDifferenceText{
     color: #c6c6c6;
     position: relative;
@@ -722,6 +717,7 @@ hr{
 }
 
 #editMenu-priorityDropAlignment{
+    width: -webkit-fill-available;
     display: inline-flex;
 }
 
