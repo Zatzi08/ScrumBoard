@@ -323,8 +323,10 @@ function toggleRolesEditMenu() {
     const rolesMenu = document.getElementById("roleOverlay");
     if(rolesMenu.style.display === "none") {
         rolesMenu.style.display = "block";
+        can_sync = false
     } else {
         rolesMenu.style.display = "none";
+        can_sync = true
     }
 }
 
@@ -362,16 +364,17 @@ window.onclick = function(event) {
     if (event.target == editOverlay) {
         userAuswahl.style.display = "none";
         debug.style.display= "block";
-
+        can_sync = true
     }
     else if (event.target == editOverlay){
         roleAuswahl.style.display = "none";
         debug.style.display= "block";
-
+        can_sync = true
     }
     if (event.target == rolesOverlay) {
         rolesOverlay.style.display = "none";
         debug.style.display = "block";
+        can_sync = true
     }
     else if (event.target == rolesOverlay2 && event.target != roleEditMenu2){
         rolesOverlay2.style.display = "none";

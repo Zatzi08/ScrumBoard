@@ -3,8 +3,10 @@ function toggleProfilMenu(uname, workDesc, priDesc){
 
     if(profilMenu.style.display === "none") {
         profilMenu.style.display = "block";
+        can_sync = false
     } else {
         profilMenu.style.display = "none";
+        can_sync = true
     }
 
     document.getElementById('inputName').value = uname
@@ -25,6 +27,7 @@ window.onclick = function(event) {
     const profilPopup = document.getElementById("profilEditMenü");
     if (event.target === profilPopup) {
         profilPopup.style.display = "none";
+        can_sync = true
     }
 }
 

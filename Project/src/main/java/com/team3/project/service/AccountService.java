@@ -7,6 +7,7 @@ import com.team3.project.Classes.User;
 import com.team3.project.DAO.DAORole;
 import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAOService.DAOAccountService;
+import com.team3.project.DAOService.DAORoleService;
 import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.Websocket.WebsocketObserver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -178,8 +179,9 @@ public class AccountService {
         if (profile.getPrivatDesc() == null || profile.getPrivatDesc().isEmpty()) throw new Exception("Null pDes");
         DAOUser user = DAOUserService.getBySessionId(sessionId);
         if (user == null) throw new Exception("User not found");
-        boolean responce = DAOUserService.updateByEMail(user.getEmail(), profile.getUname(),profile.getPrivatDesc(), profile.getWorkDesc(), RoleService.toRoleList_DAO(profile.getRoles()));
-        DAOUserService.updateRolesById(user.getId(), RoleService.toRoleList_DAO(profile.getRoles()));
+        boolean responce = DAOUserService.updateByEMail(user.getEmail(), profile.getUname(), profile.getPrivatDesc(), profile.getWorkDesc(), null);
+        user = DAOUserService.getWithAuthorizationById(user.getId());
+        if (!profile.getRoles().isEmpty() && user.getAuthorization().getAuthorization() == DAORoleService.getWithAuthorizationById(profile.getRoles().get(0).getID()).getAuthorizations().get(0).getAuthorization()) DAOUserService.updateRolesById(user.getId(), RoleService.toRoleList_DAO(profile.getRoles()));
         if (responce) {
             try {
                 user = DAOUserService.getBySessionId(sessionId);
