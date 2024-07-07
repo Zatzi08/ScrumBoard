@@ -144,13 +144,13 @@ public class TaskBoardTests extends BaseLogicTest {
     }
 
     @Test
-        /*  Test ID: Logic.T20
+        /*  Test ID: Logic.TaskBoard3
          *  Author: Henry Lewis Freyschmidt
          *  Zweck: bearbeiten einer Task erweitern um TaskBoardID T16.B2
          */
     void editTaskBoardIDInTask_changeLinkedTaskBoardOfUserObject_changeLinkToTaskBardOfUserObjectInDatabase() throws Exception{
         //Arrange
-        pw.append("Logik-Test-editTaskBoardIDInTask\nTest ID: Logic.T20\n" + "Date: " + formatter.format(date) + '\n');
+        pw.append("Logik-Test-editTaskBoardIDInTask\nTest ID: Logic.TaskBoard3\n" + "Date: " + formatter.format(date) + '\n');
         Task task = new Task(-1, "TaskT16B2", 1, -1, "10-10-2030 10:10", 10, 20, -1);
         DAOTaskList taskList = null;
         List<DAOTaskList> taskLists;

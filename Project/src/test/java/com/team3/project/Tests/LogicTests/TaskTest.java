@@ -23,7 +23,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
@@ -42,6 +44,7 @@ class TaskTest extends BaseLogicTest {
     private static Date date;
     private static SimpleDateFormat formatter;
     private boolean pass = true;
+    private UserStory userStory = new UserStory("StoryName", "BlahBlah", 1, -1);
 
     @BeforeAll
     public static void setupTest(){
@@ -71,17 +74,16 @@ class TaskTest extends BaseLogicTest {
     void createTask_createTaskObject_createTaskEntryInDatabase() throws Exception {
         // Arrange
         pw.append("Logik-Test-createTask\nTest ID: Logic.Task1\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
-        UserStory userStory = new UserStory("Story1", "Blah1", 1, -1);
         userStoryService.saveUserStory(userStory);
-        userStory = userStoryService.getUserStoryByName(userStory.getName());
-        Task task = new Task(-1, "TaskT3B1", 0, userStory.getID(), "2030-10-10 10:10", 10, 50 , -1);
+        int userStoryID = userStoryService.getUserStoryByName(userStory.getName()).getID();
+        Task task = new Task(-1, "TaskT3B1", 0, userStoryID, "2030-10-10 10:10", 10, 50 , -1);
 
         // Act
         taskService.saveTask(task);
-
+        task.setID(taskService.getTaskByDescription(task.getDescription()).getID());
         //Assert
         try{
-            Assertions.assertEquals(task.getUserStory().getID(), userStory.getID());
+            Assertions.assertEquals(userStoryID, taskService.getTaskByID(task.getID()).getUserStory().getID());
         }catch(AssertionError | Exception  e  ){
             pw.append("Fail: created Task not found\n");
             pass = false;
@@ -99,31 +101,57 @@ class TaskTest extends BaseLogicTest {
     void editTask_updateValuesOfTaskObject_changeValuesOfTaskEntryInDatabase() throws Exception {
         // Arrange
         pw.append("Logik-Test-editTask\nTest ID: Logic.Task2\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
-        UserStory userStory = new UserStory("UStory1", "blaBla1", 1, -1);
-        Task task = new Task(-1, "Task1", 0, -1, "2030-10-10 10:10", 10, 20, -1);
-        Task task_fail = new Task(1023426785, "Failure", 1, userStory.getID(),"2024-05-20 10:10", 10, 20, -1);
+        int count_correct_exceptions = 0;
+        AtomicInteger count_correct_exception_checks = new AtomicInteger();
+        String newDescription = "newblaBla1";
+        Task task_fail1 = null;
+        Task task_fail2 = new Task(1023426785, "Failure", 1, userStory.getID(),"2024-05-20 10:10", 10, 20, -1);
+        Task task_fail3 = new Task(1, null, 1, userStory.getID(),"2024-05-20 10:10", 10, 20, -1);
+        Task task_fail4 = new Task(1, "Failure", 1, -1,"2024-05-20 10:10", 10, 20, -1);
+        userStoryService.saveUserStory(userStory);
+        int userStoryID = userStoryService.getUserStoryByName(userStory.getName()).getID();
+        Task task = new Task(-1, "Task1", 0, userStoryID, "2030-10-10 10:10", 10, 20, -1);
+        taskService.saveTask(task);
+        task.setID(taskService.getTaskByDescription(task.getDescription()).getID());
+        task.setDescription(newDescription);
 
         // Act
-        userStoryService.saveUserStory(userStory);
-        userStory = userStoryService.getUserStoryByName(userStory.getName());
-        task.setUserStoryID(userStory.getID());
-        task.setDescription("newblaBla1");
         taskService.saveTask(task);
 
-        // Assert
-        assertThrows(Exception.class, () ->taskService.saveTask(null));
-        assertThrows(Exception.class, ()-> taskService.saveTask(task_fail));
-        /*
-        assertThrows(Exception.class,()-> taskService.saveTask());
-        assertThrows(Exception.class), ()-> taskService.saveTask());
-        assertThrows(Exception.class), ()-> taskService.saveTask());
-        assertThrows(Exception.class), ()-> taskService.saveTask());
-        */
+        // Exception Cases
+        assertThrows(Exception.class, () -> {
+            count_correct_exception_checks.getAndIncrement();
+            taskService.saveTask(task_fail1);
+        });
+        count_correct_exceptions++;
+        assertThrows(Exception.class, () -> {
+            count_correct_exception_checks.getAndIncrement();
+            taskService.saveTask(task_fail2);
+        });
+        count_correct_exceptions++;
+        assertThrows(Exception.class, () -> {
+            count_correct_exception_checks.getAndIncrement();
+            taskService.saveTask(task_fail3);
+        });
+        count_correct_exceptions++;
+        assertThrows(Exception.class, () -> {
+            count_correct_exception_checks.getAndIncrement();
+            taskService.saveTask(task_fail4);
+        });
+        count_correct_exceptions++;
 
-        /*if(){
-            pw.append("Fail: wrong Exception-Handling\n");
+        //Assert
+        try{
+            Assertions.assertEquals(newDescription, taskService.getTaskByID(task.getID()).getDescription());
+        }catch (AssertionError e){
             pass = false;
-        }*/
+            pw.append("Fail: Task not edited\n");
+            throw new AssertionError(e);
+        }
+        if (count_correct_exceptions != count_correct_exception_checks.get()){
+            pass = false;
+            pw.append("Fail: wrong Exception-Handling\n");
+        }
         pw.append(String.format("pass = %b\n",pass));
     }
 
@@ -157,13 +185,6 @@ class TaskTest extends BaseLogicTest {
             pass = false;
             throw new AssertionError(e);
         }
-        /*
-        if(count_correct_exceptions != count_correct_exception_checks){
-            pw.append("Fail: wrong Exception-Handling\n");
-            pass = false;
-        }
-        */
-
         pw.append(String.format("pass = %b\n", pass));
     }
 
@@ -176,24 +197,21 @@ class TaskTest extends BaseLogicTest {
     void taskWithUsers_linkUserObjectToTaskObject_createLinkBetweenUserObjectAndTaskObjectInDatabase() throws Exception {
         // Arrange
         pw.append("Logik-Test-taskWithUsers\nTest ID: Logic.Task4\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
-        UserStory userStory = new UserStory("UserStoryT8", "T19T8", 2, -1);
         List<Integer> uIDs = new LinkedList<>();
-        List<DAOUser> users;
-        Task task;
         List <DAOUser> daoUsers;
-        //Act
         accountService.register("DaveT8.1", "davet8.1@gmail.com", "T8");
         accountService.register("Dave1T8.1", "dave1t8.1@gmail.com", "T8");
         accountService.register("Dave2T8.1", "dave2t8.1@gmail.com", "T8");
-        users = DAOUserService.getAllWithRoles();
+        List<DAOUser> users = DAOUserService.getAllWithRoles();
         for(DAOUser daoUser: users){
             uIDs.add(daoUser.getId());
         }
         userStoryService.saveUserStory(userStory);
-        userStory.setID(DAOUserStoryService.getByName(userStory.getName()).getId());
-        task = new Task(-1,"TaskDescription",0,userStory.getID(), "2030-10-10 10:10", 20, 50,-1);
+        int userStoryID = userStoryService.getUserStoryByName(userStory.getName()).getID();
+        Task task = new Task(-1,"TaskDescription",0,userStoryID, "2030-10-10 10:10", 20, 50,-1);
         taskService.saveTask(task);
         task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
+        //Act
         taskService.setUsers(task.getID(), uIDs);
 
         //Assert
@@ -222,19 +240,17 @@ class TaskTest extends BaseLogicTest {
     void createTaskWithPriority_createTaskObjectWithAttributePriority_writeTaskEntryWithPriorityInDatabase() throws Exception{
         //Arrange
         pw.append("Logik-Test-createTaskWithPriority\nTest ID: Logic.Task5\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
-        UserStory userStory = new UserStory("UserStoryT7B4", "T7B4", 1, -1);
-        Task task;
+        userStoryService.saveUserStory(userStory);
+        int userStoryID = userStoryService.getUserStoryByName(userStory.getName()).getID();
+        Task task = new Task(-1, "TaskT7B4", 1, userStoryID, "10-10-2030 10:10", 10, 20, -1);
 
         //Act
-        userStoryService.saveUserStory(userStory);
-        userStory.setID(userStoryService.getUserStoryByName(userStory.getName()).getID());
-        task = new Task(-1, "TaskT7B4", 1, userStory.getID(), "10-10-2030 10:10", 10, 20, -1);
         taskService.saveTask(task);
         task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
 
         //Assert
         try{
-            Assertions.assertEquals(task.getPriorityAsInt(), DAOTaskService.getById(task.getID()).getPriority());
+            Assertions.assertEquals(task.getPriorityAsInt(), taskService.getTaskByID(task.getID()).getPriorityAsInt());
         }catch (AssertionError e){
             pass = false;
             pw.append("Fail: Task with wrong priority\n");
@@ -253,21 +269,20 @@ class TaskTest extends BaseLogicTest {
     void editTaskWithPriority_changePriorityOfTaskObject_overwritePrirorityOfTaskEntryInDatabase() throws Exception{
         //Arrange
         pw.append("Logik-Test-editTaskWithPriority\nTest ID: Logic.Task6\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
-        UserStory userStory = new UserStory("UserStoryT7B2", "T7B2", 1, -1);
-        Task task;
-
-        //Act
+        Enumerations.Priority newPriority = Enumerations.Priority.high;
         userStoryService.saveUserStory(userStory);
-        userStory.setID(userStoryService.getUserStoryByName(userStory.getName()).getID());
-        task = new Task(-1, "TaskT7B2", 1, userStory.getID(), "10-10-2030 10:10", 10, 20, -1);
+        int userStoryID = userStoryService.getUserStoryByName(userStory.getName()).getID();
+        Task task = new Task(-1, "TaskT7B2", 1, userStoryID, "10-10-2030 10:10", 10, 20, -1);
         taskService.saveTask(task);
         task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
-        task.setPriority(Enumerations.Priority.high);
+        task.setPriority(newPriority);
+
+        //Act
         taskService.saveTask(task);
 
         //Assert
         try{
-            Assertions.assertEquals(3, DAOTaskService.getById(task.getID()).getPriority());
+            Assertions.assertEquals(newPriority, taskService.getTaskByID(task.getID()).getPriority());
         }catch (AssertionError e){
             pass = false;
             pw.append("Fail: Task-Priority was not changed\n");
@@ -286,13 +301,11 @@ class TaskTest extends BaseLogicTest {
     void createTaskWithEstimate_createTaskObjectWithEstimate_writeTaskEntryWithEstimateInDatabase() throws Exception{
         //Arrange
         pw.append("Logik-Test-createTaskWithEstimate\nTest ID: Logic.Task7\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
-        UserStory userStory = new UserStory("UserStoryT10B3", "T10B3", 1, -1);
-        Task task;
+        userStoryService.saveUserStory(userStory);
+        int userStoryID = userStoryService.getUserStoryByName(userStory.getName()).getID();
+        Task task = new Task(-1, "TaskT10B3", 1, userStoryID, "10-10-2030 10:10", 10, 20, -1);
 
         //Act
-        userStoryService.saveUserStory(userStory);
-        userStory.setID(userStoryService.getUserStoryByName(userStory.getName()).getID());
-        task = new Task(-1, "TaskT10B3", 1, userStory.getID(), "10-10-2030 10:10", 10, 20, -1);
         taskService.saveTask(task);
         task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
 
@@ -317,21 +330,20 @@ class TaskTest extends BaseLogicTest {
     void editTaskWithEstimate_changeEstimateOfTaskObject_overwriteEstimateOfTaskEntryInDataBase() throws Exception{
         //Arrange
         pw.append("Logik-Test-editTaskWithEstimate\nTest ID: Logic.Task8\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
-        UserStory userStory = new UserStory("UserStoryT10B2", "T10B2", 1, -1);
-        Task task;
-
-        //Act
+        int newEstimate = 100;
         userStoryService.saveUserStory(userStory);
-        userStory.setID(userStoryService.getUserStoryByName(userStory.getName()).getID());
-        task = new Task(-1, "TaskT9B2", 1, userStory.getID(), "10-10-2030 10:10", 10, 20, -1);
+        int userStoryID = userStoryService.getUserStoryByName(userStory.getName()).getID();
+        Task task = new Task(-1, "TaskT9B2", 1, userStoryID, "10-10-2030 10:10", 10, 20, -1);
         taskService.saveTask(task);
         task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
-        task.setTimeNeededG(100);
+        task.setTimeNeededG(newEstimate);
+
+        //Act
         taskService.saveTask(task);
 
         //Assert
         try{
-            Assertions.assertEquals(100, DAOTaskService.getById(task.getID()).getProcessingTimeEstimatedInHours());
+            Assertions.assertEquals(newEstimate, DAOTaskService.getById(task.getID()).getProcessingTimeEstimatedInHours());
         }catch (AssertionError e){
             pass = false;
             pw.append("Fail: Task-Estimate was not changed\n");
@@ -350,13 +362,11 @@ class TaskTest extends BaseLogicTest {
     void createTaskWithDueDate_createTaskObjectWithDueDate_writeTaskEntryWithDueDateInDatabase() throws Exception{
         //Arrange
         pw.append("Logik-Test-createTaskWithdueDate\nTest ID: Logic.Task9\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
-        UserStory userStory = new UserStory("UserStoryT9B3", "T9B3", 1, -1);
-        Task task;
+        userStoryService.saveUserStory(userStory);
+        int userStoryID = userStoryService.getUserStoryByName(userStory.getName()).getID();
+        Task task = new Task(-1, "TaskT9B3", 1, userStoryID, "10-10-2030 10:10", 10, 20, -1);
 
         //Act
-        userStoryService.saveUserStory(userStory);
-        userStory.setID(userStoryService.getUserStoryByName(userStory.getName()).getID());
-        task = new Task(-1, "TaskT9B3", 1, userStory.getID(), "10-10-2030 10:10", 10, 20, -1);
         taskService.saveTask(task);
         task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
 
@@ -381,23 +391,21 @@ class TaskTest extends BaseLogicTest {
     void editTaskWithDueDate_changeDuDateOfTaskObject_overwriteDueDateOfTaskEntryInDatabase() throws Exception{
         //Arrange
         pw.append("Logik-Test-editTaskWithDueDate\nTest ID: Logic.Task10\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
-        UserStory userStory = new UserStory("UserStoryT9B2", "T9B2", 1, -1);
-        Task task;
+        userStoryService.saveUserStory(userStory);
+        int userStoryID = userStoryService.getUserStoryByName(userStory.getName()).getID();
+        Task task = new Task(-1, "TaskT9B2", 1, userStoryID, "10-10-2030 10:10", 10, 20, -1);
+        taskService.saveTask(task);
+        task.setID(taskService.getTaskByDescription(task.getDescription()).getID());
+        DateFormat dformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String newDueDate = "2030-12-12T12:12";
+        task.setDueDate(dformat.parse(newDueDate.replace("T", " ")));
 
         //Act
-        userStoryService.saveUserStory(userStory);
-        userStory.setID(userStoryService.getUserStoryByName(userStory.getName()).getID());
-        task = new Task(-1, "TaskT9B2", 1, userStory.getID(), "10-10-2030 10:10", 10, 20, -1);
-        taskService.saveTask(task);
-        task.setID(DAOTaskService.getByDescription(task.getDescription()).getId());
-        DateFormat dformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        String dueDate = "2030-12-12T12:12";
-        task.setDueDate(dformat.parse(dueDate.replace("T", " ")));
         taskService.saveTask(task);
 
         //Assert
         try{
-            Assertions.assertEquals(dueDate, DAOTaskService.getById(task.getID()).getDueDate());
+            Assertions.assertEquals(newDueDate, DAOTaskService.getById(task.getID()).getDueDate());
         }catch (AssertionError e){
             pass = false;
             pw.append("Fail: Task-DueDate was not changed\n");
@@ -416,20 +424,19 @@ class TaskTest extends BaseLogicTest {
     void editTaskWithRealTime_changeRealTimeOfTaskObject_overwriteRealTimeOfTaskEntryInDatabase() throws Exception{
         //Arrange
         pw.append("Logik-Test-editTaskWithRealTime\nTest ID: Logic.Task11\n" + "Date: ").append(formatter.format(date)).append(String.valueOf('\n'));
-        UserStory userStory = new UserStory("UserStoryT9B2", "T9B2", 1, -1);
-        Task task;
-
-        //Act
+        double newTime = 10.0;
         userStoryService.saveUserStory(userStory);
-        userStory.setID(userStoryService.getUserStoryByName(userStory.getName()).getID());
-        task = new Task(-1, "TaskT9B2", 1, userStory.getID(), "10-10-2030 10:10", 10, 20, -1);
+        int userStoryID = userStoryService.getUserStoryByName(userStory.getName()).getID();
+        Task task = new Task(-1, "TaskT9B2", 1, userStoryID, "10-10-2030 10:10", 10, 20, -1);
         taskService.saveTask(task);
         task.setID(taskService.getTaskByDescription(task.getDescription()).getID());
-        taskService.setRealTimeAufwand(task.getID(), 10.0);
+        taskService.setRealTimeAufwand(task.getID(), newTime);
 
+        //Act
+        taskService.saveTask(task);
         //Assert
         try{
-            Assertions.assertEquals(10.0, DAOTaskService.getById(task.getID()).getProcessingTimeRealInHours());
+            Assertions.assertEquals(newTime, DAOTaskService.getById(task.getID()).getProcessingTimeRealInHours());
         }catch (AssertionError e){
             pass = false;
             pw.append("Fail: Task-Realtime was not changed\n");
