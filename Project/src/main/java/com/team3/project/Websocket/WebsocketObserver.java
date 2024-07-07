@@ -4,9 +4,13 @@ import com.team3.project.Classes.Role;
 import com.team3.project.Classes.UserStory;
 import com.team3.project.Classes.observable;
 import com.team3.project.DAO.DAORole;
+import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAO.DAOUser;
+import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.DAORoleService;
+import com.team3.project.DAOService.DAOTaskBoardService;
 import com.team3.project.DAOService.DAOUserService;
+import com.team3.project.DAOService.DAOUserStoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +41,9 @@ public class WebsocketObserver {
         service.sendMessage("PM-N", messageTyp, object);
         service.sendMessage("PM-T", messageTyp, object);
         // kann keinen Broadcast für alle machen
-        service.sendMessage("PM-TzUS", messageTyp, object);
+        for (DAOUserStory dus : DAOUserStoryService.getAll()){
+            service.sendMessage("PM-TzUS/US"+dus.getId(), messageTyp, object);
+        }
     }
 
     public void sendToProfileByID(int messageTyp, observable object) {
@@ -57,7 +63,9 @@ public class WebsocketObserver {
         service.sendMessage("PM-US", messageTyp, object);
         sendToUSzTByUSID(messageTyp, object);
         service.sendMessage("PM-T", messageTyp, object);
-        service.sendMessage("TB", messageTyp, object);
+        for (DAOTaskBoard dtb : DAOTaskBoardService.getAll()){
+            service.sendMessage("TB/board" + dtb.getId(), messageTyp, object);
+        }
     }
 
     public void sendToTaskBoardByID(int messageTyp, observable object){
