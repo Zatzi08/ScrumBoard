@@ -1,6 +1,6 @@
 
 const stompClient = new StompJs.Client({
-    brokerURL: 'ws://139.30.186.70:8080/gs-websocket'
+    brokerURL: 'ws://localhost:8080/gs-websocket'
 });
 
 stompClient.onWebsocketError = (error) => {
