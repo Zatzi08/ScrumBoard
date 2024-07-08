@@ -11,6 +11,14 @@ import com.team3.project.DAO.DAOTaskList;
 import io.micrometer.common.lang.Nullable;
 
 public class DAOTaskListService {
+    static List<String> defaultTaskLists = Arrays.asList(
+       "Tasks", 
+            "In Bearbeitung", 
+            "Unter Review", 
+            "Unter Test", 
+            "Fertig"
+        );
+    
     //gets
     /* Author: Tom-Malte Seep
      * Revisited: /
@@ -21,7 +29,7 @@ public class DAOTaskListService {
     /** gets all entries 
      * @return List of DAOTaskLists
      */
-    public static List<DAOTaskList> getAll(){
+    public static List<DAOTaskList> getAll() {
         return DAOService.getAll(DAOTaskList.class);
     }
 
@@ -81,10 +89,13 @@ public class DAOTaskListService {
         return false;
     }
 
-    
-
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: creates default tasklists for a taskboard
+     * Reason: 
+     * UserStory/Task-ID:
+     */
     static boolean createDefaultsForTaskBoardByTaskBoardName(String name) {
-        List<String> defaultTaskLists = Arrays.asList("freie Tasks", "Tasks in Bearbeitung", "Tasks unter Review", "Tasks unter Test", "fertiggestellte Tasks");
         String joinOnAttributeName = "taskLists";
         DAOTaskBoard daoTaskBoard = DAOService.getLeftJoinByID(DAOTaskBoardService.getByName(name).getId(), DAOTaskBoard.class, joinOnAttributeName);
         for (String defaultTaskName : defaultTaskLists) {
@@ -99,8 +110,12 @@ public class DAOTaskListService {
         return true;
     }
 
-
-
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: updates tasks
+     * Reason: 
+     * UserStory/Task-ID:
+     */
     public static boolean updateTasksById(int id, List<DAOTask> daoTasks) {
         String joinOnAttributeName = "tasks";
         DAOTaskList taskList = DAOService.getLeftJoinByID(id, DAOTaskList.class, joinOnAttributeName);
@@ -108,9 +123,13 @@ public class DAOTaskListService {
         return DAOService.merge(taskList);
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: adds a task
+     * Reason: 
+     * UserStory/Task-ID:
+     */
     public static boolean addTaskById(int id, DAOTask daoTask) {
         return DAOTaskService.updateTaskListById(daoTask.getId(), getById(id));
     }
-
-    
 }

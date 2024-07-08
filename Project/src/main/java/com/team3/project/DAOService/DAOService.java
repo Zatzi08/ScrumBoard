@@ -1,5 +1,6 @@
 package com.team3.project.DAOService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.EntityExistsException;
@@ -34,6 +35,12 @@ class DAOService {
         return retrieve;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: 
+     * Reason: 
+     * UserStory/Task-ID:
+     */
     static <Dao> List<Dao> getAllFloating(Class<Dao> daoClass, String linkName) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
@@ -163,50 +170,24 @@ class DAOService {
     }
 
     
-
-    
-    static <Dao> Dao getSingleLeftJoinsById(int id, Class<Dao> daoClass, List<String> joinOnAttributeNames) {
+    static <Dao> List<Dao> getListLeftJoins(Class<Dao> daoClass, List<String> joinOnAttributeName) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
-        String query = "SELECT item FROM " + daoClass.getName() + " AS item";
-        Dao retrieve;
+        StringBuilder querySb = new StringBuilder("SELECT item FROM " + daoClass.getName() + " AS item");
+        joinOnAttributeName.stream().forEach(attributeName -> {
+            querySb.append(" LEFT JOIN item." + attributeName);
+        });
+        List<Dao> retrieve;
         try {
-            query = "SELECT DISTINCT item FROM " + daoClass.getName() + " AS item" + " LEFT JOIN FETCH item." + joinOnAttributeNames.get(0) + " WHERE item.id = ?1";
-            retrieve = entityManager.createQuery(query, daoClass)
-                .setParameter(1, id)
-                .getSingleResult();;
-            query = "SELECT DISTINCT item FROM " + daoClass.getName() + " AS item" + " LEFT JOIN FETCH item." + joinOnAttributeNames.get(1) + " WHERE item in ?1";
-            retrieve = entityManager.createQuery(query, daoClass).setParameter(1, retrieve).getSingleResult();
-// List<Post> posts = entityManager.createQuery("""
-// select distinct p
-// from Post p
-// left join fetch p.comments
-// where p.id between :minId and :maxId
-// """, Post.class)
-// .setParameter("minId", 1L)
-// .setParameter("maxId", 50L)
-// .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
-// .getResultList();
-
-// posts = entityManager.createQuery("""
-// select distinct p
-// from Post p
-// left join fetch p.tags t
-// where p in :posts
-// """, Post.class)
-// .setParameter("posts", posts)
-// .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
-// .getResultList();
-
+            retrieve = entityManager.createQuery(querySb.toString(), daoClass).getResultList();
         } catch (Exception e) {
-            System.out.println(e);
-            retrieve = null;
+            retrieve = new ArrayList<Dao>();
         } finally {
-            DAOSession.closeEntityManager(entityManager);
+            entityManager.close();
         }
         return retrieve;
     }
-
+    
     /* Author: Tom-Malte Seep
      * Revisited: /
      * Function: gets a single entry with a specific parameter
@@ -236,6 +217,12 @@ class DAOService {
         return retrieve;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: 
+     * Reason: 
+     * UserStory/Task-ID:
+     */
     static <Dao> List<Dao> getListLeftJoinByPara(Class<Dao> daoClass, String parameter, String parameterName, String joinOnAttributeName) {
         EntityManager entityManager = DAOSession.getNewEntityManager();
         entityManager.getTransaction().begin();
@@ -512,6 +499,7 @@ class DAOService {
             entityManager.merge(daoObject);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
+            System.out.println(e);
             //Something went wrong
         } finally {
             DAOSession.closeEntityManager(entityManager);

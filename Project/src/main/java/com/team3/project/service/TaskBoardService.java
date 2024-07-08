@@ -1,4 +1,5 @@
 package com.team3.project.service;
+import com.team3.project.Classes.Profile;
 import com.team3.project.Classes.TaskBoard;
 import com.team3.project.Classes.TaskList;
 import com.team3.project.DAO.DAOTask;
@@ -7,11 +8,19 @@ import com.team3.project.DAO.DAOTaskList;
 import com.team3.project.DAOService.DAOTaskBoardService;
 import com.team3.project.DAOService.DAOTaskListService;
 import com.team3.project.DAOService.DAOTaskService;
+import com.team3.project.Websocket.WebsocketObserver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
 
+@Service
 public class TaskBoardService {
+
+    @Autowired
+    private WebsocketObserver observer;
+
     // TODO: FIX Konstruktor
     public TaskBoard getTaskBoardByID(int tbid) throws Exception {
         if (tbid < 0) throw new Exception("Null ID");
@@ -24,7 +33,16 @@ public class TaskBoardService {
     public void createTaskBoard(String taskBoardName) throws Exception{
         if(taskBoardName == null) throw new Exception("Null Name");
         if (taskBoardName.isEmpty()) throw new Exception("Empty Name");
-        DAOTaskBoardService.create(taskBoardName, null);
+        boolean responce = DAOTaskBoardService.create(taskBoardName, null);
+        if (responce) {
+            try {
+                List<DAOTaskBoard> dtbl = DAOTaskBoardService.getAll();
+                DAOTaskBoard dtb = dtbl.get(dtbl.size()-1);
+                observer.sendToTaskBoardGroup(0, new TaskBoard(dtb.getId(),dtb.getName()));
+            } catch (Exception e) {
+                System.out.println("Observer nicht initialisiert");
+            }
+        }
     }
 
 
@@ -79,7 +97,14 @@ public class TaskBoardService {
             createTaskBoard(taskBoard.getName());
         } else {
             if (DAOTaskBoardService.getById(taskBoard.getID()) != null){
-                DAOTaskBoardService.updateNameById(taskBoard.getID(),taskBoard.getName());
+                boolean responce = DAOTaskBoardService.updateNameById(taskBoard.getID(),taskBoard.getName());
+                if (responce) {
+                    try {
+                        observer.sendToTaskBoardGroup(0, new TaskBoard(taskBoard.getID(),taskBoard.getName()));
+                    } catch (Exception e) {
+                        System.out.println("Observer nicht initialisiert");
+                    }
+                }
             } else throw new Exception("TaskBoard not found");
         }
     }
@@ -95,6 +120,13 @@ public class TaskBoardService {
         if (DAOTaskBoardService.getAll().size() < 2) throw new Exception("Invalid Operation");
         DAOTaskBoard dtb = DAOTaskBoardService.getById(tbID);
         if (dtb == null) throw new Exception("TaskBoard not found");
-        DAOTaskBoardService.deleteById(dtb.getId());
+        boolean responce = DAOTaskBoardService.deleteById(dtb.getId());
+        if (responce) {
+            try {
+                observer.sendToTaskBoardGroup(1, new TaskBoard(dtb.getId(),dtb.getName()));
+            } catch (Exception e) {
+                System.out.println("Observer nicht initialisiert");
+            }
+        }
     }
 }

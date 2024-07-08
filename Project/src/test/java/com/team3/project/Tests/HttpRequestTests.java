@@ -7,6 +7,7 @@ import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.*;
+import com.team3.project.Facede.PresentationToLogic;
 import com.team3.project.Tests.BaseClassesForTests.BaseHTTPTest;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,26 +33,24 @@ public class HttpRequestTests extends BaseHTTPTest {
 
     @BeforeAll
     public static void BeforeAll() throws Exception {
-        changeHibernateCfg(true);
         setup(true);
         if (accounts.isEmpty()) throw new RuntimeException("Fuck IT");
     }
 
     @BeforeEach
     public void beforeEach() {
-        before();
+        wipeDb(false);
     }
 
     @AfterEach
     public void afterEach() {
-
+        wipeDb(false);
     }
 
     @AfterAll
     public static void afterAll() {
         tearDown();
-        after();
-        changeHibernateCfg(true);
+        wipeDb(true);
     }
 
 
@@ -1809,7 +1808,7 @@ public class HttpRequestTests extends BaseHTTPTest {
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + url + "?ID=" + 9999, method, message, String.class).getStatusCode())
-                    .isEqualTo(HttpStatus.OK);
+                    .isEqualTo(HttpStatus.CONFLICT);
         } catch (AssertionError e){
             printWriterAddFailure("Akzeptiert Request nicht - invalid USID");
             throw new AssertionError(e);

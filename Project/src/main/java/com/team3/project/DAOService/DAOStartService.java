@@ -1,5 +1,9 @@
 package com.team3.project.DAOService;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import com.team3.project.DAO.DAORole;
 import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskBoard;
@@ -20,6 +24,17 @@ public class DAOStartService {
         DAOSession.startOrStop(true);
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: /
+     * Function: starts the EntityManagerFactory for tests
+     * Reason:
+     * UserStory/Task-ID:
+     */
+    /** starts the EntityManagerFactory for tests
+     */
+    public static void restartForTests() {
+        DAOSession.testStart();
+    }
     
     /* Author: Tom-Malte Seep
      * Revisited: /
@@ -68,7 +83,13 @@ public class DAOStartService {
                     break;
         }
     }
-
+    
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: 
+     * Reason: 
+     * UserStory/Task-ID:
+     */
     public static <Dao> boolean wipeDb() {
         try {
             DAOService.deleteAll(DAORole.class);

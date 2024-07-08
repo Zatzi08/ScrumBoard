@@ -63,7 +63,7 @@ public class TaskListService {
         if (daoTaskList == null) throw new Exception("Invalid TaskList");
         List<Task> tasks = new LinkedList<Task>();
         for (DAOTask daoTask : daoTaskList.getTasks()) {
-            Task toAdd = new Task(daoTask.getId(), daoTask.getDescription(), daoTask.getPriority(), daoTask.getUserStory().getId(), daoTask.getDueDate(), daoTask.getProcessingTimeEstimatedInHours(), daoTask.getProcessingTimeRealInHours(), -1);
+            Task toAdd = new Task(daoTask.getId(), daoTask.getDescription(), daoTask.getPriority(), daoTask.getUserStory().getId(), daoTask.getDueDate(), daoTask.getProcessingTimeEstimatedInHours(), daoTask.getProcessingTimeRealInHours(), daoTaskList.getTaskBoard().getId());
             tasks.add(toAdd);
         }
         taskList.setTasks(tasks);

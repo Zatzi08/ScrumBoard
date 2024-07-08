@@ -8,13 +8,7 @@ public class BaseDBTest extends BaseTest {
     protected static void setup() {
         BaseTest.setup(logName, mainTestName);
     }
-    protected static void before() {
-        BaseTest.before();
-    }
-
-    protected static void after() {
-        BaseTest.after(true);
-    }
+    
     protected static void tearDown() {
         BaseTest.tearDown();
     }

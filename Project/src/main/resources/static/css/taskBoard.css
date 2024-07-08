@@ -46,23 +46,6 @@
     display: inline;
 }
 
-#outerContainer-HeaderChangeTBName{
-    position: relative;
-    width: fit-content;
-    height: 25px;
-    border-radius: 5px;
-    color: #ffffff;
-    font-size: 12px;
-    padding: 5px;
-    background-color: #46425e;
-    /* display: inline; */
-    /* right: 15px; */
-    float: right;
-    content: antiquewhite;
-    /* justify-content: flex-end; */
-
-}
-
 #outerContainer-HeaderChangeTBName:hover{
     background-color: #38364b;
     cursor: pointer;
@@ -74,12 +57,13 @@
     background-color: #46425e;
     cursor: pointer;
 }
-/*#38618C*/
+
 #outerContainer{
     background-color: #211f2b;
     border-bottom: 10px;
     position: relative;
-    margin-top: 1%;
+    margin: 1%;
+    margin-right: 0;
     display: flex;
     flex-direction: row;
     border-radius: 20px;
@@ -91,6 +75,7 @@
     width: 20%;
     border-radius: 10px;
     overflow: auto;
+    margin-right: 1%;
 }
 
 .wrapper {
@@ -126,7 +111,8 @@
     border-top-right-radius: 0;
     text-align: center;
     background-color: #295266;
-    color: white
+    color: white;
+    cursor: unset;
 }
 .columnTable th,
 .columnTable td {
@@ -197,7 +183,7 @@ hr {
     padding: 10px;
     text-align: left;
     width: 95%;
-    max-width: 200px;
+    max-width: 14dvw;
     border: 0 solid #adadad;
     border-radius: 10px;
     cursor: default;
@@ -232,14 +218,23 @@ hr {
     overflow-y: scroll;
 }
 
+.overlay2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1001;
+    overflow-y: scroll;
+}
+
 .zoomedTaskCard-content{
     color: #d1d1d1;
-    /* display: inline-table; */
     width: 86%;
     background: #282435;
     border-radius: 10px;
     text-align: center;
-    /* height: 3dvh; */
 }
 
 .zoomedTaskCard-Header{
@@ -296,48 +291,6 @@ hr {
     display: inherit;
 }
 
-#zoomedTaskCard-nutzerDropdown label{
-    background-color: transparent;
-    color: #d1d1d1;
-    border: none;
-    display: inherit;
-    background-color: #282435;
-}
-
-#zoomedTaskCard-nutzerDropdown ul{
-    display: none;
-    float: left;
-    position: fixed;
-    background-color: #373347;
-    min-width: fit-content;
-    height:100px;
-    box-shadow: 8px 16px rgba(0,0,0,0.2);
-    overflow: scroll;
-    margin-top: 4%;
-    margin-left: 5%;
-    z-index: 1;
-    border-radius:0px;
-}
-#zoomedTaskCard-nutzerDropdown ul li{
-    overflow: scroll;
-    background-color: transparent;
-    color: #d1d1d1;
-    text-decoration: none;
-    display: block;
-}
-
-#zoomedTaskCard-nutzerDropdownBtn{
-    background-color: transparent;
-}
-#zoomedTaskCard-nutzerDropdown:hover ul {display: block;}
-
-
-#zoomedTaskCard-nutzerDropdown:focus{
-    outline: none;
-    box-shadow: none;
-    border-color:transparent;
-}
-
 ::-webkit-scrollbar {
     width: 20px;
 }
@@ -364,7 +317,7 @@ hr {
     border: 2px dashed #ccc;
 }
 
-#popupChangeTBName, #popupTaskFertig, #popupCreateTB{
+#popupChangeTBName, #popupTaskFertig, #popupCreateTB, #popupTBDelete{
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.4);
@@ -375,7 +328,7 @@ hr {
     top: 0;
 }
 
-#changeTBNameForm, #taskFertigForm, #createTBForm {
+#changeTBNameForm, #taskFertigForm, #createTBForm, #tBDeleteForm{
     position: relative;
     background-color: rgb(46, 46, 61);
     padding: 20px;
@@ -384,6 +337,7 @@ hr {
     top: 50dvh;
     left: 50dvw;
     transform: translate(-50%, -50%);
+    color:white;
 }
 
 #changeTBNameInput, #taskFertigInput, #createTBNameInput {
@@ -398,8 +352,23 @@ hr {
     margin-left: 10%;
     padding: 10px;
 }
+#tbDeleteBtn{background-color: #A23615; padding:2px 2px 2px; margin-left:30px; height:30px}
+#tbNotDeleteBtn{background-color: #50772C; padding:2px 2px 2px; margin-right:30px;height:30px}
 
-#changeTBNameBtn, #taskFertigBtn, #createTBNameBtn {
+#tbDeleteBtn:hover{background-color: #6C240F;}
+
+#tbNotDeleteBtn:hover{background-color: #3C5922;}
+
+.inline{
+    display:inline-block;
+    margin-right:5px;
+    padding: 2px 2px 2px;
+    border-radius: 12px;
+    margin-top:15px;
+    height:25px;
+}
+
+#changeTBNameBtn, #taskFertigBtn, #createTBNameBtn{
     position: relative;
     height: 30px;
     width: fit-content;
@@ -487,4 +456,94 @@ hr {
 
 #wrapper{
     display: flex;
+}
+
+.zoomedTaskCard-userCircle{
+    width: 26px;
+    height: 26px;
+    display: inline-block;
+    border-radius: 100%;
+    overflow: hidden;
+    background: aliceblue;
+    line-height: 26px;
+    text-align: center;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+#assignedUsers{
+    display: none;
+    position: fixed;
+    padding: 20px;
+    width: 500px;
+    max-height: 499px;
+    height: auto;
+    background: azure;
+    top: 50dvh;
+    left: 50dvw;
+    transform: translate(-50%, -50%);
+    z-index: 1002;
+    border-radius: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#assignedUsers ul{
+    position: relative;
+    margin: 2% 2% 2% 2%;
+    list-style-type: none;
+}
+
+#assignedUsers li{
+    position: relative;
+    color: black;
+}
+
+#outerContainer-HeaderAlignment{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    align-content: center;
+    vertical-align: middle;
+}
+
+#outerContainer-HeaderAlignmentInner{
+    width: 100%;
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: scroll;
+}
+
+#outerContainer-HeaderChangeTBName{
+    position: relative;
+    margin-right: 0;
+    margin-left: auto;
+    width: fit-content;
+    height: 25px;
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 5px;
+    background-color: #46425e;
+    content: antiquewhite;
+}
+
+@media only screen and (max-width: 1400px) {
+    #outerContainer-HeaderAlignmentInner{
+        width: 84dvw;
+    }
+}
+
+@media only screen and (min-width: 1400px){
+    #outerContainer-HeaderAlignmentInner{
+        width: 88dvw;
+    }
+}
+
+#tableContentLabel-vis{
+    display: none
+}
+
+#changeTBNameInput::placeholder, #taskFertigInput::placeholder, #createTBNameInput::placeholder{
+    color: black;
 }

@@ -1,7 +1,6 @@
 package com.team3.project.Classes;
 
 import com.team3.project.DAO.DAOTask;
-import com.team3.project.DAO.DAOTaskList;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class TaskList extends abstraktDataClasses {
+public class TaskList extends dataClasses {
     private String name;
     private List<Task> tasks;
 
@@ -32,5 +31,10 @@ public class TaskList extends abstraktDataClasses {
             }
         }
         this.tasks = taskList;
+    }
+
+    public String toJSON() {
+        System.out.println("HAHA! Musst du erst implementieren!");
+        return "";
     }
 }

@@ -1,21 +1,22 @@
-/*
-* Author: Zana Salih Hama
-* Revisited: /
-* Funktion: Toggeln des Bearbeitungsmenü'
-* Grund: /
-* User-Story/Task-ID: U3.F1, U4.F1
-*/
+function hover(id){
+    document.getElementById(id).style.borderColor = "#ba55d3";
+}
+
+function hoverLeave(id) {
+    document.getElementById(id).style.borderColor = "#fff";
+}
 
 function toggleEditMenu(id) {
-    var editMenu = document.querySelector('.editMenu');
-    var overlay = document.querySelector('.overlay');
-
+    const editMenu = document.querySelector('.editMenu');
+    let overlay = document.querySelector('.overlay');
+    can_sync = false
     if (editMenu) {
         if (editMenu.style.display === "block") {
             editMenu.style.display = "none";
             if (overlay) {
                 overlay.remove();
                 overlay.removeEventListener('click', toggleEditMenu);
+                can_sync = true;
             }
         } else {
             editMenu.style.display = "block";
@@ -30,7 +31,7 @@ function toggleEditMenu(id) {
         console.error("Das Element mit der Klasse 'editMenu' wurde nicht gefunden.");
     }
     console.log(id);
-    if(id === 'addUserStoryBtn'){
+    if (id === 'addUserStoryBtn'){
         console.log('Userstory erstellen');
         document.querySelector('.editMenu label').textContent = "Erstellen";
     } else {
@@ -38,13 +39,6 @@ function toggleEditMenu(id) {
     }
 }
 
-/*
-* Author: Zana Salih Hama
-* Revisited: /
-* Funktion: Highlighten der Prioritätsbuttons im Bearbeitungsfenster bei Auswahl
-* Grund: Benutzerfreundlichkeit
-* User-ID/Task-ID: /
-*/
 function highlightPriorityButton(buttonId) {
     const priorityButtons = document.querySelectorAll('.inputEditPrio');
     switch (buttonId){
@@ -61,13 +55,6 @@ function highlightPriorityButton(buttonId) {
             button.classList.remove('selected');
         }
     });
-}
-
-function hover(buttonId){
-    document.getElementById(buttonId).style.color = "#ba55d3";
-}
-function hoverLeave(buttonId) {
-    document.getElementById(buttonId).style.color = "#fff";
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -128,17 +115,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-function deleteTableRow() {
-    var row = document.querySelector('.userTaskTable tbody tr');
-    if (row) {
-        row.remove();
-    }
-
-    function taskToUS(){
-
-    }
-}
-
 function toggleEditBoxT(id, TId, description, usID, dueDate, timeG, tbID, prio, names){
     toggleEditMenu(id);
     document.getElementById("inputDesc").textContent = description;
@@ -190,7 +166,7 @@ function toggleEditBoxT(id, TId, description, usID, dueDate, timeG, tbID, prio, 
         li.children[0].checked = false
     }
 
-    names = parseUser(names)
+    names = JSON.parse(names);
     names.forEach((name) =>{
         id = 'N'+name.id
         document.getElementById(id).children[0].checked = true;
@@ -199,8 +175,16 @@ function toggleEditBoxT(id, TId, description, usID, dueDate, timeG, tbID, prio, 
 
 function toggleEditBox(id,storyId, name, description, prio){
     toggleEditMenu(id);
-    document.getElementById("inputName").textContent = name;
-    document.getElementById("inputDesc").textContent = description;
+    if (name !== undefined){
+        document.getElementById("inputName").textContent = name;
+    } else {
+        document.getElementById("inputName").value = '';
+    }
+    if (description !== undefined){
+        document.getElementById("inputDesc").textContent = description;
+    } else {
+        document.getElementById("inputDesc").value = '';
+    }
     if (storyId !== undefined){
         document.getElementById("editId").value = storyId;
     } else {
@@ -222,23 +206,56 @@ function toggleEditBox(id,storyId, name, description, prio){
     }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Nuterliste
+    const nutzerList = document.getElementById('list1');
+    if (nutzerList) {
+        const anchor = nutzerList.getElementsByClassName('anchor')[0];
+        if (anchor) {
+            anchor.onclick = function(evt) {
+                nutzerList.classList.toggle('visible');
+            };
+        }
 
-var checkList = document.getElementById('list1');
-checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
-    if (checkList.classList.contains('visible'))
-        checkList.classList.remove('visible');
-    else
-        checkList.classList.add('visible');
-}
+        document.addEventListener('click', function(evt) {
+            let targetElement = evt.target;
+
+            do {
+                if (targetElement === anchor || targetElement === nutzerList) {
+                    return;
+                }
+                targetElement = targetElement.parentNode;
+            } while (targetElement);
+
+            if (nutzerList.classList.contains('visible')) {
+                nutzerList.classList.remove('visible');
+            }
+        });
+    }
+
+    const roleList = document.getElementById('roleTaskDropdown');
+    if (roleList) {
+        const chooseRoleTaskBtn = roleList.getElementsByClassName("chooseRoleTaskBtn")[0];
+        if (chooseRoleTaskBtn) {
+            chooseRoleTaskBtn.onclick = function(evt) {
+                if (roleList.classList.contains('visible')) {
+                    roleList.classList.remove('visible');
+                } else {
+                    roleList.classList.add('visible');
+                }
+            };
+        }
+    }
+});
 
 function visualisationOfAllTimes(est, real, names){
     est = JSON.parse(est)
     real = JSON.parse(real)
     names = names.replaceAll("'", '"')
     names = JSON.parse(names)
-    est.forEach((e) => console.log(e))
-    real.forEach((e)=> console.log(e))
-    names.forEach((e)=> console.log(e))
+    // est.forEach((e) => console.log(e))
+    // real.forEach((e)=> console.log(e))
+    // names.forEach((e)=> console.log(e))
     visualisationOfAllTime(est, real, names)
 }
 
@@ -247,11 +264,19 @@ async function saveTaskWithUserList(sessionID) {
     let r = await saveTask(sessionID, id)
     if (r.status !== 400){
         let lis = document.getElementById('usersAuswahlID').children;
-        let list = []
+        let Ulist = []
         for (let li of lis) {
-            if (li.children[0].checked) list.push(li.id.substring(1))
+            if (li.children[0].checked) Ulist.push(li.id.substring(1))
         }
-        await setUsersOfTask(sessionID, id, list)
+        /*
+        lis = document.getElementById('rollsAuswahlID').children;
+        let Rlist = []
+        for (let li of lis) {
+            if (li.children[0].checked) Rlist.push(li.id.substring(1))
+        }
+        */
+        await setUsersOfTask(sessionID, id, Ulist)
+        //await setRollsOfTask(sessionID, id, Rlist)
     }
     document.location.reload()
 }
@@ -275,13 +300,13 @@ function toggleVisAllTasks(percentageDifference, absNum, numType){
                 document.body.appendChild(overlay);
                 switch (numType){
                     case 0:
-                        document.getElementById('percentageDifferenceText').innerText = `Die Summe der geschätzten und realen Bearbeitungszeit stimmen überein!`;
+                        document.getElementById('percentageDifferenceText').innerText = `Die Summe der geschätzten und realen Bearbeitungszeit[-en] stimmen überein!`;
                         break;
                     case 1:
-                        document.getElementById('percentageDifferenceText').innerText = `Der insgesamte Mehraufwand gegenüber der Summe der geschätzten Bearbeitungszeiten beträgt ${absNum}h!`;
+                        document.getElementById('percentageDifferenceText').innerText = `Der insgesamte Mehraufwand gegenüber der Summe der geschätzten Bearbeitungszeit[-en] beträgt ${absNum}h!`;
                         break;
                     case 2:
-                        document.getElementById('percentageDifferenceText').innerText = `Die Summe der realen Bearbeitungszeiten weicht zu ${percentageDifference}% von der geschätzten ab. Dies entspricht ${absNum}h!`;
+                        document.getElementById('percentageDifferenceText').innerText = `Die Summe der realen Bearbeitungszeit[-en] weicht zu ${percentageDifference}% von der geschätzten ab. Dies entspricht ${absNum}h!`;
                         break;
                 }
                 overlay.addEventListener('click', toggleVisAllTasks);
@@ -289,5 +314,93 @@ function toggleVisAllTasks(percentageDifference, absNum, numType){
         }
     } else {
         console.error("Das Element mit der Klasse 'vis' wurde nicht gefunden.");
+    }
+
+    }
+
+
+function toggleRolesEditMenu() {
+    const rolesMenu = document.getElementById("roleOverlay");
+    if(rolesMenu.style.display === "none") {
+        rolesMenu.style.display = "block";
+        can_sync = false
+    } else {
+        rolesMenu.style.display = "none";
+        can_sync = true
+    }
+}
+
+function toggleRoleNameMenu(id = -1, auth = 1, name = ""){
+    const rolesNameMenu = document.getElementById("roleOverlay2");
+    if(rolesNameMenu.style.display === "none") {
+        can_sync = false
+        rolesNameMenu.style.display = "block";
+        if (id !== -1){
+            document.getElementById('rightsForRoles').style.display = "none"
+        } else {
+            document.getElementById('rightsForRoles').style.display = "block"
+        }
+        document.getElementById('rightsForRolesID').value = id
+        document.getElementById('rightsForRoles').children[0].value = auth
+        document.getElementById('roleNameInput').value = name
+    } else {
+        can_sync = true
+        rolesNameMenu.style.display = "none";
+    }
+}
+
+
+window.onclick = function(event) {
+    var roleEditMenu = document.getElementById("editRolesMenu");
+    var roleEditMenu2 = document.getElementById("editRoleNameMenu");
+    var rolesOverlay = document.getElementById("roleOverlay");
+    var rolesOverlay2 = document.getElementById("roleOverlay2");
+    var userDropdown = document.getElementById("list1");
+    var roleDropdown = document.getElementById("roleTaskDropdown");
+    var userAuswahl = document.getElementById("usersAuswahlID");
+    var roleAuswahl = document.getElementById("roleTaskList");
+    var editOverlay = document.getElementsByClassName("editmenu");
+    var debug = document.getElementById("debug");
+    if (event.target == editOverlay) {
+        userAuswahl.style.display = "none";
+        debug.style.display= "block";
+        can_sync = true
+    }
+    else if (event.target == editOverlay){
+        roleAuswahl.style.display = "none";
+        debug.style.display= "block";
+        can_sync = true
+    }
+    if (event.target == rolesOverlay) {
+        rolesOverlay.style.display = "none";
+        debug.style.display = "block";
+        can_sync = true
+    }
+    else if (event.target == rolesOverlay2 && event.target != roleEditMenu2){
+        rolesOverlay2.style.display = "none";
+        debug.style.display = "block";
+        can_sync = true
+    }
+}
+
+function saveRoleB(sessionID){
+    let auth = document.getElementById('rightsForRoles').children[0].value
+    let id = document.getElementById('rightsForRolesID').value
+    let name = document.getElementById('roleNameInput').value
+    saveRole(sessionID, id, name, auth)
+    can_sync = true
+}
+
+function filterRole(selected) {
+    let authority = selected.value
+    let roleList = document.getElementById("roleList").getElementsByTagName("li");
+    for (var i = 0; i < roleList.length; i++) {
+        if (roleList[i].getAttribute("auth") !== authority && authority !== "0") {
+            roleList[i].style.display = "none";
+        }
+        else{
+            roleList[i].style.display = "block"
+        }
+
     }
 }

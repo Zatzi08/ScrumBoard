@@ -970,3 +970,35 @@ Date: 04/06/24 13:43:34
 pass: true
 
 
+Hyper-Text-Transport-Protocol-Tests:
+
+Hyper-Text-Transport-Protocol-Test-setRealTaskTime
+Test ID: HTTP.T26
+Date: 14/06/24 12:09:07
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-ProjectManager
+Test ID: HTTP.T25
+Date: 14/06/24 12:09:07
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-deleteUS
+Test ID: HTTP.T27
+Date: 14/06/24 12:09:07
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-deleteTaskBoard
+Test ID: HTTP.T23
+Date: 14/06/24 12:09:07
+pass: true
+
+
+Hyper-Text-Transport-Protocol-Test-FunktionsToRedirect
+Test ID: HTTP.T24
+Date: 14/06/24 12:09:07
+pass: true
+
+

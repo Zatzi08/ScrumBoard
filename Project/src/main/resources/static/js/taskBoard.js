@@ -1,10 +1,11 @@
-/*
-* Author: Paula Krasnovska
-* Revisited: /
-* Funktion: Toggeln des Bearbeitungsmenü, Zuweisung von Attributen für Thymeleaf
-* Grund: /
-* User-Story/Task-ID: U3.F1, U4.F1
-*/
+function hover(id){
+    document.getElementById(id).style.borderColor = "#ba55d3";
+}
+
+function hoverLeave(id) {
+    document.getElementById(id).style.borderColor = "#fff";
+}
+
 function toggleEditBox(storyId, name, description){
     EditBox();
     document.getElementById("inputName").textContent = name;
@@ -12,16 +13,16 @@ function toggleEditBox(storyId, name, description){
     document.getElementById("editId").value = storyId;
 }
 
-function toggleZoomedTaskCard(id) {
-    var editMenu = document.querySelector('#zoomedTaskCard');
-    var overlay = document.querySelector('.overlay');
+function toggleZoomedTaskCard() {
+    const editMenu = document.querySelector('#zoomedTaskCard');
+    let overlay = document.querySelector('.overlay');
 
     if (editMenu) {
         if (editMenu.style.display === "block") {
             editMenu.style.display = "none";
             if (overlay) {
                 overlay.remove();
-                overlay.removeEventListener('click', toggleZoomedTaskCard);
+                overlay.removeEventListener('click', closeOverlay);
             }
         } else {
             editMenu.style.display = "block";
@@ -29,7 +30,7 @@ function toggleZoomedTaskCard(id) {
                 overlay = document.createElement('div');
                 overlay.classList.add('overlay');
                 document.body.appendChild(overlay);
-                overlay.addEventListener('click', toggleZoomedTaskCard);
+                overlay.addEventListener('click', closeOverlay);
             }
         }
     } else {
@@ -37,38 +38,51 @@ function toggleZoomedTaskCard(id) {
     }
 }
 
+function closeOverlay() {
+    const overlay = document.querySelector('.overlay');
+    const zoomedTaskCard = document.querySelector('#zoomedTaskCard');
+
+    if (zoomedTaskCard.style.display === "block") {
+        zoomedTaskCard.style.display = "none";
+        if (overlay) {
+            overlay.remove();
+            overlay.removeEventListener('click', closeOverlay);
+        }
+    }
+}
+
 function toggleVis(percentageDifference, absNum, numType) {
-    var vis = document.querySelector('#visEstimateTracker');
-    var overlay = document.querySelector('.overlay');
+    const vis = document.querySelector('#visEstimateTracker');
+    let overlay = document.querySelector('.overlay');
 
     if (vis) {
-        if (vis.style.display === "block") {
-            vis.style.display = "none";
-            if (overlay) {
-                overlay.remove();
-                overlay.removeEventListener('click', toggleVis);
-                destroyMyChart();
-            }
-        } else {
-            vis.style.display = "block";
-            if (!overlay) {
-                overlay = document.createElement('div');
-                overlay.classList.add('overlay');
-                document.body.appendChild(overlay);
-                switch (numType){
-                    case 0:
-                        document.getElementById('percentageDifferenceText').innerText = `Deine Bearbeitungszeit entspricht genau der Schätzung!`;
-                        break;
-                    case 1:
-                        document.getElementById('percentageDifferenceText').innerText = `Der Mehraufwand gegenüber der geschätzten Bearbeitungszeit beträgt ${absNum}h!`;
-                        break;
-                    case 2:
-                        document.getElementById('percentageDifferenceText').innerText = `Deine reale Bearbeitungszeit weicht zu ${percentageDifference}% von der geschätzten ab. Dies entspricht ${absNum}h!`;
-                        break;
+            if (vis.style.display === "block") {
+                vis.style.display = "none";
+                if (overlay) {
+                    overlay.remove();
+                    overlay.removeEventListener('click', toggleVis);
+                    destroyMyChart();
                 }
-                overlay.addEventListener('click', toggleVis);
+            } else {
+                vis.style.display = "block";
+                if (!overlay) {
+                    overlay = document.createElement('div');
+                    overlay.classList.add('overlay');
+                    document.body.appendChild(overlay);
+                    switch (numType){
+                        case 0:
+                            document.getElementById('percentageDifferenceText').innerText = `Deine Bearbeitungszeit entspricht genau der Schätzung!`;
+                            break;
+                        case 1:
+                            document.getElementById('percentageDifferenceText').innerText = `Der Mehraufwand gegenüber der geschätzten Bearbeitungszeit beträgt ${absNum}h!`;
+                            break;
+                        case 2:
+                            document.getElementById('percentageDifferenceText').innerText = `Deine reale Bearbeitungszeit weicht zu ${percentageDifference}% von der geschätzten ab. Dies entspricht ${absNum}h!`;
+                            break;
+                    }
+                    overlay.addEventListener('click', toggleVis);
+                }
             }
-        }
     } else {
         console.error("Das Element mit der Klasse 'vis' wurde nicht gefunden.");
     }
@@ -163,116 +177,57 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-/*
-document.addEventListener('DOMContentLoaded', function() {
-    function enableButtonEdit() {
-        const headerButtons = document.querySelectorAll('.outerContainer-HeaderBtn');
-
-        headerButtons.forEach(button => {
-            button.addEventListener('dblclick', function(event) {
-                const currentText = button.textContent.trim();
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.value = currentText;
-                input.style.width = button.offsetWidth + 'px';
-                input.style.height = button.offsetHeight + 'px';
-                input.style.fontFamily = window.getComputedStyle(button).fontFamily;
-                input.style.fontSize = window.getComputedStyle(button).fontSize;
-                input.style.padding = '2px';
-                input.style.margin = '0';
-                input.style.border = '1px solid #ccc';
-                input.style.borderRadius = '3px';
-                input.style.boxSizing = 'border-box';
-                input.style.display = 'inline';
-
-                input.addEventListener('keyup', function(e) {
-                    if (e.key === 'Enter') {
-                        button.textContent = input.value.trim();
-                        input.replaceWith(button);
-                    }
-                });
-
-                input.addEventListener('blur', function() {
-                    button.textContent = input.value.trim();
-                    input.replaceWith(button);
-                });
-
-                button.replaceWith(input);
-                input.focus();
-            });
-        });
-    }
-
-    enableButtonEdit();
-});
-
-function addHeaderButton(text) {
-
-    var newButton = document.createElement('button');
-    newButton.className = 'outerContainer-HeaderBtn';
-    newButton.style.position = 'relative';
-    newButton.ondblclick = function() {
-        this.contentEditable = true;
-    };
-    newButton.style.marginRight = '5px';
-
-
-    var buttonText = document.createElement('span');
-    buttonText.innerText = text;
-
-
-    var deleteBtn = document.createElement('span');
-    deleteBtn.className = 'delete-btn';
-    deleteBtn.innerHTML = '&times;';
-    deleteBtn.onclick = function() {
-        deleteButton(newButton);
-    };
-    deleteBtn.setAttribute('contenteditable', 'false');
-
-
-    newButton.appendChild(buttonText);
-    newButton.appendChild(deleteBtn);
-
-    var addButton = document.getElementById('outerContainer-HeaderBtnAdd');
-    addButton.parentNode.insertBefore(newButton, addButton);
-}
- */
-
 function deleteButton(button) {
     button.parentNode.removeChild(button);
 }
 
-function changeTBNamePopUp(){
-    var TBNamePopup = document.getElementById("popupChangeTBName");
-    TBNamePopup.style.display = "block";
-}
-
-function createTBNamePopUp(){
-    var TBNamePopup = document.getElementById("popupCreateTB");
+function changeTBNamePopUp(id){
+    can_sync = false
+    const TBNamePopup = document.getElementById(id);
     TBNamePopup.style.display = "block";
 }
 
 window.onclick = function(event) {
-    var TBNamePopup = document.getElementById("popupChangeTBName");
-    var TBCreatePopup = document.getElementById("popupCreateTB");
-    var fertigPopup = document.getElementById("popupTaskFertig");
-    if (event.target == TBNamePopup) {
+    const TBNamePopup = document.getElementById("popupChangeTBName");
+    const TBCreatePopup = document.getElementById("popupCreateTB");
+    if (event.target === TBNamePopup) {
         TBNamePopup.style.display = "none";
+        can_sync = true
     }
 
-    else if (event.target == fertigPopup) {
-        fertigPopup.style.display = "none";
-    }
-
-    else if (event.target == TBCreatePopup) {
+    else if (event.target === TBCreatePopup) {
         TBCreatePopup.style.display = "none";
+        can_sync = true
     }
 }
 
 function openPopup(){
-    var fertigPopup = document.getElementById("popupTaskFertig");
+    can_sync = false
+    const fertigPopup = document.getElementById("popupTaskFertig");
     fertigPopup.style.display = "block";
 }
+
+let TBdelete = false;
+
+
+function deleteTBPopup(button, sessionID, TBID){
+    can_sync = false
+    let deleteTBPopup = document.getElementById("popupTBDelete")
+    deleteTBPopup.style.display = "block";
+    document.getElementById('tbNotDeleteBtn').addEventListener("click", function() {
+        TBdelete = false;
+        deleteTBPopup.style.display = "none";
+    });
+    document.getElementById('tbDeleteBtn').addEventListener("click", function() {
+        TBdelete = true;
+        deleteTaskBoard(button, sessionID, TBID)
+        deleteTBPopup.style.display = "none";
+    });
+    can_sync = true
+    TBdelete = false;
+}
+
+
 
 async function deleteTaskBoard(button, sessionID, TBID) {
     await deleteTB(sessionID, TBID)
@@ -286,18 +241,19 @@ async function deleteTaskBoard(button, sessionID, TBID) {
 function changeTBName(sessionID, tbID) {
     let name = document.getElementById('changeTBNameInput').value;
     saveTaskBoard(sessionID, tbID, name);
+    can_sync = true
     let id = 'Name' + tbID;
     document.getElementById(id).innerText = name;
 }
 
 async function addTaskBoard(sessionID) {
     let name = document.getElementById('createTBNameInput').value;
-    let num = await saveTaskBoard(sessionID, -1, name);
-    console.log('Hi')
+    await saveTaskBoard(sessionID, -1, name)
+    can_sync = true
     document.location.reload()
 }
 
-function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime,prio ,DueDate, NutzerList){
+function toggleZoomedTaskCardforTask(sessionID, USName, TBName, TaskDesc, estTime, realTime,prio ,DueDate, NutzerList){
     toggleZoomedTaskCard()
     document.getElementById('zoomedTaskCard-US').innerText = USName;
     document.getElementById('zoomedTaskCard-taskBoard').innerText = TBName;
@@ -307,15 +263,33 @@ function toggleZoomedTaskCardforTask(USName, TBName, TaskDesc, estTime, realTime
     document.getElementById('zoomedTaskCard-workedTime').innerText = realTime;
     document.getElementById('zoomedTaskCard-deadline').innerText = DueDate
     document.getElementById('zoomedTaskCard-role').innerText;
-    NutzerList = parseUser(NutzerList)
-    var ul = document.getElementById("zoomedTaskCard-nutzerDropdown-content");
-    ul.innerHTML = ""
-    NutzerList.forEach((nutzer)=>{
-        var li = document.createElement("li")
-        li.id = 'N' + nutzer.id;
-        li.appendChild(document.createTextNode(nutzer.name));
-        ul.appendChild(li);
-    })
+    NutzerList = JSON.parse(NutzerList)
+    const label = document.getElementById("zoomedTaskCard-assignedUsers");
+    label.innerHTML = ""
+    NutzerList.slice(0, 5).forEach((nutzer)=>{
+        const circle = document.createElement("button");
+        circle.classList.add('zoomedTaskCard-userCircle');
+        let but = "SwitchToOtherProfile(" + sessionID + ", " + nutzer.email + ")";
+        circle.addEventListener("click", function(event){
+            SwitchToOtherProfile(sessionID, nutzer.email)
+        });
+        circle.title = nutzer.name
+        circle.id = 'N' + nutzer.id;
+        circle.appendChild(document.createTextNode(nutzer.name.charAt(0).toUpperCase()));
+        circle.style.backgroundColor = randomizeAssignedUsersColour(0, 255)
+        label.appendChild(circle);
+     })
+    if (NutzerList.length > 5){
+        var moreUsersCircle = document.createElement("button");
+        moreUsersCircle.classList.add('zoomedTaskCard-userCircle');
+        moreUsersCircle.classList.add('#zoomedTaskCard-userCircle');
+        const leftUsers = (NutzerList.length) - 5;
+        const moreUsersText = (leftUsers.toString()).concat('+');
+        moreUsersCircle.appendChild(document.createTextNode(moreUsersText));
+        label.appendChild(moreUsersCircle);
+    }
+    moreUsersCircle.onclick = function (){ openAssignedUsers(NutzerList)
+    };
 }
 
 function closePopup(){
@@ -324,4 +298,68 @@ function closePopup(){
 
     popupChange.style.display = "none";
     popupFertig.style.display = "none";
+    can_sync = true
+}
+
+function openAssignedUsers(NutzerList){
+    const assignedUsers = document.querySelector('#assignedUsers');
+    let overlay2 = document.querySelector('.overlay2');
+
+    const ul = document.getElementById("assignedUsersList");
+    ul.innerHTML = ""
+    NutzerList.forEach((nutzer)=> {
+        const li = document.createElement("li");
+        li.id = 'N' + nutzer.id;
+        li.appendChild(document.createTextNode(nutzer.name));
+        ul.appendChild(li);
+    })
+
+    if (assignedUsers) {
+        if (assignedUsers.style.display === "block") {
+            if (overlay2) {
+                overlay2.remove();
+                overlay2.removeEventListener('click', closeOverlay2);
+            }
+            assignedUsers.style.display = "none";
+        } else {
+            assignedUsers.style.display = "block";
+            if (!overlay2) {
+                overlay2 = document.createElement('div');
+                overlay2.classList.add('overlay2');
+                document.body.appendChild(overlay2);
+                overlay2.addEventListener('click', closeOverlay2);
+            }
+        }
+    }
+}
+
+function closeOverlay2() {
+    const overlay2 = document.querySelector('.overlay2');
+    const assignedUsers = document.querySelector('#assignedUsers');
+
+    if (assignedUsers.style.display === "block") {
+        assignedUsers.style.display = "none";
+        if (overlay2) {
+            overlay2.remove();
+            overlay2.removeEventListener('click', closeOverlay2);
+        }
+    } else {
+        toggleZoomedTaskCard();
+    }
+}
+
+function randomizeAssignedUsersColour(min, max){
+    const ranValues = []
+
+    for(let i=0; i<3; i++){
+        let ranNum = Math.random() * (max - min) + min;
+        ranValues.push(ranNum)
+    }
+    return`rgb(${ranValues[0]}, ${ranValues[1]}, ${ranValues[2]})`
+}
+
+function setTime(element,sessionID){
+    setTaskTime(sessionID);
+    element.style.display = 'unset';
+    can_sync = true
 }

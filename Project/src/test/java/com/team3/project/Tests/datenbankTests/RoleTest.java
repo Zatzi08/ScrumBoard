@@ -24,16 +24,17 @@ public class RoleTest extends BaseDBTest {
     @BeforeAll
     public static void BeforeAll() {
         setup();
+        wipeDb(true);
     }
 
     @BeforeEach
     public void beforeEach() {
-        before();
+        wipeDb(false);
     }
 
     @AfterEach
     public void afterEach() {
-        after();
+        wipeDb(true);
     }
 
     @AfterAll
@@ -60,7 +61,7 @@ public class RoleTest extends BaseDBTest {
         DAORoleService.create(TestRole, 1);
         try {
             assertEquals(DAOUserService.getByMail(TestEmail).getAuthorization().getAuthorization(),1);
-            assertTrue(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getRoles().isEmpty());
+            assertTrue(DAOUserService.getWithRolesById(DAOUserService.getIdByMail(TestEmail)).getRoles().isEmpty());
         } catch (Exception e) {
             printWriterAddFailure("does not have right authorization/role");
             throw new AssertionError(e);
@@ -69,21 +70,21 @@ public class RoleTest extends BaseDBTest {
         TestRoles.add(DAORoleService.getByName(TestRole));
         try {
             assertTrue(DAOUserService.updateRolesById(DAOUserService.getIdByMail(TestEmail), TestRoles));
-            assertEquals(TestRole, DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getRoles().get(0).getName());
+            assertEquals(TestRole, DAOUserService.getWithRolesById(DAOUserService.getIdByMail(TestEmail)).getRoles().get(0).getName());
         } catch (Exception e) {
             printWriterAddFailure("did not add role");
             throw new AssertionError(e);
         }
         try {
             assertTrue(DAORoleService.updateNameById(DAORoleService.getByName(TestRole).getId(),TestRole1));
-            assertEquals(TestRole1, DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getRoles().get(0).getName());
+            assertEquals(TestRole1, DAOUserService.getWithRolesById(DAOUserService.getIdByMail(TestEmail)).getRoles().get(0).getName());
         } catch (Exception e) {
             printWriterAddFailure("update role name dose not work");
             throw new AssertionError(e);
         }
         try {
             assertTrue(DAORoleService.deleteById(DAORoleService.getByName(TestRole1).getId()));
-            assertTrue(DAOUserService.getByIdPlusRoles(DAOUserService.getIdByMail(TestEmail)).getRoles().isEmpty());
+            assertTrue(DAOUserService.getWithRolesById(DAOUserService.getIdByMail(TestEmail)).getRoles().isEmpty());
         } catch (Exception e) {
             printWriterAddFailure("can not delete role");
             throw new AssertionError(e);

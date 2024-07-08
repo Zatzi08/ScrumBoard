@@ -1,19 +1,10 @@
-/*Author: Pair Programming: Zana Salih Hama, Paula Krasnovska*/
-
-/**
-Revisited: PK, unterschiedliche ids zu einer Klasse zusammengefügt
-Funktion: Login Hintergrund
-Grund: /
-User-ID/Task-ID: A3.F1
-**/
-
-.loginBackground{
-display: flex;
-align-items: center;
-justify-content: center;
-width: 100%;
-min-height: 100vh;
-background-image: repeating-linear-gradient(135deg, hsla(280, 0%, 67%, 0.06) 0px, hsla(280, 0%, 67%, 0.06) 1px, transparent 1px, transparent 96px), repeating-linear-gradient(45deg, hsla(280, 0%, 67%, 0.06) 0px, hsla(280, 0%, 67%, 0.06) 1px, transparent 1px, transparent 96px), repeating-linear-gradient(45deg, hsla(280, 0%, 67%, 0.09) 0px, hsla(280, 0%, 67%, 0.09) 1px, transparent 1px, transparent 12px), repeating-linear-gradient(135deg, hsla(280, 0%, 67%, 0.09) 0px, hsla(280, 0%, 67%, 0.09) 1px, transparent 1px, transparent 12px), linear-gradient(135deg, hsl(226, 47%, 26%), hsl(226, 47%, 26%));
+.loginBackground {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  background-image:repeating-linear-gradient(90deg, rgba(250, 249, 249, 0.1) 0px, rgba(250, 249, 249, 0.1) 1px, transparent 1px, transparent 104px), repeating-linear-gradient(0deg, rgba(250, 249, 249, 0.1) 0px, rgba(250, 249, 249, 0.1) 1px, transparent 1px, transparent 104px), repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0px, rgba(255, 255, 255, 0.06) 1px, transparent 1px, transparent 26px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0px, rgb(255 255 255 / 10%) 1px, transparent 1px, transparent 26px), linear-gradient(135deg, rgb(15 62 91), rgb(3 13 18));
 }
 
 #primaryContainer{
@@ -25,7 +16,7 @@ background-image: repeating-linear-gradient(135deg, hsla(280, 0%, 67%, 0.06) 0px
   left: 49%;
   margin: -200px 0 0 -200px;
   border-radius: 15px;
-  background-color: rgb(116 120 188);
+  background-color: #061f2d;
   box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -38,21 +29,14 @@ background-image: repeating-linear-gradient(135deg, hsla(280, 0%, 67%, 0.06) 0px
   left: 50%;
   margin: -200px 0 0 -200px;
   border-radius: 15px;
-  background-color: rgba(152, 156, 224);
+  background-color: #092e43;
   box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-
-/**
-Revisited: /
-Funktion: Button zur Login-Bestätigung
-Grund: /
-User-ID/Task-ID: A3.F1
-**/
 
 #loginButton{
   display: block;
   position: relative;
-  background-color: rgb(18, 25, 65);
+  background-color: #824D93;
   width: 100px;
   height: 40px;
   border: none;
@@ -67,16 +51,13 @@ User-ID/Task-ID: A3.F1
 
 #loginButton:hover {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-  background-color: rgb(9, 21, 36);
+  background-color: #4c2456;
   cursor: pointer;  
 }
 
-/**
-Revisited: /
-Funktion: Eingabe der Login- und Registrierungsdaten
-Grund: /
-User-ID/Task-ID: A3.F1
-**/
+label{
+  color:white;
+}
 
 .Input{
   margin-bottom: 7%;
@@ -86,24 +67,20 @@ User-ID/Task-ID: A3.F1
   padding: 10px;
   border-radius: 15px;
   color: white;
-  background-color: #0f315c;
+  background-color: #0a213d;
   box-shadow: inset -3px -3px 5px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .Input:focus{
-  background:#0f315c;
+  background: #0a213d;
 }
-/**
-Revisited: /
-Funktion: Pk: Passwort zurücksetzen Buttons
-Grund: Benutzerfreundlichkeit
-User-ID/Task-ID:
-**/
+
 #noAccount{
   position: relative;
-  margin-left: 78px;
+  margin-left: 90px;
   margin-top: 10%;
   font-size: 15px;
+  color: white;
 }
 
 #yesAccount{
@@ -112,14 +89,16 @@ User-ID/Task-ID:
   margin-left: 30px;
   bottom: 0;
   margin-top: 34px;
+  color:white;
 }
+
 #forgotP{margin-left:65px;}
-a{color:#103563;}
+a{color:#3c9b97;}
 
 #passwortResetBtn{
   display: block;
   position:relative;    
-  background-color:  rgb(18, 25, 65);
+  background-color: #824D93;;
   width:100px;
   height:40px;
   border: none;
@@ -134,21 +113,14 @@ a{color:#103563;}
   
 #passwortResetBtn:hover {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-  background-color: rgb(12, 29, 49);
+  background-color: #4c2456;
   cursor: pointer;
 }
-
-/**
-Revisited: /
-Funktion: Bestätigung des neuen Passworts mit Button
-Grund: Benutzerfreundlichkeit
-User-ID/Task-ID:
-**/
 
 #newPasswortBtn{
   display: block;
   position:relative;
-  background-color:  rgb(18, 25, 65);
+  background-color: #824D93;;
   width:100px;
   height:40px;
   border: none;
@@ -163,7 +135,7 @@ User-ID/Task-ID:
     
 #newPasswortBtn:hover {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-  background-color: rgb(12, 29, 49);
+  background-color: #4c2456;
   cursor: pointer;
 }
 
@@ -171,15 +143,9 @@ User-ID/Task-ID:
   padding: 10px;
   font-size: large;
   font-weight: bold;
+  color: #9a58af;
+  font-size:20px;
 }
-
-/**
-Author:Paula Krasnovska
-Revisited: /
-Funktion: Bestätigung des Emailversandts
-Grund: Benutzerfreundlichkeit
-User-ID/Task-ID:
-**/
 
 #emailGesendetPopup{
   width: 200px;

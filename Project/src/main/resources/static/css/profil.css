@@ -1,13 +1,11 @@
 #profilContainer{
     position: absolute;
-    margin: 1%;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-top: 20px;
-    height: auto;
-    width: 90%;
+    margin: 2% 2% 2% 2%;
+    height: -webkit-fill-available;
+    width: 96%;
     background-image: linear-gradient(to bottom right, #23262f, #26375d);
     border-radius: 15px;
+    overflow-y: scroll;
 }
 
 #profilInhalt{
@@ -23,15 +21,16 @@
     display: inline-block;
     color: #f1b951;
     width: 500px;
-    font-size: 300%;
+    font-size: calc(2.8dvw + 2.8dvh);
     font-family: "Lucida Console";
 }
 
 #profilInhalt button{
     display: block;
     position: absolute;
-    margin-left:100%;
+    margin-left: 100%;
     color: white;
+    font-size: calc(1dvw + 1dvh);
 
 }
 
@@ -42,10 +41,10 @@
     cursor:pointer;
 }
 
-#profilProjektBeschreibung, #profilPersoBeschreibung, rolleProfil{
-    color: #e1dbdb;
+.profilInhalt{
+    color:  #a8a398;;
     font-family: Roboto;
-    font-size: 110%;
+    font-size: calc(0.9dvw + 0.9dvh);
     overflow-wrap: break-word;
     text-align: justify;
     hyphens: auto;
@@ -75,7 +74,7 @@
 #profilForm{
     width: 800px;
     height: 564px;
-    background-color: rgb(46, 46, 61);
+    background-color: rgb(40, 47, 59);
     padding: 20px;
     color: black;
     border-radius: 15px;
@@ -83,14 +82,13 @@
     left: 50dvw;
     transform: translate(-50%, -50%);
     position: fixed;
+    overflow: auto;
 }
 
 .profilInput{
     display: block;
     width: 95%;
-    height: 90px;
-    border: #606060 solid 1px;
-    background-color: #283d48;
+    background-color: #203139;
     color: #afafaf;
     resize: none;
     border-radius: 10px;
@@ -112,13 +110,15 @@
 
 #profilEditBtn{
     position: relative;
-    height:35px;
-    width:auto;
+    height: 35px;
+    width: auto;
     margin-top: 20px;
     margin-left: 45%;
     background-color: #4b6294;
     border-radius: 10px;
-    color:white;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
 }
 
 #profilEditBtn:hover{
@@ -137,12 +137,11 @@
 }
 
 .profileText{
-    font-size: 150%;
+    font-size: calc(1.2dvw + 1.2dvh);
     font-family: "Lucida Console";
-    color: #a8a398;
+    color:#e1dbdb;
     margin-top: 20px;
     overflow-wrap: break-word;
-    text-align: justify;
     hyphens: auto;
 }
 
@@ -162,4 +161,47 @@
     background: rgba(0,0,0,0);
 }
 
-/*Todo: Hübsche Fonts raussuchen, Strich zentrieren, margins und Abstände anpassen*/
+.roleDropdown {
+    display: inline-block;
+    /*display: inline-flex;*/
+    align-items: center;
+    justify-content: center;
+    right:0;
+    width: 95%;
+    height:50px;
+    margin-left:3%;
+}
+
+.setRolesBtn {
+    cursor: pointer;
+    background-color: #203139;
+    color: #afafaf;
+    border: grey solid 1px;
+    border-radius: 8px;
+    font-size: 12px;
+    box-shadow: white;
+    padding: .75rem 1rem;
+    height: 45px;
+    width: 100%;
+}
+
+.roles {
+    position: relative;
+    padding: 2px;
+    display: none;
+    border: 1px solid #ccc;
+    border-top: none;
+    background-color: #203139;
+    width: 100%;
+    height: 150px;
+    border-radius: 8px;
+    overflow: auto;
+}
+
+.roleDropdown.visible .roles {
+    display: block;
+}
+
+li {
+    list-style: none;
+}

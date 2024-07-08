@@ -1,18 +1,55 @@
 package com.team3.project.Classes;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.team3.project.DAO.DAOTask;
+import com.team3.project.DAOService.DAOTaskService;
 
-import java.text.ParseException;
 import java.util.List;
 
-@Getter
-@Setter
-public class TaskXUser extends Task{
-    private List<User> users;
+public class TaskXUser extends dataClasses implements observable {
+    List<User> userList;
 
-    public TaskXUser(List<User> users, int tID, String description, int priority, int userStoryID, String dueDate, double timeNeededG, double timeNeededA, int tbID) throws ParseException {
-        super(tID, description, priority, userStoryID, dueDate, timeNeededG, timeNeededA, tbID);
-        this.users = users;
+    public TaskXUser(int ID, List<User> user) {
+        super(ID);
+        this.userList = user;
+    }
+
+    @Override
+    public String toJSON() {
+        String json = "{";
+        json += "\"id\":\""+ this.getID();
+        json += "\",\"user\":"+ parseUser(this.userList);
+        json += "}";
+        return json;
+    }
+
+    private String parseUser(List<User> users){
+        String json = "[";
+
+        for (User user : users){
+            json += user.toJSON();
+            if (user != users.get(users.size()-1))
+                json += ",";
+        }
+
+        json += "]";
+        return json;
+    }
+
+    @Override
+    public Integer getUSID_P() {
+        DAOTask dt = DAOTaskService.getWithUserStorysById(this.getID());
+        if (dt != null) {
+            return dt.getUserStory().getId();
+        }
+        return null;
+    }
+
+    @Override
+    public Integer getTBID_P() {
+        DAOTask dt = DAOTaskService.getWithUserStorysById(this.getID());
+        if (dt != null && dt.getTaskList() != null) {
+            return dt.getTaskList().getTaskBoard().getId();
+        }
+        return null;
     }
 }

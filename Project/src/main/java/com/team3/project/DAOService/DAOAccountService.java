@@ -9,7 +9,7 @@ public class DAOAccountService {
     * Revisited: Tom-Malte Seep
      * Function: creates a account
      * Reason: refactoring
-     * UserStory/Task-ID:
+     * UserStory/Task-ID: A2.D1
      */
     /** creates a Account with a Mail and a password
      * @param email    email
@@ -17,9 +17,10 @@ public class DAOAccountService {
      * @return         true if account creation was successfull
      */
     public static boolean create(String email, String password) {
+        String hashedPassword = DAOUserService.hash(password);
         if (!checkMail(email)) {
             try {
-                DAOService.persist(new DAOAccount(email, password));
+                DAOService.persist(new DAOAccount(email, hashedPassword));
                 DAOUser user = DAOUserService.getByMail(email);
                 user.setAuthorization(DAOAuthorizationService.getByAuthorization(1));
                 DAOService.merge(user);
@@ -36,18 +37,19 @@ public class DAOAccountService {
     * Revisited: Tom-Malte Seep
     * Function: updates the password for an account
     * Reason: refactoring
-    * UserStory/Task-ID:
+    * UserStory/Task-ID: A5.D1
     */
     /** updates the password for an account 
      * @param email    email
      * @param password new password
-     * @return         true if update was successfull
+     * @return         true if update was successful
      */
     public static boolean updatePassword(String email, String password) {
+        String hashedPassword = DAOUserService.hash(password);
         String parameterName = "email";
         DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
         if (account != null) {
-            account.setPassword(password);
+            account.setPassword(hashedPassword);
             return DAOService.merge(account);
         }
         return false; //no entry
@@ -59,7 +61,7 @@ public class DAOAccountService {
      * Function: deletes a user by email
      * Reason: refactoring
      *         cascading issues
-     * UserStory/Task-ID:
+     * UserStory/Task-ID: 
      */
     /** FOR TESTING ONLY <p>
      * deletes a user by mail
@@ -75,7 +77,7 @@ public class DAOAccountService {
      * Revisited: Tom-Malte Seep
      * Function: checks if the email exists
      * Reason: refactoring
-     * UserStory/Task-ID:
+     * UserStory/Task-ID: A3.D1
      */
     /** checks if the email exists
      * @param email email 
@@ -99,8 +101,9 @@ public class DAOAccountService {
      * @return          true if account exists and has the password
      */
     public static boolean checkLogin(String email, String password) {
+        String hashedPassword = DAOUserService.hash(password);
         String parameterName = "email";
         DAOAccount account = DAOService.getSingleByPara(DAOAccount.class, email, parameterName);
-        return (account != null && account.getPassword().equals(password)) ? true : false;
+        return (account != null && account.getPassword().equals(hashedPassword)) ? true : false;
     }
 }

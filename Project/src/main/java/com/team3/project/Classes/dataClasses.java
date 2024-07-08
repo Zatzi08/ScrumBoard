@@ -4,10 +4,10 @@ import lombok.*;
 
 @Getter
 @Setter
-public abstract class abstraktDataClasses {
+public abstract class dataClasses {
     private int ID;
 
-    public abstraktDataClasses(int ID) {
+    public dataClasses(int ID) {
         this.ID = ID;
     }
 }

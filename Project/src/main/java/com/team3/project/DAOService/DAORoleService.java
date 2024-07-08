@@ -20,8 +20,8 @@ public class DAORoleService {
      * @return list of DAORoles
      */
     public static List<DAORole> getAll() {
-        List<DAORole> roles = DAOService.getAll(DAORole.class);
-        return roles;
+        List<String> joinOnAttributeName = Arrays.asList("authorizations" /*, users */);
+        return DAOService.getAllLeftJoin(DAORole.class, joinOnAttributeName);
     }
 
     
@@ -56,6 +56,12 @@ public class DAORoleService {
         return role;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: get roles by authorization
+     * Reason: 
+     * UserStory/Task-ID:
+     */
     public static List<DAORole> getByAuthorization(int authorization) {
         String joinOnAttributeName = "authorizations";
         List<DAORole> roles = DAOService.getAllLeftJoin(DAORole.class, joinOnAttributeName);
@@ -68,10 +74,27 @@ public class DAORoleService {
             .toList().size() > 0).toList();
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: get roles by authorization
+     * Reason: 
+     * UserStory/Task-ID: R2.D2
+     */
     public static List<DAORole> getByAuthorization(DAOAuthorization authorization) {
         return getByAuthorization(authorization.getAuthorization());
     }
+
+    public static DAORole getWithAuthorizationById(int id) {
+        String joinOnAttributeName = "authorizations";
+        return DAOService.getLeftJoinByID(id, DAORole.class, joinOnAttributeName);
+    }
     
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: creates a role
+     * Reason: 
+     * UserStory/Task-ID: R2.D3
+     */
     public static boolean create(String name, DAOAuthorization daoAuthorization) {
         try {
             DAOService.persist(new DAORole(name, Arrays.asList(daoAuthorization)));
@@ -81,10 +104,22 @@ public class DAORoleService {
         return true;
     }
     
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: creates a role
+     * Reason: 
+     * UserStory/Task-ID:
+     */
     public static boolean create(String name, int authorization) {
         return create(name, DAOAuthorizationService.getByAuthorization(authorization));
     }
     
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: updates the name
+     * Reason: 
+     * UserStory/Task-ID: R3.D1
+     */
     public static boolean updateNameById(int id, String name) {
         DAORole role = getByID(id);
         if (role != null) {
@@ -94,6 +129,12 @@ public class DAORoleService {
         return false;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: deletes a role
+     * Reason: 
+     * UserStory/Task-ID: R4.D1
+     */
     public static boolean deleteById(int id) {
         DAORole role = DAOService.getByID(id, DAORole.class);
         if (role != null) {
@@ -102,10 +143,22 @@ public class DAORoleService {
         return true;
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: checks if authorization is correct
+     * Reason: 
+     * UserStory/Task-ID:
+     */
     static boolean checkAuthorizationById(int id, DAOAuthorization authorization) {
         return checkAuthorizationIdById(id, authorization.getId());
     }
 
+    /* Author: Tom-Malte Seep
+     * Revisited: 
+     * Function: checks if authorization is correct
+     * Reason: 
+     * UserStory/Task-ID:
+     */
     static boolean checkAuthorizationIdById(int id, int authorizationId) {
         String joinOnAttributeName = "authorizations";
         DAORole daoRole = DAOService.getLeftJoinByID(id, DAORole.class, joinOnAttributeName);
