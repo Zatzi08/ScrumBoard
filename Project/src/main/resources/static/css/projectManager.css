@@ -20,12 +20,12 @@
 #editMenu-saveEditBtn {
     border-radius: 10px;
     width: 80px;
-    height: 25px;
+    height: 19px;
     background-color: #cccbcb;
     font-size: 14px;
     margin-left: 43%;
     display: block;
-    margin-top: 5%;
+    margin-top: 3%;
 }
 
 #editMenu-saveEditBtn:hover{
@@ -553,7 +553,7 @@ ul{list-style-type: none;}
     right: 0;
     width: 25%;
     height: 30px;
-    margin-left: 36%;
+    margin-left: 30%;
 }
 
 .anchor, .chooseRoleTaskBtn {
@@ -717,7 +717,7 @@ hr{
 }
 
 #editMenu-priorityDropAlignment{
-    width: -webkit-fill-available;
+    width: min-content;
     display: inline-flex;
 }
 
