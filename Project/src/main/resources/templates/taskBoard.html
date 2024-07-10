@@ -120,7 +120,7 @@
     </div>
 
 
-    <div th:if="${authority == 2 || authority == 4}" id = "popupTaskFertig">
+    <div id = "popupTaskFertig">
         <form id = taskFertigForm>
             <i class = "fa fa-clock" style="margin-right:10px;" title="Name des Task-Boards ändern"></i> <label style = "color: #d1d1d1; border-bottom: 2px solid #d1d1d1;display: inline; width:100%" > Gebe die Bearbeitungszeit der Task an</label>
             <input type = "number" min="0" max="1000" step="0.25" form = "taskFertigForm" id = "taskFertigInput" placeholder="Deine Bearbeitungszeit">
