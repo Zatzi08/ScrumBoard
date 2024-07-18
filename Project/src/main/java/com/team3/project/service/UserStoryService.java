@@ -1,12 +1,13 @@
 package com.team3.project.service;
 
-import com.team3.project.Classes.Enumerations;
+import com.team3.project.Classes.Task;
 import com.team3.project.Classes.UserStory;
+import com.team3.project.Websocket.WebsocketObserver;
 import com.team3.project.DAO.DAOTask;
-import com.team3.project.DAO.DAOUser;
 import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.DAOTaskService;
 import com.team3.project.DAOService.DAOUserStoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -14,6 +15,9 @@ import java.util.List;
 
 @Service
 public class UserStoryService {
+
+    @Autowired
+    private WebsocketObserver observer;
 
     /* Author: Lucas Krüger
      * Revisited: /
@@ -57,15 +61,41 @@ public class UserStoryService {
         if (userStory.getDescription() == null) throw new Exception("Null Story-Desc");
         if (userStory.getPriorityAsInt() <= -1) throw new Exception("Null Story-prio");
         if(userStory.getID() <= -1){
-            DAOUserStoryService.create(userStory.getName(),userStory.getDescription(), userStory.getPriorityAsInt());
-        } else{
+            boolean responce = DAOUserStoryService.create(userStory.getName(),userStory.getDescription(), userStory.getPriorityAsInt());
+            if (responce){
+                try{
+                    List<DAOUserStory> dusl = DAOUserStoryService.getAll();
+                    DAOUserStory dus = dusl.get(dusl.size()-1);
+                    observer.sendToUserStoryGroup(0, new UserStory(dus.getName(), dus.getDescription(), dus.getPriority(), dus.getId()));
+                } catch (Exception e){
+                    System.out.println("Observer nicht initialisiert");
+                }
+            }
+        } else {
             DAOUserStory dus = DAOUserStoryService.getById(userStory.getID());
             if (dus != null){
+                boolean responce = false;
                 if (!dus.getName().equals(userStory.getName())) 
-                    DAOUserStoryService.updateName(dus.getId(),userStory.getName());
-                if (!dus.getDescription().equals(userStory.getDescription())) 
-                    DAOUserStoryService.updateDescription(dus.getId(),userStory.getDescription());
-                if (dus.getPriority() != userStory.getPriorityAsInt()) DAOUserStoryService.updatePriority(dus.getId(), userStory.getPriorityAsInt());
+                    responce = responce || DAOUserStoryService.updateName(dus.getId(),userStory.getName());
+                if (!dus.getDescription().equals(userStory.getDescription()))
+                    responce = responce || DAOUserStoryService.updateDescription(dus.getId(),userStory.getDescription());
+                if (dus.getPriority() != userStory.getPriorityAsInt())
+                    responce = responce || DAOUserStoryService.updatePriority(dus.getId(), userStory.getPriorityAsInt());
+
+                if (responce){
+                    try{
+                        dus = DAOUserStoryService.getById(userStory.getID());
+                        observer.sendToUserStoryGroup(2, new UserStory(dus.getName(), dus.getDescription(), dus.getPriority(), dus.getId()));
+                    } catch (Exception e){
+                        System.out.println("Observer nicht initialisiert");
+                    }
+                } else {
+                    try{
+                        observer.sendToUserStoryGroup(4, null);
+                    } catch (Exception e){
+                        System.out.println("Observer nicht initialisiert");
+                    }
+                }
             } else throw new Exception("UserStory not found");
         }
     }
@@ -107,8 +137,32 @@ public class UserStoryService {
      */
     public void deleteUserStoryAndLinkedTasks(int uid) throws Exception {
         if (uid <= -1) throw new Exception("Null usid");
-        List <DAOTask> tasks = DAOTaskService.getListByUserStoryId(uid);
-        if(tasks != null) tasks.forEach(x -> DAOTaskService.deleteById(x.getId()));
-        DAOUserStoryService.deleteById(uid);
+        DAOUserStory dus = DAOUserStoryService.getWithTasksById(uid);
+        if (dus == null) throw new Exception("UserStory not found");
+        List <DAOTask> tasks = dus.getTasks();
+        if(tasks != null) {
+            for (DAOTask dt : tasks) {
+                boolean responce = DAOTaskService.deleteById(dt.getId());
+                if (responce) {
+                    try {
+                        observer.sendToTaskGroup(1,
+                                new Task(dt.getId(), dt.getDescription(), dt.getPriority(), dt.getUserStory().getId(),
+                                        dt.getDueDate(), dt.getProcessingTimeEstimatedInHours(),
+                                        dt.getProcessingTimeRealInHours(), dt.getTaskList().getTaskBoard().getId()));
+                    } catch (Exception e) {
+                        System.out.println("Observer nicht initialisiert");
+                    }
+                }
+            }
+        }
+        boolean responce = DAOUserStoryService.deleteById(uid);
+        if (responce) {
+            try {
+                observer.sendToUserStoryGroup(1,
+                        new UserStory(dus.getName(), dus.getDescription(), dus.getPriority(), dus.getId()));
+            } catch (Exception e) {
+                System.out.println("Observer nicht initialisiert");
+            }
+        }
     }
 }

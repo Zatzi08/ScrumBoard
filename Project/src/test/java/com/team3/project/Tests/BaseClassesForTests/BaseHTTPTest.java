@@ -5,10 +5,14 @@ import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAOService.DAOTaskBoardService;
 import com.team3.project.DAOService.DAOUserService;
 import com.team3.project.Facede.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
 
+@Component
 public class BaseHTTPTest extends BaseTest {
     private final static String logName = "log_HttpRequestTest.txt",
             mainTestName = "Hyper-Text-Transport-Protocol",
@@ -22,15 +26,16 @@ public class BaseHTTPTest extends BaseTest {
     protected static List<UserStory> storys = new LinkedList<UserStory>();
     protected static List<TaskBoard> boards = new LinkedList<TaskBoard>();
 
-    public static final PresentationToLogic presentationToLogic = PresentationToLogic.getInstance();
+    public static final PresentationToLogic presentationToLogic = new PresentationToLogic().init_facade();
+
 
     protected static void setup(boolean b) throws Exception {
-        if (b) BaseTest.setup(logName, mainTestName);
+        BaseTest.setup(logName, mainTestName);
         if (DAOUserService.checkByEmail("T@M.com")) throw new Exception("Fuck IT");
         if (boards.isEmpty()) TestDBTaskBoard();
-        if (accounts.isEmpty())TestDBUser();
-        if (storys.isEmpty())TestDBUserStory();
-        if (tasks.isEmpty())TestDBTask();
+        if (accounts.isEmpty()) TestDBUser();
+        if (storys.isEmpty()) TestDBUserStory();
+        if (tasks.isEmpty()) TestDBTask();
     }
     
     protected static void tearDown() {

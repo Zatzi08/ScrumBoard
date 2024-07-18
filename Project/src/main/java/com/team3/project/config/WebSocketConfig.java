@@ -1,4 +1,4 @@
-package com.team3.project.Websocket;
+package com.team3.project.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

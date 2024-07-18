@@ -157,10 +157,10 @@ public class DAOUser {
         if (user.getSessionDate() != null) {
             this.setSessionDate(user.getSessionDate());
         }
-        if (user.getRoles() != null) {
+        if (user.getRoles() != null && !user.getRoles().isEmpty()) {
             this.setRoles(user.getRoles());
         }
-        if (user.getTasks() != null) {
+        if (user.getTasks() != null && !user.getRoles().isEmpty()) {
             this.setTasks(user.getTasks());
         }
     }

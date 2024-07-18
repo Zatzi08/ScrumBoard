@@ -1,40 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Task Board</title>
-        <link rel="stylesheet" href="/css/foundation.css">
-        <link rel="stylesheet" href="/css/taskBoard.css">
-        <link rel="stylesheet" href="/css/setup.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    </head>
-    <body>
-    <!--
-           Author: Zana Salih Hama
-           Revisited: /
-           Funktion: Reiter zur Übersicht aller Seiten[-optionen]
-           Grund: Übersichtlichkeit
-           User-ID/Task-ID: /
-        -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task-Board</title>
+    <link rel="stylesheet" href="/css/foundation.css">
+    <link rel="stylesheet" href="/css/taskBoard.css">
+    <link rel="stylesheet" href="/css/setup.css">
+    <link rel="icon" type="image/ico" href="/img/favicon.ico"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <input type="hidden" id="data" th:tbID="${Board.getID()}">
     <div class="Reiter">
         <button class="reiterBtn" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" >Projekt Manager</button>
         <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" >Profil </button>
-        <button class = "reiterBtn" onmouseover = "hover()" onmouseleave="hoverLeave()" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Task-Board </button>
-        <button class = "reiterBtn">Kalender </button>
-        <button class = "reiterBtn" style="margin-left: auto; margin-right: 0;"><a href="/">Abmelden</a></button>
+        <button class = "reiterBtn" onmouseover = "hover(this.id)" onmouseleave="hoverLeave(this.id)" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Task-Board </button>
+        <button class = "reiterBtn" id = "logoutBtn" onclick="location.href='/'">Abmelden</button>
     </div>
 
     <div id="outerContainer-Header">
-        <button style="position: relative; margin-right: 5px;" th:each="Taskboard : ${TaskBoards}" th:sID="${sessionID}" th:id="@{Button{tb}(tb=${Taskboard.getID()})}" class="outerContainer-HeaderBtn" th:tbID="${Taskboard.getID()}" ondblclick="SwitchToTaskBoardByID(this.getAttribute('sID'), this.getAttribute('tbID'))" title="Doppeklick, um auf Taskboard zu wechseln">
-            <span th:id="@{Name{tb}(tb=${Taskboard.getID()})}" th:text="${Taskboard.getName()}">  </span>
-            <span th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" th:tbID="${Taskboard.getID()}" class='delete-btn' onclick="deleteTaskBoard(this, this.getAttribute('sID'), this.getAttribute('tbID'))" title="Taskboard löschen">×</span></button>
-        <button type="button" th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" id="outerContainer-HeaderBtnAdd" onclick="createTBNamePopUp()" title="Taskboard hinzufügen"><b>+</b></button>
-        <button type="button" th:if="${authority == 2 || authority == 4}" id = "outerContainer-HeaderChangeTBName" onclick="changeTBNamePopUp()"><i id="pencilSym" class = "fa fa-pencil"></i>Name ändern</button>
+        <div id="outerContainer-HeaderAlignment">
+            <div id="outerContainer-HeaderAlignmentInner">
+                <button style="position: relative; margin-right: 5px;" th:each="Taskboard : ${TaskBoards}" th:sID="${sessionID}" th:id="@{Button{tb}(tb=${Taskboard.getID()})}" class="outerContainer-HeaderBtn" th:tbID="${Taskboard.getID()}" ondblclick="SwitchToTaskBoardByID(this.getAttribute('sID'), this.getAttribute('tbID'))" title="Doppeklick, um auf Task-Board zu wechseln">
+                    <span th:id="@{Name{tb}(tb=${Taskboard.getID()})}" th:text="${Taskboard.getName()}">  </span>
+                    <span th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" th:tbID="${Taskboard.getID()}" class='delete-btn' onclick="deleteTBPopup(this, this.getAttribute('sID'), this.getAttribute('tbID'))" title="Task-Board löschen">×</span></button>
+                <button type="button" th:if="${authority == 2 || authority == 4}" th:sID="${sessionID}" id="outerContainer-HeaderBtnAdd" onclick="changeTBNamePopUp('popupCreateTB')" title="Task-Board hinzufügen"><b>+</b></button>
+            </div>
+            <button type="button" th:if="${authority == 2 || authority == 4}" id = "outerContainer-HeaderChangeTBName" onclick="changeTBNamePopUp('popupChangeTBName')"><i id="pencilSym" class = "fa fa-pencil"></i>Name ändern</button>
+        </div>
 
         <div id="outerContainer" th:tbID="${Board.getID()}" >
-            <div th:each="TaskList : ${Board.getTaskListList()}" th:id="${TaskList.getID()}" class="innerContainer" style="margin-left: 10px">
+            <div th:each="TaskList : ${Board.getTaskListList()}" th:id="${TaskList.getID()}" class="innerContainer">
                 <table class="columnTable">
                     <thead class="columnTableHead">
                     <tr>
@@ -42,11 +40,12 @@
                     </tr>
                     </thead>
                     <tbody class="columnTableBody">
-                    <tr th:each="task : ${TaskList.getTasks()}" th:users="${task.getUserAsJSON()}" th:id="@{T{TID}(TID=${task.getID()})}" draggable="true" th:us="${task.getUserStory().getName()}" th:tb="${Board.getName()}" th:desc="${task.getDescription()}" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}" th:pri="${task.getPriority()}" th:due="${task.getDueDateAsPresentable()}"
-                        ondblclick="toggleZoomedTaskCardforTask(this.getAttribute('us'),this.getAttribute('tb'),this.getAttribute('desc'), this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('pri'), this.getAttribute('due'), this.getAttribute('users'))" title="Doppelklicken, um gesamte Task zu sehen">
-                        <td th:style = "${(task.getPriorityAsInt() == 1) ? 'background-color: #9EC5E5' : (task.getPriorityAsInt() == 2) ? 'background-color: #f5dd90' : (task.getPriorityAsInt() == 3) ? 'background-color: #f68e5f' : (task.getPriorityAsInt() == 4) ? 'background-color: #f76c5e' : 'background-color: rgba(255, 255, 255, 0.66)'}">
-                            <button class="tableContentLabel" th:id="@{tableContent-Visualisation:{tID}(tID=${task.getID()})}" title="Schätzungstracker" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}"  onclick="visualisationOfTaskTime(this.getAttribute('est'), this.getAttribute('real'))"><i class = "fa-solid fa-chart-bar"></i></button>
+                    <tr th:each="task : ${TaskList.getTasks()}" th:sID="${sessionID}" th:users="${task.getUserAsJSON()}" th:id="@{T{TID}(TID=${task.getID()})}" draggable="true" th:us="${task.getUserStory().getName()}" th:tb="${Board.getName()}" th:desc="${task.getDescription()}" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}" th:pri="${task.getPriority()}" th:due="${task.getDueDateAsPresentable()}"
+                        ondblclick="toggleZoomedTaskCardforTask(this.getAttribute('sID'),this.getAttribute('us'),this.getAttribute('tb'),this.getAttribute('desc'), this.getAttribute('est'), this.getAttribute('real'), this.getAttribute('pri'), this.getAttribute('due'), this.getAttribute('users'))" title="Doppelklicken, um gesamte Task zu sehen">
+                        <td th:style = "${(task.getPriorityAsInt() == 1) ? 'background-color: #9EC5E5' : ((task.getPriorityAsInt() == 2) ? 'background-color: #f5dd90' : ((task.getPriorityAsInt() == 3) ? 'background-color: #f68e5f' : ((task.getPriorityAsInt() == 4) ? 'background-color: #f76c5e' : 'background-color: rgba(255, 255, 255, 0.66)')))}" >
+                            <button class="tableContentLabel" id = "tableContentLabel-vis" th:style="${(!task.isDone()) ? 'display: none' : 'display: unset'}" th:id="@{tableContent-Visualisation:{tID}(tID=${task.getID()})}" title="Schätzungstracker" th:est="${task.getTimeNeededG()}" th:real="${task.getTimeNeededA()}" onclick="visualisationOfTaskTime(this.getAttribute('est'), this.getAttribute('real'))"><i class = "fa-solid fa-chart-bar"></i></button>
                             <label class="tableContentLabel" id="tableContent-UsId" th:text="${task.getUserStory().getName()}" title="Referenz zur entsprechenden User-Sotry">US-ID</label>
+                            <br/>
                             <label class="tableContentLabel" id="tableContent-Beschreibung" th:text="${task.getDescription()}" title="Beschreibung der Task">Beschreibung</label>
                             <label class="tableContentLabel" id="tableContent-LeftTime" th:text="${task.getDueDateAsPresentable()}" title="Frist">Left Time</label>
                             <label class="tableContentLabel" id="tableContent-Role" title="Rolle">Rolle</label>
@@ -64,21 +63,20 @@
         <label id="zoomedTaskCard-taskBoard" class="zoomedTaskCard-Header" title="Referenz zum dazugehörigen Task-Board">Task-Board</label>
         <br/>
         <i class="fa-solid fa-bars" id="zoomedTaskCard-sym5"></i><label class="zoomedTaskCard-symLab" style="margin-left: 2%;">Beschreibung</label>
-        <label id="zoomedTaskCard-description" title="Beschreibung der Task">Lacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velitLacinia nascetur pellentesque euismod mus est nibh conubia. Parturient dignissim habitant mauris convallis interdum. Malesuada litora nulla semper sollicitudin urna etiam sapien tempor varius platea. Dictum egestas et quis commodo conubia ut parturient netus. Amet feugiat velit</label>
+        <label id="zoomedTaskCard-description" title="Beschreibung der Task"></label>
            <div id="wrapper">
                 <div id="zoomedTaskCard-LeftSide">
                     <i class="fa-regular fa-clock" id="zoomedTaskCard-sym1"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym1">Schätzung</label>
                     <label class="zoomedTaskCard-content" id="zoomedTaskCard-estimatedTime" title="Geschätzte Zeit der Task">Geschätzte Zeit</label>
                     <i class="fa-solid fa-hourglass-end" id="zoomedTaskCard-sym3"></i><label class="zoomedTaskCard-symLab" for="zoomedTaskCard-sym3" style="margin-left: 6%;">Bearbeitung</label>
                     <label class="zoomedTaskCard-content" id="zoomedTaskCard-workedTime" title="Real bearbeitete Zeit">Bearbeitungszeit</label>
-                    <div  class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdown">
-                        <i class="fa-regular fa-user" id="zoomedTaskCard-sym7" style = "display:inline"></i> <label class="zoomedTaskCard-symLab" for = "zoomedTaskCard-sym7">Zugewiesene Nutzer</label>
-                        <label id="zoomedTaskCard-nutzerDropdownBtn" title="Zugewiesene Nutzer"><i class = "fa fa-level-down"></i> Nutzer</label>
-                        <ul class="zoomedTaskCard-content" id="zoomedTaskCard-nutzerDropdown-content">
-                            <li>Nutzer 1</li>
-                            <li>Nutzer 1</li>
-                            <li>Nutzer 1</li>
-                        </ul>
+                    <div id="zoomedTaskCard-nutzerDropdown">
+                        <i class="fa-regular fa-user" id="zoomedTaskCard-sym7" style = "display:inline"></i> <label class="zoomedTaskCard-symLab" for = "zoomedTaskCard-sym7" style="font-size: 100%;">Zugewiesene Nutzer</label>
+                        <div id="zoomedTaskCard-nutzerDropdownAlignment">
+                            <label class="zoomedTaskCard-content" id="zoomedTaskCard-assignedUsers" >
+
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div id="zoomedTaskCard-RightSide">
@@ -92,6 +90,12 @@
            </div>
     </div>
 
+    <div id="assignedUsers">
+        <ul id = "assignedUsersList">
+            <li id = "user" onclick = "randomizeAssignedUsersColour(this.id, 0, 255)">A</li>
+        </ul>
+    </div>
+
     <div id = "visEstimateTracker">
         <div id = "visEstimateTracker-graph">
             <canvas id = "myChart"></canvas>
@@ -101,15 +105,15 @@
 
     <div th:if="${authority == 2 || authority == 4}" id="popupChangeTBName">
         <form id = changeTBNameForm>
-        <i class = "fa fa-pencil" style="margin-right:10px;" title="Name des Taskboards ändern"></i><label style = "color: #d1d1d1; border-bottom: 2px solid #d1d1d1; display: inline">Ändere den Namen des Task-Boards</label>
+        <i class = "fa fa-pencil" style="margin-right:10px;" title="Name des Task-Boards ändern"></i><label style = "color: #d1d1d1; border-bottom: 2px solid #d1d1d1; display: inline">Ändere den Namen des Task-Boards</label>
         <input form = "changeTBNameForm" id = "changeTBNameInput" th:value="${Board.getName()}">
-        <button type="button" th:tbID="${Board.getID()}" th:sID="${sessionID}" id = "changeTBNameBtn" title="Name des Taskboards ändern" onclick="changeTBName(this.getAttribute('sID'), this.getAttribute('tbID')); closePopup()" >Ändern</button>
+        <button type="button" th:tbID="${Board.getID()}" th:sID="${sessionID}" id = "changeTBNameBtn" title="Name des Task-Boards ändern" onclick="changeTBName(this.getAttribute('sID'), this.getAttribute('tbID')); closePopup()" >Ändern</button>
         </form>
     </div>
 
     <div th:if="${authority == 2 || authority == 4}" id="popupCreateTB">
         <form id = createTBForm>
-            <i class = "fa fa-plus" style="margin-right:10px;" title="Name des Taskboards ändern"></i><label style = "color: #d1d1d1; border-bottom: 2px solid #d1d1d1; display: inline; width:100%" > Name des Taskboards </label>
+            <i class = "fa fa-plus" style="margin-right:10px;" title="Name des Task-Boards ändern"></i><label style = "color: #d1d1d1; border-bottom: 2px solid #d1d1d1; display: inline; width:100%" > Name des Task-Boards </label>
             <input form = "changeTBNameForm" id = "createTBNameInput">
             <button type="button" th:sID="${sessionID}" id = "createTBNameBtn" onclick="addTaskBoard(this.getAttribute('sID')); closePopup()" >Erstellen</button>
         </form>
@@ -118,24 +122,42 @@
 
     <div th:if="${authority == 2 || authority == 4}" id = "popupTaskFertig">
         <form id = taskFertigForm>
-            <i class = "fa fa-clock" style="margin-right:10px;" title="Name des Taskboards ändern"></i> <label style = "color: #d1d1d1; border-bottom: 2px solid #d1d1d1;display: inline; width:100%" > Gebe die Bearbeitungszeit der Task an</label>
-            <input type = "number" min="0" max="1000" step="0.5" form = "taskFertigForm" id = "taskFertigInput" placeholder="Deine Bearbeitungszeit">
+            <i class = "fa fa-clock" style="margin-right:10px;" title="Name des Task-Boards ändern"></i> <label style = "color: #d1d1d1; border-bottom: 2px solid #d1d1d1;display: inline; width:100%" > Gebe die Bearbeitungszeit der Task an</label>
+            <input type = "number" min="0" max="1000" step="0.25" form = "taskFertigForm" id = "taskFertigInput" placeholder="Deine Bearbeitungszeit">
             <input type="hidden" id="taskID">
-            <button type="button" th:sID="${sessionID}"  id = "taskFertigBtn" onclick="setTaskTime(this.getAttribute('sID')); closePopup()" >Bestätigen</button>
+            <button type="button" th:sID="${sessionID}"  id = "taskFertigBtn" onclick="setTime(this, this.getAttribute('sID'));" >Bestätigen</button>
+        </form>
+    </div>
+
+    <div th:if="${authority == 2 || authority == 4}" id = "popupTBDelete">
+        <form id = "tBDeleteForm" style = "height: auto; width:50%">
+            <i class = "fa fa-exclamation-triangle" style="margin-right:10px;" title="Task-Board löschen"></i> <label style = "color: #d1d1d1; border-bottom: 2px solid #d1d1d1;display: inline; width:100%" >Task-Board löschen</label>
+            <label style = "margin-top:10px; color:white">Achtung! Sie sind grade dabei Ihr Task-Board endgültig zu löschen. Dabei gehen alle Daten des ausgewählten Task-Boards verloren. Fortfahren?</label>
+            <button type="button" th:sID="${sessionID}"  id = "tbDeleteBtn" class = "inline">Löschen</button>
+            <button type="button" th:sID="${sessionID}"  id = "tbNotDeleteBtn" class = "inline" style = "float:right">Behalten</button>
         </form>
     </div>
 
     <input type="hidden" id="sessionID" th:value="${sessionID}">
-        <script src="/js/vendor/jquery.js"></script>
-        <script src="/js/vendor/what-input.js"></script>
-        <script src="/js/vendor/foundation.js"></script>
-        <script src="/js/app.js"></script>
-        <script src="/js/communication.js"></script>
-        <script type = "text/javascript" src="/js/setup.js"></script>
-        <script type = "text/javascript" src="/js/taskBoard.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script type="module" src="/js/myChart.js"></script>
-        <script src="/js/myChart.js"></script>
-    </body>
+
+    <script src="/js/vendor/jquery.js"></script>
+    <script src="/js/vendor/what-input.js"></script>
+    <script src="/js/vendor/foundation.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/communication.js"></script>
+    <script type = "text/javascript" src="/js/setup.js"></script>
+    <script type = "text/javascript" src="/js/taskBoard.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="/js/myChart.js"></script>
+    <script src="/js/myChart.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+    <script src="/js/webSockets/websocket.js"></script>
+    <script src="/js/webSockets/WS_TB.js"></script>
+    <script type="application/javascript">
+        window.onbeforeunload = disconnect();
+        window.onload = connect();
+    </script>
+</body>
 </html>

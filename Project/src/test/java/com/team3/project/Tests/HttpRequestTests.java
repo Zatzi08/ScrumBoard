@@ -7,6 +7,7 @@ import com.team3.project.DAO.DAOTask;
 import com.team3.project.DAO.DAOTaskBoard;
 import com.team3.project.DAO.DAOUserStory;
 import com.team3.project.DAOService.*;
+import com.team3.project.Facede.PresentationToLogic;
 import com.team3.project.Tests.BaseClassesForTests.BaseHTTPTest;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -1807,7 +1808,7 @@ public class HttpRequestTests extends BaseHTTPTest {
 
         try {
             assertThat(this.restTemplate.exchange("http://localhost:" + port + url + "?ID=" + 9999, method, message, String.class).getStatusCode())
-                    .isEqualTo(HttpStatus.OK);
+                    .isEqualTo(HttpStatus.CONFLICT);
         } catch (AssertionError e){
             printWriterAddFailure("Akzeptiert Request nicht - invalid USID");
             throw new AssertionError(e);

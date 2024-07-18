@@ -2759,4 +2759,1122 @@ Fail: wrong Authorization
 pass: falseLogik-Test-editTaskWithPriority
 Test ID: Logic.T23
 Date: 09/06/24 13:08:48
+pass = trueBack-End-Tests:
+
+Logik-Test-createUserStory
+Test ID: Logic.T1
+Date: 21/06/24 11:23:31
+pass: trueBack-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 21/06/24 11:46:43
+pass: trueBack-End-Tests:
+
+Logik-Test-createProfile
+Test ID: Logic.T3
+Date: 21/06/24 11:50:48
+pass: trueBack-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 21/06/24 11:55:04
+pass = trueBack-End-Tests:
+
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 21/06/24 11:57:52
+pass = true
+Back-End-Tests:
+
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 21/06/24 12:09:20
+pass = true
+Back-End-Tests:
+
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 21/06/24 12:18:04
+pass = true
+Back-End-Tests:
+
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 21/06/24 12:31:05
+pass = true
+Back-End-Tests:
+
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 21/06/24 12:37:49
+Back-End-Tests:
+
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 21/06/24 12:38:35
+Back-End-Tests:
+
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 21/06/24 12:39:31
+pass = true
+Back-End-Tests:
+
+Logik-Test-register
+Test ID: Logic.T9
+Date: 21/06/24 13:23:05
+pass = trueBack-End-Tests:
+
+Logik-Test-login
+Test ID: Logic.T10
+Date: 21/06/24 13:25:20
+pass = trueBack-End-Tests:
+
+Logik-Test-authority
+Test ID: Logic.T11
+Date: 21/06/24 13:32:32
+pass = trueBack-End-Tests:
+
+Logik-Test-changeAuthority
+Test ID: Logic.T12
+Date: 21/06/24 13:33:01
+Fail: Authority was not changed
+Back-End-Tests:
+
+Logik-Test-changeAuthority
+Test ID: Logic.T12
+Date: 21/06/24 13:38:51
+pass = true
+Back-End-Tests:
+
+Logik-Test-changeAuthority
+Test ID: Logic.T12
+Date: 21/06/24 13:43:11
+pass = true
+Back-End-Tests:
+
+Logik-Test-getAllProfiles
+Test ID: Logic.T18
+Date: 21/06/24 13:50:43
+pass = trueBack-End-Tests:
+
+Logik-Test-addDoneToTask
+Test ID: Logic.T19
+Date: 21/06/24 13:52:52
+Back-End-Tests:
+
+Logik-Test-TaskWithUsers
+Test ID: Logic.T19
+Date: 21/06/24 14:04:22
+Back-End-Tests:
+
+Logik-Test-TaskWithUsers
+Test ID: Logic.T19
+Date: 21/06/24 14:07:20
+pass = trueBack-End-Tests:
+
+Logik-Test-TaskWithUsers
+Test ID: Logic.T19
+Date: 21/06/24 14:07:54
+pass = trueBack-End-Tests:
+
+Logik-Test-deleteVisualRole
+Test ID: Logic.T16
+Date: 21/06/24 14:09:45
+Fail: visual Role was not deleted 
+Logik-Test-changeVisualRoleName
+Test ID: Logic.T15
+Date: 21/06/24 14:09:45
+Fail: visual Role Name was not changed
+pass = falseLogik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 21/06/24 14:09:45
+pass = trueLogik-Test-createTaskWithdueDate
+Test ID: Logic.T24
+Date: 21/06/24 14:09:45
+Fail: null Date not converted to empty String
+Fail: Date wrong/wrong formatted
+pass = falseLogik-Test-getAllProfiles
+Test ID: Logic.T18
+Date: 21/06/24 14:09:45
+pass = trueLogik-Test-editTaskWithDueDate
+Test ID: Logic.T25
+Date: 21/06/24 14:09:45
+pass = trueLogik-Test-editTaskBoardIDInTask
+Test ID: Logic.T20
+Date: 21/06/24 14:09:45
+Fail: wrong Exception-Hanlding
+pass = trueLogik-Test-createUserStory
+Test ID: Logic.T1
+Date: 21/06/24 14:09:45
+pass: trueLogik-Test-showVisualRole
+Test ID: Logic.T13
+Date: 21/06/24 14:09:45
+Logik-Test-register
+Test ID: Logic.T9
+Date: 21/06/24 14:09:45
+pass = trueLogik-Test-TaskWithUsers
+Test ID: Logic.T19
+Date: 21/06/24 14:09:45
+pass = trueLogik-Test-login
+Test ID: Logic.T10
+Date: 21/06/24 14:09:45
+pass = trueLogik-Test-changeVisualRole
+Test ID: Logic.T17
+Date: 21/06/24 14:09:45
+Fail: visual Role was not attributed to User
+Logik-Test-createTaskWithEstimate
+Test ID: Logic.T24
+Date: 21/06/24 14:09:45
+pass = trueLogik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 21/06/24 14:09:45
+pass = true
+Logik-Test-changeAuthority
+Test ID: Logic.T12
+Date: 21/06/24 14:09:45
+pass = true
+Logik-Test-editTaskWithEstimate
+Test ID: Logic.T25
+Date: 21/06/24 14:09:45
+pass = trueLogik-Test-createTask
+Test ID: Logic.T6
+Date: 21/06/24 14:09:45
+pass = true
+Logik-Test-authority
+Test ID: Logic.T11
+Date: 21/06/24 14:09:45
+pass = trueLogik-Test-createVisualRole
+Test ID: Logic.T14
+Date: 21/06/24 14:09:45
+Fail: visual Role was not created
+Logik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 21/06/24 14:09:45
+pass: trueLogik-Test-editTask
+Test ID: Logic.T7
+Date: 21/06/24 14:09:45
+pass = true
+Logik-Test-createTaskWithTaskBoardID
+Test ID: Logic.T21
+Date: 21/06/24 14:09:45
+pass = trueLogik-Test-deleteTask
+Test ID: Logic.T8
+Date: 21/06/24 14:09:45
+pass = true
+Logik-Test-createTaskWithPriority
+Test ID: Logic.T22
+Date: 21/06/24 14:09:45
+pass = trueLogik-Test-createProfile
+Test ID: Logic.T3
+Date: 21/06/24 14:09:45
+Fail: wrong Authorization
+Fail: wrong Authorization
+pass: falseLogik-Test-editTaskWithPriority
+Test ID: Logic.T23
+Date: 21/06/24 14:09:45
+pass = trueBack-End-Tests:
+
+Logik-Test-editTaskBoardIDInTask
+Test ID: Logic.T20
+Date: 21/06/24 14:19:19
+Fail: wrong Exception-Hanlding
+pass = trueBack-End-Tests:
+
+Logik-Test-createTaskWithTaskBoardID
+Test ID: Logic.T21
+Date: 21/06/24 14:23:00
+pass = trueBack-End-Tests:
+
+Logik-Test-createTaskWithPriority
+Test ID: Logic.T22
+Date: 21/06/24 14:29:34
+pass = trueBack-End-Tests:
+
+Logik-Test-editTaskWithPriority
+Test ID: Logic.T23
+Date: 21/06/24 14:33:25
+pass = trueBack-End-Tests:
+
+Logik-Test-createTaskWithEstimate
+Test ID: Logic.T24
+Date: 21/06/24 14:37:12
+pass = trueBack-End-Tests:
+
+Logik-Test-editTaskWithEstimate
+Test ID: Logic.T25
+Date: 21/06/24 14:37:22
+pass = trueBack-End-Tests:
+
+Logik-Test-createTaskWithdueDate
+Test ID: Logic.T24
+Date: 21/06/24 14:39:40
+pass = trueBack-End-Tests:
+
+Logik-Test-editTaskWithDueDate
+Test ID: Logic.T25
+Date: 21/06/24 14:41:36
+pass = trueBack-End-Tests:
+
+Logik-Test-editTaskWithRealTime
+Test ID: Logic.T28
+Date: 21/06/24 15:16:17
+Fail: Task-Realtime was not changed
+Back-End-Tests:
+
+Logik-Test-editTaskWithRealTime
+Test ID: Logic.T28
+Date: 21/06/24 15:17:04
+pass = trueBack-End-Tests:
+
+Logik-Test-editTaskWithRealTime
+Test ID: Logic.T28
+Date: 21/06/24 15:18:59
+pass = trueBack-End-Tests:
+
+Logik-Test-register
+Test ID: Logic.T9
+Date: 24/06/24 11:19:11
+pass = trueBack-End-Tests:
+
+Fail: existent user could not login
+Back-End-Tests:
+
+Fail: wrong Exception-Handling
+Back-End-Tests:
+
+Logik-Test-authority
+Test ID: Logic.T11
+Date: 25/06/24 13:00:22
+Back-End-Tests:
+
+Logik-Test-authority
+Test ID: Logic.T11
+Date: 25/06/24 13:02:06
+Back-End-Tests:
+
+Back-End-Tests:
+
+Back-End-Tests:
+
+Back-End-Tests:
+
+Back-End-Tests:
+
+Back-End-Tests:
+
+Logik-Test-saveUserStory
+Test ID: Logic.T1
+Date: 25/06/24 14:22:28
+Back-End-Tests:
+
+Logik-Test-saveUserStory
+Test ID: Logic.T1
+Date: 25/06/24 14:24:19
+Back-End-Tests:
+
+Logik-Test-saveUserStory
+Test ID: Logic.T1
+Date: 25/06/24 14:24:33
+Back-End-Tests:
+
+Logik-Test-saveUserStory
+Test ID: Logic.T1
+Date: 25/06/24 14:24:45
+Back-End-Tests:
+
+Logik-Test-saveUserStory
+Test ID: Logic.T1
+Date: 25/06/24 14:26:05
+Back-End-Tests:
+
+Logik-Test-saveUserStory
+Test ID: Logic.T1
+Date: 25/06/24 14:26:54
+Back-End-Tests:
+
+Logik-Test-saveUserStory
+Test ID: Logic.T1
+Date: 25/06/24 14:27:14
+Back-End-Tests:
+
+Logik-Test-saveUserStory
+Test ID: Logic.T1
+Date: 25/06/24 14:27:49
+Back-End-Tests:
+
+Logik-Test-saveUserStory
+Test ID: Logic.T1
+Date: 25/06/24 14:29:25
+Back-End-Tests:
+
+Logik-Test-saveUserStory
+Test ID: Logic.T1
+Date: 25/06/24 14:29:46
+Back-End-Tests:
+
+Logik-Test-saveUserStory
+Test ID: Logic.T1
+Date: 25/06/24 14:33:18
+Back-End-Tests:
+
+Logik-Test-saveUserStory
+Test ID: Logic.T1
+Date: 25/06/24 14:36:16
+Back-End-Tests:
+
+Logik-Test-saveUserStory
+Test ID: Logic.T1
+Date: 25/06/24 14:39:44
+Back-End-Tests:
+
+Logik-Test-saveUserStory
+Test ID: Logic.T1
+Date: 25/06/24 14:41:23
+pass: trueBack-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 25/06/24 14:47:08
+Fail: UserStory not updated
+Back-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 25/06/24 14:49:56
+Fail: UserStory not updated
+Back-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 25/06/24 14:51:24
+Fail: UserStory not updated
+Back-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 25/06/24 14:52:54
+pass: trueBack-End-Tests:
+
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 25/06/24 15:17:23
+pass = true
+Back-End-Tests:
+
+Logik-Test-addNewUserStory
+Test ID: Logic.T1
+Date: 25/06/24 15:17:38
+pass: trueLogik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 25/06/24 15:17:38
+pass: trueLogik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 25/06/24 15:17:38
+pass = true
+Back-End-Tests:
+
+Logik-Test-login
+Test ID: Logic.T10
+Date: 25/06/24 15:17:53
+Fail: wrong Exception-Handling
+Logik-Test-register
+Test ID: Logic.T9
+Date: 25/06/24 15:17:53
+pass = trueLogik-Test-authority
+Test ID: Logic.T11
+Date: 25/06/24 15:17:53
+Back-End-Tests:
+
+Logik-Test-addNewUserStory
+Test ID: Logic.T1
+Date: 26/06/24 09:27:10
+pass: trueBack-End-Tests:
+
+Logik-Test-addNewUserStory
+Test ID: Logic.T1
+Date: 28/06/24 12:05:22
+pass: trueLogik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 28/06/24 12:05:22
+pass: trueLogik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 28/06/24 12:05:22
+pass = true
+Back-End-Tests:
+
+Logik-Test-addNewUserStory
+Test ID: Logic.T1
+Date: 28/06/24 12:08:52
+Logik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 28/06/24 12:08:52
+Logik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 28/06/24 12:08:52
+Back-End-Tests:
+
+Logik-Test-addNewUserStory
+Test ID: Logic.T1
+Date: 28/06/24 12:09:41
+pass: trueLogik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 28/06/24 12:09:41
+pass: trueLogik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 28/06/24 12:09:41
+pass = true
+Back-End-Tests:
+
+Logik-Test-createTask
+Test ID: Logic.T6
+Date: 28/06/24 12:19:34
+pass = true
+Back-End-Tests:
+
+Logik-Test-createTaskWithTaskBoardID
+Test ID: Logic.T21
+Date: 28/06/24 13:12:45
+pass = trueBack-End-Tests:
+
+Logik-Test-editTaskBoardIDInTask
+Test ID: Logic.T20
+Date: 28/06/24 13:36:27
+Back-End-Tests:
+
+Logik-Test-editTaskBoardIDInTask
+Test ID: Logic.T20
+Date: 28/06/24 13:49:33
+pass = trueBack-End-Tests:
+
+Logik-Test-editTaskWithRealTime
+Test ID: Logic.T28
+Date: 01/07/24 13:51:30
+pass = trueLogik-Test-createTaskWithdueDate
+Test ID: Logic.T24
+Date: 01/07/24 13:51:30
+pass = trueLogik-Test-editTaskWithDueDate
+Test ID: Logic.T25
+Date: 01/07/24 13:51:30
+pass = trueLogik-Test-TaskWithUsers
+Test ID: Logic.T19
+Date: 01/07/24 13:51:30
+pass = trueLogik-Test-createTaskWithEstimate
+Test ID: Logic.T24
+Date: 01/07/24 13:51:30
+pass = trueLogik-Test-editTaskWithEstimate
+Test ID: Logic.T25
+Date: 01/07/24 13:51:30
+pass = trueLogik-Test-createTask
+Test ID: Logic.T6
+Date: 01/07/24 13:51:30
+pass = true
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 01/07/24 13:51:30
+pass = true
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 01/07/24 13:51:30
+pass = true
+Logik-Test-createTaskWithPriority
+Test ID: Logic.T22
+Date: 01/07/24 13:51:30
+pass = trueLogik-Test-editTaskWithPriority
+Test ID: Logic.T23
+Date: 01/07/24 13:51:30
+pass = trueBack-End-Tests:
+
+Logik-Test-addNewUserStory
+Test ID: Logic.T1
+Date: 01/07/24 13:52:03
+pass: trueLogik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 01/07/24 13:52:03
+pass: trueLogik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 01/07/24 13:52:03
+pass = true
+Back-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 01/07/24 13:52:23
+pass = trueLogik-Test-getAllProfiles
+Test ID: Logic.T18
+Date: 01/07/24 13:52:23
+pass = trueLogik-Test-createProfile
+Test ID: Logic.T3
+Date: 01/07/24 13:52:23
+pass: trueBack-End-Tests:
+
+Logik-Test-editTaskBoardIDInTask
+Test ID: Logic.T20
+Date: 01/07/24 13:52:39
+pass = trueLogik-Test-createTaskWithTaskBoardID
+Test ID: Logic.T21
+Date: 01/07/24 13:52:39
+pass = trueBack-End-Tests:
+
+Logik-Test-login
+Test ID: Logic.T10
+Date: 01/07/24 13:53:41
+Fail: wrong Exception-Handling
+Logik-Test-register
+Test ID: Logic.T9
+Date: 01/07/24 13:53:41
+pass = trueLogik-Test-authority
+Test ID: Logic.T11
+Date: 01/07/24 13:53:41
+Back-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 05/07/24 12:38:19
+Logik-Test-getAllProfiles
+Test ID: Logic.T18
+Date: 05/07/24 12:38:19
+pass = trueLogik-Test-createProfile
+Test ID: Logic.T3
+Date: 05/07/24 12:38:19
+Back-End-Tests:
+
+Logik-Test-login
+Test ID: Logic.T10
+Date: 05/07/24 12:38:22
+Fail: wrong Exception-Handling
+Logik-Test-register
+Test ID: Logic.T9
+Date: 05/07/24 12:38:22
+pass = trueLogik-Test-authority
+Test ID: Logic.T11
+Date: 05/07/24 12:38:22
+Back-End-Tests:
+
+Logik-Test-editTaskBoardIDInTask
+Test ID: Logic.T20
+Date: 05/07/24 12:38:23
+pass = trueLogik-Test-createTaskWithTaskBoardID
+Test ID: Logic.T21
+Date: 05/07/24 12:38:23
+pass = trueBack-End-Tests:
+
+Logik-Test-deleteVisualRole
+Test ID: Logic.T16
+Date: 05/07/24 12:38:24
+pass = trueLogik-Test-changeVisualRoleName
+Test ID: Logic.T15
+Date: 05/07/24 12:38:24
+pass = trueLogik-Test-getAllVisualRolesByRole
+Test ID: Logic.T16
+Date: 05/07/24 12:38:24
+pass = trueLogik-Test-createVisualRole
+Test ID: Logic.T14
+Date: 05/07/24 12:38:24
+pass = trueLogik-Test-addVisualRole
+Test ID: Logic.T16
+Date: 05/07/24 12:38:24
+Logik-Test-getAllVisualRoles
+Test ID: Logic.T13
+Date: 05/07/24 12:38:24
+pass = trueBack-End-Tests:
+
+Logik-Test-addNewUserStory
+Test ID: Logic.T1
+Date: 05/07/24 12:38:25
+pass: trueLogik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 05/07/24 12:38:25
+pass: trueLogik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 05/07/24 12:38:25
+pass = true
+Back-End-Tests:
+
+Logik-Test-editTaskWithRealTime
+Test ID: Logic.T28
+Date: 05/07/24 12:38:25
+pass = trueLogik-Test-createTaskWithdueDate
+Test ID: Logic.T24
+Date: 05/07/24 12:38:25
+pass = trueLogik-Test-editTaskWithDueDate
+Test ID: Logic.T25
+Date: 05/07/24 12:38:25
+pass = trueLogik-Test-TaskWithUsers
+Test ID: Logic.T19
+Date: 05/07/24 12:38:25
+pass = trueLogik-Test-createTaskWithEstimate
+Test ID: Logic.T24
+Date: 05/07/24 12:38:25
+pass = trueLogik-Test-editTaskWithEstimate
+Test ID: Logic.T25
+Date: 05/07/24 12:38:25
+pass = trueLogik-Test-createTask
+Test ID: Logic.T6
+Date: 05/07/24 12:38:25
+pass = true
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 05/07/24 12:38:25
+pass = true
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 05/07/24 12:38:25
+pass = true
+Logik-Test-createTaskWithPriority
+Test ID: Logic.T22
+Date: 05/07/24 12:38:25
+pass = trueLogik-Test-editTaskWithPriority
+Test ID: Logic.T23
+Date: 05/07/24 12:38:25
+pass = trueBack-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 05/07/24 12:45:26
+Back-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 05/07/24 12:46:27
+Back-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 05/07/24 12:47:26
+Back-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 05/07/24 12:49:13
+Back-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 05/07/24 12:55:57
+pass = trueBack-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 05/07/24 12:57:25
+pass = trueLogik-Test-getAllProfiles
+Test ID: Logic.T18
+Date: 05/07/24 12:57:25
+pass = trueLogik-Test-createProfile
+Test ID: Logic.T3
+Date: 05/07/24 12:57:25
+pass: trueBack-End-Tests:
+
+Logik-Test-addVisualRole
+Test ID: Logic.T16
+Date: 05/07/24 13:01:41
+Back-End-Tests:
+
+Logik-Test-addVisualRole
+Test ID: Logic.T16
+Date: 05/07/24 13:04:46
+Back-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.T4
+Date: 05/07/24 13:14:50
+pass = trueLogik-Test-getAllProfiles
+Test ID: Logic.T18
+Date: 05/07/24 13:14:50
+pass = trueLogik-Test-createProfile
+Test ID: Logic.T3
+Date: 05/07/24 13:14:50
+pass: trueBack-End-Tests:
+
+Logik-Test-login
+Test ID: Logic.T10
+Date: 05/07/24 13:14:53
+Fail: wrong Exception-Handling
+Logik-Test-register
+Test ID: Logic.T9
+Date: 05/07/24 13:14:53
+pass = trueLogik-Test-authority
+Test ID: Logic.T11
+Date: 05/07/24 13:14:53
+Back-End-Tests:
+
+Logik-Test-editTaskBoardIDInTask
+Test ID: Logic.T20
+Date: 05/07/24 13:14:53
+pass = trueLogik-Test-createTaskWithTaskBoardID
+Test ID: Logic.T21
+Date: 05/07/24 13:14:53
+pass = trueBack-End-Tests:
+
+Logik-Test-deleteVisualRole
+Test ID: Logic.T16
+Date: 05/07/24 13:14:54
+pass = trueLogik-Test-changeVisualRoleName
+Test ID: Logic.T15
+Date: 05/07/24 13:14:54
+pass = trueLogik-Test-getAllVisualRolesByRole
+Test ID: Logic.T16
+Date: 05/07/24 13:14:54
+pass = trueLogik-Test-createVisualRole
+Test ID: Logic.T14
+Date: 05/07/24 13:14:54
+pass = trueLogik-Test-getAllVisualRoles
+Test ID: Logic.T13
+Date: 05/07/24 13:14:54
+pass = trueBack-End-Tests:
+
+Logik-Test-addNewUserStory
+Test ID: Logic.T1
+Date: 05/07/24 13:14:55
+pass: trueLogik-Test-updateUserStory
+Test ID: Logic.T2
+Date: 05/07/24 13:14:55
+pass: trueLogik-Test-deleteUserStory
+Test ID: Logic.T5
+Date: 05/07/24 13:14:55
+pass = true
+Back-End-Tests:
+
+Logik-Test-editTaskWithRealTime
+Test ID: Logic.T28
+Date: 05/07/24 13:14:55
+pass = trueLogik-Test-createTaskWithdueDate
+Test ID: Logic.T24
+Date: 05/07/24 13:14:55
+pass = trueLogik-Test-editTaskWithDueDate
+Test ID: Logic.T25
+Date: 05/07/24 13:14:55
+pass = trueLogik-Test-TaskWithUsers
+Test ID: Logic.T19
+Date: 05/07/24 13:14:55
+pass = trueLogik-Test-createTaskWithEstimate
+Test ID: Logic.T24
+Date: 05/07/24 13:14:55
+pass = trueLogik-Test-editTaskWithEstimate
+Test ID: Logic.T25
+Date: 05/07/24 13:14:55
+pass = trueLogik-Test-createTask
+Test ID: Logic.T6
+Date: 05/07/24 13:14:55
+pass = true
+Logik-Test-editTask
+Test ID: Logic.T7
+Date: 05/07/24 13:14:55
+pass = true
+Logik-Test-deleteTask
+Test ID: Logic.T8
+Date: 05/07/24 13:14:55
+pass = true
+Logik-Test-createTaskWithPriority
+Test ID: Logic.T22
+Date: 05/07/24 13:14:55
+pass = trueLogik-Test-editTaskWithPriority
+Test ID: Logic.T23
+Date: 05/07/24 13:14:55
+pass = trueBack-End-Tests:
+
+Logik-Test-addVisualRole
+Test ID: Logic.T16
+Date: 05/07/24 13:06:31
+Back-End-Tests:
+
+Logik-Test-createTaskBoard
+Test ID: Logic.TaskBoard1
+Date: 05/07/24 13:42:59
+pass = trueBack-End-Tests:
+
+Logik-Test-createTaskWithTaskBoardID
+Test ID: Logic.TaskBoard2
+Date: 05/07/24 13:58:27
+pass = trueBack-End-Tests:
+
+Logik-Test-editTaskWithEstimate
+Test ID: Logic.Task8
+Date: 07/07/24 17:44:02
+pass = trueLogik-Test-taskWithUsers
+Test ID: Logic.Task4
+Date: 07/07/24 17:44:02
+pass = trueLogik-Test-editTaskWithRealTime
+Test ID: Logic.Task11
+Date: 07/07/24 17:44:02
+pass = trueLogik-Test-createTaskWithEstimate
+Test ID: Logic.Task7
+Date: 07/07/24 17:44:02
+pass = trueLogik-Test-editTaskWithDueDate
+Test ID: Logic.Task10
+Date: 07/07/24 17:44:02
+Logik-Test-editTask
+Test ID: Logic.Task2
+Date: 07/07/24 17:44:02
+pass = true
+Logik-Test-editTaskWithPriority
+Test ID: Logic.Task6
+Date: 07/07/24 17:44:02
+pass = trueLogik-Test-deleteTask
+Test ID: Logic.Task3
+Date: 07/07/24 17:44:02
+pass = true
+Logik-Test-createTaskWithPriority
+Test ID: Logic.Task5
+Date: 07/07/24 17:44:02
+pass = trueLogik-Test-createTask
+Test ID: Logic.Task1
+Date: 07/07/24 17:44:02
+Fail: created Task not found
+Logik-Test-createTaskWithdueDate
+Test ID: Logic.Task9
+Date: 07/07/24 17:44:02
+pass = trueBack-End-Tests:
+
+Logik-Test-editTaskWithEstimate
+Test ID: Logic.Task8
+Date: 07/07/24 17:48:05
+pass = trueLogik-Test-taskWithUsers
+Test ID: Logic.Task4
+Date: 07/07/24 17:48:05
+pass = trueLogik-Test-editTaskWithRealTime
+Test ID: Logic.Task11
+Date: 07/07/24 17:48:05
+pass = trueLogik-Test-createTaskWithEstimate
+Test ID: Logic.Task7
+Date: 07/07/24 17:48:05
+pass = trueLogik-Test-editTaskWithDueDate
+Test ID: Logic.Task10
+Date: 07/07/24 17:48:05
+pass = trueLogik-Test-editTask
+Test ID: Logic.Task2
+Date: 07/07/24 17:48:05
+pass = true
+Logik-Test-editTaskWithPriority
+Test ID: Logic.Task6
+Date: 07/07/24 17:48:05
+pass = trueLogik-Test-deleteTask
+Test ID: Logic.Task3
+Date: 07/07/24 17:48:05
+pass = true
+Logik-Test-createTaskWithPriority
+Test ID: Logic.Task5
+Date: 07/07/24 17:48:05
+pass = trueLogik-Test-createTask
+Test ID: Logic.Task1
+Date: 07/07/24 17:48:05
+Fail: created Task not found
+Logik-Test-createTaskWithdueDate
+Test ID: Logic.Task9
+Date: 07/07/24 17:48:05
+pass = trueBack-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.Profile2
+Date: 07/07/24 18:22:36
+pass = trueLogik-Test-createProfile
+Test ID: Logic.Profile1
+Date: 07/07/24 18:22:36
+pass: trueLogik-Test-getAllProfiles
+Test ID: Logic.Profile3
+Date: 07/07/24 18:22:36
+pass = trueBack-End-Tests:
+
+Logik-Test-login
+Test ID: Logic.User2
+Date: 07/07/24 18:22:38
+Fail: wrong Exception-Handling
+Logik-Test-setAuthority
+Test ID: Logic.User4
+Date: 07/07/24 18:22:38
+Logik-Test-register
+Test ID: Logic.User1
+Date: 07/07/24 18:22:38
+pass = trueLogik-Test-authority
+Test ID: Logic.User3
+Date: 07/07/24 18:22:38
+Back-End-Tests:
+
+Logik-Test-createTaskBoard
+Test ID: Logic.TaskBoard1
+Date: 07/07/24 18:22:36
+pass = trueLogik-Test-editTaskBoardIDInTask
+Test ID: Logic.TaskBoard3
+Date: 07/07/24 18:22:36
+pass = trueLogik-Test-createTaskWithTaskBoardID
+Test ID: Logic.TaskBoard2
+Date: 07/07/24 18:22:36
+pass = trueBack-End-Tests:
+
+Logik-Test-deleteVisualRole
+Test ID: Logic.VisualRole4
+Date: 07/07/24 18:22:37
+pass = trueLogik-Test-changeVisualRoleName
+Test ID: Logic.VisualRole3
+Date: 07/07/24 18:22:37
+pass = trueLogik-Test-getAllVisualRolesByRole
+Test ID: Logic.VisualRole5
+Date: 07/07/24 18:22:37
+pass = trueLogik-Test-createVisualRole
+Test ID: Logic.VisualRole1
+Date: 07/07/24 18:22:37
+pass = trueLogik-Test-getAllVisualRoles
+Test ID: Logic.VisualRole2
+Date: 07/07/24 18:22:37
+pass = trueBack-End-Tests:
+
+Logik-Test-addNewUserStory
+Test ID: Logic.UserStory1
+Date: 07/07/24 18:22:37
+pass: trueLogik-Test-updateUserStory
+Test ID: Logic.UserStory2
+Date: 07/07/24 18:22:37
+pass: trueLogik-Test-deleteUserStory
+Test ID: Logic.UserStory3
+Date: 07/07/24 18:22:37
+pass = true
+Back-End-Tests:
+
+Logik-Test-editTaskWithEstimate
+Test ID: Logic.Task8
+Date: 07/07/24 18:22:37
+pass = trueLogik-Test-taskWithUsers
+Test ID: Logic.Task4
+Date: 07/07/24 18:22:37
+pass = trueLogik-Test-editTaskWithRealTime
+Test ID: Logic.Task11
+Date: 07/07/24 18:22:37
+pass = trueLogik-Test-createTaskWithEstimate
+Test ID: Logic.Task7
+Date: 07/07/24 18:22:37
+pass = trueLogik-Test-editTaskWithDueDate
+Test ID: Logic.Task10
+Date: 07/07/24 18:22:37
+pass = trueLogik-Test-editTask
+Test ID: Logic.Task2
+Date: 07/07/24 18:22:37
+pass = true
+Logik-Test-editTaskWithPriority
+Test ID: Logic.Task6
+Date: 07/07/24 18:22:37
+pass = trueLogik-Test-deleteTask
+Test ID: Logic.Task3
+Date: 07/07/24 18:22:37
+pass = true
+Logik-Test-createTaskWithPriority
+Test ID: Logic.Task5
+Date: 07/07/24 18:22:37
+pass = trueLogik-Test-createTask
+Test ID: Logic.Task1
+Date: 07/07/24 18:22:37
+Fail: created Task not found
+Logik-Test-createTaskWithdueDate
+Test ID: Logic.Task9
+Date: 07/07/24 18:22:37
+pass = trueBack-End-Tests:
+
+Logik-Test-createTask
+Test ID: Logic.Task1
+Date: 07/07/24 18:23:56
+pass = true
+Back-End-Tests:
+
+Logik-Test-updateUserStory
+Test ID: Logic.Profile2
+Date: 07/07/24 18:24:09
+pass = trueLogik-Test-createProfile
+Test ID: Logic.Profile1
+Date: 07/07/24 18:24:09
+pass: trueLogik-Test-getAllProfiles
+Test ID: Logic.Profile3
+Date: 07/07/24 18:24:09
+pass = trueBack-End-Tests:
+
+Logik-Test-login
+Test ID: Logic.User2
+Date: 07/07/24 18:24:11
+Fail: wrong Exception-Handling
+Logik-Test-setAuthority
+Test ID: Logic.User4
+Date: 07/07/24 18:24:11
+Logik-Test-register
+Test ID: Logic.User1
+Date: 07/07/24 18:24:11
+pass = trueLogik-Test-authority
+Test ID: Logic.User3
+Date: 07/07/24 18:24:11
+Back-End-Tests:
+
+Logik-Test-createTaskBoard
+Test ID: Logic.TaskBoard1
+Date: 07/07/24 18:24:12
+pass = trueLogik-Test-editTaskBoardIDInTask
+Test ID: Logic.TaskBoard3
+Date: 07/07/24 18:24:12
+pass = trueLogik-Test-createTaskWithTaskBoardID
+Test ID: Logic.TaskBoard2
+Date: 07/07/24 18:24:12
+pass = trueBack-End-Tests:
+
+Logik-Test-deleteVisualRole
+Test ID: Logic.VisualRole4
+Date: 07/07/24 18:24:12
+pass = trueLogik-Test-changeVisualRoleName
+Test ID: Logic.VisualRole3
+Date: 07/07/24 18:24:12
+pass = trueLogik-Test-getAllVisualRolesByRole
+Test ID: Logic.VisualRole5
+Date: 07/07/24 18:24:12
+pass = trueLogik-Test-createVisualRole
+Test ID: Logic.VisualRole1
+Date: 07/07/24 18:24:12
+pass = trueLogik-Test-getAllVisualRoles
+Test ID: Logic.VisualRole2
+Date: 07/07/24 18:24:12
+pass = trueBack-End-Tests:
+
+Logik-Test-addNewUserStory
+Test ID: Logic.UserStory1
+Date: 07/07/24 18:24:13
+pass: trueLogik-Test-updateUserStory
+Test ID: Logic.UserStory2
+Date: 07/07/24 18:24:13
+pass: trueLogik-Test-deleteUserStory
+Test ID: Logic.UserStory3
+Date: 07/07/24 18:24:13
+pass = true
+Back-End-Tests:
+
+Logik-Test-editTaskWithEstimate
+Test ID: Logic.Task8
+Date: 07/07/24 18:24:13
+pass = trueLogik-Test-taskWithUsers
+Test ID: Logic.Task4
+Date: 07/07/24 18:24:13
+pass = trueLogik-Test-editTaskWithRealTime
+Test ID: Logic.Task11
+Date: 07/07/24 18:24:13
+pass = trueLogik-Test-createTaskWithEstimate
+Test ID: Logic.Task7
+Date: 07/07/24 18:24:13
+pass = trueLogik-Test-editTaskWithDueDate
+Test ID: Logic.Task10
+Date: 07/07/24 18:24:13
+pass = trueLogik-Test-editTask
+Test ID: Logic.Task2
+Date: 07/07/24 18:24:13
+pass = true
+Logik-Test-editTaskWithPriority
+Test ID: Logic.Task6
+Date: 07/07/24 18:24:13
+pass = trueLogik-Test-deleteTask
+Test ID: Logic.Task3
+Date: 07/07/24 18:24:13
+pass = true
+Logik-Test-createTaskWithPriority
+Test ID: Logic.Task5
+Date: 07/07/24 18:24:13
+pass = trueLogik-Test-createTask
+Test ID: Logic.Task1
+Date: 07/07/24 18:24:13
+pass = true
+Logik-Test-createTaskWithdueDate
+Test ID: Logic.Task9
+Date: 07/07/24 18:24:13
 pass = true
