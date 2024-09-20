@@ -1,0 +1,207 @@
+#profilContainer{
+    position: absolute;
+    margin: 2% 2% 2% 2%;
+    height: -webkit-fill-available;
+    width: 96%;
+    background-image: linear-gradient(to bottom right, #23262f, #26375d);
+    border-radius: 15px;
+    overflow-y: scroll;
+}
+
+#profilInhalt{
+    position: relative;
+    margin: 2%;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+    height: fit-content;
+}
+
+#profilName{
+    display: inline-block;
+    color: #f1b951;
+    width: 500px;
+    font-size: calc(2.8dvw + 2.8dvh);
+    font-family: "Lucida Console";
+}
+
+#profilInhalt button{
+    display: block;
+    position: absolute;
+    margin-left: 100%;
+    color: white;
+    font-size: calc(1dvw + 1dvh);
+
+}
+
+#profilInhalt button:hover{
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    color: #8a8a8a;
+    cursor:pointer;
+}
+
+.profilInhalt{
+    color:  #a8a398;;
+    font-family: Roboto;
+    font-size: calc(0.9dvw + 0.9dvh);
+    overflow-wrap: break-word;
+    text-align: justify;
+    hyphens: auto;
+}
+
+#rolleProfil p{
+    width:100%;
+    margin-right:2%;
+    border-bottom: 2px solid #58749d;
+    color: #26335d;
+}
+
+#profilEditMenü{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    top:0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.47);
+}
+#profilEditMenü span:hover{
+    cursor: pointer;
+    color: grey;
+}
+
+#profilForm{
+    width: 800px;
+    height: 564px;
+    background-color: rgb(40, 47, 59);
+    padding: 20px;
+    color: black;
+    border-radius: 15px;
+    top: 50dvh;
+    left: 50dvw;
+    transform: translate(-50%, -50%);
+    position: fixed;
+    overflow: auto;
+}
+
+.profilInput{
+    display: block;
+    width: 95%;
+    background-color: #203139;
+    color: #afafaf;
+    resize: none;
+    border-radius: 10px;
+    margin-left: 3%;
+}
+
+.profilInput:focus{
+    background: rgba(217, 220, 222, 0);
+}
+
+.labelProfil{
+    margin-top: 20px;
+    color: white;
+    font-family: "Arial";
+    font-size: 15px;
+    margin-left: 3.5%;
+    margin-bottom: 1%;
+}
+
+#profilEditBtn{
+    position: relative;
+    height: 35px;
+    width: auto;
+    margin-top: 20px;
+    margin-left: 45%;
+    background-color: #4b6294;
+    border-radius: 10px;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+}
+
+#profilEditBtn:hover{
+    cursor: pointer;
+    background-color: #26335d;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+#profilForm span{
+    display: block;
+    position: relative;
+    margin-left: 98%;
+
+    color:white;
+}
+
+.profileText{
+    font-size: calc(1.2dvw + 1.2dvh);
+    font-family: "Lucida Console";
+    color:#e1dbdb;
+    margin-top: 20px;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+}
+::-webkit-scrollbar-track {background-color: transparent;}
+::-webkit-scrollbar-thumb {
+    background-color: #627378;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {background-color: #a8bbbf;}
+
+::-webkit-scrollbar-corner {
+    background: rgba(0,0,0,0);
+}
+
+.roleDropdown {
+    display: inline-block;
+    /*display: inline-flex;*/
+    align-items: center;
+    justify-content: center;
+    right:0;
+    width: 95%;
+    height:50px;
+    margin-left:3%;
+}
+
+.setRolesBtn {
+    cursor: pointer;
+    background-color: #203139;
+    color: #afafaf;
+    border: grey solid 1px;
+    border-radius: 8px;
+    font-size: 12px;
+    box-shadow: white;
+    padding: .75rem 1rem;
+    height: 45px;
+    width: 100%;
+}
+
+.roles {
+    position: relative;
+    padding: 2px;
+    display: none;
+    border: 1px solid #ccc;
+    border-top: none;
+    background-color: #203139;
+    width: 100%;
+    height: 150px;
+    border-radius: 8px;
+    overflow: auto;
+}
+
+.roleDropdown.visible .roles {
+    display: block;
+}
+
+li {
+    list-style: none;
+}

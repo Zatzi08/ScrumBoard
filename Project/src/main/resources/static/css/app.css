@@ -1,0 +1,179 @@
+.loginBackground {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  background-image:repeating-linear-gradient(90deg, rgba(250, 249, 249, 0.1) 0px, rgba(250, 249, 249, 0.1) 1px, transparent 1px, transparent 104px), repeating-linear-gradient(0deg, rgba(250, 249, 249, 0.1) 0px, rgba(250, 249, 249, 0.1) 1px, transparent 1px, transparent 104px), repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0px, rgba(255, 255, 255, 0.06) 1px, transparent 1px, transparent 26px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0px, rgb(255 255 255 / 10%) 1px, transparent 1px, transparent 26px), linear-gradient(135deg, rgb(15 62 91), rgb(3 13 18));
+}
+
+#primaryContainer{
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  z-index: 15;
+  top: 48%;
+  left: 49%;
+  margin: -200px 0 0 -200px;
+  border-radius: 15px;
+  background-color: #061f2d;
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.secondaryContainer{
+  position: absolute;
+  width: 400px;
+  height: auto;
+  z-index: 15;
+  top: 50%;
+  left: 50%;
+  margin: -200px 0 0 -200px;
+  border-radius: 15px;
+  background-color: #092e43;
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#loginButton{
+  display: block;
+  position: relative;
+  background-color: #824D93;
+  width: 100px;
+  height: 40px;
+  border: none;
+  color: rgb(209, 205, 205);
+  font-size: 16px;
+  transition-duration: 0.4s;
+  box-shadow: -3px -3px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 15px;
+  margin-left: 140px;
+  margin-top: 11px;
+}
+
+#loginButton:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  background-color: #4c2456;
+  cursor: pointer;  
+}
+
+label{
+  color:white;
+}
+
+.Input{
+  margin-bottom: 7%;
+  margin-left: 37px;
+  width: 80%;
+  height: 50px;
+  padding: 10px;
+  border-radius: 15px;
+  color: white;
+  background-color: #0a213d;
+  box-shadow: inset -3px -3px 5px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Input:focus{
+  background: #0a213d;
+}
+
+#noAccount{
+  position: relative;
+  margin-left: 90px;
+  margin-top: 10%;
+  font-size: 15px;
+  color: white;
+}
+
+#yesAccount{
+  position: relative;
+  width: 400px;
+  margin-left: 30px;
+  bottom: 0;
+  margin-top: 34px;
+  color:white;
+}
+
+#forgotP{margin-left:65px;}
+a{color:#3c9b97;}
+
+#passwortResetBtn{
+  display: block;
+  position:relative;    
+  background-color: #824D93;;
+  width:100px;
+  height:40px;
+  border: none;
+  color: rgb(209, 205, 205);
+  font-size: 16px;
+  transition-duration: 0.4s;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  border-radius: 15px; 
+  margin-left:148px;
+  margin-top: 50px;
+}
+  
+#passwortResetBtn:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  background-color: #4c2456;
+  cursor: pointer;
+}
+
+#newPasswortBtn{
+  display: block;
+  position:relative;
+  background-color: #824D93;;
+  width:100px;
+  height:40px;
+  border: none;
+  color: rgb(209, 205, 205);
+  font-size: 16px;
+  transition-duration: 0.4s;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  border-radius: 15px;
+  margin-left:148px;
+  margin-top: 50px;
+}
+    
+#newPasswortBtn:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  background-color: #4c2456;
+  cursor: pointer;
+}
+
+#headerLogin{
+  padding: 10px;
+  font-size: large;
+  font-weight: bold;
+  color: #9a58af;
+  font-size:20px;
+}
+
+#emailGesendetPopup{
+  width: 200px;
+  margin:30px;
+  margin-left: 100px;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.57);
+  color: white;
+  text-align: center;
+  border-radius: 15px;
+  bottom: 50px;
+}
+
+#emailGesendetPopup.show{
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+#containerForm{
+  position: relative;
+  padding: 15px;
+  height: 350px;
+}
+
+#passwortForgot{
+  font-size: 13px;
+  position: relative;
+  top: -1px;
+  left: 10%;
+}

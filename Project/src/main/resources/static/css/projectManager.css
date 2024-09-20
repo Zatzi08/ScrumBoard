@@ -1,0 +1,816 @@
+.editMenu {
+    display: none;
+    position: fixed;
+    height: 330px;
+    background-color: rgb(46, 46, 61);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    overflow: auto;
+    z-index: 1000;
+    top: 50dvh;
+    left: 50dvw;
+    transform: translate(-50%, -50%);
+}
+
+.editMenu::-webkit-scrollbar{
+    display: block;
+}
+
+#editMenu-saveEditBtn {
+    border-radius: 10px;
+    width: 80px;
+    height: 19px;
+    background-color: #cccbcb;
+    font-size: 14px;
+    margin-left: 43%;
+    display: block;
+    margin-top: 3%;
+}
+
+#editMenu-saveEditBtn:hover{
+    background-color: #bdbdbd;
+    transition: right 0.5s ease;
+    cursor:pointer;
+}
+
+.inputEdit {
+    width: 100%;
+    border: 2px solid #6e7f91;
+    border-radius: 8px;
+    font-size: 12px;
+    transition: border-color 0.3s;
+    line-height: 1;
+    resize: vertical;
+    background-color: #283d48;
+    color: #afafaf;
+}
+
+.inputEdit:focus{
+    background: rgba(217, 220, 222, 0);
+}
+
+.inputEditPrio {
+    border-radius: .5rem;
+    box-shadow: white;
+    color: #111827;
+    padding: .75rem 1rem;
+    text-align: center;
+    font-size: 12px;
+    width: 56px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.inputEditPrio:hover {background-color: rgb(249,250,251);}
+
+.inputEditPrio:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.inputEditPrio:focus-visible {box-shadow: none;}
+.inputEditPrio.selected {border: 2px solid #ba55d3;}
+
+#inputDate {font-size: 12px; height: 30px; border-radius: 5px;}
+#inputTimeNeeded {font-size: 12px; height: 30px; border-radius: 5px;}
+
+.editMenu-content form label{color: white;}
+
+.closeToggleEdit {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+}
+.closeToggleEdit:hover{
+    color:grey;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    overflow-y: scroll;
+}
+
+.userStoryTaskTrenner{
+    display: inline-block;
+    margin-top: -5px;
+    margin-left: -8px;
+}
+
+.selectBtn{
+    display: inline;
+    color: #ffffff;
+    background-color: rgba(64, 59, 59, 0);
+    margin-right: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 14px;
+    height: 20px;
+}
+
+.selectBtn:hover{
+    color: #ba55d3;
+}
+
+#outerProjectManagerContainer{
+    position: relative;
+    display: flow-root;
+    background-color: rgba(13, 71, 115, 0.7);
+    color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 15px;
+    width: 96%;
+    font-size: 16px;
+    height: 115dvh;
+    margin: 2% 2% 2% 2%;
+}
+
+#innerProjectManagerContainer{
+    display: inline;
+    position: relative;
+    max-height: 550px;
+    background-color: rgba(13, 71, 115, 0);
+    color: #ffffff;
+    padding: 12px 16px;
+    border: none;
+    width: 190dvh;
+    font-size: 16px;
+    height: 95%;
+    border-radius: 10px;
+    margin: 2% 3% 1%;
+}
+
+.addUserStoryBtn{
+    display: inline;
+    width: 160px;
+    height: 20px;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    float: right;
+    padding: 1px;
+}
+
+.addUserStoryBtn:hover{
+    background-color: rgb(0, 0, 0);
+}
+#roleBtn:hover{
+    background-color: #0a0a0a;
+}
+
+#userTaskTableHead {
+    position: sticky;
+    top: 0;
+    background-color: #000000;
+    cursor: default;
+}
+
+.wrapper {
+    height: 100dvh;
+    overflow: auto;
+    cursor: default;
+}
+
+.userTaskTable {
+    position: relative;
+    width: 97%;
+    border-collapse: separate;
+    table-layout: auto;
+    font-size: 10pt;
+    border-spacing: 0 15px;
+    cursor: default;
+    margin: 1%;
+}
+
+#userTaskTableBody tbody{background-color:transparent;}
+
+.userTaskTable th,
+.userTaskTable td {
+    padding: 10px;
+    text-align: left;
+    width: 20%;
+    border: 0 solid #adadad;
+    border-radius: 10px;
+    cursor: default;
+}
+
+.userTaskTable th {
+    color: black;
+    white-space: nowrap;
+    max-width: 909px;
+    background-color: #eee8da;
+}
+
+.userTaskTable tbody tr {
+    transition: background-color 0.3s;
+}
+
+.userTaskTable tbody tr:hover{
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    color: black;
+    white-space: nowrap;
+}
+
+.userTaskTable tbody tr.dragging {
+    opacity: 0.5;
+}
+
+#A{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    text-align: center;
+    background-color: rgba(25,0,255,0.3);
+    color: white;
+    cursor: default
+}
+
+.userTaskTable tbody tr.drag-over {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.userTaskTable tbody tr.dragging td {
+    cursor: grabbing;
+}
+
+.userTaskTableContentSubdate{
+    position: relative;
+    color: #919297;
+    font-size: 12px;
+    float: right;
+}
+
+.userTaskTable-ContentStoryBoard{
+    display: inline;
+    font-size: 12px;
+    color: grey;
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+}
+::-webkit-scrollbar-track {background-color: transparent;}
+::-webkit-scrollbar-thumb {
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {background-color: #a8bbbf;}
+
+::-webkit-scrollbar-corner {
+    background: rgba(0,0,0,0);
+}
+
+hr {
+    border: 1px solid #bebebe;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#storyBtn {
+    background-color: rgba(255, 255, 255, 0.6);
+    color: #ffffff;
+    padding: 12px 16px;
+    margin-right:20px;
+    border: none;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    border-radius: 15px;
+    font-size: 14px;
+}
+
+#boardBtn {
+    display: inline-flex;
+    background-color: rgba(0, 116, 204, 0.6);
+    color: #ffffff;
+    padding: 12px 16px;
+    margin-right:20px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    border-radius: 15px;
+}
+
+.storyDropdown{
+    position: relative;
+}
+
+.storydropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    border-radius: 15px;
+    width: 100px;
+    overflow:auto;
+    font-size: 12px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.storydropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    border-bottom: 1px solid #403b3b;
+    display: block;
+}
+
+.storydropdown-content a:hover {background-color: #d9dcde;}
+
+.show {display:block;}
+
+.dropdownTask{
+    background-color: #283d48;
+    color: #afafaf;
+    border: 2px solid #6e7f91;
+    border-radius: 8px;
+    font-size: 12px;
+
+}
+
+.dropdownTask option{
+    background-color: #F9FBF2;
+    color:black;
+}
+
+.dropdownTask option:hover{
+    background-color: #D7E2EA;
+    color:black;
+}
+
+.dropdownTask:focus{
+    background-color: transparent;
+}
+
+#tableHeader{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    text-align: center;
+    background-color: rgba(25,0,255,0.3);
+    color: white;
+}
+
+#selectUser:hover{
+   color: #ba55d3;
+}
+
+#userTextDiv{
+    display: flex;
+}
+
+#userText{
+        display:inline-block;
+        position: relative;
+        font-size: 22px;
+        margin-right: 5px;
+        flex:50%;
+}
+
+#editRolesMenu{
+    width: 80vh;
+    display: inherit;
+    position: fixed;
+    z-index: 2;
+
+
+}
+
+#editRoleNameMenu{
+    display: inherit;
+    position: fixed;
+    background-color: rgb(46, 46, 61);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    overflow: auto;
+    top: 50dvh;
+    left: 50dvw;
+    transform: translate(-50%, -50%);
+}
+
+#roleNameInput{
+    position: relative;
+    background-color: #283d48;
+    width: 100%;
+    color: white;
+    border-radius: 8px;
+    margin-right: 50%;
+    margin-top: 5%;
+    border-style: solid;
+    padding: 6px;
+    font-size: 13px;
+}
+
+#roleNameBtn{
+    margin-top: 40px;
+    margin-left: 42%;
+    background-color: #7E7E9E;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 10px;
+}
+#rightsForRoles select{
+    border-radius: 8px;
+    margin-top: 15px;
+    background-color: #283d48;
+    color: lightgrey;
+    height: 30px;
+    user-select: none;
+    font-size: 13px;
+}
+#roleNameBtn:hover{
+    background-color: #606080;
+}
+
+#roleOverlay, #roleOverlay2{
+    display: block;
+    position: fixed;
+    z-index: 1;
+    top:0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.47);
+
+}
+
+.editRoles-content, .editRolesName-content{
+    display: inline-block;
+    overflow: hidden;
+    width:100%;
+    height:auto;
+}
+
+#editRolesBtn{
+    display: inline-block;
+    height: auto;
+    border-radius: 15px;
+    color: #E6AF2E;
+    margin-top:1px;
+    float:right;
+    margin-right:1px;
+}
+
+#editRolesBtn:hover{
+    color: #cb7e14;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.filterRolesDropdown {
+    display: inline-block;
+    width: auto;
+    height:25px;
+    font-size: 15px;
+    background-color: #4F4F69;
+    color: white;
+    border-radius: 8px;
+    float:left;
+    border-color:#1b2947;
+    margin-bottom:12px;
+}
+
+
+.roleTitle{
+    color: white;
+    border-bottom: 1px solid #ffffff;
+    margin-bottom: 20px;
+    display:inline-block;
+    width:100%
+}
+
+.visualRole{
+    display: block;
+    background-color: #0d1525;
+    border-radius: 8px;
+    width: 100%;
+    max-height: 25px;
+    font-size: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    color: white;
+    margin-top: 5px;
+    padding: 10px;
+    line-height: 0.5;
+}
+ul{list-style-type: none;}
+
+#editRoleBtn, #deleteRoleBtn{
+    position: relative;
+    margin-right: 2%;
+}
+.fa-edit:hover, .fa-solid:hover{
+    color: grey;
+    cursor:pointer;
+}
+
+#userRights{
+    float:right;
+    overflow: hidden;
+    width:auto;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.rightsDropdown{
+    width: fit-content;
+    height: 30px;
+    border-radius: 10px;
+    background-color: #7ab2cf;
+    color: black;
+    font-family: Roboto;
+    border: 1px solid black;
+    margin: 1%;
+    margin-right:3px;
+
+}
+
+.rightsDropdown hover{
+    background-color: #b2bbc4;
+    height: 30px;
+}
+
+.rightsDropdown:focus{background-color: #87939f;}
+
+.dropdown-check-list {
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    right: 0;
+    width: 25%;
+    height: 30px;
+    margin-left: 30%;
+}
+
+.anchor, .chooseRoleTaskBtn {
+    position: relative;
+    cursor: pointer;
+    display: inline-flex;
+    background-color: #283d48;
+    color: #afafaf;
+    border: 2px solid #6e7f91;
+    border-radius: 8px;
+    font-size: 12px;
+    box-shadow: white;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    width: 272px;
+    margin-left: -105%;
+    float: right;
+}
+
+.dropdown-check-list ul.items {
+    position: relative;
+    padding: 2px;
+    display: none;
+    border: 1px solid #ccc;
+    border-top: none;
+    z-index: 1;
+    background-color: #23353f;
+    width: 272px;
+    height: 150px;
+    border-radius: 8px;
+    margin-left: -100%;
+    float: right;
+    left: 2px;
+    overflow:auto;
+}
+
+.dropdown-check-list ul.items li, #chooseRoleTaskBtn ul.items li {list-style: none;}
+
+
+
+.dropdown-check-list.visible .items, #chooseRoleTaskBtn.visible .items {display: block;}
+
+#roleTaskDropdown{
+    width:100%;
+    height:auto;
+    margin-left:0;
+}
+
+
+#Hi{
+    border: solid #374c5e;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.buttonBox{
+    display:inline
+}
+
+#Btn1{
+    display: inline;
+    position: absolute;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 0px;
+    right: 31px;
+    margin-left: auto;
+}
+
+#Btn2{
+    display: inline-block;
+    position: relative;
+    font-size: 25px;
+    cursor: pointer;
+    float: right;
+    margin-top: -0.6dvh;
+}
+
+hr{
+    width: 100%;
+}
+
+#iContent1, #iContent2, #iContent3, #iContent4{
+    display: inline;
+    font-size: 13px;
+}
+
+.userTaskTableBody-Content {
+    display: block;
+    width: fit-content;
+    max-width: 98%;
+    height: auto;
+    white-space: break-spaces;
+    overflow-wrap: break-word;
+    text-align: justify;
+    font-size: 12px;
+    margin-left: 25px;
+    hyphens: auto;
+}
+
+.iContent-Label{
+    display: inline;
+    font-size: 15px;
+    font-family: system-ui;
+    margin-left: 12.1px;
+}
+
+.userTaskTableBody-Border{
+    border-bottom: #000 1px solid;
+    padding-top: 1em;
+}
+
+#visEstimateTracker{
+    width: 657px;
+    position: fixed;
+    height: 560px;
+    background-color: rgb(42, 39, 50, 0.8);
+    display: none;
+    z-index: 1000;
+    top: 50dvh;
+    left: 50dvw;
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
+}
+
+#visEstimateTracker-graph{
+    width: 100%;
+    height: 80%;
+    position: relative;
+    padding: 25px;
+}
+
+#percentageDifferenceText{
+    color: #c6c6c6;
+    position: relative;
+    padding: 14px;
+    font-family: system-ui;
+    margin-top: 2%;
+    text-align: center;
+    hyphens: auto;
+    font-size: 90%;
+}
+
+#visAllTasks{
+    float: right;
+}
+
+#userTaskTableBody-BottomAlignment{
+    display: block;
+    margin-top: 15px;
+}
+
+#userTaskTableBody-TaskDone{
+    position: relative;
+    border: dotted;
+    border-radius: 10px;
+    width: 20px;
+    color:#116A2A;
+    padding: 5px 5px 5px
+}
+
+#editMenu-priorityDropAlignment{
+    width: min-content;
+    display: inline-flex;
+}
+
+#filterDropdown{
+    height: 20px;
+    width: 110px;
+    float: right;
+    border-radius: 10px;
+    position: relative;
+    line-height: 1;
+    font-size: 13px;
+    background-color: palegoldenrod;
+    background-color: rgba(13, 93, 108, 0.7);
+    margin-right: 12px;
+    color: lightgrey;
+    border-color: black;
+}
+
+select{
+    margin: 0 0 0;
+    color:black;
+    background-color: white;
+}
+
+#userTaskTableHeadLabel{
+    width: auto;
+    color: white;
+    display: contents;
+}
+
+input[type="datetime-local"] {
+    color-scheme: dark;
+}
+
+#sucheInput{
+    display: inline;
+    border-radius: 10px;
+    height: 20px;
+    width: 110px;
+    font-size: 13px;
+    padding-right: 30px;
+    background-color: rgba(13, 93, 108, 0.7);
+    color: lemonchiffon;
+    border-color: black;
+}
+
+.search-container {
+    position: relative;
+    display: inline-block;
+    float: right;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}
+
+#clearButton {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: none;
+    color: white;
+}
+
+#sucheInput:not(:placeholder-shown) ~ #clearButton {
+    display: block;
+}
+
+#roleAlignment{
+    display: inline-block;
+    width: 100%;
+}
+
+#roleLabelAlign{
+    display: inline-block;
+}
+
+.visualRoleRight{
+    display: inline-flex;
+    float: right;
+    gap: 10px;
+    margin-top: -4px;
+    font-size: 12px;
+}
+
+.roleLabel{
+    display: inline;
+    color: white;
+    line-height: 0.4;
+    float: left;
+}

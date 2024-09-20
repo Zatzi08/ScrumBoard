@@ -1,0 +1,41 @@
+body {
+    background-color: #23262f;
+    color: #ffffff;
+    background-image:url("https://cdn.pixabay.com/photo/2023/10/10/12/36/lofi-8306352_1280.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.Reiter {
+    display: flex;
+    background-color: rgba(16, 22, 58, 0.6);
+    height: 30%;
+    width: 100%;
+}
+
+.reiterBtn {
+    display: inline-block;
+    position: relative;
+    color: #d9dcde;
+    background-color: transparent;
+    padding: 12px 10px;
+    transition: border-bottom-color 0.4s;
+    margin-right: 4%;
+    margin-top: 2%;
+    font-size: 105%;
+}
+
+.reiterBtn:hover {
+    border-bottom-color: #ba55d3;
+    color: #ba55d3;
+}
+
+#logoutBtn{
+    margin-left: auto;
+    margin-right: 0;
+    color:white;
+}
+#logoutBtn:hover{
+    color: #ba55d3;
+}
