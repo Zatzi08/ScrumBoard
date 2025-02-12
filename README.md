@@ -10,10 +10,7 @@
 </details>
 
 ## About the project
-is an extension of the [wumpus game](https://de.wikipedia.org/wiki/Wumpus-Welt) by a multi-agent environment approach with
-- communication between agents
-- different classes of agents with different focuses
-- A*-algorithm (heuristic: utility function coupled with the Manhatten distance) as the traversal algorithm through the map
+Scrum Board is a tool that helps visualize and manage work and is commonly used in software development
 
 ### Rough structural diagram
 <img src="media/wumpusStructure.png" width="500" height="350"/>
@@ -53,4 +50,4 @@ TODO: Add proper readme with explanations of the architecture, used tech stack, 
 [Mockito]: https://img.shields.io/badge/Mockito-5.11.0-blue?style=for-the-badge&logoColor=white
 [Mockito-url]: https://site.mockito.org/
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/Zatzi08/Wumpus/blob/main/LICENSE
+[license-url]: https://github.com/Zatzi08/ScrumBoard/blob/main/LICENSE
