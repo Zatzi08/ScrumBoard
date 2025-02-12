@@ -9,3 +9,5 @@ cd ScrumBoard
 mvn spring-boot:run
 ```
 3. Go into your preferred browser to <a href="http://localhost:8080/">localhost</a> port 8080
+
+TODO: Add proper readme with explanations of the architecture, used tech stack, requirements, ...
