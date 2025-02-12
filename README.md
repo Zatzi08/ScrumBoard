@@ -13,7 +13,7 @@
 Scrum Board is a tool that helps visualize and manage work and is commonly used in software development
 
 ### Rough structural diagram
-<img src="media/wumpusStructure.png" width="500" height="350"/>
+<img src="media/componentDiagram.png" width="1000" height="350"/>
 
 ### Build with
 [![Java][Java]][Java-url]
@@ -21,6 +21,8 @@ Scrum Board is a tool that helps visualize and manage work and is commonly used 
 [![Hibernate][Hibernate]][Hibernate-url]
 [![SpringBoot][SpringBoot]][SpringBoot-url]
 [![Mockito][Mockito]][Mockito-url]
+
+
 
 ## Demo
 
