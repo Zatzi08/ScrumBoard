@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutzer | Projektmanager</title>
+    <link rel="stylesheet" href="/css/foundation.css">
+    <link rel="stylesheet" href="/css/projectManager.css">
+    <link rel="stylesheet" href="/css/setup.css">
+    <link rel="icon" type="image/ico" href="/img/favicon.ico"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <div class="Reiter">
+        <button class="reiterBtn" onmouseover = "hover(this.id)" onmouseleave="hoverLeave(this.id)" id = "pjBtn" style = "border-bottom: 1px solid #ffffff;">Projekt Manager</button>
+        <button type="button" th:Sid="${sessionID}" onclick="SwitchToOwnProfile(this.getAttribute('Sid'))" class = "reiterBtn">Profil </button>
+        <button class = "reiterBtn" th:Sid="${sessionID}" onclick="SwitchToTaskBoard(this.getAttribute('Sid'))">Task-Board </button>
+        <button class = "reiterBtn" id = "logoutBtn" onclick="location.href='/'">Abmelden</button>
+    </div>
+
+    <div id="outerProjectManagerContainer">
+        <div id="Hi">
+            <button class="selectBtn" id="selectUserstory" th:Sid="${sessionID}" onclick="SwitchToUserStory(this.getAttribute('Sid'))" onmouseover = "hover(this.id)" onmouseleave="hoverLeave(this.id)" title="Wechsel Ansicht zu Userstories">Userstories</button>
+            <span class="userStoryTaskTrenner">|</span>
+            <button class="selectBtn" id="selectTasks" th:Sid="${sessionID}" onclick="SwitchToTasks(this.getAttribute('Sid'))" onmouseover = "hover(this.id)" onmouseleave="hoverLeave(this.id)" title="Wechsel Ansicht zu Tasks">Tasks</button>
+            <span class="userStoryTaskTrenner">|</span>
+            <button class="selectBtn" id="selectUser" style= "border-bottom: 1px solid #ffffff" title = "Wechsel zur Nutzeransicht" onmouseover = "hover(this.id)" onmouseleave="hoverLeave(this.id)">Nutzer</button>
+            <button th:if = "${auth>2}" class="addUserStoryBtn" title="Erstelle und Bearbeite die Rollen" onclick="toggleRolesEditMenu()"><i class="fa fa-user" style = "margin-right: 5px"></i>Rollen bearbeiten</button>
+        </div>
+        <div id="innerProjectManagerContainer">
+            <div class="wrapper">
+                <table class="userTaskTable">
+                <thead id="userTaskTableHead">
+                    <tr>
+                        <th id = "tableHeader" style="cursor:default;">Nutzer</th>
+                    </tr>
+                </thead>
+                <tbody id="userTaskTableBody"> <!-- th:role="${user.getRoles()}" ist ne Liste kp wie wir das machen-->
+                <tr th:each="user : ${User}" th:Sid="${sessionID}" th:email="${user.getEmail()}" ondblclick="SwitchToOtherProfile( this.getAttribute('sid'), this.getAttribute('email'))" title="Doppelklick für Profilsicht">
+                    <th style="cursor:alias;">
+                    <div id = userTextDiv>
+                    <i class="fa-solid fa-person" style="position: relative; line-height: 2.2; margin-right: 2dvh;"></i><label class = "userText" th:text="${user.getUname()}" style="line-height: 2.2;">Nutzername</label>
+                        <div id = "userRights">
+                            <select class = "rightsDropdown" th:if = "${auth>2}" th:Sid="${sessionID}" onchange="changeAuth(this.getAttribute('Sid'),this.getAttribute('id'), this.getAttribute('usID'))" th:id="@{RoleDropdown:{id}(id=${user.getID()})}"  th:usID="${user.getID()}" title="Auswahl der Rolle">
+                                <option id="Role:1" value="1" th:selected="${user.getAuthorization() == 1} ? 'selected'">Nutzer</option>
+                                <option id="Role:2" value="2" th:selected="${user.getAuthorization() == 2} ? 'selected'" >Manager</option>
+                                <option id="Role:3" value="3" th:selected="${user.getAuthorization() == 3} ? 'selected'" >Project Owner</option>
+                                <option id="Role:4" value="4" th:selected="${user.getAuthorization() == 4} ? 'selected'" >Admin</option>
+                            </select>
+                            <label th:unless = "${auth>2}" th:text="${user.getAuthorizationAsEnum()}"></label>
+                        </div>
+                    </div>
+                    </th>
+                </tr>
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div th:if = "${auth>2}" id = "roleOverlay" style = "display:none">
+        <div class = "editMenu"  id = "editRolesMenu">
+            <label class = "roleTitle"><i class = "fa fa-pencil" style="margin-right: 5px;"></i> Rollen bearbeiten und erstellen</label><span class="closeToggleEdit" onclick="toggleRolesEditMenu()">&times;</span>
+            <div class="editRoles-content">
+                <div id="roleAlignment">
+                    <select onchange="filterRole(this)" class = "filterRolesDropdown"  title="Nach Rechten Filtern">
+                        <option value="0">Kein Filter</option>
+                        <option value="1">Nutzer</option>
+                        <option value="2">Manager</option>
+                        <option value="3">Project Owner</option>
+                        <option value="4">Admin</option>
+                    </select>
+                    <button id = "editRolesBtn"><i class="fa fa-plus-circle" style = "font-size: 23px" onclick = "toggleRoleNameMenu()" title = "Rolle erstellen"></i></button>
+                </div>
+                <ul id="roleList" >
+                    <li th:each="item : ${Roles}" th:auth="${item.getAuth().ordinal()+1}" class = "visualRole">
+                        <label class="roleLabel" th:text="${item.getName()}"></label>
+                        <div class="visualRoleRight">
+                            <i th:RID="${item.getID()}" th:auth="${item.getAuth().ordinal()+1}" th:name="${item.getName()}"  class="fa fa-edit" onclick="toggleRoleNameMenu(this.getAttribute('RID'), this.getAttribute('auth'), this.getAttribute('name'))" title = "Rolle bearbeiten"></i>
+                            <i th:RID="${item.getID()}" th:Sid="${sessionID}" onclick="deleteRole(this.getAttribute('Sid'), this.getAttribute('RID'))" class="fa-solid fa-x", title = "Rolle löschen"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div th:if = "${auth>2}" id = "roleOverlay2" style = "display:none;z-index:3">
+        <div id = "editRoleNameMenu">
+            <label class = "roleTitle" ><i class = "fa fa-pencil" style="margin-right: 5px;"></i> Rolle erstellen <span class="closeToggleEdit" onclick = "toggleRoleNameMenu()">&times;</span></label>
+            <div class="editRolesName-content">
+                <input id = "roleNameInput" placeholder = "Namen der Rolle eingeben">
+                <input type="hidden" id="rightsForRolesID">
+                <div id = "rightsForRoles">
+                    <select class = "chooseRightsRolesDropdown" title="Auswahl der Rolle">
+                        <option id="RRole:1" value="1" >Nutzer</option>
+                        <option id="RRole:2" value="2" >Manager</option>
+                        <option id="RRole:3" value="3" >Project Owner</option>
+                        <option id="RRole:4" value="4" >Admin</option>
+                    </select>
+                </div>
+                <button th:Sid="${sessionID}" id = "roleNameBtn" onclick="saveRoleB(this.getAttribute('sID'))">Bestätigen</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="/js/vendor/jquery.js"></script>
+    <script src="/js/vendor/what-input.js"></script>
+    <script src="/js/vendor/foundation.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/communication.js"></script>
+    <script type = "text/javascript" src="/js/setup.js"></script>
+    <script type = "text/javascript" src="/js/projectManager.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+    <script src="/js/webSockets/websocket.js"></script>
+    <script src="/js/webSockets/WS_PM_N.js"></script>
+    <script type="application/javascript">
+        window.onbeforeunload = disconnect();
+        window.onload = connect();
+
+        window.onclick = function(event) {
+            var roleEditMenu = document.getElementById("editRolesMenu");
+            var roleEditMenu2 = document.getElementById("editRoleNameMenu");
+            var rolesOverlay = document.getElementById("roleOverlay");
+            var rolesOverlay2 = document.getElementById("roleOverlay2");
+            if (event.target == rolesOverlay) {
+                rolesOverlay.style.display = "none";
+                can_sync = true
+            }
+            else if (event.target == rolesOverlay2 && event.target != roleEditMenu2){
+                rolesOverlay2.style.display = "none";
+                can_sync = true
+            }
+        }
+    </script>
+</body>
+</html>
