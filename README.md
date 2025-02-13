@@ -1,21 +1,32 @@
 <h1 align="center">Scrum Board</h1>
 <div align="center">
   
+| ⚠️ Disclaimer |
+|------------|
+|This project was made for a university course. At the time, me and my colleagues barely had any knowledge of web development nor about frontend (this project was created with no frontend framework), so - to the reader of this - don't expect best pratices and or a completely responsive web design. Hence why this was more of a "playground" to learn. Main focus of the course was to work in a self-created agile environment as a team and solve the requirements we were given. Nontheless, the product that came out was solid and we're proud of it!|
+
+  
 [![Unlicense License][license-shield]][license-url]
 </div>
 <details>
   <summary>Table of Contents</summary>
   <ol>
+    <li><a href="#about-the-project">About the project</a></li>
+    <li><a href="#rough-structural-diagram">Rough structural diagram</a></li>
+    <li><a href="#build-with">Build with</a></li>
+    <li><a href="#main-features">Main features</a></li>
+    <li><a href="#additional-features">Additional features</a></li>
+    <li><a href="#how-to-use">How to use</a></li>
   </ol>
 </details>
 
 ## About the project
-a Scrum Board is a project management tool that helps visualize and manage work and is most commonly used in software development
+a Scrum Board is a project management tool that helps visualize and manage work, most commonly used in software development. It enables teams to track progress and organize tasksin an <a href="https://en.wikipedia.org/wiki/Agile_software_development">agile development process</a>. This project provides a digital Scrum Board with features that are discussed in more detail in <a href="#main-features">Main features</a>
  
 ## Rough structural diagram
 <img src="media/componentDiagram.png" width="1000" height="350"/>
 
-### Build with
+## Build with
 [![Java][Java]][Java-url]
 [![HTML][HTML]][HTML-url]
 [![JavaScript][JavaScript]][JavaScript-url]
@@ -67,6 +78,7 @@ a Scrum Board is a project management tool that helps visualize and manage work 
 - **Multi-user:**  allows multiple clients to run the application simultaneously 
 
 ## How to use
+**Requirements:** Java 17, Maven and support for the languages listed in <a href="#build-with">Build with</a> by the IDE
 1. Clone the repository
 ```sh
 git clone https://github.com/Zatzi08/ScrumBoard.git
@@ -78,7 +90,8 @@ mvn spring-boot:run
 ```
 3. Go into your preferred browser to <a href="http://localhost:8080/">localhost</a> (port: 8080)
 
-TODO: Add proper readme with explanations of the architecture, used tech stack, requirements, ...
+## TODO:
+- [ ] set up a Docker
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [Java]: https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white
