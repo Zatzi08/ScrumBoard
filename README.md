@@ -24,7 +24,7 @@ a Scrum Board is a project management tool that helps visualize and manage work 
 <table>
   <tr>
     <td><img src="media/register.gif" width="477"/></td>
-    <td><img src="media/profile.png" width="500" height="277"/></td>
+    <td><img src="media/profile.png"/></td>
   </tr>
 </table>
 
