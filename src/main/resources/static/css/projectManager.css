@@ -717,7 +717,7 @@ hr{
 }
 
 #editMenu-priorityDropAlignment{
-    width: -webkit-fill-available;
+    width: 91%;
     display: inline-flex;
 }
 
