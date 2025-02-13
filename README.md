@@ -21,6 +21,13 @@ a Scrum Board is a project management tool that helps visualize and manage work 
   - *Login:* login with your account
   - *Personalization:* change basic info about you
 
+<table>
+  <tr>
+    <td><img src="media/register.gif" width="477"/></td>
+    <td><img src="media/profile.png" width="500" height="277"/></td>
+  </tr>
+</table>
+
 - **Project Management**
   - User Storys: create, delete and edit (CDE)
   - Tasks: CDE; assign to User Story and Task Board
