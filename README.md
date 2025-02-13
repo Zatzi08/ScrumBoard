@@ -3,7 +3,7 @@
   
 | ⚠️ Disclaimer |
 |------------|
-|This project was made for a university course. At the time, me and my colleagues barely had any knowledge of web development nor about frontend (this project was created with no frontend framework), so - to the reader of this - don't expect best pratices and or a completely responsive web design. Hence why this was more of a "playground" to learn. Main focus of the course was to work in a self-created agile environment as a team and solve the requirements we were given. Nontheless, the product that came out was solid and we're proud of it!|
+|This project was made for a university course. At the time, me and my colleagues barely had any knowledge of web development nor about frontend (this project was created with no frontend framework and everything used was self-taught), so - to the reader of this - don't expect best pratices and or a completely responsive web design. Hence why this was more of a "playground" to learn. Main focus of the course was to work in a self-created agile environment as a team and solve the requirements we were given. Nontheless, the product that came out was solid and we're proud of it!|
 
   
 [![Unlicense License][license-shield]][license-url]
