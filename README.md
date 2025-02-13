@@ -10,10 +10,27 @@
 </details>
 
 ## About the project
-Scrum Board is a tool that helps visualize and manage work and is commonly used in software development
-
-### Rough structural diagram
+a Scrum Board is a project management tool that helps visualize and manage work and is most commonly used in software development
+ 
+## Rough structural diagram
 <img src="media/componentDiagram.png" width="1000" height="350"/>
+
+## Main features 
+- **User management**
+  - *Registration:* register a new user account
+  - *Login:* login with your account
+  - *Personalization:* change basic info about you
+
+- **Project Management**
+  - User Storys: create, delete and edit (CDE)
+  - Tasks: CDE; assign to User Story and Task Board
+  - Roles: create and assign roles to existing users (restricted to admins and project owners)
+  - Filter: filter User Storys, Tasks and Tasks to User Storys by priority (low, normal, high, urgent) or state (done or not done)
+  - Search: search User Storys, Tasks and Tasks to User Storys by name or description
+- **Task Board**
+  - Task Board instance: categorize tasks in different boards (can be created/deleted besides the default one); tasks are shown in the assigned instance
+  - Task Board columns: categorize tasks in states (In Progress, Under Review, Under Test, Done)
+  - Interactive estimation tracker: if a task is moved to done, visualize the estimated time vs the actual time needed with a conclusion sentence
 
 ### Build with
 [![Java][Java]][Java-url]
@@ -21,10 +38,6 @@ Scrum Board is a tool that helps visualize and manage work and is commonly used 
 [![Hibernate][Hibernate]][Hibernate-url]
 [![SpringBoot][SpringBoot]][SpringBoot-url]
 [![Mockito][Mockito]][Mockito-url]
-
-
-
-## Demo
 
 ## How to use
 1. Clone the repository
