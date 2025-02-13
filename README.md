@@ -15,6 +15,15 @@ a Scrum Board is a project management tool that helps visualize and manage work 
 ## Rough structural diagram
 <img src="media/componentDiagram.png" width="1000" height="350"/>
 
+### Build with
+[![Java][Java]][Java-url]
+[![HTML][HTML]][HTML-url]
+[![JavaScript][JavaScript]][JavaScript-url]
+[![SQLite][SQLite]][SQLite-url]
+[![Hibernate][Hibernate]][Hibernate-url]
+[![SpringBoot][SpringBoot]][SpringBoot-url]
+[![Mockito][Mockito]][Mockito-url]
+
 ## Main features 
 - **User management**
   - *Registration:* register a new user account
@@ -30,21 +39,32 @@ a Scrum Board is a project management tool that helps visualize and manage work 
 
 - **Project Management**
   - User Storys: create, delete and edit (CDE)
-  - Tasks: CDE; assign to User Story and Task Board
+  - Tasks: CDE; assign to User Story and Task Board; visualize Estimation tracker for all tasks
   - Roles: create and assign roles to existing users (restricted to admins and project owners)
   - Filter: filter User Storys, Tasks and Tasks to User Storys by priority (low, normal, high, urgent) or state (done or not done)
   - Search: search User Storys, Tasks and Tasks to User Storys by name or description
-- **Task Board**
-  - Task Board instance: categorize tasks in different boards (can be created/deleted besides the default one); tasks are shown in the assigned instance
-  - Task Board columns: categorize tasks in states (In Progress, Under Review, Under Test, Done)
-  - Interactive estimation tracker: if a task is moved to done, visualize the estimated time vs the actual time needed with a conclusion sentence
 
-### Build with
-[![Java][Java]][Java-url]
-[![SQLite][SQLite]][SQLite-url]
-[![Hibernate][Hibernate]][Hibernate-url]
-[![SpringBoot][SpringBoot]][SpringBoot-url]
-[![Mockito][Mockito]][Mockito-url]
+<table>
+  <tr>
+    <td width="50%"><img src="media/projectManager.gif" width="100%"/></td>
+    <td width="50%"><img src="media/estTracker.gif" width="100%"/></td>
+  </tr>
+</table>
+
+- **Task Board**
+  - Task Board instance: categorize tasks in different boards (can be created/deleted besides the default one); tasks are shown in the assigned Task Board
+  - Task Board columns: categorize tasks in states (In Progress, Under Review, Under Test, Done)
+  - Estimation tracker: if a task is moved to done, visualize the estimated time vs the actual time needed with a conclusion sentence
+
+<table align="center">
+  <tr>
+    <td width="100%"><img src="media/taskBoard.gif" width="100%"/></td>
+  </tr>
+</table>
+
+## Additional features
+- **Synchronization:** if a client uses the application, changes get synchronized with others
+- **Multi-user:**  allows multiple clients to run the application simultaneously 
 
 ## How to use
 1. Clone the repository
@@ -63,6 +83,10 @@ TODO: Add proper readme with explanations of the architecture, used tech stack, 
 <!-- MARKDOWN LINKS & IMAGES -->
 [Java]: https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white
 [Java-url]: https://www.java.com/download/ie_manual.jsp
+[HTML]: https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white
+[HTML-url]: https://developer.mozilla.org/en-US/docs/Web/HTML
+[JavaScript]: https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=333
+[JavaScript-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
 [SQLite]: https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=SQLite&logoColor=white
 [SQLite-url]: https://www.sqlite.org/
 [Hibernate]: https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white
