@@ -49,11 +49,11 @@ a Scrum Board is a project management tool that helps visualize and manage work,
 </table>
 
 - **Project Management**
-  - User Storys: create, delete and edit (CDE)
-  - Tasks: CDE; assign to User Story and Task Board; visualize Estimation tracker for all tasks
-  - Roles: create and assign roles to existing users (restricted to admins and project owners)
-  - Filter: filter User Storys, Tasks and Tasks to User Storys by priority (low, normal, high, urgent) or state (done or not done)
-  - Search: search User Storys, Tasks and Tasks to User Storys by name or description
+  - *User Storys:* create, delete and edit (CDE)
+  - *Tasks:* CDE; assign to User Story and Task Board; visualize Estimation tracker for all tasks
+  - *Roles:* create and assign roles to existing users (restricted to admins and project owners)
+  - *Filter:* filter User Storys, Tasks and Tasks to User Storys by priority (low, normal, high, urgent) or state (done or not done)
+  - *Search:* search User Storys, Tasks and Tasks to User Storys by name or description
 
 <table>
   <tr>
@@ -63,9 +63,9 @@ a Scrum Board is a project management tool that helps visualize and manage work,
 </table>
 
 - **Task Board**
-  - Task Board instance: categorize tasks in different boards (can be created/deleted besides the default one); tasks are shown in the assigned Task Board
-  - Task Board columns: categorize tasks in states (In Progress, Under Review, Under Test, Done)
-  - Estimation tracker: if a task is moved to done, visualize the estimated time vs the actual time needed with a conclusion sentence
+  - *Task Board instance:* categorize tasks in different boards (can be created/deleted besides the default one); tasks are shown in the assigned Task Board
+  - *Task Board columns:* categorize tasks in states (In Progress, Under Review, Under Test, Done)
+  - *Estimation tracker:* if a task is moved to done, visualize the estimated time vs the actual time needed with a conclusion sentence
 
 <table align="center">
   <tr>
@@ -74,8 +74,8 @@ a Scrum Board is a project management tool that helps visualize and manage work,
 </table>
 
 ## Additional features
-- **Synchronization:** if a client uses the application, changes get synchronized with others
-- **Multi-user:**  allows multiple clients to run the application simultaneously 
+- *Synchronization:* if a client uses the application, changes get synchronized with others
+- *Multi-user:*  allows multiple clients to run the application simultaneously 
 
 ## How to use
 **Requirements:** Java 17, Maven and support for the languages listed in <a href="#build-with">Build with</a> by the IDE
